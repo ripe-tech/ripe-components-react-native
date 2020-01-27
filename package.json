@@ -1,0 +1,28 @@
+{
+    "name": "ripe-components-react-native",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "cleanup": "rm -rf node_modules && rm -f package-lock.json",
+        "lint": "eslint .",
+        "prettier": "prettier \"./**/*.{js,json}\" --write"
+    },
+    "dependencies": {
+        "react": "^16.12.0",
+        "react-native": "^0.61.5"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.8.3",
+        "@babel/runtime": "^7.8.3",
+        "@react-native-community/eslint-config": "^0.0.7",
+        "babel-jest": "^25.1.0",
+        "eslint": "^6.8.0",
+        "jest": "^25.1.0",
+        "metro-react-native-babel-preset": "^0.58.0",
+        "prettier": "^1.19.1",
+        "react-test-renderer": "^16.12.0"
+    },
+    "jest": {
+        "preset": "react-native"
+    }
+}

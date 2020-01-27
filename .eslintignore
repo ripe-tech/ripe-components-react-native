@@ -1,0 +1,4 @@
+/dist
+/temp
+**/dist
+**/temp
