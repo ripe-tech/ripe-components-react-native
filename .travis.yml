@@ -8,7 +8,7 @@ node_js:
   - "11"
 install:
   - npm install
-script: npm test
+script: npm run lint-all && npm test
 deploy:
   provider: npm
   email: development@platforme.com

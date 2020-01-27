@@ -21,5 +21,8 @@ module.exports = {
         ],
         "no-alert": "off",
         "react-native/no-inline-styles": "off"
+    },
+    env: {
+        jasmine: true
     }
 };

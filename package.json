@@ -31,7 +31,9 @@
     "main": "index.js",
     "scripts": {
         "cleanup": "rm -rf node_modules && rm -f package-lock.json",
-        "lint": "eslint .",
+        "lint": "eslint \"./**/*.js\"",
+        "lint-all": "npm run lint",
+        "lint-fix": "eslint \"./**/*.js\" --fix",
         "prettier": "prettier \"./**/*.{js,json}\" --write",
         "test": "mocha --recursive"
     },
