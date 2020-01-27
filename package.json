@@ -32,7 +32,8 @@
     "scripts": {
         "cleanup": "rm -rf node_modules && rm -f package-lock.json",
         "lint": "eslint .",
-        "prettier": "prettier \"./**/*.{js,json}\" --write"
+        "prettier": "prettier \"./**/*.{js,json}\" --write",
+        "test": "mocha --recursive"
     },
     "dependencies": {
         "react": "^16.12.0",
