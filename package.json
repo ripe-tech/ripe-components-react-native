@@ -1,7 +1,34 @@
 {
     "name": "ripe-components-react-native",
     "version": "0.0.1",
-    "private": true,
+    "description": "RIPE Components for React Native",
+    "keywords": [
+        "components",
+        "ripe",
+        "react",
+        "native"
+    ],
+    "homepage": "https://github.com/ripe-tech/ripe-components-react-native#readme",
+    "bugs": {
+        "url": "https://github.com/ripe-tech/ripe-components-react-native/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ripe-tech/ripe-components-react-native.git"
+    },
+    "license": "Apache-2.0",
+    "author": "Platforme",
+    "files": [
+        "index.js",
+        "LICENSE",
+        "dist/**/*",
+        "js/**/*.js",
+        "res/**/*.ico",
+        "res/**/*.png",
+        "test/**/*.js",
+        "react/**/*.js"
+    ],
+    "main": "index.js",
     "scripts": {
         "cleanup": "rm -rf node_modules && rm -f package-lock.json",
         "lint": "eslint .",
