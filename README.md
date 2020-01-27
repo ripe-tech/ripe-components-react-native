@@ -1,2 +1,3 @@
-# ripe-components-react-native
-Set of React Native components to be used withing RIPE
+# RIPE Components React Native
+
+Set of [React Native](https://facebook.github.io/react-native/) components to be used withing RIPE.
