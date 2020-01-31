@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
 });
 
 Button.propTypes = {
-    onPress: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
     icon: PropTypes.number,
+    onPress: PropTypes.func.isRequired,
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };

@@ -7,16 +7,19 @@ import { Button } from "./button";
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Button", () => {
-        const buttonText = text("Button Text", "Press Me!");
-        const onPress = () => alert("Thanks for the press!");
-        const iconList = select(
+        const text_ = text("Text", "Press Me!");
+        const icon = select(
             "Icon",
-            { None: null, "Small Platform logo": require("../../../assets/small-logo.png") },
+            {
+                None: null,
+                "Small Platform logo": require("../../../assets/small-logo.png")
+            },
             null
         );
+        const onPress = () => alert("Thanks for the press!");
         return (
             <View style={styles.root}>
-                <Button text={buttonText} onPress={onPress} icon={iconList} />
+                <Button text={text_} onPress={onPress} icon={icon} />
             </View>
         );
     });
