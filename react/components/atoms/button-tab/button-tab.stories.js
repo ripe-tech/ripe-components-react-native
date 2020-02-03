@@ -7,29 +7,27 @@ import { ButtonTab } from "../";
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("ButtonTab", () => {
+        const avatarBlue = require("../../../assets/blue/ic-avatar.png");
+        const avatarGray = require("../../../assets/gray/ic-avatar.png");
         const buttonText = text("Button Text", "User");
         const buttonDisabled = boolean("Disabled", false);
-        const activeImage = select(
-            "Icon",
-            { None: null, "Activated icon": require("../../../assets/blue/ic-avatar.png") },
-            require("../../../assets/blue/ic-avatar.png")
+        const icon = select("Icon", { None: null, Avatar: avatarGray }, avatarGray);
+        const iconSelected = select(
+            "Icon Selected",
+            { None: null, Avatar: avatarBlue },
+            avatarBlue
         );
-        const disableImage = select(
-            "Icon",
-            { None: null, "Deactivated icon": require("../../../assets/gray/ic-avatar.png") },
-            require("../../../assets/gray/ic-avatar.png")
-        );
-        const isSelected = boolean("Is elected", true);
-        const onPress = () => alert("Going To Route");
+        const selected = boolean("Selected", true);
+        const onPress = () => alert("Clicked");
         return (
             <View style={styles.root}>
                 <ButtonTab
-                    label={buttonText}
-                    disabled={buttonDisabled}
-                    activeImage={activeImage}
-                    inactiveImage={disableImage}
+                    text={buttonText}
+                    icon={icon}
+                    iconSelected={iconSelected}
                     onPress={onPress}
-                    selected={isSelected}
+                    selected={selected}
+                    disabled={buttonDisabled}
                 />
             </View>
         );

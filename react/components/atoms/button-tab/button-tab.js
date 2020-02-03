@@ -5,26 +5,26 @@ import PropTypes from "prop-types";
 export class ButtonTab extends PureComponent {
     _containerStyles = () => {
         const { selected } = this.props;
-        return [styles.buttonTabContainer, selected && styles.buttonTabContainerActive];
+        return [styles.buttonTabContainer, selected && styles.buttonTabContainerSelected];
     };
 
-    _imageToShow = () => {
-        const { selected, activeImage, inactiveImage } = this.props;
-        return selected ? activeImage : inactiveImage;
+    _image = () => {
+        const { selected, icon, iconSelected } = this.props;
+        return selected ? iconSelected || icon : icon;
     };
 
     _labelStyles = () => {
         const { selected } = this.props;
-        return [styles.buttonTabLabel, selected && styles.buttonTabLabelActive];
+        return [styles.buttonTabLabel, selected && styles.buttonTabLabelSelected];
     };
 
     render() {
-        const { label, onPress, disabled } = this.props;
+        const { text, onPress, disabled } = this.props;
         return (
             <TouchableWithoutFeedback onPress={onPress} disabled={disabled}>
                 <View style={this._containerStyles()}>
-                    <Image source={this._imageToShow()} />
-                    <Text style={this._labelStyles()}>{label}</Text>
+                    <Image source={this._image()} />
+                    <Text style={this._labelStyles()}>{text}</Text>
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -33,36 +33,33 @@ export class ButtonTab extends PureComponent {
 
 const styles = StyleSheet.create({
     buttonTabContainer: {
-        backgroundColor: "white",
+        backgroundColor: "#ffffff",
         flex: 1,
         alignItems: "center",
         justifyContent: "flex-end",
         height: "100%",
-        borderRadius: 4,
-        marginHorizontal: 4
+        borderRadius: 4
     },
-    buttonTabContainerActive: {
+    buttonTabContainerSelected: {
         backgroundColor: "rgba(102,135,246,0.11)"
     },
     buttonTabLabel: {
         fontSize: 11,
-        fontWeight: "normal",
-        fontStyle: "normal",
         lineHeight: 11,
-        letterSpacing: 0.24,
+        letterSpacing: 0.5,
         textAlign: "center",
         color: "#a6adb4"
     },
-    buttonTabLabelActive: {
+    buttonTabLabelSelected: {
         color: "#597cf0"
     }
 });
 
 ButtonTab.propTypes = {
-    label: PropTypes.string.isRequired,
-    activeImage: PropTypes.number.isRequired,
-    inactiveImage: PropTypes.number.isRequired,
-    selected: PropTypes.bool.isRequired,
-    onPress: PropTypes.func.isRequired,
+    text: PropTypes.string,
+    icon: PropTypes.number.isRequired,
+    iconSelected: PropTypes.number,
+    selected: PropTypes.bool,
+    onPress: PropTypes.func,
     disabled: PropTypes.bool
 };
