@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         paddingBottom: 2
     },
     containerSelected: {
-        backgroundColor: "rgba(102,135,246,0.11)"
+        backgroundColor: "#6687f6"
     },
     label: {
         color: "#a6adb4",
