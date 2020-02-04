@@ -22,13 +22,13 @@ export class Tab extends PureComponent {
         const { tabs } = this.props;
         return (
             <SafeAreaView style={styles.root}>
-                {Object.keys(tabs).map((tab, index) => (
+                {tabs.map((tab, index) => (
                     <ButtonTab
-                        key={tab}
-                        label={tabs[tab].label}
-                        disabled={tabs[tab].disabled}
-                        activeImage={tabs[tab].activeImage}
-                        inactiveImage={tabs[tab].inactiveImage}
+                        width={`${100 / tabs.length}%`}
+                        key={tab.text}
+                        text={tab.text}
+                        disabled={tab.disabled}
+                        icon={tab.icon}
                         onPress={() => this.onPressTab(tab)}
                         selected={this._isSelected(index)}
                     />
@@ -40,19 +40,19 @@ export class Tab extends PureComponent {
 
 const styles = StyleSheet.create({
     root: {
-        backgroundColor: "white",
-        width: "100%",
-        height: 50,
-        flexDirection: "row",
-        alignItems: "flex-end",
-        borderTopWidth: 1,
-        borderTopColor: "#e3e8f1",
-        paddingTop: 2,
-        paddingBottom: 2
+        backgroundColor: "#ffffff",
+        flexDirection: "row"
     }
 });
 
 Tab.propTypes = {
     navigation: PropTypes.object.isRequired,
-    tabs: PropTypes.object.isRequired
+    tabs: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string,
+            icon: PropTypes.string.isRequired,
+            selected: PropTypes.bool,
+            disabled: PropTypes.bool
+        })
+    )
 };

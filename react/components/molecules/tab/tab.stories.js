@@ -1,7 +1,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, select } from "@storybook/addon-knobs";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { Tab } from "../";
 
 storiesOf("Molecules", module)
@@ -15,45 +15,38 @@ storiesOf("Molecules", module)
             },
             0
         );
-        const IconAvatar = require("../../../assets/gray/ic-avatar.png");
-        const IconAvatarBlue = require("../../../assets/blue/ic-avatar.png");
-        const Tabs = {
-            Search: {
+        const Tabs = [
+            {
                 // stack: LoginStack,
-                label: "Search",
-                inactiveImage: IconAvatar,
-                activeImage: IconAvatarBlue,
+                text: "Search",
+                icon: "add",
                 disabled: true
             },
-            Scan: {
+            {
                 // stack: LoginStack,
-                label: "Scan",
-                inactiveImage: IconAvatar,
-                activeImage: IconAvatarBlue,
+                text: "Scan",
+                icon: "add",
                 disabled: true
             },
-            Orders: {
+            {
                 // stack: LoginStack,
-                label: "Orders",
-                inactiveImage: IconAvatar,
-                activeImage: IconAvatarBlue,
+                text: "Orders",
+                icon: "add",
                 disabled: false
             },
-            Alerts: {
+            {
                 // stack: LoginStack,
-                label: "Alerts",
-                inactiveImage: IconAvatar,
-                activeImage: IconAvatarBlue,
+                text: "Alerts",
+                icon: "add",
                 disabled: false
             },
-            User: {
+            {
                 // stack: LoginStack,
-                label: "User",
-                inactiveImage: IconAvatar,
-                activeImage: IconAvatarBlue,
+                text: "User",
+                icon: "add",
                 disabled: false
             }
-        };
+        ];
 
         const navigation = {
             navigate: () => alert("we are going to the next route"),
@@ -61,14 +54,8 @@ storiesOf("Molecules", module)
         };
 
         return (
-            <View style={styles.root}>
+            <View>
                 <Tab navigation={navigation} tabs={Tabs} />
             </View>
         );
     });
-
-const styles = StyleSheet.create({
-    root: {
-        marginTop: 50
-    }
-});
