@@ -10,7 +10,9 @@ export class Button extends PureComponent {
         const { style, width } = this.props;
         const base = Object.assign({}, styles.root);
 
-        if (width) base.width = width;
+        if (width) {
+            base.width = width;
+        }
 
         return [base, style];
     };
