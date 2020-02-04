@@ -6,7 +6,7 @@ import { ButtonTab } from "./button-tab";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
-    .add("ButtonTab", () => {
+    .add("Button Tab", () => {
         const _text = text("Text", "User");
         const disabled = boolean("Disabled", false);
         const icon = select(
