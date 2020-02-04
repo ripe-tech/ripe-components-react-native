@@ -1,7 +1,9 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
+
+import { Icon } from "../icon/icon";
 
 export class Button extends PureComponent {
     _gradientStart = { x: 0, y: 0 };
@@ -13,8 +15,12 @@ export class Button extends PureComponent {
     _onPress = () => this.props.onPress();
 
     _rootStyle = () => {
-        const { containerStyle } = this.props;
-        return [styles.root, containerStyle];
+        const { style, width } = this.props;
+        const base = Object.assign({}, styles.root);
+
+        if (width) base.width = width;
+
+        return [base, style];
     };
 
     render() {
@@ -32,7 +38,7 @@ export class Button extends PureComponent {
                     colors={this._gradientColors}
                     style={styles.container}
                 >
-                    {icon ? <Image source={icon} style={styles.icon} /> : null}
+                    {icon ? <Icon icon={icon} color="#ffffff" style={styles.icon} /> : null}
                     <Text style={styles.text}>{text}</Text>
                 </LinearGradient>
             </TouchableOpacity>
@@ -42,9 +48,9 @@ export class Button extends PureComponent {
 
 const styles = StyleSheet.create({
     root: {
-        borderRadius: 6,
-        overflow: "hidden",
-        minHeight: 48
+        borderRadius: 8,
+        height: 48,
+        alignSelf: "flex-start"
     },
     container: {
         flex: 1,
@@ -53,22 +59,22 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     icon: {
-        marginRight: 20
+        marginRight: 5
     },
     text: {
         fontSize: 16,
-        fontWeight: "normal",
-        fontStyle: "normal",
-        lineHeight: 20,
-        letterSpacing: 0.34,
-        textAlign: "center",
-        color: "white"
+        color: "#ffffff"
     }
 });
 
+Button.defaultProps = {
+    width: "100%"
+};
+
 Button.propTypes = {
-    onPress: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
-    icon: PropTypes.number,
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    icon: PropTypes.string,
+    onPress: PropTypes.func,
+    width: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };

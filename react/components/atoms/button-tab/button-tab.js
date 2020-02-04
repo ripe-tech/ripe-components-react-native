@@ -6,8 +6,8 @@ import { Icon } from "../icon/icon";
 
 export class ButtonTab extends PureComponent {
     _containerStyles = () => {
-        const { selected, width } = this.props;
-        return [styles.container, { width: width }, selected && styles.containerSelected];
+        const { selected, width, style } = this.props;
+        return [style, styles.container, { width: width }, selected && styles.containerSelected];
     };
 
     _iconColor = () => {
@@ -61,5 +61,6 @@ ButtonTab.propTypes = {
     selected: PropTypes.bool,
     onPress: PropTypes.func,
     disabled: PropTypes.bool,
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };

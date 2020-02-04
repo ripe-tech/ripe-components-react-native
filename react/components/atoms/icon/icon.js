@@ -21,6 +21,7 @@ export class Icon extends PureComponent {
                 width={this.props.width}
                 stroke={this.props.color}
                 strokeWidth={this.props.strokeWidth}
+                style={this.props.style}
             />
         );
     }
@@ -30,7 +31,8 @@ Icon.defaultProps = {
     color: "#000000",
     height: 20,
     width: 20,
-    strokeWidth: 1.5
+    strokeWidth: 1.5,
+    style: {}
 };
 
 Icon.propTypes = {
@@ -41,5 +43,6 @@ Icon.propTypes = {
         PropTypes.arrayOf(PropTypes.number)
     ]),
     height: PropTypes.number,
-    width: PropTypes.number
+    width: PropTypes.number,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
