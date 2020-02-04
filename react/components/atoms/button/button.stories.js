@@ -7,7 +7,7 @@ import { Button } from "./button";
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Button", () => {
-        const buttonText = text("Button Text", "Press Me!");
+        const _text = text("Button Text", "Press Me!");
         const icon = select(
             "Icon",
             { None: null, Add: "add", Alarm: "alarm", Bell: "bell" },
@@ -17,7 +17,7 @@ storiesOf("Atoms", module)
         return (
             <View>
                 <Button
-                    text={buttonText}
+                    text={_text}
                     icon={icon}
                     width={Number.isInteger(width) ? width : undefined}
                 />

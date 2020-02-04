@@ -6,14 +6,6 @@ import PropTypes from "prop-types";
 import { Icon } from "../icon/icon";
 
 export class Button extends PureComponent {
-    _gradientStart = { x: 0, y: 0 };
-
-    _gradientEnd = { x: 1, y: 0 };
-
-    _gradientColors = ["#4a6fe9", "#6687f6"];
-
-    _onPress = () => this.props.onPress();
-
     _rootStyle = () => {
         const { style, width } = this.props;
         const base = Object.assign({}, styles.root);
@@ -22,6 +14,14 @@ export class Button extends PureComponent {
 
         return [base, style];
     };
+
+    _gradientStart = this.props.gradientStart || { x: 0, y: 0 };
+
+    _gradientEnd = this.props.gradienteEnd || { x: 0, y: 0 };
+
+    _gradientColors = this.props.gradientColors || ["#4a6fe9", "#6687f6"];
+
+    _onPress = () => this.props.onPress();
 
     render() {
         const { icon, text } = this.props;
@@ -68,13 +68,19 @@ const styles = StyleSheet.create({
 });
 
 Button.defaultProps = {
-    width: "100%"
+    width: "100%",
+    gradientStart: { x: 0, y: 0 },
+    gradientEnd: { x: 0, y: 0 },
+    gradientColors: ["#4a6fe9", "#6687f6"]
 };
 
 Button.propTypes = {
     text: PropTypes.string.isRequired,
     icon: PropTypes.string,
-    onPress: PropTypes.func,
+    gradientColors: PropTypes.arrayOf(PropTypes.string),
+    gradientStart: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+    gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
     width: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    onPress: PropTypes.func
 };
