@@ -2,6 +2,8 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
+import * as baseStyles from "../../../util/styles";
+
 import { Icon } from "../icon";
 
 export class Tag extends PureComponent {
@@ -72,7 +74,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         borderRadius: 6,
         borderColor: "red",
-        borderWidth: 1
+        borderWidth: 1,
+        fontFamily: baseStyles.FONT
     },
     text: {
         fontSize: 14

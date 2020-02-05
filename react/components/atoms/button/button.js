@@ -3,6 +3,8 @@ import { StyleSheet, Text, TouchableOpacity, ViewPropTypes } from "react-native"
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
+import * as baseStyles from "../../../util/styles";
+
 import { Icon } from "../icon";
 
 export class Button extends PureComponent {
@@ -47,6 +49,7 @@ export class Button extends PureComponent {
 
         return (
             <TouchableOpacity
+                activeOpacity={0.8}
                 useForeground={true}
                 style={this._style()}
                 onPress={this.props.onPress}
@@ -76,6 +79,7 @@ export class Button extends PureComponent {
 const styles = StyleSheet.create({
     button: {
         flex: 1,
+        fontFamily: baseStyles.FONT,
         alignSelf: "flex-start"
     },
     container: {
