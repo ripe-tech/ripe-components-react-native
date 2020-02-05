@@ -7,6 +7,10 @@ import * as baseStyles from "../../../util/styles";
 import { Icon } from "../icon";
 
 export class ButtonTab extends PureComponent {
+    state = {
+        pressed: false
+    };
+
     static get propTypes() {
         return {
             text: PropTypes.string,
@@ -35,11 +39,22 @@ export class ButtonTab extends PureComponent {
     };
 
     _iconColor = () => {
-        return this.props.selected ? "#1d2631" : "#a6adb4";
+        return this.props.selected || this.state.pressed ? "#1d2631" : "#a6adb4";
     };
 
     _labelStyles = () => {
-        return [styles.label, this.props.selected && styles.labelSelected];
+        return [
+            styles.label,
+            this.props.selected || this.state.pressed ? styles.labelSelected : {}
+        ];
+    };
+
+    _onPressIn = () => {
+        this.setState({ pressed: true });
+    };
+
+    _onPressOut = () => {
+        this.setState({ pressed: false });
     };
 
     render() {
@@ -48,6 +63,8 @@ export class ButtonTab extends PureComponent {
                 style={this.props.style}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
+                onPressIn={this._onPressIn}
+                onPressOut={this._onPressOut}
             >
                 <View style={this._containerStyles()}>
                     {this.props.icon ? (

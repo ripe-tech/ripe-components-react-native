@@ -21,7 +21,7 @@ module.exports = {
         ],
         "no-alert": "off",
         "react-native/no-inline-styles": "off",
-        "curly": "off"
+        curly: "off"
     },
     env: {
         jasmine: true
