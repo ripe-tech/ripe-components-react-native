@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity, ViewPropTypes } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, ViewPropTypes, Platform } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
@@ -93,9 +93,9 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        marginTop: 4,
         letterSpacing: 0.5,
         color: "#ffffff",
+        marginTop: Platform.OS === "ios" ? 4 : 0,
         fontFamily: baseStyles.FONT_BOOK
     }
 });

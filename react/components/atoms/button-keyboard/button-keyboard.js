@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
 import PropTypes from "prop-types";
 
 import * as baseStyles from "../../../util/styles";
@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
         letterSpacing: 0.47,
         textAlign: "center",
         color: "#17425c",
-        fontFamily: baseStyles.FONT
+        fontFamily: baseStyles.FONT,
+        marginTop: Platform.OS === "ios" ? 4 : 0
     }
 });
