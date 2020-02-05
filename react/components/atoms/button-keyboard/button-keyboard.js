@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Icon } from "../../";
 import PropTypes from "prop-types";
+
+import { Icon } from "../icon";
 
 export class ButtonKeyboard extends PureComponent {
     static get propTypes() {

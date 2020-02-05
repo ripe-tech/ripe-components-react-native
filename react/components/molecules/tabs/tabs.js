@@ -1,8 +1,9 @@
 import React, { PureComponent } from "react";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import { ButtonTab } from "../../atoms";
 import PropTypes from "prop-types";
+
+import { ButtonTab } from "../../atoms/button-tab";
 
 export class Tabs extends PureComponent {
     static get propTypes() {

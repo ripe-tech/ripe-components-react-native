@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, View } from "react-native";
-import { ButtonKeyboard } from "../../";
-
 import PropTypes from "prop-types";
+
+import { ButtonKeyboard } from "../../atoms/button-keyboard";
 
 export class KeyboardNumeric extends PureComponent {
     static get propTypes() {

@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, View, Text, TouchableWithoutFeedback, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { Icon } from "../icon/icon";
+import { Icon } from "../icon";
 
 export class ButtonTab extends PureComponent {
     static get propTypes() {

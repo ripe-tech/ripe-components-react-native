@@ -2,7 +2,8 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs } from "@storybook/addon-knobs";
 import { View } from "react-native";
-import { KeyboardNumeric } from "../../";
+
+import { KeyboardNumeric } from "./keyboard-numeric";
 
 storiesOf("Molecules", module)
     .addDecorator(withKnobs)

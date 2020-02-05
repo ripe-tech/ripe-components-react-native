@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Icon } from "../icon";
-
 import PropTypes from "prop-types";
+
+import { Icon } from "../icon";
 
 export class Tag extends PureComponent {
     static get propTypes() {

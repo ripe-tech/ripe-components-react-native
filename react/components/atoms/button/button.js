@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, ViewPropTypes } from "react-native"
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
-import { Icon } from "../icon/icon";
+import { Icon } from "../icon";
 
 export class Button extends PureComponent {
     static get propTypes() {
@@ -11,7 +11,7 @@ export class Button extends PureComponent {
             text: PropTypes.string.isRequired,
             icon: PropTypes.string,
             iconStrokeWidth: PropTypes.number,
-            grandientAngle: PropTypes.number,
+            gradientAngle: PropTypes.number,
             gradientColors: PropTypes.arrayOf(PropTypes.string),
             gradientLocations: PropTypes.arrayOf(PropTypes.number),
             gradientStart: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
@@ -52,7 +52,7 @@ export class Button extends PureComponent {
                 onPress={this.props.onPress}
             >
                 <LinearGradient
-                    angle={this.props.grandientAngle}
+                    angle={this.props.gradientAngle}
                     colors={this.props.gradientColors}
                     locations={this.props.gradientLocations}
                     useAngle={true}

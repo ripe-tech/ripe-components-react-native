@@ -2,6 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, select } from "@storybook/addon-knobs";
+
 import { Tabs } from "./tabs";
 
 storiesOf("Molecules", module)
