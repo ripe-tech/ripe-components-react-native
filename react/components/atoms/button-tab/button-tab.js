@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.BOLD_FONT,
         lineHeight: 10,
         marginTop: 6,
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily: baseStyles.FONT
     },
     labelSelected: {
         color: "#1d2631"
