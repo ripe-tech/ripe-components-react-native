@@ -74,10 +74,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         borderRadius: 6,
         borderColor: "red",
-        borderWidth: 1,
-        fontFamily: baseStyles.FONT
+        borderWidth: 1
     },
     text: {
-        fontSize: 14
+        fontFamily: baseStyles.FONT,
+        fontSize: baseStyles.FONT_SIZE
     }
 });
