@@ -19,7 +19,7 @@ export class KeyboardNumeric extends PureComponent {
 
     render() {
         return (
-            <View style={styles.root}>
+            <View style={styles.style}>
                 <View style={styles.row}>
                     <ButtonKeyboard text={"1"} value={1} onPress={this.props.onKeyPress} />
                     <ButtonKeyboard text={"2"} value={2} onPress={this.props.onKeyPress} />
@@ -52,7 +52,7 @@ export class KeyboardNumeric extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    root: {
+    style: {
         width: "100%",
         minHeight: 124,
         maxHeight: 236,
