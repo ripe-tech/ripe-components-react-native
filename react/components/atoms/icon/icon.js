@@ -1,16 +1,24 @@
 import React, { PureComponent } from "react";
+import { ViewPropTypes } from "react-native";
 import { SvgXml } from "react-native-svg";
 import PropTypes from "prop-types";
 import add from "../../../assets/icons/add.svg";
 import chevronLeft from "../../../assets/icons/chevron-left.svg";
+import mute from "../../../assets/icons/mute.svg";
+import volumeLoud from "../../../assets/icons/volume-loud.svg";
 
 export class Icon extends PureComponent {
     _icon() {
-        switch (this.props.icon) {
+        const { icon } = this.props;
+        switch (icon) {
             case "add":
                 return add;
             case "chevron-left":
                 return chevronLeft;
+            case "mute":
+                return mute;
+            case "volume-loud":
+                return volumeLoud;
             default:
                 return null;
         }
@@ -30,14 +38,6 @@ export class Icon extends PureComponent {
     }
 }
 
-Icon.defaultProps = {
-    color: "#000000",
-    height: 20,
-    width: 20,
-    strokeWidth: 1.5,
-    style: {}
-};
-
 Icon.propTypes = {
     icon: PropTypes.string.isRequired,
     color: PropTypes.oneOfType([
@@ -47,5 +47,13 @@ Icon.propTypes = {
     ]),
     height: PropTypes.number,
     width: PropTypes.number,
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    style: ViewPropTypes.style
+};
+
+Icon.defaultProps = {
+    color: "#000000",
+    height: 20,
+    width: 20,
+    strokeWidth: 1.5,
+    style: {}
 };
