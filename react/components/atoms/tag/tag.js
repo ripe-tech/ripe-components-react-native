@@ -78,6 +78,6 @@ const styles = StyleSheet.create({
     },
     text: {
         fontFamily: baseStyles.FONT,
-        fontSize: baseStyles.FONT_SIZE
+        fontSize: 14
     }
 });
