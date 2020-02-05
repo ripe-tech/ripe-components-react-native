@@ -1,31 +1,26 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, text, select } from "@storybook/addon-knobs";
-import { View, StyleSheet } from "react-native";
+import { withKnobs, text, select, number } from "@storybook/addon-knobs";
+
 import { Button } from "./button";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Button", () => {
-        const text_ = text("Text", "Press Me!");
+        const _text = text("Button Text", "Use Platforme ID");
         const icon = select(
             "Icon",
-            {
-                None: null,
-                "Small Platform logo": require("../../../assets/small-logo.png")
-            },
-            null
+            { None: undefined, Id: "id", Add: "add", Alarm: "alarm", Bell: "bell" },
+            "id"
         );
-        const onPress = () => alert("Thanks for the press!");
+        const iconStrokeWidth = number("Icon Stroke Width", 0.5);
+        const width = number("Width", undefined);
         return (
-            <View style={styles.root}>
-                <Button text={text_} onPress={onPress} icon={icon} />
-            </View>
+            <Button
+                text={_text || undefined}
+                icon={icon}
+                width={width || undefined}
+                iconStrokeWidth={iconStrokeWidth || undefined}
+            />
         );
     });
-
-const styles = StyleSheet.create({
-    root: {
-        margin: 20
-    }
-});

@@ -1,21 +1,46 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, ViewPropTypes } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
+import { Icon } from "../icon";
+
 export class Button extends PureComponent {
-    _rootStyle = () => {
-        const { containerStyle } = this.props;
-        return [styles.root, containerStyle];
+    static get propTypes() {
+        return {
+            text: PropTypes.string.isRequired,
+            icon: PropTypes.string,
+            iconStrokeWidth: PropTypes.number,
+            gradientAngle: PropTypes.number,
+            gradientColors: PropTypes.arrayOf(PropTypes.string),
+            gradientLocations: PropTypes.arrayOf(PropTypes.number),
+            gradientStart: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+            gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+            width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            style: ViewPropTypes.style,
+            onPress: PropTypes.func
+        };
+    }
+
+    static get defaultProps() {
+        return {
+            icon: undefined,
+            iconStrokeWidth: undefined,
+            gradientAngle: 62,
+            gradientLocations: [0.4, 0.84],
+            gradientColors: ["#4a6fe9", "#6687f6"],
+            width: "100%",
+            style: {},
+            onPress: () => {}
+        };
+    }
+
+    _style = () => {
+        const { style, width } = this.props;
+        const base = Object.assign({}, styles.root);
+        if (width) base.width = width;
+        return [base, style];
     };
-
-    _gradientStart = this.props.gradientStart || { x: 0, y: 0 };
-
-    _gradientEnd = this.props.gradienteEnd || { x: 0, y: 0 };
-
-    _gradientColors = this.props.gradientColors || ["#4a6fe9", "#6687f6"];
-
-    _onPress = () => this.props.onPress();
 
     render() {
         const { icon, text } = this.props;
@@ -23,16 +48,24 @@ export class Button extends PureComponent {
         return (
             <TouchableOpacity
                 useForeground={true}
-                style={this._rootStyle()}
-                onPress={this._onPress}
+                style={this._style()}
+                onPress={this.props.onPress}
             >
                 <LinearGradient
-                    start={this._gradientStart}
-                    end={this._gradientEnd}
-                    colors={this._gradientColors}
+                    angle={this.props.gradientAngle}
+                    colors={this.props.gradientColors}
+                    locations={this.props.gradientLocations}
+                    useAngle={true}
                     style={styles.container}
                 >
-                    {icon ? <Image source={icon} style={styles.icon} /> : null}
+                    {icon ? (
+                        <Icon
+                            icon={icon}
+                            color="#ffffff"
+                            style={styles.icon}
+                            strokeWidth={this.props.iconStrokeWidth}
+                        />
+                    ) : null}
                     <Text style={styles.text}>{text}</Text>
                 </LinearGradient>
             </TouchableOpacity>
@@ -41,34 +74,23 @@ export class Button extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    root: {
-        borderRadius: 6,
-        height: 48
+    button: {
+        flex: 1,
+        alignSelf: "flex-start"
     },
     container: {
-        flex: 1,
+        borderRadius: 6,
+        height: 48,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center"
     },
     icon: {
-        marginRight: 20
+        marginRight: 15
     },
     text: {
         fontSize: 16,
-        lineHeight: 20,
         letterSpacing: 0.5,
-        textAlign: "center",
         color: "#ffffff"
     }
 });
-
-Button.propTypes = {
-    text: PropTypes.string.isRequired,
-    icon: PropTypes.number,
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    gradientColors: PropTypes.arrayOf(PropTypes.string),
-    gradientStart: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
-    gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
-    onPress: PropTypes.func.isRequired
-};
