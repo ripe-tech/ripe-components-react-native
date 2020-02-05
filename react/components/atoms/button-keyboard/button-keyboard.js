@@ -2,6 +2,8 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
+import * as baseStyles from "../../../util/styles";
+
 import { Icon } from "../icon";
 
 export class ButtonKeyboard extends PureComponent {
@@ -75,7 +77,8 @@ const styles = StyleSheet.create({
         shadowOffset: {
             width: 0,
             height: 3
-        }
+        },
+        fontFamily: baseStyles.FONT
     },
     cleanStyle: {
         backgroundColor: "transparent",

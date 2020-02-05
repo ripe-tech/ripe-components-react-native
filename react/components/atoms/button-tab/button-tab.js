@@ -2,6 +2,8 @@ import React, { PureComponent } from "react";
 import { StyleSheet, View, Text, TouchableWithoutFeedback, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
+import * as baseStyles from "../../../util/styles";
+
 import { Icon } from "../icon";
 
 export class ButtonTab extends PureComponent {
@@ -48,8 +50,12 @@ export class ButtonTab extends PureComponent {
                 onPress={this.props.onPress}
             >
                 <View style={this._containerStyles()}>
-                    <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2} />
-                    <Text style={this._labelStyles()}>{this.props.text}</Text>
+                    {this.props.icon ? (
+                        <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2} />
+                    ) : null}
+                    {this.props.text ? (
+                        <Text style={this._labelStyles()}>{this.props.text}</Text>
+                    ) : null}
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -61,7 +67,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 4,
         paddingTop: 10,
-        paddingBottom: 6
+        paddingBottom: 6,
+        fontFamily: baseStyles.FONT
     },
     label: {
         color: "#a6adb4",
