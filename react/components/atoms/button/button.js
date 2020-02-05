@@ -95,6 +95,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         letterSpacing: 0.5,
         color: "#ffffff",
-        fontFamily: baseStyles.FONT
+        fontFamily: baseStyles.FONT_BOOK
     }
 });

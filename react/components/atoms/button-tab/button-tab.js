@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     label: {
         color: "#a6adb4",
         fontSize: 10,
-        fontFamily: baseStyles.BOLD_FONT,
+        fontFamily: baseStyles.FONT_BOOK,
         lineHeight: 10,
         marginTop: 6,
         textAlign: "center"
