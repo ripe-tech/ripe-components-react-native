@@ -70,14 +70,16 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        paddingVertical: 4,
+        paddingVertical: 6,
         paddingHorizontal: 8,
         borderRadius: 6,
         borderColor: "red",
-        borderWidth: 1
+        borderWidth: 0
     },
     text: {
-        fontFamily: baseStyles.FONT_BOOK,
-        fontSize: 14
+        fontFamily: baseStyles.FONT_REGULAR,
+        fontSize: 13,
+        marginTop: 2,
+        alignSelf: "center"
     }
 });
