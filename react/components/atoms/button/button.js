@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
+        marginTop: 4,
         letterSpacing: 0.5,
         color: "#ffffff",
         fontFamily: baseStyles.FONT_BOOK
