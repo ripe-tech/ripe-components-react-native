@@ -5,9 +5,35 @@ import PropTypes from "prop-types";
 import { Icon } from "../icon/icon";
 
 export class ButtonTab extends PureComponent {
+    static get propTypes() {
+        return {
+            text: PropTypes.string,
+            icon: PropTypes.string.isRequired,
+            selected: PropTypes.bool,
+            disabled: PropTypes.bool,
+            width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+            style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+            onPress: PropTypes.func
+        };
+    }
+
+    static get defaultProps() {
+        return {
+            text: null,
+            selected: false,
+            disabled: false,
+            width: "100%",
+            style: {},
+            onPress: () => {}
+        };
+    }
+
     _containerStyles = () => {
-        const { selected, width, style } = this.props;
-        return [style, styles.container, { width: width }, selected && styles.containerSelected];
+        return [
+            styles.container,
+            { width: this.props.width },
+            this.props.selected && styles.containerSelected
+        ];
     };
 
     _iconColor = () => {
@@ -15,17 +41,19 @@ export class ButtonTab extends PureComponent {
     };
 
     _labelStyles = () => {
-        const { selected } = this.props;
-        return [styles.label, selected && styles.labelSelected];
+        return [styles.label, this.props && styles.labelSelected];
     };
 
     render() {
-        const { text, onPress, disabled } = this.props;
         return (
-            <TouchableWithoutFeedback onPress={onPress} disabled={disabled}>
+            <TouchableWithoutFeedback
+                style={this.props.style}
+                disabled={this.props.disabled}
+                onPress={this.props.onPress}
+            >
                 <View style={this._containerStyles()}>
                     <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
-                    <Text style={this._labelStyles()}>{text}</Text>
+                    <Text style={this._labelStyles()}>{this.props.text}</Text>
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -54,13 +82,3 @@ const styles = StyleSheet.create({
         color: "#597cf0"
     }
 });
-
-ButtonTab.propTypes = {
-    text: PropTypes.string,
-    icon: PropTypes.string.isRequired,
-    selected: PropTypes.bool,
-    onPress: PropTypes.func,
-    disabled: PropTypes.bool,
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
-};

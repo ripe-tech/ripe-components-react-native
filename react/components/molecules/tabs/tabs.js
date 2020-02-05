@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-navigation";
 import { ButtonTab } from "../../atoms";
 import PropTypes from "prop-types";
 
-export class Tab extends PureComponent {
+export class Tabs extends PureComponent {
     onPressTab = tag => {
         this.props.navigation.navigate(tag);
     };
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     }
 });
 
-Tab.propTypes = {
+Tabs.propTypes = {
     navigation: PropTypes.object.isRequired,
     tabs: PropTypes.arrayOf(
         PropTypes.shape({
