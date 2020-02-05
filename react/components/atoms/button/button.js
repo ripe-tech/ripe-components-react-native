@@ -79,7 +79,6 @@ export class Button extends PureComponent {
 const styles = StyleSheet.create({
     button: {
         flex: 1,
-        fontFamily: baseStyles.FONT,
         alignSelf: "flex-start"
     },
     container: {
@@ -95,6 +94,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         letterSpacing: 0.5,
-        color: "#ffffff"
+        color: "#ffffff",
+        fontFamily: baseStyles.FONT
     }
 });
