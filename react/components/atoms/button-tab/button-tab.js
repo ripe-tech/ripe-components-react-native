@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 4,
         paddingTop: 10,
-        paddingBottom: 6,
-        fontFamily: baseStyles.FONT
+        paddingBottom: 6
     },
     label: {
         color: "#a6adb4",
@@ -77,7 +76,8 @@ const styles = StyleSheet.create({
         lineHeight: 10,
         letterSpacing: 0.5,
         marginTop: 6,
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily: baseStyles.FONT
     },
     labelSelected: {
         color: "#1d2631"

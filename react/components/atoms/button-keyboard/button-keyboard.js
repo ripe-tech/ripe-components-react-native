@@ -77,8 +77,7 @@ const styles = StyleSheet.create({
         shadowOffset: {
             width: 0,
             height: 3
-        },
-        fontFamily: baseStyles.FONT
+        }
     },
     cleanStyle: {
         backgroundColor: "transparent",
@@ -91,6 +90,7 @@ const styles = StyleSheet.create({
         fontStyle: "normal",
         letterSpacing: 0.47,
         textAlign: "center",
-        color: "#17425c"
+        color: "#17425c",
+        fontFamily: baseStyles.FONT
     }
 });
