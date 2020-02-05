@@ -6,20 +6,34 @@ import PropTypes from "prop-types";
 import { Icon } from "../icon/icon";
 
 export class Button extends PureComponent {
-    _rootStyle = () => {
+    static get propTypes() {
+        return {
+            text: PropTypes.string.isRequired,
+            icon: PropTypes.string,
+            gradientColors: PropTypes.arrayOf(PropTypes.string),
+            gradientStart: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+            gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+            width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+            onPress: PropTypes.func
+        };
+    }
+
+    static get defaultProps() {
+        return {
+            width: "100%",
+            gradientStart: { x: 0, y: 0 },
+            gradientEnd: { x: 0, y: 0 },
+            gradientColors: ["#4a6fe9", "#6687f6"]
+        };
+    }
+
+    _style = () => {
         const { style, width } = this.props;
         const base = Object.assign({}, styles.root);
-
         if (width) base.width = width;
-
         return [base, style];
     };
-
-    _gradientStart = this.props.gradientStart || { x: 0, y: 0 };
-
-    _gradientEnd = this.props.gradienteEnd || { x: 0, y: 0 };
-
-    _gradientColors = this.props.gradientColors || ["#4a6fe9", "#6687f6"];
 
     _onPress = () => this.props.onPress();
 
@@ -27,15 +41,11 @@ export class Button extends PureComponent {
         const { icon, text } = this.props;
 
         return (
-            <TouchableOpacity
-                useForeground={true}
-                style={this._rootStyle()}
-                onPress={this._onPress}
-            >
+            <TouchableOpacity useForeground={true} style={this._style()} onPress={this._onPress}>
                 <LinearGradient
-                    start={this._gradientStart}
-                    end={this._gradientEnd}
-                    colors={this._gradientColors}
+                    start={this.props.gradientStart}
+                    end={this.props.gradienteEnd}
+                    colors={this.props.gradientColors}
                     style={styles.container}
                 >
                     {icon ? <Icon icon={icon} color="#ffffff" style={styles.icon} /> : null}
@@ -47,7 +57,7 @@ export class Button extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    root: {
+    button: {
         borderRadius: 8,
         height: 48,
         alignSelf: "flex-start"
@@ -66,21 +76,3 @@ const styles = StyleSheet.create({
         color: "#ffffff"
     }
 });
-
-Button.defaultProps = {
-    width: "100%",
-    gradientStart: { x: 0, y: 0 },
-    gradientEnd: { x: 0, y: 0 },
-    gradientColors: ["#4a6fe9", "#6687f6"]
-};
-
-Button.propTypes = {
-    text: PropTypes.string.isRequired,
-    icon: PropTypes.string,
-    gradientColors: PropTypes.arrayOf(PropTypes.string),
-    gradientStart: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
-    gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
-    width: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    onPress: PropTypes.func
-};

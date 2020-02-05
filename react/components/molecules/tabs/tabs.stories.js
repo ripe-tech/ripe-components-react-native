@@ -1,8 +1,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, select } from "@storybook/addon-knobs";
-import { View } from "react-native";
-import { Tab } from "../";
+import { Tabs } from "./tabs";
 
 storiesOf("Molecules", module)
     .addDecorator(withKnobs)
@@ -15,33 +14,28 @@ storiesOf("Molecules", module)
             },
             0
         );
-        const Tabs = [
+        const tabs = [
             {
-                // stack: LoginStack,
                 text: "Search",
                 icon: "add",
                 disabled: true
             },
             {
-                // stack: LoginStack,
                 text: "Scan",
                 icon: "add",
                 disabled: true
             },
             {
-                // stack: LoginStack,
                 text: "Orders",
                 icon: "add",
                 disabled: false
             },
             {
-                // stack: LoginStack,
                 text: "Alerts",
                 icon: "add",
                 disabled: false
             },
             {
-                // stack: LoginStack,
                 text: "User",
                 icon: "add",
                 disabled: false
@@ -53,9 +47,5 @@ storiesOf("Molecules", module)
             state: { index: selectedIndex }
         };
 
-        return (
-            <View>
-                <Tab navigation={navigation} tabs={Tabs} />
-            </View>
-        );
+        return <Tabs navigation={navigation} tabs={tabs} />;
     });

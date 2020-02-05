@@ -1,7 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text, select, boolean } from "@storybook/addon-knobs";
-import { View } from "react-native";
 import { ButtonTab } from "./button-tab";
 
 storiesOf("Atoms", module)
@@ -17,14 +16,12 @@ storiesOf("Atoms", module)
         const selected = boolean("Selected", true);
         const onPress = () => alert("Clicked");
         return (
-            <View>
-                <ButtonTab
-                    text={_text}
-                    icon={icon}
-                    onPress={onPress}
-                    selected={selected}
-                    disabled={disabled}
-                />
-            </View>
+            <ButtonTab
+                text={_text || undefined}
+                icon={icon}
+                onPress={onPress}
+                selected={selected}
+                disabled={disabled}
+            />
         );
     });
