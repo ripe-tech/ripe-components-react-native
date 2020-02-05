@@ -5,8 +5,8 @@ import { ButtonTab } from "../../atoms";
 import PropTypes from "prop-types";
 
 export class Tab extends PureComponent {
-    onPressTab = tag => {
-        this.props.navigation.navigate(tag);
+    onPressTab = (tag, index) => {
+        this.props.navigation.navigate(tag, index);
     };
 
     _isSelected = index => {
@@ -24,12 +24,11 @@ export class Tab extends PureComponent {
             <SafeAreaView style={styles.root}>
                 {tabs.map((tab, index) => (
                     <ButtonTab
-                        width={`${100 / tabs.length}%`}
                         key={tab.text}
                         text={tab.text}
                         disabled={tab.disabled}
                         icon={tab.icon}
-                        onPress={() => this.onPressTab(tab)}
+                        onPress={() => this.onPressTab(tab, index)}
                         selected={this._isSelected(index)}
                     />
                 ))}
@@ -55,4 +54,8 @@ Tab.propTypes = {
             disabled: PropTypes.bool
         })
     )
+};
+
+Tab.defaultProps = {
+    tabs: []
 };

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { ViewPropTypes, StyleSheet, Text, TouchableOpacity } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
@@ -69,20 +69,23 @@ const styles = StyleSheet.create({
     }
 });
 
-Button.defaultProps = {
-    width: "100%",
-    gradientStart: { x: 0, y: 0 },
-    gradientEnd: { x: 0, y: 0 },
-    gradientColors: ["#4a6fe9", "#6687f6"]
-};
-
 Button.propTypes = {
     text: PropTypes.string.isRequired,
     icon: PropTypes.string,
     gradientColors: PropTypes.arrayOf(PropTypes.string),
     gradientStart: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
     gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
-    width: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    style: ViewPropTypes.style,
     onPress: PropTypes.func
+};
+
+Button.defaultProps = {
+    icon: null,
+    gradientColors: ["#4a6fe9", "#6687f6"],
+    gradientStart: { x: 0, y: 0 },
+    gradientEnd: { x: 0, y: 0 },
+    width: "100%",
+    style: {},
+    onPress: () => {}
 };

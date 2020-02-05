@@ -1,13 +1,13 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, Text, TouchableWithoutFeedback } from "react-native";
+import { ViewPropTypes, StyleSheet, View, Text, TouchableWithoutFeedback } from "react-native";
 import PropTypes from "prop-types";
 
 import { Icon } from "../icon/icon";
 
 export class ButtonTab extends PureComponent {
     _containerStyles = () => {
-        const { selected, width, style } = this.props;
-        return [style, styles.container, { width: width }, selected && styles.containerSelected];
+        const { selected, style } = this.props;
+        return [style, styles.container, selected && styles.containerSelected];
     };
 
     _iconColor = () => {
@@ -34,6 +34,8 @@ export class ButtonTab extends PureComponent {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        height: "100%",
         alignItems: "center",
         borderRadius: 4,
         paddingTop: 4,
@@ -61,6 +63,13 @@ ButtonTab.propTypes = {
     selected: PropTypes.bool,
     onPress: PropTypes.func,
     disabled: PropTypes.bool,
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    style: ViewPropTypes.style
+};
+
+ButtonTab.defaultProps = {
+    text: null,
+    selected: false,
+    onPress: () => {},
+    disabled: false,
+    style: {}
 };

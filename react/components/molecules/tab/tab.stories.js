@@ -1,7 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, select } from "@storybook/addon-knobs";
-import { View } from "react-native";
 import { Tab } from "../";
 
 storiesOf("Molecules", module)
@@ -10,6 +9,7 @@ storiesOf("Molecules", module)
         const selectedIndex = select(
             "Select Tab",
             {
+                "First Tab": 0,
                 "Fourth Tab": 3,
                 "Fifth Tab": 4
             },
@@ -20,7 +20,7 @@ storiesOf("Molecules", module)
                 // stack: LoginStack,
                 text: "Search",
                 icon: "add",
-                disabled: true
+                disabled: false
             },
             {
                 // stack: LoginStack,
@@ -53,9 +53,5 @@ storiesOf("Molecules", module)
             state: { index: selectedIndex }
         };
 
-        return (
-            <View>
-                <Tab navigation={navigation} tabs={Tabs} />
-            </View>
-        );
+        return <Tab navigation={navigation} tabs={Tabs} />;
     });

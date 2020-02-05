@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { ViewPropTypes, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Icon } from "../../";
 import PropTypes from "prop-types";
 
 export class ButtonKeyboard extends PureComponent {
     _containerStyle = () => {
-        const { variant } = this.props;
-        const baseStyle = [styles.root];
+        const { variant, style } = this.props;
+        const baseStyle = [styles.root, style];
 
         switch (variant) {
             case "clean":
@@ -26,7 +26,7 @@ export class ButtonKeyboard extends PureComponent {
         return (
             <TouchableOpacity style={this._containerStyle()} onPress={this._onPress}>
                 {text ? <Text style={styles.text}>{text}</Text> : null}
-                {icon ? <Icon icon={icon} color="#17425c" /> : null}
+                {icon ? <Icon icon={icon} color="#17425c" width={28} height={28} /> : null}
             </TouchableOpacity>
         );
     }
@@ -65,9 +65,19 @@ const styles = StyleSheet.create({
 });
 
 ButtonKeyboard.propTypes = {
-    onPress: PropTypes.func.isRequired,
+    style: ViewPropTypes.style,
+    onPress: PropTypes.func,
     icon: PropTypes.string,
     text: PropTypes.string,
     variant: PropTypes.string,
-    value: PropTypes.any.isRequired
+    value: PropTypes.any
+};
+
+ButtonKeyboard.defaultProps = {
+    style: {},
+    onPress: () => {},
+    icon: null,
+    text: null,
+    variant: null,
+    value: null
 };
