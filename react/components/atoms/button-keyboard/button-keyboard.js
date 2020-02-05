@@ -35,7 +35,7 @@ export class ButtonKeyboard extends PureComponent {
 
         switch (this.props.variant) {
             case "clean":
-                base.push(styles.variantCleanContainer);
+                base.push(styles.cleanStyle);
                 break;
             default:
                 break;
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
             height: 3
         }
     },
-    variantCleanContainer: {
+    cleanStyle: {
         backgroundColor: "transparent",
         elevation: 0,
         shadowOpacity: 0

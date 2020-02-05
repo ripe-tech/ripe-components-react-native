@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { ViewPropTypes } from "react-native";
 import { SvgXml } from "react-native-svg";
 import PropTypes from "prop-types";
 import add from "../../../assets/icons/add.svg";
@@ -10,6 +11,8 @@ import inboxAlt from "../../../assets/icons/inbox-alt.svg";
 import id from "../../../assets/icons/id.svg";
 import bell from "../../../assets/icons/bell.svg";
 import user from "../../../assets/icons/user.svg";
+import mute from "../../../assets/icons/mute.svg";
+import volumeLoud from "../../../assets/icons/volume-loud.svg";
 
 export class Icon extends PureComponent {
     static get propTypes() {
@@ -22,7 +25,7 @@ export class Icon extends PureComponent {
             ]),
             height: PropTypes.number,
             width: PropTypes.number,
-            style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+            style: ViewPropTypes.style
         };
     }
 
@@ -54,6 +57,10 @@ export class Icon extends PureComponent {
                 return bell;
             case "user":
                 return user;
+            case "mute":
+                return mute;
+            case "volume-loud":
+                return volumeLoud;
             default:
                 throw new Error(`Unknown icon ${this.props.icon}`);
         }

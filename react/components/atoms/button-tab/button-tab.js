@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, Text, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, View, Text, TouchableWithoutFeedback, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { Icon } from "../icon/icon";
@@ -12,7 +12,7 @@ export class ButtonTab extends PureComponent {
             selected: PropTypes.bool,
             disabled: PropTypes.bool,
             width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-            style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+            style: ViewPropTypes.style,
             onPress: PropTypes.func
         };
     }

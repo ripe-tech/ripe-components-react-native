@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, ViewPropTypes } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
@@ -17,7 +17,7 @@ export class Button extends PureComponent {
             gradientStart: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
             gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-            style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+            style: ViewPropTypes.style,
             onPress: PropTypes.func
         };
     }

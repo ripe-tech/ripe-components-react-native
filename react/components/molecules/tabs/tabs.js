@@ -25,8 +25,8 @@ export class Tabs extends PureComponent {
         };
     }
 
-    onPressTab = tag => {
-        this.props.navigation.navigate(tag);
+    onPressTab = (tag, index) => {
+        this.props.navigation.navigate(tag, index);
     };
 
     _isSelected = index => {
@@ -49,7 +49,7 @@ export class Tabs extends PureComponent {
                         text={tab.text}
                         disabled={tab.disabled}
                         icon={tab.icon}
-                        onPress={() => this.onPressTab(tab)}
+                        onPress={() => this.onPressTab(tab, index)}
                         selected={this._isSelected(index)}
                     />
                 ))}
