@@ -1,4 +1,4 @@
-export { Button } from "./button/button";
-export { ButtonTab } from "./button-tab/button-tab";
-export { Icon } from "./icon/icon";
-export { ButtonKeyboard } from "./button-keyboard/button-keyboard";
+export * from "./button";
+export * from "./button-keyboard";
+export * from "./button-tab";
+export * from "./icon";

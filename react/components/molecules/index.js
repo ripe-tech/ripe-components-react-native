@@ -1,2 +1,2 @@
-export { Tab } from "./tab/tab";
-export { KeyboardNumeric } from "./keyboard-numeric/keyboard-numeric";
+export * from "./keyboard-numeric";
+export * from "./tabs";

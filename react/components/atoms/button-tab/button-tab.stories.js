@@ -14,12 +14,10 @@ storiesOf("Atoms", module)
             "add"
         );
         const selected = boolean("Selected", true);
-        const onPress = () => alert("Clicked");
         return (
             <ButtonTab
                 text={_text || undefined}
                 icon={icon}
-                onPress={onPress}
                 selected={selected}
                 disabled={disabled}
             />

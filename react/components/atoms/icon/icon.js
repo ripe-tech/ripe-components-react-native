@@ -5,6 +5,30 @@ import add from "../../../assets/icons/add.svg";
 import chevronLeft from "../../../assets/icons/chevron-left.svg";
 
 export class Icon extends PureComponent {
+    static get defaultProps() {
+        return {
+            color: "#000000",
+            height: 20,
+            width: 20,
+            strokeWidth: 1.5,
+            style: {}
+        };
+    }
+
+    static get propTypes() {
+        return {
+            icon: PropTypes.string.isRequired,
+            color: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.number,
+                PropTypes.arrayOf(PropTypes.number)
+            ]),
+            height: PropTypes.number,
+            width: PropTypes.number,
+            style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+        };
+    }
+
     _icon() {
         switch (this.props.icon) {
             case "add":
@@ -29,23 +53,3 @@ export class Icon extends PureComponent {
         );
     }
 }
-
-Icon.defaultProps = {
-    color: "#000000",
-    height: 20,
-    width: 20,
-    strokeWidth: 1.5,
-    style: {}
-};
-
-Icon.propTypes = {
-    icon: PropTypes.string.isRequired,
-    color: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.arrayOf(PropTypes.number)
-    ]),
-    height: PropTypes.number,
-    width: PropTypes.number,
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
-};
