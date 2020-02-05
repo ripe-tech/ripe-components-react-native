@@ -6,14 +6,20 @@ import { Button } from "./button";
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Button", () => {
-        const _text = text("Button Text", "Press Me2");
+        const _text = text("Button Text", "Use Platforme ID");
         const icon = select(
             "Icon",
-            { None: null, Add: "add", Alarm: "alarm", Bell: "bell" },
-            "add"
+            { None: undefined, Id: "id", Add: "add", Alarm: "alarm", Bell: "bell" },
+            "id"
         );
-        const width = number("Width", null);
+        const iconStrokeWidth = number("Icon Stroke Width", 0.5);
+        const width = number("Width", undefined);
         return (
-            <Button text={_text} icon={icon} width={Number.isInteger(width) ? width : undefined} />
+            <Button
+                text={_text || undefined}
+                icon={icon}
+                width={width || undefined}
+                iconStrokeWidth={iconStrokeWidth || undefined}
+            />
         );
     });

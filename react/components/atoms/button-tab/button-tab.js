@@ -19,7 +19,7 @@ export class ButtonTab extends PureComponent {
 
     static get defaultProps() {
         return {
-            text: null,
+            text: undefined,
             selected: false,
             disabled: false,
             width: "100%",
@@ -29,19 +29,15 @@ export class ButtonTab extends PureComponent {
     }
 
     _containerStyles = () => {
-        return [
-            styles.container,
-            { width: this.props.width },
-            this.props.selected && styles.containerSelected
-        ];
+        return [styles.container, { width: this.props.width }];
     };
 
     _iconColor = () => {
-        return this.props.selected ? "#597cf0" : "#a6adb4";
+        return this.props.selected ? "#1d2631" : "#a6adb4";
     };
 
     _labelStyles = () => {
-        return [styles.label, this.props && styles.labelSelected];
+        return [styles.label, this.props.selected && styles.labelSelected];
     };
 
     render() {
@@ -52,7 +48,7 @@ export class ButtonTab extends PureComponent {
                 onPress={this.props.onPress}
             >
                 <View style={this._containerStyles()}>
-                    <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
+                    <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2} />
                     <Text style={this._labelStyles()}>{this.props.text}</Text>
                 </View>
             </TouchableWithoutFeedback>
@@ -64,21 +60,19 @@ const styles = StyleSheet.create({
     container: {
         alignItems: "center",
         borderRadius: 4,
-        paddingTop: 4,
-        paddingBottom: 2
-    },
-    containerSelected: {
-        backgroundColor: "#f2f4fe"
+        paddingTop: 10,
+        paddingBottom: 6
     },
     label: {
         color: "#a6adb4",
-        fontSize: 11,
-        lineHeight: 11,
+        fontSize: 10,
+        fontWeight: "bold",
+        lineHeight: 10,
         letterSpacing: 0.5,
-        marginTop: 3,
+        marginTop: 6,
         textAlign: "center"
     },
     labelSelected: {
-        color: "#597cf0"
+        color: "#1d2631"
     }
 });

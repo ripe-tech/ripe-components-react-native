@@ -10,7 +10,10 @@ export class Button extends PureComponent {
         return {
             text: PropTypes.string.isRequired,
             icon: PropTypes.string,
+            iconStrokeWidth: PropTypes.number,
+            grandientAngle: PropTypes.number,
             gradientColors: PropTypes.arrayOf(PropTypes.string),
+            gradientLocations: PropTypes.arrayOf(PropTypes.number),
             gradientStart: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
             gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -21,10 +24,14 @@ export class Button extends PureComponent {
 
     static get defaultProps() {
         return {
+            icon: undefined,
+            iconStrokeWidth: undefined,
+            gradientAngle: 62,
+            gradientLocations: [0.4, 0.84],
+            gradientColors: ["#4a6fe9", "#6687f6"],
             width: "100%",
-            gradientStart: { x: 0, y: 0 },
-            gradientEnd: { x: 0, y: 0 },
-            gradientColors: ["#4a6fe9", "#6687f6"]
+            style: {},
+            onPress: () => {}
         };
     }
 
@@ -35,20 +42,30 @@ export class Button extends PureComponent {
         return [base, style];
     };
 
-    _onPress = () => this.props.onPress();
-
     render() {
         const { icon, text } = this.props;
 
         return (
-            <TouchableOpacity useForeground={true} style={this._style()} onPress={this._onPress}>
+            <TouchableOpacity
+                useForeground={true}
+                style={this._style()}
+                onPress={this.props.onPress}
+            >
                 <LinearGradient
-                    start={this.props.gradientStart}
-                    end={this.props.gradienteEnd}
+                    angle={this.props.grandientAngle}
                     colors={this.props.gradientColors}
+                    locations={this.props.gradientLocations}
+                    useAngle={true}
                     style={styles.container}
                 >
-                    {icon ? <Icon icon={icon} color="#ffffff" style={styles.icon} /> : null}
+                    {icon ? (
+                        <Icon
+                            icon={icon}
+                            color="#ffffff"
+                            style={styles.icon}
+                            strokeWidth={this.props.iconStrokeWidth}
+                        />
+                    ) : null}
                     <Text style={styles.text}>{text}</Text>
                 </LinearGradient>
             </TouchableOpacity>
@@ -58,21 +75,22 @@ export class Button extends PureComponent {
 
 const styles = StyleSheet.create({
     button: {
-        borderRadius: 8,
-        height: 48,
+        flex: 1,
         alignSelf: "flex-start"
     },
     container: {
-        flex: 1,
+        borderRadius: 6,
+        height: 48,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center"
     },
     icon: {
-        marginRight: 5
+        marginRight: 15
     },
     text: {
         fontSize: 16,
+        letterSpacing: 0.5,
         color: "#ffffff"
     }
 });

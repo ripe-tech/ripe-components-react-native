@@ -5,6 +5,26 @@ import { ButtonTab } from "../../atoms";
 import PropTypes from "prop-types";
 
 export class Tabs extends PureComponent {
+    static get propTypes() {
+        return {
+            navigation: PropTypes.object.isRequired,
+            tabs: PropTypes.arrayOf(
+                PropTypes.shape({
+                    text: PropTypes.string,
+                    icon: PropTypes.string.isRequired,
+                    selected: PropTypes.bool,
+                    disabled: PropTypes.bool
+                })
+            )
+        };
+    }
+
+    static get defaultProps() {
+        return {
+            tabs: []
+        };
+    }
+
     onPressTab = tag => {
         this.props.navigation.navigate(tag);
     };
@@ -44,15 +64,3 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     }
 });
-
-Tabs.propTypes = {
-    navigation: PropTypes.object.isRequired,
-    tabs: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-            icon: PropTypes.string.isRequired,
-            selected: PropTypes.bool,
-            disabled: PropTypes.bool
-        })
-    )
-};

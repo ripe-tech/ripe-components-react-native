@@ -4,36 +4,63 @@ import { Icon } from "../../";
 import PropTypes from "prop-types";
 
 export class ButtonKeyboard extends PureComponent {
-    _containerStyle = () => {
-        const { variant } = this.props;
-        const baseStyle = [styles.root];
+    static get propTypes() {
+        return {
+            icon: PropTypes.string,
+            strokeWidth: PropTypes.number,
+            text: PropTypes.string,
+            value: PropTypes.any,
+            variant: PropTypes.string,
+            onPress: PropTypes.func
+        };
+    }
 
-        switch (variant) {
+    static get defaultProps() {
+        return {
+            icon: undefined,
+            strokeWidth: undefined,
+            text: undefined,
+            value: undefined,
+            variant: undefined,
+            onPress: () => {}
+        };
+    }
+
+    _onPress = () => {
+        this.props.onPress(this.props.value);
+    };
+
+    _style = () => {
+        const base = [styles.style];
+
+        switch (this.props.variant) {
             case "clean":
-                baseStyle.push(styles.variantCleanContainer);
+                base.push(styles.variantCleanContainer);
                 break;
             default:
                 break;
         }
-        return baseStyle;
+        return base;
     };
-    _onPress = () => {
-        const { onPress, value } = this.props;
-        onPress(value);
-    };
+
     render() {
-        const { text, icon } = this.props;
         return (
-            <TouchableOpacity style={this._containerStyle()} onPress={this._onPress}>
-                {text ? <Text style={styles.text}>{text}</Text> : null}
-                {icon ? <Icon icon={icon} color="#17425c" /> : null}
+            <TouchableOpacity style={this._style()} onPress={this._onPress}>
+                {this.props.text ? <Text style={styles.text}>{this.props.text}</Text> : null}
+                {this.props.icon ? (
+                    <Icon
+                        icon={this.props.icon}
+                        strokeWidth={this.props.strokeWidth}
+                        color="#17425c"
+                    />
+                ) : null}
             </TouchableOpacity>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    root: {
+    style: {
         flex: 1,
         maxHeight: 54,
         marginHorizontal: 2,
@@ -63,11 +90,3 @@ const styles = StyleSheet.create({
         color: "#17425c"
     }
 });
-
-ButtonKeyboard.propTypes = {
-    onPress: PropTypes.func.isRequired,
-    icon: PropTypes.string,
-    text: PropTypes.string,
-    variant: PropTypes.string,
-    value: PropTypes.any.isRequired
-};

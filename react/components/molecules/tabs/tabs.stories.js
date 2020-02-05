@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, select } from "@storybook/addon-knobs";
 import { Tabs } from "./tabs";
@@ -17,27 +18,27 @@ storiesOf("Molecules", module)
         const tabs = [
             {
                 text: "Search",
-                icon: "add",
+                icon: "search",
                 disabled: true
             },
             {
                 text: "Scan",
-                icon: "add",
+                icon: "qr",
                 disabled: true
             },
             {
                 text: "Orders",
-                icon: "add",
+                icon: "inbox-alt",
                 disabled: false
             },
             {
                 text: "Alerts",
-                icon: "add",
+                icon: "bell",
                 disabled: false
             },
             {
                 text: "User",
-                icon: "add",
+                icon: "user",
                 disabled: false
             }
         ];
@@ -47,5 +48,9 @@ storiesOf("Molecules", module)
             state: { index: selectedIndex }
         };
 
-        return <Tabs navigation={navigation} tabs={tabs} />;
+        return (
+            <View style={{ flex: 1, justifyContent: "flex-end" }}>
+                <Tabs navigation={navigation} tabs={tabs} />
+            </View>
+        );
     });
