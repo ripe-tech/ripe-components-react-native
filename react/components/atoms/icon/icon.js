@@ -2,12 +2,15 @@ import React, { PureComponent } from "react";
 import { SvgXml } from "react-native-svg";
 import PropTypes from "prop-types";
 import add from "../../../assets/icons/add.svg";
+import chevronLeft from "../../../assets/icons/chevron-left.svg";
 
 export class Icon extends PureComponent {
     _icon() {
         switch (this.props.icon) {
             case "add":
                 return add;
+            case "chevron-left":
+                return chevronLeft;
             default:
                 return null;
         }
