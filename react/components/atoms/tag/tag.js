@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         borderWidth: 1
     },
     text: {
-        fontSize: 14,
-        fontFamily: baseStyles.FONT
+        fontFamily: baseStyles.FONT,
+        fontSize: 14
     }
 });
