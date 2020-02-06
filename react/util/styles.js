@@ -6,5 +6,4 @@ export const FONT_BOLD = "Soleil-Bold";
 export const FONT_BOLD_ITALIC = "Soleil-Bold-Italic";
 
 export const FONT = FONT_REGULAR;
-
 export const FONT_SIZE = 14;
