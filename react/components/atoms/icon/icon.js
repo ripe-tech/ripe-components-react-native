@@ -13,6 +13,7 @@ import bell from "../../../assets/icons/bell.svg";
 import user from "../../../assets/icons/user.svg";
 import mute from "../../../assets/icons/mute.svg";
 import volumeLoud from "../../../assets/icons/volume-loud.svg";
+import bolt from "../../../assets/icons/bolt.svg";
 
 export class Icon extends PureComponent {
     static get propTypes() {
@@ -61,6 +62,8 @@ export class Icon extends PureComponent {
                 return mute;
             case "volume-loud":
                 return volumeLoud;
+            case "bolt":
+                return bolt;
             default:
                 throw new Error(`Unknown icon ${this.props.icon}`);
         }
