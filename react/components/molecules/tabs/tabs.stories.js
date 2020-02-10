@@ -45,13 +45,16 @@ storiesOf("Molecules", module)
         ];
 
         const navigation = {
-            navigate: () => alert("we are going to the next route"),
-            state: { index: selectedIndex }
+            navigate: () => alert("we are going to the next route")
+        };
+
+        const state = {
+            index: selectedIndex
         };
 
         return (
             <View style={{ flex: 1, justifyContent: "flex-end" }}>
-                <Tabs navigation={navigation} tabs={tabs} />
+                <Tabs navigation={navigation} state={state} tabs={tabs} />
             </View>
         );
     });

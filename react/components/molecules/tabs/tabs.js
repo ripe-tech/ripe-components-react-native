@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
-import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-navigation";
+import { StyleSheet, View } from "react-native";
+
 import PropTypes from "prop-types";
 
 import { ButtonTab } from "../../atoms/button-tab";
@@ -26,35 +26,29 @@ export class Tabs extends PureComponent {
         };
     }
 
-    onPressTab = (tag, index) => {
-        this.props.navigation.navigate(tag, index);
+    onPressTab = route => {
+        this.props.navigation.navigate(route);
     };
 
-    _isSelected = index => {
-        const {
-            navigation: {
-                state: { index: selected }
-            }
-        } = this.props;
-        return selected === index;
+    _isSelected = id => {
+        return this.props.state.routeNames[this.props.state.index] === id;
     };
 
     render() {
         const { tabs } = this.props;
         return (
-            <SafeAreaView style={styles.root}>
-                {tabs.map((tab, index) => (
+            <View style={styles.root}>
+                {tabs.map(tab => (
                     <ButtonTab
-                        width={`${100 / tabs.length}%`}
                         key={tab.text}
                         text={tab.text}
                         disabled={tab.disabled}
                         icon={tab.icon}
-                        onPress={() => this.onPressTab(tab, index)}
-                        selected={this._isSelected(index)}
+                        onPress={() => this.onPressTab(tab.id)}
+                        selected={this._isSelected(tab.id)}
                     />
                 ))}
-            </SafeAreaView>
+            </View>
         );
     }
 }
