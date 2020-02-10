@@ -54,7 +54,8 @@ storiesOf("Molecules", module)
         };
 
         const state = {
-            index: selectedIndex
+            index: selectedIndex,
+            routeNames: ["search", "scan", "orders", "alerts", "user"]
         };
 
         return (
