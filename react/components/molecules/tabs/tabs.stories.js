@@ -18,26 +18,31 @@ storiesOf("Molecules", module)
         );
         const tabs = [
             {
+                id: "search",
                 text: "Search",
                 icon: "search",
                 disabled: true
             },
             {
+                id: "scan",
                 text: "Scan",
                 icon: "qr",
                 disabled: true
             },
             {
+                id: "orders",
                 text: "Orders",
                 icon: "inbox-alt",
                 disabled: false
             },
             {
+                id: "alerts",
                 text: "Alerts",
                 icon: "bell",
                 disabled: false
             },
             {
+                id: "user",
                 text: "User",
                 icon: "user",
                 disabled: false
