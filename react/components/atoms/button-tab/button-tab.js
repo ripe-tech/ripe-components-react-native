@@ -32,10 +32,6 @@ export class ButtonTab extends PureComponent {
         };
     }
 
-    _containerStyles = () => {
-        return styles.container;
-    };
-
     _iconColor = () => {
         return this.props.selected || this.state.pressed ? "#1d2631" : "#a6adb4";
     };
@@ -64,7 +60,7 @@ export class ButtonTab extends PureComponent {
                 onPressIn={this._onPressIn}
                 onPressOut={this._onPressOut}
             >
-                <View style={this._containerStyles()}>
+                <View style={styles.container}>
                     {this.props.icon ? (
                         <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
                     ) : null}
