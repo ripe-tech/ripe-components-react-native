@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { ButtonTab } from "../../atoms/button-tab";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export class Tabs extends PureComponent {
     static get propTypes() {
@@ -37,7 +38,7 @@ export class Tabs extends PureComponent {
     render() {
         const { tabs } = this.props;
         return (
-            <View style={styles.root}>
+            <SafeAreaView style={styles.root}>
                 {tabs.map(tab => (
                     <ButtonTab
                         key={tab.text}
@@ -48,13 +49,14 @@ export class Tabs extends PureComponent {
                         selected={this._isSelected(tab.id)}
                     />
                 ))}
-            </View>
+            </SafeAreaView>
         );
     }
 }
 
 const styles = StyleSheet.create({
     root: {
+        paddingTop: 0,
         backgroundColor: "#ffffff",
         flexDirection: "row"
     }
