@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, select } from "@storybook/addon-knobs";
 
@@ -59,8 +59,8 @@ storiesOf("Molecules", module)
         };
 
         return (
-            <View style={{ flex: 1, justifyContent: "flex-end" }}>
+            <SafeAreaProvider style={{ flex: 1, justifyContent: "flex-end" }}>
                 <Tabs navigation={navigation} state={state} tabs={tabs} />
-            </View>
+            </SafeAreaProvider>
         );
     });
