@@ -25,8 +25,12 @@
         "js/**/*.js",
         "res/**/*.ico",
         "res/**/*.png",
+        "res/**/*.svg",
         "test/**/*.js",
-        "react/**/*.js"
+        "react/**/*.js",
+        "react/**/*.ico",
+        "react/**/*.png",
+        "react/**/*.svg"
     ],
     "main": "index.js",
     "scripts": {
