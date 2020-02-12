@@ -35,6 +35,7 @@
         "lint-all": "npm run lint",
         "lint-fix": "eslint \"./**/*.js\" --fix",
         "prettier": "prettier \"./**/*.{js,json}\" --write",
+        "pretty": "npm run prettier && npm run lint-fix",
         "test": "mocha --recursive"
     },
     "dependencies": {
