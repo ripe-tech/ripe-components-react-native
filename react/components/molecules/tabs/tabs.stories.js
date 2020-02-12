@@ -18,26 +18,31 @@ storiesOf("Molecules", module)
         );
         const tabs = [
             {
+                id: "search",
                 text: "Search",
                 icon: "search",
                 disabled: true
             },
             {
+                id: "scan",
                 text: "Scan",
                 icon: "qr",
                 disabled: true
             },
             {
+                id: "orders",
                 text: "Orders",
                 icon: "inbox-alt",
                 disabled: false
             },
             {
+                id: "alerts",
                 text: "Alerts",
                 icon: "bell",
                 disabled: false
             },
             {
+                id: "user",
                 text: "User",
                 icon: "user",
                 disabled: false
@@ -45,13 +50,17 @@ storiesOf("Molecules", module)
         ];
 
         const navigation = {
-            navigate: () => alert("we are going to the next route"),
-            state: { index: selectedIndex }
+            navigate: () => alert("we are going to the next route")
+        };
+
+        const state = {
+            index: selectedIndex,
+            routeNames: ["search", "scan", "orders", "alerts", "user"]
         };
 
         return (
             <View style={{ flex: 1, justifyContent: "flex-end" }}>
-                <Tabs navigation={navigation} tabs={tabs} />
+                <Tabs navigation={navigation} state={state} tabs={tabs} />
             </View>
         );
     });

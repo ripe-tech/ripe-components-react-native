@@ -17,7 +17,6 @@ export class ButtonTab extends PureComponent {
             icon: PropTypes.string.isRequired,
             selected: PropTypes.bool,
             disabled: PropTypes.bool,
-            width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             style: ViewPropTypes.style,
             onPress: PropTypes.func
         };
@@ -28,15 +27,10 @@ export class ButtonTab extends PureComponent {
             text: undefined,
             selected: false,
             disabled: false,
-            width: "100%",
             style: {},
             onPress: () => {}
         };
     }
-
-    _containerStyles = () => {
-        return [styles.container, { width: this.props.width }];
-    };
 
     _iconColor = () => {
         return this.props.selected || this.state.pressed ? "#1d2631" : "#a6adb4";
@@ -66,9 +60,9 @@ export class ButtonTab extends PureComponent {
                 onPressIn={this._onPressIn}
                 onPressOut={this._onPressOut}
             >
-                <View style={this._containerStyles()}>
+                <View style={styles.container}>
                     {this.props.icon ? (
-                        <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2} />
+                        <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
                     ) : null}
                     {this.props.text ? (
                         <Text style={this._labelStyles()}>{this.props.text}</Text>
@@ -81,6 +75,7 @@ export class ButtonTab extends PureComponent {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         alignItems: "center",
         borderRadius: 4,
         paddingTop: 10,
