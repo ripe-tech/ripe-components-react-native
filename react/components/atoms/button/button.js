@@ -38,15 +38,12 @@ export class Button extends PureComponent {
     }
 
     _style = () => {
-        const { style, width } = this.props;
         const base = Object.assign({}, styles.root);
-        if (width) base.width = width;
-        return [base, style];
+        if (this.props.width) base.width = this.props.width;
+        return [base, this.props.style];
     };
 
     render() {
-        const { icon, text } = this.props;
-
         return (
             <TouchableOpacity
                 activeOpacity={0.8}
@@ -61,15 +58,15 @@ export class Button extends PureComponent {
                     useAngle={true}
                     style={styles.container}
                 >
-                    {icon ? (
+                    {this.props.icon ? (
                         <Icon
-                            icon={icon}
+                            icon={this.props.icon}
                             color="#ffffff"
                             style={styles.icon}
                             strokeWidth={this.props.iconStrokeWidth}
                         />
                     ) : null}
-                    <Text style={styles.text}>{text}</Text>
+                    <Text style={styles.text}>{this.props.text}</Text>
                 </LinearGradient>
             </TouchableOpacity>
         );

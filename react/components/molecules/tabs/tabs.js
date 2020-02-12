@@ -35,10 +35,9 @@ export class Tabs extends PureComponent {
     };
 
     render() {
-        const { tabs } = this.props;
         return (
             <SafeAreaView style={styles.root}>
-                {tabs.map(tab => (
+                {this.props.tabs.map(tab => (
                     <ButtonTab
                         key={tab.text}
                         text={tab.text}
