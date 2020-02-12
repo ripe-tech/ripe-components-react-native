@@ -14,7 +14,7 @@ export class ButtonTab extends PureComponent {
     static get propTypes() {
         return {
             text: PropTypes.string,
-            icon: PropTypes.string.isRequired,
+            icon: PropTypes.string,
             selected: PropTypes.bool,
             disabled: PropTypes.bool,
             style: ViewPropTypes.style,
