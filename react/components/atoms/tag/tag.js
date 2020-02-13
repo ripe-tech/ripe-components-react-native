@@ -24,7 +24,7 @@ export class Tag extends PureComponent {
         return {
             color: "#57626e",
             backgroundColor: "#eceef1",
-            borderColor: "red",
+            borderColor: undefined,
             text: undefined,
             icon: undefined,
             iconWidth: undefined,
@@ -36,7 +36,9 @@ export class Tag extends PureComponent {
     _style = () => {
         return Object.assign({}, styles.style, {
             backgroundColor: this.props.backgroundColor,
-            borderColor: this.props.borderColor
+            borderColor: this.props.borderColor,
+            borderWidth: this.props.borderColor ? 1 : 0,
+            borderRadius: this.props.borderColor ? 6 : 0
         });
     };
 
@@ -71,10 +73,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         paddingVertical: 6,
-        paddingHorizontal: 12,
-        borderRadius: 6,
-        borderColor: "red",
-        borderWidth: 0
+        paddingHorizontal: 12
     },
     text: {
         fontFamily: baseStyles.FONT_REGULAR,
