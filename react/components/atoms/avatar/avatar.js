@@ -7,12 +7,14 @@ export class Avatar extends PureComponent {
     static get propTypes() {
         return {
             image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
+            resizeMode: PropTypes.string,
             style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
+            resizeMode: "contain",
             style: {}
         };
     }
@@ -22,8 +24,13 @@ export class Avatar extends PureComponent {
     };
 
     render() {
-        const { image } = this.props;
-        return <Image source={image} style={this._imageStyles()} resizeMode={"contain"} />;
+        return (
+            <Image
+                source={this.props.image}
+                style={this._imageStyles()}
+                resizeMode={this.props.resizeMode}
+            />
+        );
     }
 }
 
