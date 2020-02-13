@@ -9,8 +9,9 @@ storiesOf("Atoms", module)
     .add("Avatar", () => {
         return (
             <Avatar
-                image={{ uri: "https://semantic-ui.com/images/avatar2/large/matthew.png" }}
-                style={{ width: 40, height: 40, borderRadius: 20 }}
+                image={{
+                    uri: "https://id.platforme.com/admin/accounts/v-fl%40platforme.com/avatar"
+                }}
             />
         );
     });

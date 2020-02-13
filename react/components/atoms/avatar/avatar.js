@@ -6,15 +6,14 @@ import PropTypes from "prop-types";
 export class Avatar extends PureComponent {
     static get propTypes() {
         return {
-            image: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.object.isRequired])
-                .isRequired,
+            image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
             style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
-            style: []
+            style: {}
         };
     }
 
@@ -29,5 +28,9 @@ export class Avatar extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    image: {}
+    image: {
+        width: 40,
+        height: 40,
+        borderRadius: 20
+    }
 });

@@ -31,7 +31,7 @@ export class Button extends PureComponent {
             gradientAngle: 62,
             gradientLocations: [0.4, 0.84],
             gradientColors: ["#4a6fe9", "#6687f6"],
-            width: undefined,
+            width: "100%",
             style: {},
             onPress: () => {}
         };
