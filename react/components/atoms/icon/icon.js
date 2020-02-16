@@ -15,6 +15,8 @@ import mute from "../../../assets/icons/mute.svg";
 import volumeLoud from "../../../assets/icons/volume-loud.svg";
 import bolt from "../../../assets/icons/bolt.svg";
 import chatAlt from "../../../assets/icons/chat-alt.svg";
+import arrowLeft from "../../../assets/icons/arrow-left.svg";
+import clipboard from "../../../assets/icons/clipboard.svg";
 
 export class Icon extends PureComponent {
     static get propTypes() {
@@ -67,6 +69,10 @@ export class Icon extends PureComponent {
                 return bolt;
             case "chat-alt":
                 return chatAlt;
+            case "arrow-left":
+                return arrowLeft;
+            case "clipboard":
+                return clipboard;
             default:
                 throw new Error(`Unknown icon ${this.props.icon}`);
         }
