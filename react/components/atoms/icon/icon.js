@@ -2,21 +2,8 @@ import React, { PureComponent } from "react";
 import { ViewPropTypes } from "react-native";
 import { SvgXml } from "react-native-svg";
 import PropTypes from "prop-types";
-import add from "../../../assets/icons/add.svg";
-import chevronLeft from "../../../assets/icons/chevron-left.svg";
 
-import search from "../../../assets/icons/search.svg";
-import qr from "../../../assets/icons/qr.svg";
-import inboxAlt from "../../../assets/icons/inbox-alt.svg";
-import id from "../../../assets/icons/id.svg";
-import bell from "../../../assets/icons/bell.svg";
-import user from "../../../assets/icons/user.svg";
-import mute from "../../../assets/icons/mute.svg";
-import volumeLoud from "../../../assets/icons/volume-loud.svg";
-import bolt from "../../../assets/icons/bolt.svg";
-import chatAlt from "../../../assets/icons/chat-alt.svg";
-import arrowLeft from "../../../assets/icons/arrow-left.svg";
-import clipboard from "../../../assets/icons/clipboard.svg";
+import icons from "../../../assets/icons/";
 
 export class Icon extends PureComponent {
     static get propTypes() {
@@ -44,38 +31,8 @@ export class Icon extends PureComponent {
     }
 
     _icon() {
-        switch (this.props.icon) {
-            case "add":
-                return add;
-            case "chevron-left":
-                return chevronLeft;
-            case "search":
-                return search;
-            case "qr":
-                return qr;
-            case "inbox-alt":
-                return inboxAlt;
-            case "id":
-                return id;
-            case "bell":
-                return bell;
-            case "user":
-                return user;
-            case "mute":
-                return mute;
-            case "volume-loud":
-                return volumeLoud;
-            case "bolt":
-                return bolt;
-            case "chat-alt":
-                return chatAlt;
-            case "arrow-left":
-                return arrowLeft;
-            case "clipboard":
-                return clipboard;
-            default:
-                throw new Error(`Unknown icon ${this.props.icon}`);
-        }
+        if (icons[this.props.icon]) return icons[this.props.icon];
+        throw new Error(`Unknown icon ${this.props.icon}`);
     }
 
     render() {
