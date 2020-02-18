@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, ViewPropTypes, Platform } from "rea
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
-import * as baseStyles from "../../../util/styles";
+import { baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
 

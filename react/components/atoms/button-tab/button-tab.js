@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, View, Text, TouchableWithoutFeedback, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import * as baseStyles from "../../../util/styles";
+import { baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
 
