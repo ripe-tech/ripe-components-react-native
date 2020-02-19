@@ -21,6 +21,7 @@ export class Button extends PureComponent {
             text: PropTypes.string.isRequired,
             icon: PropTypes.string,
             loading: PropTypes.bool,
+            disabled: PropTypes.bool,
             iconStrokeWidth: PropTypes.number,
             gradientAngle: PropTypes.number,
             gradientColors: PropTypes.arrayOf(PropTypes.string),
@@ -37,6 +38,7 @@ export class Button extends PureComponent {
         return {
             icon: undefined,
             loading: false,
+            disabled: false,
             iconStrokeWidth: undefined,
             gradientAngle: 62,
             gradientLocations: [0.4, 0.84],
@@ -48,9 +50,9 @@ export class Button extends PureComponent {
     }
 
     _style = () => {
-        const base = Object.assign({}, styles.root);
+        const base = Object.assign({}, styles.button);
         if (this.props.width) base.width = this.props.width;
-        return [base, this.props.style];
+        return [base, this.props.style, this.props.disabled ? styles.buttonDisabled : {}];
     };
 
     _renderLoading() {
@@ -59,7 +61,7 @@ export class Button extends PureComponent {
 
     _renderNormal() {
         return (
-            <View>
+            <View style={styles.container}>
                 {this.props.icon ? (
                     <Icon
                         icon={this.props.icon}
@@ -96,9 +98,9 @@ export class Button extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    button: {
-        flex: 1,
-        alignSelf: "flex-start"
+    button: {},
+    buttonDisabled: {
+        opacity: 0.3
     },
     container: {
         borderRadius: 6,
