@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
+import { StyleSheet, ViewPropTypes, Platform, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -16,6 +16,8 @@ export class Tag extends PureComponent {
             icon: PropTypes.string,
             iconWidth: PropTypes.number,
             iconHeight: PropTypes.number,
+            style: ViewPropTypes.style,
+            textStyle: ViewPropTypes.style,
             onPress: PropTypes.func
         };
     }
@@ -29,29 +31,43 @@ export class Tag extends PureComponent {
             icon: undefined,
             iconWidth: undefined,
             iconHeight: undefined,
-            onPress: () => {}
+            style: {},
+            textStyle: {},
+            onPress: undefined
         };
     }
 
     _style = () => {
-        return Object.assign({}, styles.style, {
-            backgroundColor: this.props.backgroundColor,
-            borderColor: this.props.borderColor,
-            borderWidth: this.props.borderColor ? 1 : 0,
-            borderRadius: this.props.borderColor ? 6 : 0
-        });
+        return [
+            styles.tag,
+            {
+                backgroundColor: this.props.backgroundColor,
+                borderColor: this.props.borderColor,
+                borderWidth: this.props.borderColor ? 1 : 0,
+                borderRadius: this.props.borderColor ? 6 : 0
+            },
+            this.props.style
+        ];
     };
 
     _textStyle = () => {
-        return Object.assign({}, styles.text, {
-            color: this.props.color,
-            marginLeft: this.props.icon ? 8 : undefined
-        });
+        return [
+            styles.text,
+            {
+                color: this.props.color,
+                marginLeft: this.props.icon ? 8 : undefined
+            },
+            this.props.textStyle
+        ];
     };
 
     render() {
         return (
-            <TouchableOpacity style={this._style()} onPress={this.props.onPress}>
+            <TouchableOpacity
+                style={this._style()}
+                onPress={this.props.onPress}
+                disabled={!this.props.onPress}
+            >
                 {this.props.icon ? (
                     <Icon
                         icon={this.props.icon}
@@ -67,7 +83,7 @@ export class Tag extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    style: {
+    tag: {
         alignSelf: "flex-start",
         flexDirection: "row",
         alignItems: "center",
