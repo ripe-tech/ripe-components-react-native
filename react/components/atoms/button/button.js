@@ -1,5 +1,13 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity, ViewPropTypes, Platform } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    ActivityIndicator,
+    ViewPropTypes,
+    Platform,
+    View
+} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
@@ -12,6 +20,7 @@ export class Button extends PureComponent {
         return {
             text: PropTypes.string.isRequired,
             icon: PropTypes.string,
+            loading: PropTypes.bool,
             iconStrokeWidth: PropTypes.number,
             gradientAngle: PropTypes.number,
             gradientColors: PropTypes.arrayOf(PropTypes.string),
@@ -27,6 +36,7 @@ export class Button extends PureComponent {
     static get defaultProps() {
         return {
             icon: undefined,
+            loading: true,
             iconStrokeWidth: undefined,
             gradientAngle: 62,
             gradientLocations: [0.4, 0.84],
@@ -43,6 +53,26 @@ export class Button extends PureComponent {
         return [base, this.props.style];
     };
 
+    _renderLoading() {
+        return <ActivityIndicator color="#ffffff" />;
+    }
+
+    _renderNormal() {
+        return (
+            <View>
+                {this.props.icon ? (
+                    <Icon
+                        icon={this.props.icon}
+                        color="#ffffff"
+                        style={styles.icon}
+                        strokeWidth={this.props.iconStrokeWidth}
+                    />
+                ) : null}
+                <Text style={styles.text}>{this.props.text}</Text>
+            </View>
+        );
+    }
+
     render() {
         return (
             <TouchableOpacity
@@ -58,15 +88,7 @@ export class Button extends PureComponent {
                     useAngle={true}
                     style={styles.container}
                 >
-                    {this.props.icon ? (
-                        <Icon
-                            icon={this.props.icon}
-                            color="#ffffff"
-                            style={styles.icon}
-                            strokeWidth={this.props.iconStrokeWidth}
-                        />
-                    ) : null}
-                    <Text style={styles.text}>{this.props.text}</Text>
+                    {this.props.loading ? this._renderLoading() : this._renderNormal()}
                 </LinearGradient>
             </TouchableOpacity>
         );
