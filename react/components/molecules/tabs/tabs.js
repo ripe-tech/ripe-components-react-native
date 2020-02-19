@@ -14,7 +14,8 @@ export class Tabs extends PureComponent {
                     text: PropTypes.string,
                     icon: PropTypes.string.isRequired,
                     selected: PropTypes.bool,
-                    disabled: PropTypes.bool
+                    disabled: PropTypes.bool,
+                    hidden: PropTypes.bool
                 })
             )
         };
@@ -37,16 +38,18 @@ export class Tabs extends PureComponent {
     render() {
         return (
             <SafeAreaView style={styles.root}>
-                {this.props.tabs.map(tab => (
-                    <ButtonTab
-                        key={tab.text}
-                        text={tab.text}
-                        disabled={tab.disabled}
-                        icon={tab.icon}
-                        onPress={() => this.onPressTab(tab.id)}
-                        selected={this._isSelected(tab.id)}
-                    />
-                ))}
+                {this.props.tabs.map(tab =>
+                    !tab.hidden ? (
+                        <ButtonTab
+                            key={tab.text}
+                            text={tab.text}
+                            disabled={tab.disabled}
+                            icon={tab.icon}
+                            onPress={() => this.onPressTab(tab.id)}
+                            selected={this._isSelected(tab.id)}
+                        />
+                    ) : null
+                )}
             </SafeAreaView>
         );
     }
