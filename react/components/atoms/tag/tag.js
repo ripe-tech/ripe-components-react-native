@@ -81,3 +81,5 @@ const styles = StyleSheet.create({
         marginTop: Platform.OS === "ios" ? 2 : 0
     }
 });
+
+export default Tag;

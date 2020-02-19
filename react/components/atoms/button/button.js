@@ -118,3 +118,5 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.FONT_BOOK
     }
 });
+
+export default Button;

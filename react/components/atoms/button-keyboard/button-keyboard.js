@@ -95,3 +95,5 @@ const styles = StyleSheet.create({
         marginTop: Platform.OS === "ios" ? 4 : 0
     }
 });
+
+export default ButtonKeyboard;

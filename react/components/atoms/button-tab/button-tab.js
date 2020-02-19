@@ -93,3 +93,5 @@ const styles = StyleSheet.create({
         color: "#1d2631"
     }
 });
+
+export default ButtonTab;
