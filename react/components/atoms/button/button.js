@@ -36,7 +36,7 @@ export class Button extends PureComponent {
     static get defaultProps() {
         return {
             icon: undefined,
-            loading: true,
+            loading: false,
             iconStrokeWidth: undefined,
             gradientAngle: 62,
             gradientLocations: [0.4, 0.84],
