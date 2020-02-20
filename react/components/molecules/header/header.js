@@ -12,17 +12,18 @@ export class Header extends PureComponent {
         return {
             title: PropTypes.string,
             navigation: PropTypes.object,
-            onButtonLeftPress: PropTypes.func,
             buttonLeftIcon: PropTypes.string,
             buttonLeftVisible: PropTypes.bool,
-            onButtonRightPress: PropTypes.func,
             buttonRightIcon: PropTypes.string,
+            buttonRightVisible: PropTypes.string,
             hitSlop: PropTypes.shape({
                 top: PropTypes.number.isRequired,
                 left: PropTypes.number.isRequired,
                 right: PropTypes.number.isRequired,
                 bottom: PropTypes.number.isRequired
-            })
+            }),
+            onButtonLeftPress: PropTypes.func,
+            onButtonRightPress: PropTypes.func
         };
     }
 
@@ -30,12 +31,13 @@ export class Header extends PureComponent {
         return {
             title: undefined,
             navigation: undefined,
-            onButtonLeftPress: undefined,
             buttonLeftIcon: "arrow-left",
             buttonLeftVisible: true,
-            onButtonRightPress: () => {},
             buttonRightIcon: undefined,
-            hitSlop: { top: 20, left: 20, right: 20, bottom: 20 }
+            buttonRightVisible: false,
+            hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
+            onButtonLeftPress: undefined,
+            onButtonRightPress: undefined
         };
     }
 
@@ -44,7 +46,7 @@ export class Header extends PureComponent {
     render() {
         return (
             <SafeAreaView style={styles.header}>
-                {this.props.buttonLeftVisible ? (
+                {this.props.buttonLeftVisible && this.props.buttonLeftIcon ? (
                     <TouchableOpacity
                         hitSlop={this.props.hitSlop}
                         onPress={
@@ -64,10 +66,12 @@ export class Header extends PureComponent {
                     </TouchableOpacity>
                 ) : null}
                 {this.props.title ? <Text style={styles.title}>{this.props.title}</Text> : null}
-                {this.props.buttonRightIcon ? (
+                {this.props.buttonRightVisible && this.props.buttonRightIcon ? (
                     <TouchableOpacity
                         hitSlop={this.props.hitSlop}
-                        onPress={this.props.onButtonRightPress}
+                        onPress={
+                            this.props.onButtonRightPress ? this.props.onButtonRightPress : () => {}
+                        }
                         style={styles.containerButtonRight}
                     >
                         <Icon

@@ -34,8 +34,7 @@ export class ButtonKeyboard extends PureComponent {
     };
 
     _style = () => {
-        const base = [styles.style];
-
+        const base = [styles.buttonKeyboard];
         switch (this.props.variant) {
             case "clean":
                 base.push(styles.cleanStyle);
@@ -63,7 +62,7 @@ export class ButtonKeyboard extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    style: {
+    buttonKeyboard: {
         flex: 1,
         maxHeight: 54,
         marginHorizontal: 2,
