@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ViewPropTypes } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import PropTypes from "prop-types";
 
@@ -17,13 +17,15 @@ export class Tabs extends PureComponent {
                     disabled: PropTypes.bool,
                     hidden: PropTypes.bool
                 })
-            )
+            ),
+            style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
-            tabs: []
+            tabs: [],
+            style: {}
         };
     }
 
@@ -35,9 +37,13 @@ export class Tabs extends PureComponent {
         return this.props.state.routeNames[this.props.state.index] === id;
     };
 
+    _style = () => {
+        return [styles.tabs, this.props.style];
+    };
+
     render() {
         return (
-            <SafeAreaView style={styles.root}>
+            <SafeAreaView style={this._style()}>
                 {this.props.tabs.map(tab =>
                     !tab.hidden ? (
                         <ButtonTab
@@ -56,7 +62,7 @@ export class Tabs extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    root: {
+    tabs: {
         paddingTop: 0,
         backgroundColor: "#ffffff",
         flexDirection: "row"
