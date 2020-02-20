@@ -24,7 +24,11 @@ export class Avatar extends PureComponent {
     _imageStyles = () => {
         return [
             this.props.style,
-            { width: this.props.size, height: this.props.size, borderRadius: this.props.size / 2 }
+            {
+                width: this.props.size,
+                height: this.props.size,
+                borderRadius: this.props.size
+            }
         ];
     };
 
