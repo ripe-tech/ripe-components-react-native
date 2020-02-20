@@ -9,6 +9,5 @@ storiesOf("Atoms", module)
     .add("Key Value", () => {
         const key = text("Key", "Key");
         const value = text("Value", "Value");
-
         return <KeyValue _key={key} value={value} />;
     });

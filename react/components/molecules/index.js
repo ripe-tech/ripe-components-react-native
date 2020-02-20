@@ -1,4 +1,4 @@
 export * from "./key-values";
 export * from "./keyboard-numeric";
-export * from "./label-view";
+export * from "./section-view";
 export * from "./tabs";

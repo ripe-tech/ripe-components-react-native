@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
 
-export class LabelView extends PureComponent {
+export class SectionView extends PureComponent {
     static get propTypes() {
         return {
             text: PropTypes.string.isRequired
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LabelView;
+export default SectionView;

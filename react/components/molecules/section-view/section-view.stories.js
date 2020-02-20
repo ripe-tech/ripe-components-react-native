@@ -3,16 +3,16 @@ import { Text } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text } from "@storybook/addon-knobs";
 
-import { LabelView } from "./label-view";
+import { SectionView } from "./section-view";
 
 storiesOf("Molecules", module)
     .addDecorator(withKnobs)
-    .add("Label View", () => {
+    .add("Section View", () => {
         const _text = text("Text", "Label");
         return (
-            <LabelView text={_text}>
+            <SectionView text={_text}>
                 <Text>Some</Text>
                 <Text>Content</Text>
-            </LabelView>
+            </SectionView>
         );
     });

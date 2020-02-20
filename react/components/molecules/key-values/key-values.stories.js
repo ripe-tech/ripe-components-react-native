@@ -14,6 +14,5 @@ storiesOf("Molecules", module)
             { key: "Birth date", value: "14/03/1993" },
             { key: "Nationality", value: "Portuguese" }
         ];
-
         return <KeyValues items={items} />;
     });
