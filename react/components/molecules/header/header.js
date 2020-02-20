@@ -36,7 +36,7 @@ export class Header extends PureComponent {
             buttonLeftVisible: true,
             onButtonRightPress: () => {},
             buttonRightIcon: undefined,
-            hitSlop: { top: 10, left: 10, right: 10, bottom: 10 }
+            hitSlop: { top: 20, left: 20, right: 20, bottom: 20 }
         };
     }
 
