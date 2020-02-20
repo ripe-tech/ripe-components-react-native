@@ -1,12 +1,11 @@
 import React, { PureComponent } from "react";
 import { Platform, StyleSheet, TouchableOpacity, Text } from "react-native";
+import PropTypes from "prop-types";
 import SafeAreaView from "react-native-safe-area-view";
 
 import { baseStyles } from "../../../util";
 
 import { Icon } from "../../atoms";
-
-import PropTypes from "prop-types";
 
 export class Header extends PureComponent {
     static get propTypes() {
