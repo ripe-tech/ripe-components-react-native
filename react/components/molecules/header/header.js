@@ -15,7 +15,7 @@ export class Header extends PureComponent {
             buttonLeftIcon: PropTypes.string,
             buttonLeftVisible: PropTypes.bool,
             buttonRightIcon: PropTypes.string,
-            buttonRightVisible: PropTypes.string,
+            buttonRightVisible: PropTypes.bool,
             hitSlop: PropTypes.shape({
                 top: PropTypes.number.isRequired,
                 left: PropTypes.number.isRequired,
