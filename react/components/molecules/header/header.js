@@ -44,7 +44,7 @@ export class Header extends PureComponent {
 
     render() {
         return (
-            <SafeAreaView style={styles.root}>
+            <SafeAreaView style={styles.header}>
                 {this.props.buttonLeftVisible ? (
                     <TouchableOpacity
                         hitSlop={this.props.hitSlop}
@@ -86,7 +86,7 @@ export class Header extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    root: {
+    header: {
         backgroundColor: "#f5f7f9",
         borderBottomColor: "#e4e8f0",
         borderBottomWidth: 1,
