@@ -5,3 +5,4 @@ export * from "./button-tab";
 export * from "./key-value";
 export * from "./icon";
 export * from "./tag";
+export * from "./container-swipeable";
