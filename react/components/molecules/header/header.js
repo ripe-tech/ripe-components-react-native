@@ -106,11 +106,13 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     containerButtonLeft: {
+        zIndex: 1,
         position: "absolute",
         top: 18,
         left: 10
     },
     containerButtonRight: {
+        zIndex: 1,
         position: "absolute",
         top: 18,
         right: 10
