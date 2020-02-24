@@ -49,7 +49,7 @@ export class KeyValue extends PureComponent {
                         iconWidth={this.props.iconWidth}
                         size={this.props.iconSize}
                         iconStrokeWidth={this.props.iconStrokeWidth}
-                        iconOnPress={this.props.iconOnPress}
+                        onPress={this.props.iconOnPress}
                     />
                 ) : null}
             </View>

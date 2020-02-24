@@ -31,7 +31,7 @@ storiesOf("Atoms", module)
                 iconHeight={iconHeight}
                 iconWidth={iconWidth}
                 iconStrokeWidth={iconStrokeWidth}
-                iconOnPress={() => alert("Thanks for the press!")}
+                onPress={() => alert("Thanks for the press!")}
             />
         );
     });
