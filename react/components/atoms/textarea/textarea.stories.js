@@ -2,12 +2,12 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs } from "@storybook/addon-knobs";
 
-import { Textarea } from "../../";
+import { TextArea } from "../../";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Textarea", () => {
         return (
-            <Textarea />
+            <TextArea />
         );
     });

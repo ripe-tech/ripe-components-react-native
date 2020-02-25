@@ -3,7 +3,7 @@ import {Text} from "react-native";
 
 import PropTypes from "prop-types";
 
-export class Textarea extends PureComponent {
+export class TextArea extends PureComponent {
     static get propTypes() {
         return {};
     }
@@ -23,4 +23,4 @@ export class Textarea extends PureComponent {
     }
 }
 
-export default Textarea;
+export default TextArea;
