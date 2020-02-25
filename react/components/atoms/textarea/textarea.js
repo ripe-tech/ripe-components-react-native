@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, Text } from "react-native";
+import { ViewPropTypes, TextInput } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -35,7 +35,11 @@ export class TextArea extends PureComponent {
     };
 
     render() {
-        return <Text>{this.test()}</Text>;
+        return (
+            <TextInput placeholder={this.props.placeholder} multiline={this.props.multiline}>
+                {this.props.value}
+            </TextInput>
+        );
     }
 }
 
