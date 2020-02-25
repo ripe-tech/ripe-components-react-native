@@ -1,24 +1,24 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, Text as RNText } from "react-native";
-
-import PropTypes from "prop-types";
+import { StyleSheet, Text as RNText } from "react-native";
 
 export class Text extends PureComponent {
-    static get propTypes() {
-        return {};
-    }
-
-    static get defaultProps() {
-        return {};
-    }
-
-    _style = () => {
-        return {};
-    };
-
     render() {
-        return <RNText>Hi! I'm Text</RNText>;
+        return (
+            <RNText style={styles.text}>
+                Experience is the teacher of all things is the teacher of all things, experience is
+                the teacher of teacher all things is the teacher of all things.
+            </RNText>
+        );
     }
 }
+
+const styles = StyleSheet.create({
+    text: {
+        fontFamily: "Soleil",
+        fontSize: 14,
+        lineHeight: 22,
+        color: "#3e566a"
+    }
+});
 
 export default Text;
