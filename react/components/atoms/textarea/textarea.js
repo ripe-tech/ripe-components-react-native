@@ -26,10 +26,6 @@ export class TextArea extends PureComponent {
         };
     }
 
-    test = () => {
-        return `${this.props.value}\n${this.props.placeholder}\n${this.props.multiline}\n${this.props.minHeight}`;
-    };
-
     _style = () => {
         return [];
     };
