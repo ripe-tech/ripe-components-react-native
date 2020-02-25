@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -23,8 +23,16 @@ export class Link extends PureComponent {
     };
 
     render() {
-        return <Text>{this.props.text ? this.props.text : this.props.url}</Text>;
+        return (
+            <Text style={styles.text}>{this.props.text ? this.props.text : this.props.url}</Text>
+        );
     }
 }
+
+const styles = StyleSheet.create({
+    text: {
+        //TODO
+    }
+});
 
 export default Link;
