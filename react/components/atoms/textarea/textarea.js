@@ -9,10 +9,7 @@ export class TextArea extends PureComponent {
             value: PropTypes.string,
             placeholder: PropTypes.string,
             multiline: PropTypes.bool,
-            minHeight: PropTypes.oneOfType([
-                PropTypes.string,
-                PropTypes.number,
-            ]),
+            minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onValue: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -30,17 +27,15 @@ export class TextArea extends PureComponent {
     }
 
     test = () => {
-        return `${this.props.value}\n${this.props.placeholder}\n${this.props.multiline}\n${this.props.minHeight}`
-    }
+        return `${this.props.value}\n${this.props.placeholder}\n${this.props.multiline}\n${this.props.minHeight}`;
+    };
 
     _style = () => {
         return [];
     };
 
     render() {
-        return (
-        <Text>{this.test()}</Text>
-        );
+        return <Text>{this.test()}</Text>;
     }
 }
 
