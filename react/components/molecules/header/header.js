@@ -41,7 +41,8 @@ export class Header extends PureComponent {
         };
     }
 
-    goBack = () => this.props.navigation &&  this.props.navigation.canGoBack() && this.props.navigation.pop(1);
+    goBack = () =>
+        this.props.navigation && this.props.navigation.canGoBack() && this.props.navigation.pop(1);
 
     render() {
         return (
