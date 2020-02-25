@@ -23,7 +23,7 @@ export class Link extends PureComponent {
     };
 
     render() {
-        return <Text>{this.teste()}</Text>;
+        return <Text>{this.props.text ? this.props.text : this.props.url}</Text>;
     }
 }
 
