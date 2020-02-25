@@ -36,7 +36,11 @@ export class TextArea extends PureComponent {
 
     render() {
         return (
-            <TextInput placeholder={this.props.placeholder} multiline={this.props.multiline}>
+            <TextInput
+                placeholder={this.props.placeholder}
+                multiline={this.props.multiline}
+                onChangeText={this.props.onValue}
+            >
                 {this.props.value}
             </TextInput>
         );

@@ -7,6 +7,9 @@ import { TextArea } from "../../";
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Textarea", () => {
+        const onValue = value => {
+            console.log("[TextArea]", "onValue", value);
+        };
         const value = text("Value", undefined);
         const placeholder = text("Placeholder", "Placeholder example");
         const multiline = boolean("Multiline", false);
@@ -17,6 +20,7 @@ storiesOf("Atoms", module)
                 placeholder={placeholder}
                 multiline={multiline}
                 minHeight={minHeight}
+                onValue={onValue}
             />
         );
     });
