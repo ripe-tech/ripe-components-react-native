@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, Text } from "react-native";
+import { ViewPropTypes, View, Text } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -23,7 +23,21 @@ export class Container extends PureComponent {
     }
 
     _style = () => {
-        return [{}, this.props.style];
+        return [
+            {
+                backgroundColor: "#ffffff",
+                borderRadius: 6,
+                //TODO maybe improve shadow box ?
+                shadowOffset: {
+                    width: 0,
+                    height: 5
+                },
+                shadowRadius: 5,
+                shadowColor: "#435664",
+                shadowOpacity: 0.3
+            },
+            this.props.style
+        ];
     };
 
     propsTest = () => {
@@ -31,7 +45,11 @@ export class Container extends PureComponent {
     };
 
     render() {
-        return <Text>{this.propsTest()}</Text>;
+        return (
+            <View style={this._style()}>
+                <Text>{this.propsTest()}</Text>
+            </View>
+        );
     }
 }
 
