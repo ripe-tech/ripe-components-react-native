@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, TextInput } from "react-native";
+import { StyleSheet, ViewPropTypes, TextInput } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -10,6 +10,7 @@ export class TextArea extends PureComponent {
             placeholder: PropTypes.string,
             multiline: PropTypes.bool,
             minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onValue: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -21,23 +22,20 @@ export class TextArea extends PureComponent {
             placeholder: undefined,
             multiline: false,
             minHeight: undefined,
+            maxHeight: undefined,
             onValue: () => {},
             style: {}
         };
     }
 
     _style = () => {
-        const verticalPadding = this.props.multiline ? 20 : undefined;
-
         return [
+            styles.textArea,
             this.props.style,
             {
+                verticalPadding: this.props.multiline ? 20 : undefined,
                 minHeight: this.props.minHeight,
-                paddingStart: 15,
-                paddingEnd: 15,
-                paddingTop: verticalPadding,
-                paddingBottom: verticalPadding,
-                color: "#3e566a"
+                maxHeight: this.props.maxHeight
             }
         ];
     };
@@ -55,5 +53,13 @@ export class TextArea extends PureComponent {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    textArea: {
+        paddingLeft: 15,
+        paddingRight: 15,
+        color: "#3e566a"
+    }
+});
 
 export default TextArea;
