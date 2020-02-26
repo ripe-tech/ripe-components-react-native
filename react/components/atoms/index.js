@@ -7,3 +7,4 @@ export * from "./icon";
 export * from "./link";
 export * from "./tag";
 export * from "./text";
+export * from "./textarea";
