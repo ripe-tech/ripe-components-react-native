@@ -33,3 +33,8 @@ export const timeStringUTC = function(timestamp, separator = ":") {
 export const normalize = function(value) {
     return value.split("_").join(" ");
 };
+
+export const isImage = function(fileName) {
+    const regex = /\.(jpg|jpeg|png|gif)$/i;
+    return regex.test(fileName);
+};
