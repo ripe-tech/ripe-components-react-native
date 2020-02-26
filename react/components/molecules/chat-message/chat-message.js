@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 
 import PropTypes from "prop-types";
 
 import { isImage, dateString, timeString } from "../../../util";
 
-import { Avatar, Text, Icon, link } from "../../atoms";
+import { Avatar, Text, Icon, Link } from "../../atoms";
 
 export class ChatMessage extends PureComponent {
     constructor(props) {
@@ -43,6 +43,18 @@ export class ChatMessage extends PureComponent {
     }
 
     render() {
+        const fileAttachment = (name, url) => {
+            return (
+                <View>
+                    <Link text={name} url={url} />
+                </View>
+            );
+        };
+
+        const imageAttachment = imgPath => {
+            return <Image style={styles.attachedImage} source={{ uri: imgPath }} />;
+        };
+
         return (
             <View style={styles.chatMessage}>
                 <Avatar style={styles.avatar} image={{ uri: this.props.avatarUrl }} size={32} />
@@ -53,7 +65,9 @@ export class ChatMessage extends PureComponent {
                     </View>
                     <Text>{this.props.message}</Text>
                     {this.props.attachments.map(attachment => {
-                        return <Text>{attachment.name}</Text>;
+                        return isImage(attachment.name)
+                            ? imageAttachment(attachment.path)
+                            : fileAttachment(attachment.name, attachment.path);
                     })}
                 </View>
             </View>
@@ -83,6 +97,10 @@ const styles = StyleSheet.create({
     },
     date: {
         color: "#a4adb5"
+    },
+    attachedImage: {
+        width: "100%",
+        height: 180
     }
 });
 
