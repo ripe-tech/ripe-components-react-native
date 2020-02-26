@@ -1,8 +1,10 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, View, Text } from "react-native";
+import { ViewPropTypes, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
+
+import { Icon, /* Text */ } from "../../atoms";
 
 export class Container extends PureComponent {
     static get propTypes() {
@@ -30,6 +32,8 @@ export class Container extends PureComponent {
     }
 
     _style = () => {
+        //TODO use stylesheet to improve performance ?
+        //Check all the other components and fix them too
         return [
             {
                 backgroundColor: "#ffffff",
@@ -57,8 +61,8 @@ export class Container extends PureComponent {
                     useAngle={true}
                 >
                     <View>
-                        {/*                         <Icon icon="bolt" width={32} height={32} color="#00ff00" />
-                        <Text>TODO text here</Text>
+                        <Icon icon={this.props.headerIcon} width={24} height={24} color="#ffffff" />
+{/*                         <Text>TODO text here</Text>
                         <Text>TODO date here</Text> */}
                     </View>
                 </LinearGradient>
