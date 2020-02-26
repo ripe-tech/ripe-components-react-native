@@ -50,13 +50,12 @@ export class Button extends PureComponent {
     }
 
     _style = () => {
-        const base = Object.assign({}, styles.button);
-        if (this.props.width) base.width = this.props.width;
         return [
-            base,
+            styles.button,
             styles.container,
             this.props.style,
-            this.props.disabled ? styles.buttonDisabled : {}
+            this.props.disabled ? styles.buttonDisabled : {},
+            this.props.width ? { width: this.props.width } : {}
         ];
     };
 
