@@ -14,12 +14,14 @@ storiesOf("Atoms", module)
         const placeholder = text("Placeholder", "Placeholder example");
         const multiline = boolean("Multiline", false);
         const minHeight = number("Min Height", undefined);
+        const maxHeight = number("Max Height", undefined);
         return (
             <TextArea
                 value={value}
                 placeholder={placeholder}
                 multiline={multiline}
                 minHeight={minHeight}
+                maxHeight={maxHeight}
                 onValue={onValue}
             />
         );
