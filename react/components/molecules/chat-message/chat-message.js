@@ -43,15 +43,15 @@ export class ChatMessage extends PureComponent {
     }
 
     render() {
-        const fileAttachment = (name, url) => {
+        const attachedFile = (name, url) => {
             return (
-                <View>
+                <View style={styles.attachedFile}>
+                    <Icon style={styles.attachedFileIcon} icon="file" width={24} height={24} color="#1d2631" />
                     <Link text={name} url={url} />
                 </View>
             );
         };
-
-        const imageAttachment = imgPath => {
+        const attachedImage = imgPath => {
             return <Image style={styles.attachedImage} source={{ uri: imgPath }} />;
         };
 
@@ -64,10 +64,14 @@ export class ChatMessage extends PureComponent {
                         <Text style={styles.date}>{this.dateData}</Text>
                     </View>
                     <Text>{this.props.message}</Text>
-                    {this.props.attachments.map(attachment => {
-                        return isImage(attachment.name)
-                            ? imageAttachment(attachment.path)
-                            : fileAttachment(attachment.name, attachment.path);
+                    {this.props.attachments.map((attachment, index) => {
+                        return (
+                            <View style={styles.attachment} key={index}>
+                                {isImage(attachment.name)
+                                    ? attachedImage(attachment.path)
+                                    : attachedFile(attachment.name, attachment.path)}
+                            </View>
+                        );
                     })}
                 </View>
             </View>
@@ -97,6 +101,16 @@ const styles = StyleSheet.create({
     },
     date: {
         color: "#a4adb5"
+    },
+    attachment: {
+        marginTop: 10
+    },
+    attachedFile: {
+        flexDirection: "row",
+        alignItems: 'center'
+    },
+    attachedFileIcon: {
+        marginEnd: 5
     },
     attachedImage: {
         width: "100%",
