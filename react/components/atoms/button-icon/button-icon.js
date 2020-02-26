@@ -6,14 +6,14 @@ import { Icon } from "../../";
 export class ButtonIcon extends PureComponent {
     static get propTypes() {
         return {
+            icon: PropTypes.string.isRequired,
+            size: PropTypes.number.isRequired,
             backgroundColor: PropTypes.string,
             color: PropTypes.string,
-            icon: PropTypes.string.isRequired,
             iconHeight: PropTypes.number,
             iconWidth: PropTypes.number,
             iconStrokeWidth: PropTypes.number,
             onPress: PropTypes.func,
-            size: PropTypes.number.isRequired,
             style: ViewPropTypes.style
         };
     }

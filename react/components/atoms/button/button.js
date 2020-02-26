@@ -53,9 +53,9 @@ export class Button extends PureComponent {
         return [
             styles.button,
             styles.container,
-            this.props.style,
+            { width: this.props.width },
             this.props.disabled ? styles.buttonDisabled : {},
-            this.props.width ? { width: this.props.width } : {}
+            this.props.style
         ];
     };
 

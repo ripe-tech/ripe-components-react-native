@@ -31,12 +31,12 @@ export class TextArea extends PureComponent {
     _style = () => {
         return [
             styles.textArea,
-            this.props.style,
             {
                 verticalPadding: this.props.multiline ? 20 : undefined,
                 minHeight: this.props.minHeight,
                 maxHeight: this.props.maxHeight
-            }
+            },
+            this.props.style
         ];
     };
 
