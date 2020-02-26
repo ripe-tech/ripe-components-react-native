@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, Linking } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -18,20 +18,25 @@ export class Link extends PureComponent {
         };
     }
 
-    teste = () => {
-        return `${this.props.text} - ${this.props.url}`;
+    onLinkPress = () => {
+        Linking.openURL(this.props.url);
     };
 
     render() {
         return (
-            <Text style={styles.text}>{this.props.text ? this.props.text : this.props.url}</Text>
+            <TouchableOpacity activeOpacity={0.4} onPress={() => this.onLinkPress()}>
+                <Text style={styles.text}>
+                    {this.props.text ? this.props.text : this.props.url}
+                </Text>
+            </TouchableOpacity>
         );
     }
 }
 
 const styles = StyleSheet.create({
     text: {
-        //TODO
+        color: "#1d2631",
+        textDecorationLine: "underline"
     }
 });
 
