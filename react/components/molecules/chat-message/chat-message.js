@@ -46,7 +46,13 @@ export class ChatMessage extends PureComponent {
         const attachedFile = (name, url) => {
             return (
                 <View style={styles.attachedFile}>
-                    <Icon style={styles.attachedFileIcon} icon="file" width={24} height={24} color="#1d2631" />
+                    <Icon
+                        style={styles.attachedFileIcon}
+                        icon="file"
+                        width={24}
+                        height={24}
+                        color="#1d2631"
+                    />
                     <Link text={name} url={url} />
                 </View>
             );
@@ -107,7 +113,7 @@ const styles = StyleSheet.create({
     },
     attachedFile: {
         flexDirection: "row",
-        alignItems: 'center'
+        alignItems: "center"
     },
     attachedFileIcon: {
         marginEnd: 5
