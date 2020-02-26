@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, View } from "react-native";
+import { ViewPropTypes, View, Text } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
 
@@ -9,6 +10,9 @@ export class Container extends PureComponent {
             header: PropTypes.bool,
             headerIcon: PropTypes.string,
             headerDate: PropTypes.number,
+            gradientAngle: PropTypes.number,
+            gradientColors: PropTypes.arrayOf(PropTypes.string),
+            gradientLocations: PropTypes.arrayOf(PropTypes.number),
             style: ViewPropTypes.style
         };
     }
@@ -18,6 +22,9 @@ export class Container extends PureComponent {
             header: false,
             headerIcon: undefined,
             headerDate: undefined,
+            gradientAngle: 62,
+            gradientLocations: [0.4, 0.84],
+            gradientColors: ["#4a6fe9", "#6687f6"],
             style: {}
         };
     }
@@ -40,12 +47,24 @@ export class Container extends PureComponent {
         ];
     };
 
-    propsTest = () => {
-        return `${this.props.header}\n${this.props.headerIcon}\n${this.props.headerDate}`;
-    };
-
     render() {
-        return <View style={this._style()}>{this.props.children}</View>;
+        return (
+            <View style={this._style()}>
+                <LinearGradient
+                    angle={this.props.gradientAngle}
+                    colors={this.props.gradientColors}
+                    locations={this.props.gradientLocations}
+                    useAngle={true}
+                >
+                    <View>
+{/*                         <Icon icon="bolt" width={32} height={32} color="#00ff00" />
+                        <Text>TODO text here</Text>
+                        <Text>TODO date here</Text> */}
+                    </View>
+                </LinearGradient>
+                {this.props.children}
+            </View>
+        );
     }
 }
 
