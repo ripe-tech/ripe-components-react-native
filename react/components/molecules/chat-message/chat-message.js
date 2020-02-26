@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import PropTypes from "prop-types";
 
-import { isImage } from "../../../util";
+import { isImage, dateString, timeString } from "../../../util";
 
 import { Avatar, Text, Icon, link } from "../../atoms";
 
@@ -13,6 +13,7 @@ export class ChatMessage extends PureComponent {
             avatarUrl: PropTypes.string.isRequired,
             username: PropTypes.string.isRequired,
             message: PropTypes.string.isRequired,
+            date: PropTypes.number.isRequired,
             attachments: PropTypes.arrayOf(
                 PropTypes.exact({
                     name: PropTypes.string.isRequired,
@@ -27,6 +28,7 @@ export class ChatMessage extends PureComponent {
             avatarUrl: undefined,
             username: undefined,
             message: undefined,
+            date: undefined,
             attachments: []
         };
     }
@@ -38,7 +40,7 @@ export class ChatMessage extends PureComponent {
                 <View>
                     <View>
                         <Text>{this.props.username}</Text>
-                        <Text>Date Here</Text>
+                        <Text>{dateString(this.props.date)} {timeString(this.props.date)}</Text>
                     </View>
                     <Text>{this.props.message}</Text>
                     {this.props.attachments.map(attachment => {

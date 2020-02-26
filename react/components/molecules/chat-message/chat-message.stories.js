@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, text } from "@storybook/addon-knobs";
+import { withKnobs, text, number } from "@storybook/addon-knobs";
 
 import { ChatMessage } from "../../";
 
@@ -16,6 +16,7 @@ storiesOf("Atoms", module)
             "Message",
             "Cras faucibus mauris sem, vel ultricies turpis venenatis et. Mauris sed tristique purus. Cras vulputate vitae velit eget hendrerit. Aliquam mattis commodo tellus. Sed ac ligula condimentum, euismod eros non, dignissim leo. Donec faucibus lectus non enim tincidunt, at laoreet neque auctor. Nam at arcu tortor. "
         );
+        const date = number("Date", 1576840199);
         const attachments = [
             {
                 name: "dummy.pdf",
@@ -31,6 +32,7 @@ storiesOf("Atoms", module)
                 avatarUrl={avatarUrl}
                 username={username}
                 message={message}
+                date={date}
                 attachments={attachments}
             />
         );
