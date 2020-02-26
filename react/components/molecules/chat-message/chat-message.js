@@ -3,6 +3,8 @@ import { StyleSheet, Text } from "react-native";
 
 import PropTypes from "prop-types";
 
+import { isImage } from "../../../util";
+
 export class ChatMessage extends PureComponent {
     static get propTypes() {
         return {
