@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity, Linking } from "react-native";
+import { ViewPropTypes, Text, TouchableOpacity, Linking } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -7,14 +7,16 @@ export class Link extends PureComponent {
     static get propTypes() {
         return {
             text: PropTypes.string,
-            url: PropTypes.string.isRequired
+            url: PropTypes.string.isRequired,
+            style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
             text: undefined,
-            url: undefined
+            url: undefined,
+            style: {}
         };
     }
 
@@ -22,22 +24,25 @@ export class Link extends PureComponent {
         Linking.openURL(this.props.url);
     };
 
+    _style = () => {
+        return [
+            this.props.style,
+            {
+                color: "#1d2631",
+                textDecorationLine: "underline"
+            }
+        ];
+    };
+
     render() {
         return (
             <TouchableOpacity activeOpacity={0.4} onPress={() => this.onLinkPress()}>
-                <Text style={styles.text}>
+                <Text style={this._style()}>
                     {this.props.text ? this.props.text : this.props.url}
                 </Text>
             </TouchableOpacity>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    text: {
-        color: "#1d2631",
-        textDecorationLine: "underline"
-    }
-});
 
 export default Link;
