@@ -8,6 +8,15 @@ import { isImage, dateString, timeString } from "../../../util";
 import { Avatar, Text, Icon, link } from "../../atoms";
 
 export class ChatMessage extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.dateData =
+            new Date().getDate() === new Date(props.date).getDate()
+                ? timeString(this.props.date)
+                : `${dateString(this.props.date)} ${timeString(this.props.date)}`;
+    }
+
     static get propTypes() {
         return {
             avatarUrl: PropTypes.string.isRequired,
@@ -40,9 +49,7 @@ export class ChatMessage extends PureComponent {
                 <View style={styles.content}>
                     <View style={styles.header}>
                         <Text style={styles.username}>{this.props.username}</Text>
-                        <Text style={styles.date}>
-                            {dateString(this.props.date)} {timeString(this.props.date)}
-                        </Text>
+                        <Text style={styles.date}>{this.dateData}</Text>
                     </View>
                     <Text>{this.props.message}</Text>
                     {this.props.attachments.map(attachment => {
