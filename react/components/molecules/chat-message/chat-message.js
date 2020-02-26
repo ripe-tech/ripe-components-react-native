@@ -35,12 +35,14 @@ export class ChatMessage extends PureComponent {
 
     render() {
         return (
-            <View>
-                <Avatar image={{ uri: this.props.avatarUrl }} size={50} />
-                <View>
-                    <View>
-                        <Text>{this.props.username}</Text>
-                        <Text>{dateString(this.props.date)} {timeString(this.props.date)}</Text>
+            <View style={styles.chatMessage}>
+                <Avatar style={styles.avatar} image={{ uri: this.props.avatarUrl }} size={32} />
+                <View style={styles.content}>
+                    <View style={styles.header}>
+                        <Text style={styles.username}>{this.props.username}</Text>
+                        <Text style={styles.date}>
+                            {dateString(this.props.date)} {timeString(this.props.date)}
+                        </Text>
                     </View>
                     <Text>{this.props.message}</Text>
                     {this.props.attachments.map(attachment => {
@@ -52,6 +54,28 @@ export class ChatMessage extends PureComponent {
     }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    chatMessage: {
+        flexDirection: "row",
+        marginStart: 15,
+        marginEnd: 15
+    },
+    avatar: {
+        marginEnd: 13
+    },
+    content: {
+        flex: 1
+    },
+    header: {
+        flexDirection: "row",
+        marginTop: 5
+    },
+    username: {
+        //TODO
+    },
+    date: {
+        //TODO
+    }
+});
 
 export default ChatMessage;
