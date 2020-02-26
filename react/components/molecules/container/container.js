@@ -57,7 +57,7 @@ export class Container extends PureComponent {
                     useAngle={true}
                 >
                     <View>
-{/*                         <Icon icon="bolt" width={32} height={32} color="#00ff00" />
+                        {/*                         <Icon icon="bolt" width={32} height={32} color="#00ff00" />
                         <Text>TODO text here</Text>
                         <Text>TODO date here</Text> */}
                     </View>
