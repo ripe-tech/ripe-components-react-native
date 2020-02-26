@@ -1,9 +1,11 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import PropTypes from "prop-types";
 
 import { isImage } from "../../../util";
+
+import { Avatar, Text, Icon, link } from "../../atoms";
 
 export class ChatMessage extends PureComponent {
     static get propTypes() {
@@ -29,12 +31,22 @@ export class ChatMessage extends PureComponent {
         };
     }
 
-    propsTest = () => {
-        return `${this.props.avatarUrl}\n${this.props.username}\n${this.props.message}\n${this.props.attachments}`;
-    };
-
     render() {
-        return <Text>{this.propsTest()}</Text>;
+        return (
+            <View>
+                <Avatar image={{ uri: this.props.avatarUrl }} size={50} />
+                <View>
+                    <View>
+                        <Text>{this.props.username}</Text>
+                        <Text>Date Here</Text>
+                    </View>
+                    <Text>{this.props.message}</Text>
+                    {this.props.attachments.map(attachment => {
+                        return <Text>{attachment.name}</Text>;
+                    })}
+                </View>
+            </View>
+        );
     }
 }
 
