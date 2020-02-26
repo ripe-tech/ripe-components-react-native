@@ -14,6 +14,9 @@ storiesOf("Atoms", module)
                     uri: "https://id.platforme.com/admin/accounts/v-fl%40platforme.com/avatar"
                 }}
                 size={size}
+                onPress={() => {
+                    alert("Nice touch!");
+                }}
             />
         );
     });
