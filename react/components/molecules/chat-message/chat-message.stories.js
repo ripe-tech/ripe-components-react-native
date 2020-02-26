@@ -4,9 +4,9 @@ import { withKnobs, text, number } from "@storybook/addon-knobs";
 
 import { ChatMessage } from "../../";
 
-storiesOf("Atoms", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
-    .add("Link", () => {
+    .add("Chat Message", () => {
         const avatarUrl = text(
             "Avatar URL",
             "https://id.platforme.com/admin/accounts/ns%40platforme.com/avatar"
