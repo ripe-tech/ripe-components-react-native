@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, Text as RNText } from "react-native";
+import { StyleSheet, ViewPropTypes, Text as RNText } from "react-native";
+
+import { baseStyles } from "../../../util";
 
 export class Text extends PureComponent {
     static get propTypes() {
@@ -15,20 +17,21 @@ export class Text extends PureComponent {
     }
 
     _style = () => {
-        return [
-            this.props.style,
-            {
-                fontFamily: "Soleil",
-                fontSize: 14,
-                lineHeight: 22,
-                color: "#3e566a"
-            }
-        ];
+        return [styles.text, this.props.style];
     };
 
     render() {
         return <RNText style={this._style()}>{this.props.children}</RNText>;
     }
 }
+
+const styles = StyleSheet.create({
+    text: {
+        fontFamily: baseStyles.FONT_BOOK,
+        fontSize: 14,
+        lineHeight: 22,
+        color: "#3e566a"
+    }
+});
 
 export default Text;
