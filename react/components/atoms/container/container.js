@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, View, Text } from "react-native";
+import { ViewPropTypes, View } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -45,11 +45,7 @@ export class Container extends PureComponent {
     };
 
     render() {
-        return (
-            <View style={this._style()}>
-                <Text>{this.propsTest()}</Text>
-            </View>
-        );
+        return <View style={this._style()}>{this.props.children}</View>;
     }
 }
 
