@@ -78,10 +78,11 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     username: {
-        //TODO
+        fontWeight: "bold",
+        marginEnd: 5
     },
     date: {
-        //TODO
+        color: "#a4adb5"
     }
 });
 
