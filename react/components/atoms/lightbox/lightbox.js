@@ -104,7 +104,8 @@ export class Lightbox extends PureComponent {
         return {
             width: this.state.width,
             height: this.state.height,
-            borderRadius: this.state.borderRadius
+            borderRadius: this.state.borderRadius,
+            resizeMode: "contain"
         };
     };
 
@@ -132,9 +133,10 @@ export class Lightbox extends PureComponent {
 
         return {
             position: "absolute",
+            zIndex: 1,
             backgroundColor: "#000000",
-            width: "100%",
-            height: "100%",
+            width: this.screenWidth,
+            height: this.screenHeight,
             opacity: this.state.fadeAnimationValue
         };
     };
