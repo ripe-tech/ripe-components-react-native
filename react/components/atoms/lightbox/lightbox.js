@@ -1,5 +1,13 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, View, TouchableOpacity, Image, Animated, Dimensions } from "react-native";
+import {
+    ViewPropTypes,
+    StyleSheet,
+    View,
+    TouchableOpacity,
+    Image,
+    Animated,
+    Dimensions
+} from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -32,10 +40,13 @@ export class Lightbox extends PureComponent {
             borderRadius: this.props.borderRadius,
             fadeAnimationValue: new Animated.Value(0),
             widthAnimationValue: new Animated.Value(1),
-            heightAnimationValue: new Animated.Value(1)
-        }
+            heightAnimationValue: new Animated.Value(1),
+            translateXAnimationValue: new Animated.Value(0),
+            translateYAnimationValue: new Animated.Value(0)
+        };
 
-        this.screenWidth = Dimensions.get('window').width;
+        this.screenWidth = Dimensions.get("window").width;
+        this.screenHeight = Dimensions.get("window").height;
     }
 
     onLightboxPress = () => {
@@ -45,11 +56,12 @@ export class Lightbox extends PureComponent {
     };
 
     startAnimation = () => {
-        const resizeAnimationTime = 200;
+        const openAnimationTime = 5000;
 
+        const scale = this.screenWidth / this.props.width;
 
-        const scale = this.screenWidth/this.props.width;
-
+        const finalPosX = this.screenWidth / 4;
+        const finalPosY = this.props.height * scale;
 
         Animated.parallel([
             Animated.timing(this.state.fadeAnimationValue, {
@@ -58,13 +70,35 @@ export class Lightbox extends PureComponent {
             }),
             Animated.timing(this.state.widthAnimationValue, {
                 toValue: scale,
-                duration: resizeAnimationTime
+                duration: openAnimationTime
             }),
             Animated.timing(this.state.heightAnimationValue, {
                 toValue: scale,
-                duration: resizeAnimationTime
+                duration: openAnimationTime
+            }),
+            Animated.timing(this.state.translateXAnimationValue, {
+                toValue: finalPosX,
+                duration: openAnimationTime
+            }),
+            Animated.timing(this.state.translateYAnimationValue, {
+                toValue: finalPosY,
+                duration: openAnimationTime
             })
-        ]).start()
+        ]).start();
+    };
+
+    _boxStyle = () => {
+        this.startAnimation();
+
+        return {
+            width: 200,
+            height: 200,
+            backgroundColor: "#ff00ff",
+            transform: [
+                { translateX: this.state.translateXAnimationValue },
+                { translateY: this.state.translateYAnimationValue }
+            ]
+        };
     };
 
     _imageStyle = () => {
@@ -76,7 +110,7 @@ export class Lightbox extends PureComponent {
     };
 
     _fullscreenImageStyle = () => {
-/*         const finalWidth = this.screenWidth;
+        /*         const finalWidth = this.screenWidth;
         this.props.width */
 
         return {
@@ -88,8 +122,8 @@ export class Lightbox extends PureComponent {
                 { scaleX: this.state.widthAnimationValue },
                 { scaleY: this.state.heightAnimationValue }
             ]
-        }
-    }
+        };
+    };
 
     _fullscreenStyle = () => {
         if (!this.state.visible) return;
@@ -117,7 +151,12 @@ export class Lightbox extends PureComponent {
         const fullscreenImage = () => {
             return (
                 <View style={styles.fullscreenContainer}>
-                    <Animated.Image style={this._fullscreenImageStyle()} source={{ uri: this.props.src }} />
+                    <Animated.View style={this._boxStyle()}>
+                        <Animated.Image
+                            style={this._fullscreenImageStyle()}
+                            source={{ uri: this.props.src }}
+                        />
+                    </Animated.View>
                 </View>
             );
         };
