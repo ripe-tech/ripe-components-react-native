@@ -61,7 +61,11 @@ export class Lightbox extends PureComponent {
         };
 
         const fullscreenImage = () => {
-            return <Image style={styles.fullscreenImage} source={{ uri: this.props.src }} />;
+            return (
+                <View style={styles.fullscreenContainer}>
+                    <Image style={styles.fullscreenImage} source={{ uri: this.props.src }} />
+            </View>
+            )
         };
 
         return (
@@ -82,7 +86,10 @@ const styles = StyleSheet.create({
     fullscreenImage: {
         flex: 1,
         width: "100%",
-        resizeMode:"contain"
+        resizeMode: "contain"
+    },
+    fullscreenContainer: {
+        flex:1
     }
 });
 
