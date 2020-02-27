@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, View, TouchableOpacity, Image, Animated } from "react-native";
+import { ViewPropTypes, StyleSheet, View, TouchableOpacity, Image, Animated, Dimensions } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -30,26 +30,41 @@ export class Lightbox extends PureComponent {
             width: this.props.width,
             height: this.props.height,
             borderRadius: this.props.borderRadius,
-            fadeValue: new Animated.Value(0)
-        };
+            fadeAnimationValue: new Animated.Value(0),
+            widthAnimationValue: new Animated.Value(1),
+            heightAnimationValue: new Animated.Value(1)
+        }
+
+        this.screenWidth = Dimensions.get('window').width;
     }
 
     onLightboxPress = () => {
-        this.startAnimation();
         this.setState({
             visible: true
         });
     };
 
     startAnimation = () => {
-        Animated.timing(this.state.fadeValue, {
-            toValue: 1,
-            duration: 1000
-        }).start();
-    };
+        const resizeAnimationTime = 200;
 
-    _style = () => {
-        return [this.props.style];
+
+        const scale = this.screenWidth/this.props.width;
+
+
+        Animated.parallel([
+            Animated.timing(this.state.fadeAnimationValue, {
+                toValue: 1,
+                duration: 200
+            }),
+            Animated.timing(this.state.widthAnimationValue, {
+                toValue: scale,
+                duration: resizeAnimationTime
+            }),
+            Animated.timing(this.state.heightAnimationValue, {
+                toValue: scale,
+                duration: resizeAnimationTime
+            })
+        ]).start()
     };
 
     _imageStyle = () => {
@@ -59,6 +74,22 @@ export class Lightbox extends PureComponent {
             borderRadius: this.state.borderRadius
         };
     };
+
+    _fullscreenImageStyle = () => {
+/*         const finalWidth = this.screenWidth;
+        this.props.width */
+
+        return {
+            flex: 1,
+            alignSelf: "center",
+            width: this.props.width,
+            resizeMode: "contain",
+            transform: [
+                { scaleX: this.state.widthAnimationValue },
+                { scaleY: this.state.heightAnimationValue }
+            ]
+        }
+    }
 
     _fullscreenStyle = () => {
         if (!this.state.visible) return;
@@ -70,7 +101,7 @@ export class Lightbox extends PureComponent {
             backgroundColor: "#000000",
             width: "100%",
             height: "100%",
-            opacity: this.state.fadeValue
+            opacity: this.state.fadeAnimationValue
         };
     };
 
@@ -86,13 +117,13 @@ export class Lightbox extends PureComponent {
         const fullscreenImage = () => {
             return (
                 <View style={styles.fullscreenContainer}>
-                    <Image style={styles.fullscreenImage} source={{ uri: this.props.src }} />
+                    <Animated.Image style={this._fullscreenImageStyle()} source={{ uri: this.props.src }} />
                 </View>
             );
         };
 
         return (
-            <Animated.View style={this._fullscreenStyle()}>
+            <Animated.View style={[this._fullscreenStyle(), this.props.style]}>
                 {this.state.visible ? fullscreenImage() : pressableImage()}
             </Animated.View>
         );
@@ -100,11 +131,6 @@ export class Lightbox extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    fullscreenImage: {
-        flex: 1,
-        width: "100%",
-        resizeMode: "contain"
-    },
     fullscreenContainer: {
         flex: 1
     }
