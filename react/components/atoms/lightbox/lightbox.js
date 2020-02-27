@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, View, TouchableOpacity, Image, Text } from "react-native";
+import { ViewPropTypes, StyleSheet, View, TouchableOpacity, Image, Animated } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -29,14 +29,23 @@ export class Lightbox extends PureComponent {
             visible: false,
             width: this.props.width,
             height: this.props.height,
-            borderRadius: this.props.borderRadius
+            borderRadius: this.props.borderRadius,
+            fadeValue: new Animated.Value(0)
         };
     }
 
     onLightboxPress = () => {
+        this.startAnimation();
         this.setState({
             visible: true
         });
+    };
+
+    startAnimation = () => {
+        Animated.timing(this.state.fadeValue, {
+            toValue: 1,
+            duration: 1000
+        }).start();
     };
 
     _style = () => {
@@ -48,6 +57,20 @@ export class Lightbox extends PureComponent {
             width: this.state.width,
             height: this.state.height,
             borderRadius: this.state.borderRadius
+        };
+    };
+
+    _fullscreenStyle = () => {
+        if (!this.state.visible) return;
+
+        this.startAnimation();
+
+        return {
+            position: "absolute",
+            backgroundColor: "#000000",
+            width: "100%",
+            height: "100%",
+            opacity: this.state.fadeValue
         };
     };
 
@@ -64,32 +87,26 @@ export class Lightbox extends PureComponent {
             return (
                 <View style={styles.fullscreenContainer}>
                     <Image style={styles.fullscreenImage} source={{ uri: this.props.src }} />
-            </View>
-            )
+                </View>
+            );
         };
 
         return (
-            <View style={this.state.visible && styles.fullscreen}>
+            <Animated.View style={this._fullscreenStyle()}>
                 {this.state.visible ? fullscreenImage() : pressableImage()}
-            </View>
+            </Animated.View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    fullscreen: {
-        position: "absolute",
-        backgroundColor: "#000000",
-        width: "100%",
-        height: "100%"
-    },
     fullscreenImage: {
         flex: 1,
         width: "100%",
         resizeMode: "contain"
     },
     fullscreenContainer: {
-        flex:1
+        flex: 1
     }
 });
 
