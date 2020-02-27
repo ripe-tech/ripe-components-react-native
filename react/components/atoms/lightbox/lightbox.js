@@ -87,13 +87,12 @@ export class Lightbox extends PureComponent {
         ]).start();
     };
 
-    _boxStyle = () => {
+    _translateStyle = () => {
         this.startAnimation();
 
         return {
-            width: 200,
-            height: 200,
-            backgroundColor: "#ff00ff",
+            width: this.screenWidth/2,
+            height: this.screenWidth/2,
             transform: [
                 { translateX: this.state.translateXAnimationValue },
                 { translateY: this.state.translateYAnimationValue }
@@ -117,6 +116,7 @@ export class Lightbox extends PureComponent {
             flex: 1,
             alignSelf: "center",
             width: this.props.width,
+            //height: this.props.height,
             resizeMode: "contain",
             transform: [
                 { scaleX: this.state.widthAnimationValue },
@@ -142,7 +142,7 @@ export class Lightbox extends PureComponent {
     render() {
         const pressableImage = () => {
             return (
-                <TouchableOpacity onPress={() => this.onLightboxPress()}>
+                <TouchableOpacity onPress={() => this.onLightboxPress()} activeOpacity={0.8}>
                     <Image style={this._imageStyle()} source={{ uri: this.props.src }} />
                 </TouchableOpacity>
             );
@@ -150,14 +150,12 @@ export class Lightbox extends PureComponent {
 
         const fullscreenImage = () => {
             return (
-                <View style={styles.fullscreenContainer}>
-                    <Animated.View style={this._boxStyle()}>
-                        <Animated.Image
-                            style={this._fullscreenImageStyle()}
-                            source={{ uri: this.props.src }}
-                        />
-                    </Animated.View>
-                </View>
+                <Animated.View style={this._translateStyle()}>
+                    <Animated.Image
+                        style={this._fullscreenImageStyle()}
+                        source={{ uri: this.props.src }}
+                    />
+                </Animated.View>
             );
         };
 
@@ -170,9 +168,6 @@ export class Lightbox extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    fullscreenContainer: {
-        flex: 1
-    }
 });
 
 export default Lightbox;
