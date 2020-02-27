@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, TouchableOpacity, Image } from "react-native";
+import { ViewPropTypes, StyleSheet, View, TouchableOpacity, Image, Text } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -23,8 +23,20 @@ export class Lightbox extends PureComponent {
         };
     }
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            visible: false,
+            width: this.props.width,
+            height: this.props.height,
+            borderRadius: this.props.borderRadius
+        };
+    }
+
     onLightboxPress = () => {
-        console.log("sup");
+        this.setState({
+            visible: true
+        });
     };
 
     _style = () => {
@@ -33,19 +45,40 @@ export class Lightbox extends PureComponent {
 
     _imageStyle = () => {
         return {
-            width: this.props.width,
-            height: this.props.height,
-            borderRadius: this.props.borderRadius
+            width: this.state.width,
+            height: this.state.height,
+            borderRadius: this.state.borderRadius
         };
     };
 
     render() {
+        const pressableImage = () => {
+            return (
+                <TouchableOpacity onPress={() => this.onLightboxPress()}>
+                    <Image style={this._imageStyle()} source={{ uri: this.props.src }} />
+                </TouchableOpacity>
+            );
+        };
+
+        const fullscreenImage = () => {
+            return <Image style={this._imageStyle()} source={{ uri: this.props.src }} />;
+        };
+
         return (
-            <TouchableOpacity onPress={() => this.onLightboxPress()}>
-                <Image style={this._imageStyle()} source={{ uri: this.props.src }} />
-            </TouchableOpacity>
+            <View style={this.state.visible && styles.fullscreen}>
+                {this.state.visible ? fullscreenImage() : pressableImage()}
+            </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    fullscreen: {
+        position: "absolute",
+        backgroundColor: "#000000",
+        width: "100%",
+        height: "100%"
+    }
+});
 
 export default Lightbox;
