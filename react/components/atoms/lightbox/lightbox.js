@@ -53,18 +53,14 @@ export class Lightbox extends PureComponent {
             visible: true
         });
     };
-
-    _style = () => {
-        return [this.props.style];
-    };
-
+    
     _imageStyle = () => {
-        return {
+        return [{
             width: this.props.width,
             height: this.props.height,
             borderRadius: this.props.borderRadius,
             resizeMode: this.props.resizeMode
-        };
+        }, this.props.style];
     };
 
 
