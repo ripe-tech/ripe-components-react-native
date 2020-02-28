@@ -10,7 +10,13 @@ export class Avatar extends PureComponent {
             size: PropTypes.number,
             resizeMode: PropTypes.string,
             style: ViewPropTypes.style,
-            onPress: PropTypes.func
+            onPress: PropTypes.func,
+            hitSlop: PropTypes.shape({
+                top: PropTypes.number,
+                right: PropTypes.number,
+                bottom: PropTypes.number,
+                left: PropTypes.number
+            }).isRequired
         };
     }
 
@@ -19,11 +25,10 @@ export class Avatar extends PureComponent {
             resizeMode: "contain",
             size: 40,
             style: {},
-            onPress: undefined
+            onPress: undefined,
+            hitSlop: { top: 20, left: 20, right: 20, bottom: 20 }
         };
     }
-
-    hitSlop = { top: 20, left: 20, right: 20, bottom: 20 };
 
     _imageStyles = () => {
         return [
@@ -41,7 +46,7 @@ export class Avatar extends PureComponent {
             <TouchableOpacity
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
-                hitSlop={this.hitSlop}
+                hitSlop={this.props.hitSlop}
             >
                 <Image
                     source={this.props.image}
