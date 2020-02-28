@@ -6,22 +6,27 @@ import PropTypes from "prop-types";
 export class Lightbox extends PureComponent {
     static get propTypes() {
         return {
-            src: PropTypes.string.isRequired,
+            uri: PropTypes.string,
+            source: PropTypes.string,
             width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             borderRadius: PropTypes.number,
             resizeMode: PropTypes.string,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            onVisible: PropTypes.func
         };
     }
 
     static get defaultProps() {
         return {
+            uri: undefined,
             src: undefined,
             width: "100%",
             height: "100%",
             borderRadius: undefined,
-            resizeMode: undefined
+            resizeMode: undefined,
+            style: {},
+            onVisible: () => {}
         };
     }
 
@@ -32,16 +37,21 @@ export class Lightbox extends PureComponent {
         };
     }
 
+    setVisibility(value) {
+        this.setState(
+            {
+                visible: value
+            },
+            this.props.onVisible(this.state.visible)
+        );
+    }
+
     onBackButtonPress = () => {
-        this.setState({
-            visible: false
-        });
+        this.setVisibility(false);
     };
 
     onLightboxPress = () => {
-        this.setState({
-            visible: true
-        });
+        this.setVisibility(true);
     };
 
     _imageStyle = () => {
@@ -60,7 +70,10 @@ export class Lightbox extends PureComponent {
         return (
             <View>
                 <TouchableOpacity onPress={() => this.onLightboxPress()} activeOpacity={0.7}>
-                    <Image style={this._imageStyle()} source={{ uri: this.props.src }} />
+                    <Image
+                        style={this._imageStyle()}
+                        source={this.props.uri ? { uri: this.props.uri } : this.props.source}
+                    />
                 </TouchableOpacity>
                 <Modal
                     animationType="fade"
@@ -69,7 +82,7 @@ export class Lightbox extends PureComponent {
                     onRequestClose={() => this.onBackButtonPress()}
                 >
                     <View style={styles.fullscreenContainer}>
-                        <Image style={styles.fullscreenImage} source={{ uri: this.props.src }} />
+                        <Image style={styles.fullscreenImage} source={{ uri: this.props.uri }} />
                     </View>
                 </Modal>
             </View>
