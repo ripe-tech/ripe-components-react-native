@@ -17,9 +17,7 @@ storiesOf("Atoms", module)
         const height = number("Height", 150);
         const borderRadius = number("Border Radius", undefined);
         return (
-            <View style={{flex: 1,
-                flexDirection: 'row',
-                flexWrap: 'wrap'}}>
+            <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
                 <Lightbox src={src} width={width} height={height} borderRadius={borderRadius} />
                 <Lightbox src={src} width={width} height={height} borderRadius={borderRadius} />
                 <Lightbox src={src} width={width} height={height} borderRadius={borderRadius} />
