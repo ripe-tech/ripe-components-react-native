@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, View } from "react-native";
+import { StyleSheet, ViewPropTypes, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
@@ -31,28 +31,9 @@ export class Container extends PureComponent {
         };
     }
 
-    _style = () => {
-        //TODO use stylesheet to improve performance ?
-        //Check all the other components and fix them too
-        return [
-            {
-                backgroundColor: "#ffffff",
-                borderRadius: 6,
-                shadowOffset: {
-                    width: 0,
-                    height: 2
-                },
-                shadowRadius: 2,
-                shadowColor: "#435664",
-                shadowOpacity: 0.2
-            },
-            this.props.style
-        ];
-    };
-
     render() {
         return (
-            <View style={this._style()}>
+            <View style={[styles.container ,this.props.style]}>
                 <LinearGradient
                     angle={this.props.gradientAngle}
                     colors={this.props.gradientColors}
@@ -70,5 +51,19 @@ export class Container extends PureComponent {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#ffffff",
+        borderRadius: 6,
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowRadius: 2,
+        shadowColor: "#435664",
+        shadowOpacity: 0.2
+    }
+})
 
 export default Container;
