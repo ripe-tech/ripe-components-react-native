@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import PropTypes from "prop-types";
 
 import { isImage, dateString, timeString } from "../../../util";
 
-import { Avatar, Text, Icon, Link } from "../../atoms";
+import { Avatar, Text, Icon, Link, Lightbox } from "../../atoms";
 
 export class ChatMessage extends PureComponent {
     constructor(props) {
@@ -58,7 +58,7 @@ export class ChatMessage extends PureComponent {
             );
         };
         const attachedImage = imgPath => {
-            return <Image style={styles.attachedImage} source={{ uri: imgPath }} />;
+            return <Lightbox height={180} uri={imgPath} />;
         };
 
         return (

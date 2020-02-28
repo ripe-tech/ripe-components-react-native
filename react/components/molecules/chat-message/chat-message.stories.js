@@ -24,7 +24,7 @@ storiesOf("Molecules", module)
             },
             {
                 name: "image.png",
-                path: "https://id.platforme.com/admin/accounts/ns%40platforme.com/avatar"
+                path: "https://id.platforme.com/admin/accounts/t-ms%40platforme.com/avatar"
             }
         ];
         return (
