@@ -38,14 +38,13 @@ export class Container extends PureComponent {
             {
                 backgroundColor: "#ffffff",
                 borderRadius: 6,
-                //TODO maybe improve shadow box ?
                 shadowOffset: {
                     width: 0,
-                    height: 5
+                    height: 2
                 },
-                shadowRadius: 5,
+                shadowRadius: 2,
                 shadowColor: "#435664",
-                shadowOpacity: 0.3
+                shadowOpacity: 0.2
             },
             this.props.style
         ];
