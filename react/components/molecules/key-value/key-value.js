@@ -38,21 +38,24 @@ export class KeyValue extends PureComponent {
     render() {
         return (
             <View style={styles.keyValue}>
-                <View>
+                <View style={styles.textContainer}>
                     <Text style={styles.key}>{this.props._key}</Text>
                     <Text style={styles.value}>{this.props.value}</Text>
                 </View>
                 {this.props.icon ? (
-                    <ButtonIcon
-                        backgroundColor={this.props.iconBackgroundColor}
-                        color={this.props.iconColor}
-                        icon={this.props.icon}
-                        iconHeight={this.props.iconHeight}
-                        iconWidth={this.props.iconWidth}
-                        size={this.props.iconSize}
-                        iconStrokeWidth={this.props.iconStrokeWidth}
-                        onPress={this.props.iconOnPress}
-                    />
+                    <View style={styles.iconContainer}>
+                        <ButtonIcon
+                            backgroundColor={this.props.iconBackgroundColor}
+                            color={this.props.iconColor}
+                            icon={this.props.icon}
+                            iconHeight={this.props.iconHeight}
+                            iconWidth={this.props.iconWidth}
+                            size={this.props.iconSize}
+                            iconStrokeWidth={this.props.iconStrokeWidth}
+                            onPress={this.props.iconOnPress}
+                            style={styles.iconStyle}
+                        />
+                    </View>
                 ) : null}
             </View>
         );
@@ -62,11 +65,14 @@ export class KeyValue extends PureComponent {
 const styles = StyleSheet.create({
     keyValue: {
         flexDirection: "row",
-        justifyContent: "space-between",
         paddingVertical: 16,
         paddingHorizontal: 14,
         borderBottomWidth: 1,
         borderBottomColor: "#e4e8f0"
+    },
+    textContainer: {
+        alignSelf: "flex-start",
+        flex: 1
     },
     key: {
         marginTop: Platform.OS === "ios" ? 2 : 0,
@@ -81,6 +87,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         letterSpacing: 0.5,
         color: "#223645"
+    },
+    iconContainer: {
+        justifyContent: "center"
+    },
+    iconStyle: {
+        alignSelf: "flex-end"
     }
 });
 
