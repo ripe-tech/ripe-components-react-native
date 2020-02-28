@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, Image } from "react-native";
+import { ViewPropTypes, Image, TouchableOpacity } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -9,7 +9,8 @@ export class Avatar extends PureComponent {
             image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
             size: PropTypes.number,
             resizeMode: PropTypes.string,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            onPress: PropTypes.func
         };
     }
 
@@ -17,9 +18,12 @@ export class Avatar extends PureComponent {
         return {
             resizeMode: "contain",
             size: 40,
-            style: {}
+            style: {},
+            onPress: undefined
         };
     }
+
+    hitSlop = { top: 20, left: 20, right: 20, bottom: 20 };
 
     _imageStyles = () => {
         return [
@@ -34,11 +38,17 @@ export class Avatar extends PureComponent {
 
     render() {
         return (
-            <Image
-                source={this.props.image}
-                style={this._imageStyles()}
-                resizeMode={this.props.resizeMode}
-            />
+            <TouchableOpacity
+                onPress={this.props.onPress}
+                disabled={!this.props.onPress}
+                hitSlop={this.hitSlop}
+            >
+                <Image
+                    source={this.props.image}
+                    style={this._imageStyles()}
+                    resizeMode={this.props.resizeMode}
+                />
+            </TouchableOpacity>
         );
     }
 }
