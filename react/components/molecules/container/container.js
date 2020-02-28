@@ -47,28 +47,30 @@ export class Container extends PureComponent {
     render() {
         return (
             <View style={[styles.container, this.props.style]}>
-                <LinearGradient
-                    style={styles.gradient}
-                    angle={this.props.gradientAngle}
-                    colors={this.props.gradientColors}
-                    locations={this.props.gradientLocations}
-                    useAngle={true}
-                >
-                    <View style={styles.header}>
-                        <View style={styles.headerTextContainer}>
-                            <Icon
-                                icon={this.props.headerIcon}
-                                width={24}
-                                height={24}
-                                color="#ffffff"
-                            />
-                            <Text style={[styles.headerMargin, styles.headerText]}>
-                                {this.props.headerText}
-                            </Text>
+                {this.props.header && (
+                    <LinearGradient
+                        style={styles.gradient}
+                        angle={this.props.gradientAngle}
+                        colors={this.props.gradientColors}
+                        locations={this.props.gradientLocations}
+                        useAngle={true}
+                    >
+                        <View style={styles.header}>
+                            <View style={styles.headerTextContainer}>
+                                <Icon
+                                    icon={this.props.headerIcon}
+                                    width={24}
+                                    height={24}
+                                    color="#ffffff"
+                                />
+                                <Text style={[styles.headerMargin, styles.headerText]}>
+                                    {this.props.headerText}
+                                </Text>
+                            </View>
+                            <Text style={styles.headerText}>{this.dateData}</Text>
                         </View>
-                        <Text style={styles.headerText}>{this.dateData}</Text>
-                    </View>
-                </LinearGradient>
+                    </LinearGradient>
+                )}
                 {this.props.children}
             </View>
         );
