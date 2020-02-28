@@ -56,6 +56,7 @@ export class Lightbox extends PureComponent {
 
         return {
             position: "absolute",
+            zIndex: 1,
             backgroundColor: "#000000",
             width: "100%",
             height: "100%"
