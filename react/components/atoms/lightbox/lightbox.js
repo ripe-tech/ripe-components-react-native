@@ -46,23 +46,25 @@ export class Lightbox extends PureComponent {
         this.setState({
             visible: false
         });
-    }
+    };
 
     onLightboxPress = () => {
         this.setState({
             visible: true
         });
     };
-    
-    _imageStyle = () => {
-        return [{
-            width: this.props.width,
-            height: this.props.height,
-            borderRadius: this.props.borderRadius,
-            resizeMode: this.props.resizeMode
-        }, this.props.style];
-    };
 
+    _imageStyle = () => {
+        return [
+            {
+                width: this.props.width,
+                height: this.props.height,
+                borderRadius: this.props.borderRadius,
+                resizeMode: this.props.resizeMode
+            },
+            this.props.style
+        ];
+    };
 
     render() {
         return (
@@ -74,7 +76,8 @@ export class Lightbox extends PureComponent {
                     animationType="fade"
                     transparent={false}
                     visible={this.state.visible}
-                    onRequestClose={() => this.handleBackPress()}>
+                    onRequestClose={() => this.handleBackPress()}
+                >
                     <View style={styles.fullscreenContainer}>
                         <Image style={styles.fullscreenImage} source={{ uri: this.props.src }} />
                     </View>
