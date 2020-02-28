@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { isImage, dateString, timeString } from "../../../util";
 
-import { Avatar, Text, Icon, Link, Lightbox } from "../../atoms";
+import { Avatar, Text, Link, Lightbox } from "../../atoms";
 
 export class ChatMessage extends PureComponent {
     constructor(props) {
@@ -44,18 +44,7 @@ export class ChatMessage extends PureComponent {
 
     render() {
         const attachedFile = (name, url) => {
-            return (
-                <View style={styles.attachedFile}>
-                    <Icon
-                        style={styles.attachedFileIcon}
-                        icon="file"
-                        width={24}
-                        height={24}
-                        color="#1d2631"
-                    />
-                    <Link text={name} url={url} />
-                </View>
-            );
+            return <Link text={name} url={url} />;
         };
         const attachedImage = imgPath => {
             return <Lightbox height={180} uri={imgPath} />;
@@ -110,13 +99,6 @@ const styles = StyleSheet.create({
     },
     attachment: {
         marginTop: 10
-    },
-    attachedFile: {
-        flexDirection: "row",
-        alignItems: "center"
-    },
-    attachedFileIcon: {
-        marginEnd: 5
     },
     attachedImage: {
         width: "100%",
