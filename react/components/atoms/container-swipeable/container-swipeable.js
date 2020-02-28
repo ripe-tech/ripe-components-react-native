@@ -1,10 +1,28 @@
 import React, { PureComponent } from "react";
 import { Animated, StyleSheet, Modal, View, TouchableOpacity } from "react-native";
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
-
 import PropTypes from "prop-types";
 
 export class ContainerSwipeable extends PureComponent {
+    static get propTypes() {
+        return {
+            animationsDuration: PropTypes.number,
+            hitSlop: PropTypes.shape({
+                top: PropTypes.number.isRequired,
+                left: PropTypes.number.isRequired,
+                right: PropTypes.number.isRequired,
+                bottom: PropTypes.number.isRequired
+            })
+        };
+    }
+
+    static get defaultProps() {
+        return {
+            animationsDuration: 300,
+            hitSlop: { top: 20, left: 20, right: 20, bottom: 20 }
+        };
+    }
+
     constructor(props) {
         super(props);
 
@@ -15,48 +33,26 @@ export class ContainerSwipeable extends PureComponent {
             containerInnerHeightAnimated: new Animated.Value(0)
         };
 
-        this.animationOccurring = false;
-        this.animationsDuration = 1000;
-        this.hitSlop = { top: 20, left: 20, right: 20, bottom: 20 };
+        this.animating = false;
     }
 
-    static get propTypes() {
-        return {
-            onRef: PropTypes.func
-        };
-    }
-
-    static get defaultProps() {
-        return {
-            onRef: () => null
-        };
-    }
-
-    componentDidMount() {
-        this.props.onRef(this);
-    }
-
-    onModalRequestClose() {
-        return null;
-    }
-
-    toogle = () => {
-        if (this.animationOccurring) {
+    toggle = () => {
+        if (this.animating) {
             return;
         }
 
         if (this.state.modalVisble) {
-            this._toogleAnimations();
+            this._toggleAnimations();
             setTimeout(() => {
                 this.setState({ modalVisble: false });
-            }, this.animationsDuration);
+            }, this.props.animationsDuration);
         } else {
             this.setState(
                 {
                     modalVisble: true
                 },
                 () => {
-                    this._toogleAnimations();
+                    this._toggleAnimations();
                 }
             );
         }
@@ -69,20 +65,20 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     _onAnimationEnd = () => {
-        this.animationOccurring = false;
+        this.animating = false;
     };
 
-    _toogleAnimations = () => {
-        this.animationOccurring = true;
+    _toggleAnimations = () => {
+        this.animating = true;
 
         Animated.parallel([
             Animated.timing(this.state.containerBackgroundColorAnimated, {
                 toValue: this.state.containerBackgroundColorAnimated._value ? 0 : 1,
-                duration: this.animationsDuration
+                duration: this.props.animationsDuration
             }),
             Animated.timing(this.state.containerInnerHeightAnimated, {
                 toValue: this.state.containerInnerHeightAnimated._value ? 0 : 1,
-                duration: this.animationsDuration
+                duration: this.props.animationsDuration
             })
         ]).start(this._onAnimationEnd);
     };
@@ -113,29 +109,17 @@ export class ContainerSwipeable extends PureComponent {
 
     render() {
         return (
-            <Modal
-                animationType="none"
-                transparent={true}
-                visible={this.state.modalVisble}
-                onRequestClose={this.onModalRequestClose}
-            >
+            <Modal animationType="none" transparent={true} visible={this.state.modalVisble}>
                 <Animated.View
                     style={this._containerStyles()}
-                    onStartShouldSetResponder={this.toogle}
+                    onStartShouldSetResponder={this.toggle}
                 >
-                    <Animated.View
-                        style={this._containerInnerStyles()}
-                        removeClippedSubviews={true}
-                    >
-                        <View
-                            onLayout={this.onLayout}
-                            onStartShouldSetResponder={() => true}
-                            pointerEvents="auto"
-                        >
+                    <Animated.View style={this._containerInnerStyles()}>
+                        <View onLayout={this.onLayout} pointerEvents="auto">
                             <TouchableOpacity
                                 style={styles.buttonBar}
-                                onPress={this.toogle}
-                                hitSlop={this.hitSlop}
+                                onPress={this.toggle}
+                                hitSlop={this.props.hitSlop}
                             />
                             {this.props.children}
                             <View style={styles.safeAreaBottom} />

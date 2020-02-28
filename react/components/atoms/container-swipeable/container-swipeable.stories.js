@@ -1,16 +1,16 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { Button, View } from "react-native";
+import { Button, Text, View } from "react-native";
 
 import { ContainerSwipeable } from "../";
 
 storiesOf("Atoms", module).add("Container Swipeable", () => {
-    this.containerSwipleableRef = null;
+    const ref = React.createRef();
     return (
         <View>
-            <Button title="Toogle" onPress={() => this.containerSwipleableRef.toogle()} />
-            <ContainerSwipeable ref={ref => (this.containerSwipleableRef = ref)}>
-                <Button title="Asda" onPress={() => null} />
+            <Button title="Toggle" onPress={() => ref.current.toggle()} />
+            <ContainerSwipeable ref={ref}>
+                <Text>Content</Text>
             </ContainerSwipeable>
         </View>
     );
