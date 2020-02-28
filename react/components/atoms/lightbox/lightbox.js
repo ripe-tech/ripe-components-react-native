@@ -5,7 +5,8 @@ import {
     View,
     TouchableOpacity,
     Image,
-    Modal
+    Modal,
+    BackHandler
 } from "react-native";
 
 import PropTypes from "prop-types";
@@ -39,6 +40,14 @@ export class Lightbox extends PureComponent {
         };
     }
 
+    handleBackPress = () => {
+        console.log("yeeeeeeeeeeeeeet");
+
+        this.setState({
+            visible: false
+        });
+    }
+
     onLightboxPress = () => {
         this.setState({
             visible: true
@@ -65,14 +74,15 @@ export class Lightbox extends PureComponent {
                 <TouchableOpacity onPress={() => this.onLightboxPress()}>
                     <Image style={this._imageStyle()} source={{ uri: this.props.src }} />
                 </TouchableOpacity>
-                    <Modal
-                        animationType="fade"
-                        transparent={false}
-                        visible={this.state.visible}>
-                            <View style={styles.fullscreenContainer}>
-                                <Image style={styles.fullscreenImage} source={{ uri: this.props.src }} />
-                            </View>
-                    </Modal>
+                <Modal
+                    animationType="fade"
+                    transparent={false}
+                    visible={this.state.visible}
+                    onRequestClose={() => this.handleBackPress()}>
+                    <View style={styles.fullscreenContainer}>
+                        <Image style={styles.fullscreenImage} source={{ uri: this.props.src }} />
+                    </View>
+                </Modal>
             </View>
         );
     }
