@@ -17,6 +17,7 @@ export class Container extends PureComponent {
                 ? timeString(this.props.headerDate)
                 : `${dateString(this.props.headerDate)} ${timeString(this.props.headerDate)}`;
     }
+
     static get propTypes() {
         return {
             header: PropTypes.bool,
