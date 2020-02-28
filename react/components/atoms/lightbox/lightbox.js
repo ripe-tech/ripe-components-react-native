@@ -59,7 +59,7 @@ export class Lightbox extends PureComponent {
     render() {
         return (
             <View>
-                <TouchableOpacity onPress={() => this.onLightboxPress()}>
+                <TouchableOpacity onPress={() => this.onLightboxPress()} activeOpacity={0.7}>
                     <Image style={this._imageStyle()} source={{ uri: this.props.src }} />
                 </TouchableOpacity>
                 <Modal
