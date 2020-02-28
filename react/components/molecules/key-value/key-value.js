@@ -1,8 +1,10 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import PropTypes from "prop-types";
+
 import { baseStyles } from "../../../util";
-import { ButtonIcon } from "../../";
+
+import { ButtonIcon } from "../../atoms";
 
 export class KeyValue extends PureComponent {
     static get propTypes() {
