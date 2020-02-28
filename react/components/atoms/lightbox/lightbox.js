@@ -1,13 +1,5 @@
 import React, { PureComponent } from "react";
-import {
-    ViewPropTypes,
-    StyleSheet,
-    View,
-    TouchableOpacity,
-    Image,
-    Modal,
-    BackHandler
-} from "react-native";
+import { ViewPropTypes, StyleSheet, View, TouchableOpacity, Image, Modal } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -40,9 +32,7 @@ export class Lightbox extends PureComponent {
         };
     }
 
-    handleBackPress = () => {
-        console.log("yeeeeeeeeeeeeeet");
-
+    onBackButtonPress = () => {
         this.setState({
             visible: false
         });
@@ -76,7 +66,7 @@ export class Lightbox extends PureComponent {
                     animationType="fade"
                     transparent={false}
                     visible={this.state.visible}
-                    onRequestClose={() => this.handleBackPress()}
+                    onRequestClose={() => this.onBackButtonPress()}
                 >
                     <View style={styles.fullscreenContainer}>
                         <Image style={styles.fullscreenImage} source={{ uri: this.props.src }} />
@@ -90,12 +80,10 @@ export class Lightbox extends PureComponent {
 const styles = StyleSheet.create({
     fullscreenImage: {
         flex: 1,
-        width: "100%",
         resizeMode: "contain"
     },
     fullscreenContainer: {
-        width: "100%",
-        height: "100%",
+        flex: 1,
         backgroundColor: "#000000"
     }
 });
