@@ -64,5 +64,8 @@
     },
     "jest": {
         "preset": "react-native"
+    },
+    "dependencies": {
+        "react-native-image-picker": "^2.3.1"
     }
 }

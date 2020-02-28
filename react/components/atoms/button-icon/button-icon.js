@@ -14,7 +14,13 @@ export class ButtonIcon extends PureComponent {
             iconStrokeWidth: PropTypes.number,
             onPress: PropTypes.func,
             size: PropTypes.number.isRequired,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            hitBox: PropTypes.shape({
+                top: PropTypes.number,
+                right: PropTypes.number,
+                bottom: PropTypes.number,
+                left: PropTypes.number
+            })
         };
     }
 
@@ -26,7 +32,13 @@ export class ButtonIcon extends PureComponent {
             iconWidth: 20,
             iconStrokeWidth: 1,
             onPress: undefined,
-            style: {}
+            style: {},
+            hitBox: {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20
+            }
         };
     }
 

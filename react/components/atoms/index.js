@@ -3,6 +3,7 @@ export * from "./button";
 export * from "./button-keyboard";
 export * from "./button-icon";
 export * from "./button-tab";
+export * from "./button-generic";
 export * from "./key-value";
 export * from "./icon";
 export * from "./tag";
