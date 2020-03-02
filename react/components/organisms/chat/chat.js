@@ -63,6 +63,7 @@ export class Chat extends PureComponent {
                             message={message.message}
                             date={message.date}
                             attachments={message.attachments}
+                            key={index}
                         />
                     );
                 })}
