@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, View } from "react-native";
+import { StyleSheet, ViewPropTypes, TouchableOpacity, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
@@ -27,6 +27,7 @@ export class Container extends PureComponent {
             gradientAngle: PropTypes.number,
             gradientColors: PropTypes.arrayOf(PropTypes.string),
             gradientLocations: PropTypes.arrayOf(PropTypes.number),
+            onPress: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -40,13 +41,20 @@ export class Container extends PureComponent {
             gradientAngle: 62,
             gradientLocations: [0.4, 0.84],
             gradientColors: ["#4a6fe9", "#6687f6"],
+            onPress: undefined,
             style: {}
         };
     }
 
     render() {
         return (
-            <View style={[styles.container, this.props.style]}>
+            <TouchableOpacity
+                style={[styles.container, this.props.style]}
+                activeOpacity={0.4}
+                disabled={this.props.onPress === undefined}
+                onPress={this.props.onPress}
+
+            >
                 {this.props.header && (
                     <LinearGradient
                         style={styles.gradient}
@@ -72,7 +80,7 @@ export class Container extends PureComponent {
                     </LinearGradient>
                 )}
                 {this.props.children}
-            </View>
+            </TouchableOpacity>
         );
     }
 }
