@@ -17,7 +17,7 @@ storiesOf("Atoms", module)
         const resizeMode = select(
             "Resize Mode",
             {
-                None: undefined,
+                Unset: undefined,
                 Cover: "cover",
                 Contain: "contain",
                 Stretch: "stretch",
