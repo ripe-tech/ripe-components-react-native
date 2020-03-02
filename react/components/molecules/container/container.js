@@ -53,7 +53,6 @@ export class Container extends PureComponent {
                 activeOpacity={0.4}
                 disabled={this.props.onPress === undefined}
                 onPress={this.props.onPress}
-
             >
                 {this.props.header && (
                     <LinearGradient
