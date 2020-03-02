@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, ScrollView } from "react-native";
+import { ViewPropTypes, StyleSheet, ScrollView } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -49,6 +49,7 @@ export class Chat extends PureComponent {
                 {this.props.messages.map((message, index) => {
                     return (
                         <ChatMessage
+                            style={styles.chatMessage}
                             avatarUrl={message.avatarUrl}
                             username={message.username}
                             message={message.message}
@@ -62,5 +63,11 @@ export class Chat extends PureComponent {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    chatMessage: {
+        marginTop: 32
+    }
+});
 
 export default Chat;
