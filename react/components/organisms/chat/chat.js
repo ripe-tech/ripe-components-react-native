@@ -43,15 +43,6 @@ export class Chat extends PureComponent {
         return [this.props.style];
     };
 
-    propsTest = () => {
-        let str = "";
-        this.props.messages.forEach(msg => {
-            str += `${msg.username}\n${msg.avatarUrl}\n${msg.message}\n${msg.date}\n${msg.attachments}\n\n\n`;
-        });
-
-        return str;
-    };
-
     render() {
         return (
             <ScrollView>
