@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, Image, TouchableOpacity } from "react-native";
+import { ViewPropTypes, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -32,12 +32,13 @@ export class Avatar extends PureComponent {
 
     _imageStyle = () => {
         return [
-            this.props.style,
+            styles.image,
             {
                 width: this.props.size,
                 height: this.props.size,
                 borderRadius: this.props.size
-            }
+            },
+            this.props.style
         ];
     };
 
@@ -57,5 +58,13 @@ export class Avatar extends PureComponent {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    image: {
+        width: "100%",
+        height: "100%",
+        overflow: "hidden"
+    }
+});
 
 export default Avatar;
