@@ -50,6 +50,10 @@ export class Tabs extends PureComponent {
                             key={tab.text}
                             text={tab.text}
                             disabled={tab.disabled}
+                            badgeCount={tab.badgeCount}
+                            badgeText={tab.badgeText}
+                            badgeColor={tab.badgeColor}
+                            badgeBackgroundColor={tab.badgeBackgroundColor}
                             icon={tab.icon}
                             onPress={() => this.onPressTab(tab.id)}
                             selected={this._isSelected(tab.id)}

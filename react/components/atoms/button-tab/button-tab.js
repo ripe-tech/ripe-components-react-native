@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
+import { Badge } from "../badge";
 
 export class ButtonTab extends PureComponent {
     state = {
@@ -13,6 +14,10 @@ export class ButtonTab extends PureComponent {
 
     static get propTypes() {
         return {
+            badgeCount: PropTypes.number,
+            badgeText: PropTypes.string,
+            badgeColor: PropTypes.string,
+            badgeBackgroundColor: PropTypes.string,
             text: PropTypes.string,
             icon: PropTypes.string,
             selected: PropTypes.bool,
@@ -24,6 +29,10 @@ export class ButtonTab extends PureComponent {
 
     static get defaultProps() {
         return {
+            badgeCount: undefined,
+            badgeText: undefined,
+            badgeColor: undefined,
+            badgeBackgroundColor: undefined,
             text: undefined,
             selected: false,
             disabled: false,
@@ -67,6 +76,13 @@ export class ButtonTab extends PureComponent {
                     {this.props.text ? (
                         <Text style={this._labelStyles()}>{this.props.text}</Text>
                     ) : null}
+                    <Badge
+                        count={this.props.badgeCount}
+                        text={this.props.badgeText}
+                        color={this.props.badgeColor}
+                        backgroundColor={this.props.badgeBackgroundColor}
+                        style={{ position: "absolute", top: 0, right: 9 }}
+                    />
                 </View>
             </TouchableWithoutFeedback>
         );

@@ -26,17 +26,21 @@ storiesOf("Molecules", module)
             {
                 id: "scan",
                 text: "Scan",
+                badgeText: "•",
                 icon: "qr",
                 disabled: true
             },
             {
                 id: "orders",
                 text: "Orders",
+                badgeCount: 5,
                 icon: "inbox-alt",
                 disabled: false
             },
             {
                 id: "alerts",
+                badgeCount: 999,
+                badgeBackgroundColor: "red",
                 text: "Alerts",
                 icon: "bell",
                 disabled: false
