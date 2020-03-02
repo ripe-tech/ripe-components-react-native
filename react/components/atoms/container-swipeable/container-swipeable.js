@@ -112,7 +112,10 @@ export class ContainerSwipeable extends PureComponent {
                     style={this._containerStyles()}
                     onStartShouldSetResponder={this.toggle}
                 >
-                    <Animated.View style={this._containerInnerStyles()}>
+                    <Animated.View
+                        style={this._containerInnerStyles()}
+                        onStartShouldSetResponder={() => true}
+                    >
                         <View onLayout={this.onLayout} pointerEvents="auto">
                             <TouchableOpacity
                                 style={styles.buttonBar}
