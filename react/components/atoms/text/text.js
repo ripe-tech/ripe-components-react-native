@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, Text as RNText } from "react-native";
+import { StyleSheet, Text as RNText } from "react-native";
 
 import { baseStyles } from "../../../util";
 
 export class Text extends PureComponent {
     static get propTypes() {
         return {
-            style: ViewPropTypes.style
+            style: RNText.propTypes.style
         };
     }
 

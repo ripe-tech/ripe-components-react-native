@@ -8,7 +8,7 @@ import { dateString, timeString } from "../../../util";
 
 import { Icon, Text } from "../../atoms";
 
-export class Container extends PureComponent {
+export class Item extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -49,7 +49,7 @@ export class Container extends PureComponent {
     render() {
         return (
             <TouchableOpacity
-                style={[styles.container, this.props.style]}
+                style={[styles.item, this.props.style]}
                 activeOpacity={0.4}
                 disabled={this.props.onPress === undefined}
                 onPress={this.props.onPress}
@@ -85,7 +85,7 @@ export class Container extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    item: {
         backgroundColor: "#ffffff",
         borderRadius: 6,
         shadowOffset: {
@@ -121,4 +121,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Container;
+export default Item;
