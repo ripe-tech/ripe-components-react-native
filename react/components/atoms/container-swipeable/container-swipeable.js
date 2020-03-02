@@ -27,6 +27,7 @@ export class ContainerSwipeable extends PureComponent {
         super(props);
 
         this.state = {
+            visible: false,
             modalVisible: false,
             containerChildrenHeight: null,
             containerBackgroundColorAnimated: new Animated.Value(0),
@@ -41,14 +42,19 @@ export class ContainerSwipeable extends PureComponent {
             return;
         }
 
-        if (this.state.modalVisible) {
-            this._toggleAnimations();
-            setTimeout(() => {
-                this.setState({ modalVisible: false });
-            }, this.props.animationsDuration);
+        if (this.state.visible) {
+            this.setState(
+                {
+                    visible: false
+                },
+                () => {
+                    this._toggleAnimations();
+                }
+            );
         } else {
             this.setState(
                 {
+                    visible: true,
                     modalVisible: true
                 },
                 () => {
@@ -69,15 +75,22 @@ export class ContainerSwipeable extends PureComponent {
 
         Animated.parallel([
             Animated.timing(this.state.containerBackgroundColorAnimated, {
-                toValue: this.state.containerBackgroundColorAnimated._value ? 0 : 1,
+                toValue: this.state.visible ? 1 : 0,
                 duration: this.props.animationsDuration
             }),
             Animated.timing(this.state.containerInnerHeightAnimated, {
-                toValue: this.state.containerInnerHeightAnimated._value ? 0 : 1,
+                toValue: this.state.visible ? 1 : 0,
                 duration: this.props.animationsDuration
             })
         ]).start(() => {
-            this.animating = false;
+            this.setState(
+                {
+                    modalVisible: this.state.visible
+                },
+                () => {
+                    this.animating = false;
+                }
+            );
         });
     };
 
