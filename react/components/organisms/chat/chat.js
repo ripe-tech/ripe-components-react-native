@@ -1,7 +1,9 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, Text } from "react-native";
+import { ViewPropTypes, ScrollView } from "react-native";
 
 import PropTypes from "prop-types";
+
+import { ChatMessage } from "../..";
 
 export class Chat extends PureComponent {
     static get propTypes() {
@@ -51,7 +53,21 @@ export class Chat extends PureComponent {
     };
 
     render() {
-        return <Text>{this.propsTest()}</Text>;
+        return (
+            <ScrollView>
+                {this.props.messages.map((message, index) => {
+                    return (
+                        <ChatMessage
+                            avatarUrl={message.avatarUrl}
+                            username={message.username}
+                            message={message.message}
+                            date={message.date}
+                            attachments={message.attachments}
+                        />
+                    );
+                })}
+            </ScrollView>
+        );
     }
 }
 
