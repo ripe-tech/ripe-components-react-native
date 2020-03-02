@@ -3,7 +3,6 @@ export * from "./button";
 export * from "./button-keyboard";
 export * from "./button-icon";
 export * from "./button-tab";
-export * from "./key-value";
 export * from "./icon";
 export * from "./lightbox";
 export * from "./link";
