@@ -6,12 +6,33 @@ import PropTypes from "prop-types";
 export class Chat extends PureComponent {
     static get propTypes() {
         return {
+            avatarUrl: PropTypes.string.isRequired,
+            username: PropTypes.string.isRequired,
+            messages: PropTypes.arrayOf(
+                PropTypes.exact({
+                    avatarUrl: PropTypes.string.isRequired,
+                    username: PropTypes.string.isRequired,
+                    message: PropTypes.string.isRequired,
+                    date: PropTypes.number.isRequired,
+                    attachments: PropTypes.arrayOf(
+                        PropTypes.exact({
+                            name: PropTypes.string.isRequired,
+                            path: PropTypes.string.isRequired
+                        })
+                    )
+                })
+            ),
+            onNewMessage: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
+            avatarUrl: undefined,
+            username: undefined,
+            messages: [],
+            onNewMessage: () => {},
             style: {}
         };
     }
@@ -20,8 +41,17 @@ export class Chat extends PureComponent {
         return [this.props.style];
     };
 
+    propsTest = () => {
+        let str = "";
+        this.props.messages.forEach(msg => {
+            str += `${msg.username}\n${msg.avatarUrl}\n${msg.message}\n${msg.date}\n${msg.attachments}\n\n\n`;
+        });
+
+        return str;
+    };
+
     render() {
-        return <Text>Hi ! I'm Chat</Text>;
+        return <Text>{this.propsTest()}</Text>;
     }
 }
 
