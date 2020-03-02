@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View } from "react-native";
+import { ViewPropTypes, StyleSheet, View } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -28,7 +28,8 @@ export class ChatMessage extends PureComponent {
                     name: PropTypes.string.isRequired,
                     path: PropTypes.string.isRequired
                 })
-            )
+            ),
+            style: ViewPropTypes.style
         };
     }
 
@@ -38,7 +39,8 @@ export class ChatMessage extends PureComponent {
             username: undefined,
             message: undefined,
             date: undefined,
-            attachments: []
+            attachments: [],
+            style: {}
         };
     }
 
@@ -51,7 +53,7 @@ export class ChatMessage extends PureComponent {
         };
 
         return (
-            <View style={styles.chatMessage}>
+            <View style={[styles.chatMessage, this.props.style]}>
                 <Avatar style={styles.avatar} image={{ uri: this.props.avatarUrl }} size={32} />
                 <View style={styles.content}>
                     <View style={styles.header}>
