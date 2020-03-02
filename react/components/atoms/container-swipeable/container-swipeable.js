@@ -64,10 +64,6 @@ export class ContainerSwipeable extends PureComponent {
         });
     };
 
-    _onAnimationEnd = () => {
-        this.animating = false;
-    };
-
     _toggleAnimations = () => {
         this.animating = true;
 
@@ -80,7 +76,9 @@ export class ContainerSwipeable extends PureComponent {
                 toValue: this.state.containerInnerHeightAnimated._value ? 0 : 1,
                 duration: this.props.animationsDuration
             })
-        ]).start(this._onAnimationEnd);
+        ]).start(() => {
+            this.animating = false;
+        });
     };
 
     _containerStyles() {
