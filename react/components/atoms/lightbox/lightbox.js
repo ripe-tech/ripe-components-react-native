@@ -7,7 +7,7 @@ export class Lightbox extends PureComponent {
     static get propTypes() {
         return {
             uri: PropTypes.string,
-            source: PropTypes.string,
+            src: PropTypes.string,
             width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             borderRadius: PropTypes.number,
@@ -42,7 +42,7 @@ export class Lightbox extends PureComponent {
             {
                 visible: value
             },
-            this.props.onVisible(this.state.visible)
+            this.props.onVisible(value)
         );
     }
 
@@ -52,6 +52,10 @@ export class Lightbox extends PureComponent {
 
     onLightboxPress = () => {
         this.setVisibility(true);
+    };
+
+    _imageSource = () => {
+        return this.props.uri ? { uri: this.props.uri } : this.props.src;
     };
 
     _imageStyle = () => {
@@ -69,20 +73,17 @@ export class Lightbox extends PureComponent {
     render() {
         return (
             <View>
-                <TouchableOpacity onPress={() => this.onLightboxPress()} activeOpacity={0.7}>
-                    <Image
-                        style={this._imageStyle()}
-                        source={this.props.uri ? { uri: this.props.uri } : this.props.source}
-                    />
+                <TouchableOpacity onPress={this.onLightboxPress} activeOpacity={0.7}>
+                    <Image style={this._imageStyle()} source={this._imageSource()} />
                 </TouchableOpacity>
                 <Modal
                     animationType="fade"
                     transparent={false}
                     visible={this.state.visible}
-                    onRequestClose={() => this.onBackButtonPress()}
+                    onRequestClose={this.onBackButtonPress}
                 >
                     <View style={styles.fullscreenContainer}>
-                        <Image style={styles.fullscreenImage} source={{ uri: this.props.uri }} />
+                        <Image style={styles.fullscreenImage} source={this._imageSource()} />
                     </View>
                 </Modal>
             </View>
