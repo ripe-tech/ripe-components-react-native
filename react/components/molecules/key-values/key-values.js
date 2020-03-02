@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
 
-import { KeyValue } from "../../atoms";
+import { KeyValue } from "../key-value";
 
 export class KeyValues extends PureComponent {
     static get propTypes() {
