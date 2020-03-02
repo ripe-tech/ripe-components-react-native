@@ -7,20 +7,18 @@ import { Badge } from "./badge";
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Badge", () => {
-        const _text = text("Text", "3");
-        const height = number("Height", 16);
-        const width = number("Width", 22);
-        const color = text("Color", "#ffffff");
         const backgroundColor = text("Background Color", "#597cf0");
         const borderRadius = number("Border Radius", 8);
+        const color = text("Color", "#ffffff");
+        const count = number("Count", 22);
+        const _text = text("Text", "");
         return (
             <Badge
-                text={_text || undefined}
-                width={width || undefined}
-                height={height || undefined}
-                color={color || undefined}
                 backgroundColor={backgroundColor || undefined}
                 borderRadius={borderRadius || 0}
+                color={color || undefined}
+                count={count || undefined}
+                text={_text || undefined}
             />
         );
     });

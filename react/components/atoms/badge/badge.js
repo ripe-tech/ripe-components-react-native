@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, Text, View } from "react-native";
+import { Animated, StyleSheet, ViewPropTypes, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -10,10 +10,9 @@ export class Badge extends PureComponent {
             backgroundColor: PropTypes.string,
             borderRadius: PropTypes.number,
             color: PropTypes.string,
-            height: PropTypes.number,
+            count: PropTypes.number,
             style: ViewPropTypes.style,
-            text: PropTypes.string,
-            width: PropTypes.number
+            text: PropTypes.string
         };
     }
 
@@ -22,11 +21,49 @@ export class Badge extends PureComponent {
             backgroundColor: "#597cf0",
             borderRadius: 8,
             color: "#ffffff",
-            height: 16,
+            count: 0,
             style: {},
-            text: undefined,
-            width: 22
+            text: undefined
         };
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            count: this.props.count,
+            text: this.props.text,
+            opacity: new Animated.Value(1)
+        };
+    }
+
+    becomeVisible = () => {
+        Animated.timing(this.state.opacity, {
+            toValue: 1,
+            duration: 500
+        }).start();
+    };
+
+    becomeInvisible = () => {
+        Animated.timing(this.state.opacity, {
+            toValue: 0,
+            duration: 500
+        }).start();
+    };
+
+    animateCount() {
+        console.log("count was updated!");
+        this.becomeInvisible();
+        setTimeout(() => {
+            this.becomeVisible();
+        }, 500);
+    }
+
+    async componentDidUpdate() {
+        if (this.props.count !== this.state.count || this.props.text !== this.state.text) {
+            this.animateCount();
+        }
+        this.state.count = this.props.count;
+        this.state.text = this.props.text;
     }
 
     _style = () => {
@@ -35,11 +72,22 @@ export class Badge extends PureComponent {
             {
                 backgroundColor: this.props.backgroundColor,
                 borderRadius: this.props.borderRadius,
-                height: this.props.height,
-                width: this.props.width
+                height: 16
             },
             this.props.style
         ];
+    };
+
+    _getNumericCount = () => {
+        return this.state.count > 99 ? "99+" : this.state.count;
+    };
+
+    _getTextCount = () => {
+        return this.state.text !== undefined ? this.state.text : null;
+    };
+
+    _getCount = () => {
+        return this._getNumericCount() ? this._getNumericCount() : this._getTextCount();
     };
 
     _textStyle = () => {
@@ -47,28 +95,34 @@ export class Badge extends PureComponent {
             styles.text,
             {
                 color: this.props.color,
-                lineHeight: this.props.height + 1
+                lineHeight: 17,
+                opacity: this.state.opacity,
+                paddingHorizontal: this.state.count < 100 ? 7 : 3
             }
         ];
     };
 
     render() {
-        return (
-            <View style={this._style()} disabled={this.props.disabled}>
-                {this.props.text ? <Text style={this._textStyle()}>{this.props.text}</Text> : null}
+        return this._getCount() ? (
+            <View style={this._style()}>
+                {this.state.text ? (
+                    <Animated.Text style={this._textStyle()}>{this.state.text}</Animated.Text>
+                ) : (
+                    <Animated.Text style={this._textStyle()}>{this._getCount()}</Animated.Text>
+                )}
             </View>
-        );
+        ) : null;
     }
 }
 
 const styles = StyleSheet.create({
     text: {
         fontFamily: baseStyles.FONT_BOLD,
+        fontSize: 13,
         textAlign: "center",
         fontWeight: "400",
-        width: "100%",
         height: "100%",
-        fontSize: 13
+        width: "100%"
     }
 });
 
