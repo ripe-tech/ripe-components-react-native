@@ -27,7 +27,7 @@ export class ContainerSwipeable extends PureComponent {
         super(props);
 
         this.state = {
-            modalVisble: false,
+            modalVisible: false,
             containerChildrenHeight: null,
             containerBackgroundColorAnimated: new Animated.Value(0),
             containerInnerHeightAnimated: new Animated.Value(0)
@@ -41,15 +41,15 @@ export class ContainerSwipeable extends PureComponent {
             return;
         }
 
-        if (this.state.modalVisble) {
+        if (this.state.modalVisible) {
             this._toggleAnimations();
             setTimeout(() => {
-                this.setState({ modalVisble: false });
+                this.setState({ modalVisible: false });
             }, this.props.animationsDuration);
         } else {
             this.setState(
                 {
-                    modalVisble: true
+                    modalVisible: true
                 },
                 () => {
                     this._toggleAnimations();
@@ -89,7 +89,7 @@ export class ContainerSwipeable extends PureComponent {
             {
                 backgroundColor: this.state.containerBackgroundColorAnimated.interpolate({
                     inputRange: [0, 1],
-                    outputRange: ["rgba(29,38,49,0)", "rgba(29,38,49,0.35)"]
+                    outputRange: ["rgba(29, 38, 49, 0)", "rgba(29, 38, 49, 0.35)"]
                 })
             }
         ];
@@ -109,7 +109,7 @@ export class ContainerSwipeable extends PureComponent {
 
     render() {
         return (
-            <Modal animationType="none" transparent={true} visible={this.state.modalVisble}>
+            <Modal animationType="none" transparent={true} visible={this.state.modalVisible}>
                 <Animated.View
                     style={this._containerStyles()}
                     onStartShouldSetResponder={this.toggle}
