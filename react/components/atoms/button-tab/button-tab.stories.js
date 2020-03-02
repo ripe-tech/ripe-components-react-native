@@ -11,7 +11,12 @@ storiesOf("Atoms", module)
         const disabled = boolean("Disabled", false);
         const icon = select(
             "Icon",
-            { None: undefined, Add: "add", Alarm: "alarm", Bell: "bell" },
+            {
+                Unset: undefined,
+                Add: "add",
+                Alarm: "alarm",
+                Bell: "bell"
+            },
             "add"
         );
         const selected = boolean("Selected", true);
