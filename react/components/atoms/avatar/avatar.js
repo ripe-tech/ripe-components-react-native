@@ -9,6 +9,12 @@ export class Avatar extends PureComponent {
             image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
             size: PropTypes.number,
             resizeMode: PropTypes.string,
+            hitSlop: PropTypes.shape({
+                top: PropTypes.number.isRequired,
+                left: PropTypes.number.isRequired,
+                right: PropTypes.number.isRequired,
+                bottom: PropTypes.number.isRequired
+            }),
             style: ViewPropTypes.style,
             onPress: PropTypes.func
         };
@@ -16,16 +22,15 @@ export class Avatar extends PureComponent {
 
     static get defaultProps() {
         return {
-            resizeMode: "contain",
             size: 40,
+            resizeMode: "contain",
+            hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
             style: {},
             onPress: undefined
         };
     }
 
-    hitSlop = { top: 20, left: 20, right: 20, bottom: 20 };
-
-    _imageStyles = () => {
+    _imageStyle = () => {
         return [
             this.props.style,
             {
@@ -41,11 +46,11 @@ export class Avatar extends PureComponent {
             <TouchableOpacity
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
-                hitSlop={this.hitSlop}
+                hitSlop={this.props.hitSlop}
             >
                 <Image
                     source={this.props.image}
-                    style={this._imageStyles()}
+                    style={this._imageStyle()}
                     resizeMode={this.props.resizeMode}
                 />
             </TouchableOpacity>
