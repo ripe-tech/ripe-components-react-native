@@ -9,7 +9,12 @@ storiesOf("Atoms", module)
     .add("Icon", () => {
         const icon = select(
             "Icon",
-            { None: undefined, Add: "add", Alarm: "alarm", Bell: "bell" },
+            {
+                Unset: undefined,
+                Add: "add",
+                Alarm: "alarm",
+                Bell: "bell"
+            },
             "add"
         );
         const color = text("Color", "#000000");

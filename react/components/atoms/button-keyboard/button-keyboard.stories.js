@@ -11,10 +11,21 @@ storiesOf("Atoms", module)
         const _value = text("Button Value", "Best value ever");
         const icon = select(
             "Icon",
-            { None: undefined, Add: "add", ArrowLeft: "chevron-left" },
+            {
+                Unset: undefined,
+                Add: "add",
+                ArrowLeft: "chevron-left"
+            },
             undefined
         );
-        const variant = select("Variant", { None: undefined, Clean: "clean" }, undefined);
+        const variant = select(
+            "Variant",
+            {
+                Unset: undefined,
+                Clean: "clean"
+            },
+            undefined
+        );
 
         return <ButtonKeyboard text={_text} icon={icon} value={_value} variant={variant} />;
     });
