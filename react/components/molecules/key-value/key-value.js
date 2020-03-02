@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     key: {
         marginTop: Platform.OS === "ios" ? 2 : 0,
         fontFamily: baseStyles.FONT,
-        fontSize: 15,
+        fontSize: 14,
         lineHeight: 18,
         marginBottom: 8,
         letterSpacing: 0.25,
