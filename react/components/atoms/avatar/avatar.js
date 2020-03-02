@@ -25,9 +25,8 @@ export class Avatar extends PureComponent {
 
     hitSlop = { top: 20, left: 20, right: 20, bottom: 20 };
 
-    _styles = () => {
+    _style = () => {
         return [
-            this.props.avatar,
             {
                 width: this.props.size,
                 height: this.props.size,
@@ -44,7 +43,7 @@ export class Avatar extends PureComponent {
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
                 hitSlop={this.hitSlop}
-                style={this._styles()}
+                style={this._style()}
             >
                 <Image
                     source={this.props.image}
@@ -57,9 +56,10 @@ export class Avatar extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    avatar: {},
     image: {
         width: "100%",
         height: "100%"
     }
 });
+
+export default Avatar;
