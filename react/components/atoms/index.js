@@ -10,3 +10,4 @@ export * from "./link";
 export * from "./tag";
 export * from "./text";
 export * from "./textarea";
+export * from "./button-tab-text";
