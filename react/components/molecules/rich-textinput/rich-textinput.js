@@ -3,7 +3,7 @@ import { StyleSheet, ViewPropTypes, Text } from "react-native";
 
 import PropTypes from "prop-types";
 
-export class RichTextArea extends PureComponent {
+export class RichTextInput extends PureComponent {
     static get propTypes() {
         return {
             value: PropTypes.string,
@@ -53,7 +53,7 @@ export class RichTextArea extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    richTextArea: {}
+    RichTextInput: {}
 });
 
-export default RichTextArea;
+export default RichTextInput;

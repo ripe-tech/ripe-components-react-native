@@ -2,13 +2,13 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 
-import { RichTextArea } from "../..";
+import { RichTextInput } from "../..";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
-    .add("RichTextArea", () => {
+    .add("RichTextInput", () => {
         const onValue = value => {
-            console.log("[TextArea]", "onValue", value);
+            console.log("[RichTextInput]", "onValue", value);
         };
         const value = text("Value", undefined);
         const placeholder = text("Placeholder", "Placeholder example");
@@ -16,7 +16,7 @@ storiesOf("Atoms", module)
         const minHeight = number("Min Height", undefined);
         const maxHeight = number("Max Height", undefined);
         return (
-            <RichTextArea
+            <RichTextInput
                 value={value}
                 placeholder={placeholder}
                 multiline={multiline}
