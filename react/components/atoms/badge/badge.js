@@ -39,7 +39,9 @@ export class Badge extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this._animateCount(nextProps.count, nextProps.text);
+        if (nextProps.count !== this.state.count || nextProps.text !== this.state.text) {
+            this._animateCount(nextProps.count, nextProps.text);
+        }
     }
 
     _animateCount(newCount, newText) {
