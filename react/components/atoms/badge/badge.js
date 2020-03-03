@@ -1,14 +1,15 @@
-import React, { PureComponent } from "react";
-import { Animated, StyleSheet, ViewPropTypes, View } from "react-native";
+import React, { Component } from "react";
+import { Animated, StyleSheet, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
 
-export class Badge extends PureComponent {
+export class Badge extends Component {
     static get propTypes() {
         return {
             backgroundColor: PropTypes.string,
             borderRadius: PropTypes.number,
+            animationDuration: PropTypes.number,
             color: PropTypes.string,
             count: PropTypes.number,
             style: ViewPropTypes.style,
@@ -18,6 +19,7 @@ export class Badge extends PureComponent {
 
     static get defaultProps() {
         return {
+            animationDuration: 300,
             backgroundColor: "#597cf0",
             borderRadius: 8,
             color: "#ffffff",
@@ -32,38 +34,76 @@ export class Badge extends PureComponent {
         this.state = {
             count: this.props.count,
             text: this.props.text,
-            opacity: new Animated.Value(1)
+            incomingCount: null,
+            incomingText: null,
+            opacity: new Animated.Value(1),
+            scale: new Animated.Value(1)
         };
     }
 
-    becomeVisible = () => {
+    animateCount = (newCount, nextText) => {
+        this.stopPreviousAnimations();
         Animated.timing(this.state.opacity, {
-            toValue: 1,
-            duration: 500
-        }).start();
+            toValue: 0.2,
+            duration: this.props.animationDuration
+        }).start(() => {
+            this.setState(
+                {
+                    count: newCount,
+                    text: nextText
+                },
+                () => {
+                    Animated.timing(this.state.opacity, {
+                        toValue: 1,
+                        duration: this.props.animationDuration
+                    }).start(
+                        this.animateBadge(() => {
+                            console.log("done");
+                        })
+                    );
+                }
+            );
+        });
     };
 
-    becomeInvisible = () => {
-        Animated.timing(this.state.opacity, {
-            toValue: 0,
-            duration: 500
-        }).start();
-    };
-
-    animateCount() {
-        console.log("count was updated!");
-        this.becomeInvisible();
-        setTimeout(() => {
-            this.becomeVisible();
-        }, 500);
+    stopPreviousAnimations() {
+        this.state.opacity.stopAnimation();
+        this.state.scale.stopAnimation();
     }
 
-    async componentDidUpdate() {
-        if (this.props.count !== this.state.count || this.props.text !== this.state.text) {
-            this.animateCount();
+    animateBadge() {
+        Animated.timing(this.state.scale, {
+            toValue: 1.1,
+            duration: this.props.animationDuration
+        }).start(() => {
+            Animated.timing(this.state.scale, {
+                toValue: 1,
+                duration: this.props.animationDuration
+            }).start();
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.count !== this.state.count || nextProps.text !== this.state.text) {
+            this.animateCount(nextProps.count, nextProps.text);
+            console.log("inside componentWillReceiveProps");
         }
-        this.state.count = this.props.count;
-        this.state.text = this.props.text;
+    }
+
+    async componentDidMount() {
+        this.continuousUpdate();
+    }
+
+    continuousUpdate() {
+        setTimeout(() => {
+            this.animateCount(this.state.count + 1);
+            this.continuousUpdate();
+        }, 200);
+    }
+
+    updateState(newProps) {
+        this.state.incomingCount = newProps.count;
+        this.animateCount();
     }
 
     _style = () => {
@@ -72,7 +112,10 @@ export class Badge extends PureComponent {
             {
                 backgroundColor: this.props.backgroundColor,
                 borderRadius: this.props.borderRadius,
-                height: 16
+                height: 16,
+                width: 22,
+                scale: 0,
+                transform: [{ scale: this.state.scale }]
             },
             this.props.style
         ];
@@ -104,13 +147,9 @@ export class Badge extends PureComponent {
 
     render() {
         return this._getCount() ? (
-            <View style={this._style()}>
-                {this.state.text ? (
-                    <Animated.Text style={this._textStyle()}>{this.state.text}</Animated.Text>
-                ) : (
-                    <Animated.Text style={this._textStyle()}>{this._getCount()}</Animated.Text>
-                )}
-            </View>
+            <Animated.View style={this._style()}>
+                <Animated.Text style={this._textStyle()}>{this.state.count}</Animated.Text>
+            </Animated.View>
         ) : null;
     }
 }
