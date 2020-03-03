@@ -16,6 +16,7 @@ export class Tag extends PureComponent {
             icon: PropTypes.string,
             iconWidth: PropTypes.number,
             iconHeight: PropTypes.number,
+            size: PropTypes.string,
             style: ViewPropTypes.style,
             onPress: PropTypes.func
         };
@@ -30,6 +31,7 @@ export class Tag extends PureComponent {
             icon: undefined,
             iconWidth: undefined,
             iconHeight: undefined,
+            size: "normal",
             style: {},
             onPress: undefined
         };
@@ -38,6 +40,7 @@ export class Tag extends PureComponent {
     _style = () => {
         return [
             styles.tag,
+            this.props.size === "small" ? styles.tagSmall : null,
             {
                 backgroundColor: this.props.backgroundColor,
                 borderColor: this.props.borderColor,
@@ -51,6 +54,7 @@ export class Tag extends PureComponent {
     _textStyle = () => {
         return [
             styles.text,
+            this.props.size === "small" ? styles.textSmall : null,
             {
                 color: this.props.color,
                 marginLeft: this.props.icon ? 8 : undefined
@@ -88,10 +92,17 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         paddingHorizontal: 12
     },
+    tagSmall: {
+        paddingVertical: 3,
+        paddingHorizontal: 6
+    },
     text: {
         fontFamily: baseStyles.FONT_REGULAR,
         fontSize: 13,
         marginTop: Platform.OS === "ios" ? 2 : 0
+    },
+    textSmall: {
+        fontSize: 11
     }
 });
 
