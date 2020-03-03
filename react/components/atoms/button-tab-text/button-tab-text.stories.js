@@ -8,17 +8,16 @@ storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Button Tab Text", () => {
         const _text = text("Text", "User");
-        const _backgroundColor = text("Background Color", null);
-        const _disabled = boolean("Disabled", false);
-        const _active = boolean("Active", true);
-        const onPress = () => alert("Thanks for the press!!!");
+        const backgroundColor = text("Background Color", null);
+        const disabled = boolean("Disabled", false);
+        const active = boolean("Active", true);
         return (
             <ButtonTabText
-                active={_active}
+                active={active}
                 text={_text || undefined}
-                disabled={_disabled}
-                backgroundColor={_backgroundColor}
-                onPress={onPress}
+                disabled={disabled}
+                backgroundColor={backgroundColor}
+                onPress={() => alert("Thanks for the press!")}
             />
         );
     });
