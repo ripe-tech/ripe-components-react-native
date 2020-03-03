@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Animated, StyleSheet, ViewPropTypes } from "react-native";
+import { Animated, Text, StyleSheet, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -7,9 +7,9 @@ import { baseStyles } from "../../../util";
 export class Badge extends Component {
     static get propTypes() {
         return {
+            animationDuration: PropTypes.number,
             backgroundColor: PropTypes.string,
             borderRadius: PropTypes.number,
-            animationDuration: PropTypes.number,
             color: PropTypes.string,
             count: PropTypes.number,
             style: ViewPropTypes.style,
@@ -19,7 +19,7 @@ export class Badge extends Component {
 
     static get defaultProps() {
         return {
-            animationDuration: 300,
+            animationDuration: 200,
             backgroundColor: "#597cf0",
             borderRadius: 8,
             color: "#ffffff",
@@ -33,77 +33,33 @@ export class Badge extends Component {
         super(props);
         this.state = {
             count: this.props.count,
-            text: this.props.text,
-            incomingCount: null,
-            incomingText: null,
-            opacity: new Animated.Value(1),
-            scale: new Animated.Value(1)
+            scale: new Animated.Value(1),
+            text: this.props.text
         };
     }
 
-    animateCount = (newCount, nextText) => {
-        this.stopPreviousAnimations();
-        Animated.timing(this.state.opacity, {
-            toValue: 0.2,
-            duration: this.props.animationDuration
-        }).start(() => {
-            this.setState(
-                {
-                    count: newCount,
-                    text: nextText
-                },
-                () => {
-                    Animated.timing(this.state.opacity, {
-                        toValue: 1,
-                        duration: this.props.animationDuration
-                    }).start(
-                        this.animateBadge(() => {
-                            console.log("done");
-                        })
-                    );
-                }
-            );
-        });
-    };
-
-    stopPreviousAnimations() {
-        this.state.opacity.stopAnimation();
-        this.state.scale.stopAnimation();
+    componentWillReceiveProps(nextProps) {
+        this._animateCount(nextProps.count, nextProps.text);
     }
 
-    animateBadge() {
-        Animated.timing(this.state.scale, {
-            toValue: 1.1,
-            duration: this.props.animationDuration
-        }).start(() => {
+    _animateCount(newCount, newText) {
+        this.state.scale.stopAnimation();
+
+        Animated.sequence([
+            Animated.timing(this.state.scale, {
+                toValue: 1.1,
+                duration: this.props.animationDuration
+            }),
             Animated.timing(this.state.scale, {
                 toValue: 1,
                 duration: this.props.animationDuration
-            }).start();
+            })
+        ]).start(() => {
+            this.setState({
+                count: newCount,
+                text: newText
+            });
         });
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.count !== this.state.count || nextProps.text !== this.state.text) {
-            this.animateCount(nextProps.count, nextProps.text);
-            console.log("inside componentWillReceiveProps");
-        }
-    }
-
-    async componentDidMount() {
-        this.continuousUpdate();
-    }
-
-    continuousUpdate() {
-        setTimeout(() => {
-            this.animateCount(this.state.count + 1);
-            this.continuousUpdate();
-        }, 200);
-    }
-
-    updateState(newProps) {
-        this.state.incomingCount = newProps.count;
-        this.animateCount();
     }
 
     _style = () => {
@@ -112,9 +68,6 @@ export class Badge extends Component {
             {
                 backgroundColor: this.props.backgroundColor,
                 borderRadius: this.props.borderRadius,
-                height: 16,
-                width: 22,
-                scale: 0,
                 transform: [{ scale: this.state.scale }]
             },
             this.props.style
@@ -138,8 +91,6 @@ export class Badge extends Component {
             styles.text,
             {
                 color: this.props.color,
-                lineHeight: 17,
-                opacity: this.state.opacity,
                 paddingHorizontal: this.state.count < 100 ? 7 : 3
             }
         ];
@@ -148,19 +99,25 @@ export class Badge extends Component {
     render() {
         return this._getCount() ? (
             <Animated.View style={this._style()}>
-                <Animated.Text style={this._textStyle()}>{this.state.count}</Animated.Text>
+                <Text style={this._textStyle()}>
+                    {this.state.text ? this._getTextCount() : this._getCount()}
+                </Text>
             </Animated.View>
         ) : null;
     }
 }
 
 const styles = StyleSheet.create({
+    badge: {
+        height: 16
+    },
     text: {
         fontFamily: baseStyles.FONT_BOLD,
         fontSize: 13,
-        textAlign: "center",
         fontWeight: "400",
         height: "100%",
+        lineHeight: 17,
+        textAlign: "center",
         width: "100%"
     }
 });

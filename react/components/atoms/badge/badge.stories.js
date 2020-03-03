@@ -7,13 +7,15 @@ import { Badge } from "./badge";
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Badge", () => {
+        const _text = text("Text", "");
+        const animationDuration = number("Animation Duration", 200);
         const backgroundColor = text("Background Color", "#597cf0");
         const borderRadius = number("Border Radius", 8);
         const color = text("Color", "#ffffff");
         const count = number("Count", 22);
-        const _text = text("Text", "");
         return (
             <Badge
+                animationDuration={animationDuration || undefined}
                 backgroundColor={backgroundColor || undefined}
                 borderRadius={borderRadius || 0}
                 color={color || undefined}
