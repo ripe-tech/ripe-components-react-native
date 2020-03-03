@@ -59,18 +59,20 @@ export class RichTextInput extends PureComponent {
             <View style={[styles.richTextInput, this.props.style]}>
                 <View style={styles.buttons}>
                     <ButtonIcon
+                        style={styles.button}
                         icon={"camera"}
                         size={32}
-                        color={"#000000"}
+                        color={"#375274"}
                         backgroundColor={"#ffffff"}
                         iconHeight={28}
                         iconWidth={28}
                         onPress={() => this.onPhotoButtonPress()}
                     />
                     <ButtonIcon
+                        style={styles.button}
                         icon={"clip"}
                         size={32}
-                        color={"#000000"}
+                        color={"#375274"}
                         backgroundColor={"#ffffff"}
                         iconHeight={28}
                         iconWidth={28}
@@ -90,7 +92,7 @@ export class RichTextInput extends PureComponent {
                     style={styles.sendButton}
                     icon={"send"}
                     size={32}
-                    color={"#000000"}
+                    color={"#375274"}
                     backgroundColor={"#ffffff"}
                     iconHeight={27}
                     iconWidth={27}
@@ -103,19 +105,29 @@ export class RichTextInput extends PureComponent {
 
 const styles = StyleSheet.create({
     richTextInput: {
-        backgroundColor: "#00ccff",
-        flexDirection: "row"
+        flexDirection: "row",
+        backgroundColor: "#ffffff",
+        paddingTop: 8,
+        paddingBottom: 8
     },
     textArea: {
         flex: 1,
-        backgroundColor: "#ff9999"
+        backgroundColor: "#f6f7f9",
+        borderRadius: 20,
     },
     buttons: {
         flexDirection: "row",
-        backgroundColor: "#00cc00"
+        alignSelf: 'flex-end',
+        paddingLeft: 5,
+        paddingRight: 5
+    },
+    button: {
+        marginLeft: 10
     },
     sendButton: {
-        alignSelf: "flex-end"
+        alignSelf: "flex-end",
+        marginLeft: 5,
+        marginRight: 5
     }
 });
 
