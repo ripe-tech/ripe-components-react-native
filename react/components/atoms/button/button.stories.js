@@ -10,7 +10,13 @@ storiesOf("Atoms", module)
         const _text = text("Button Text", "Use Platforme ID");
         const icon = select(
             "Icon",
-            { None: undefined, Id: "id", Add: "add", Alarm: "alarm", Bell: "bell" },
+            {
+                Unset: undefined,
+                Id: "id",
+                Add: "add",
+                Alarm: "alarm",
+                Bell: "bell"
+            },
             "id"
         );
         const loading = boolean("Loading", false);
