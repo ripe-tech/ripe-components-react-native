@@ -22,8 +22,8 @@ storiesOf("Atoms", module)
         const onImageRemoved = value => {
             console.log("[RichTextInput]", "onImageRemoved", value);
         };
-        const onSendMessage = message => {
-            console.log("[RichTextInput]", "onSendMessage", message);
+        const onSendMessage = () => {
+            console.log("[RichTextInput]", "onSendMessage");
         };
         const value = text("Value", undefined);
         const placeholder = text("Placeholder", "Placeholder example");
