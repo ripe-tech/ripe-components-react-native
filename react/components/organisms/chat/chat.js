@@ -39,17 +39,13 @@ export class Chat extends PureComponent {
         };
     }
 
-    _style = () => {
-        return [this.props.style];
-    };
-
     render() {
         return (
-            <ScrollView>
+            <ScrollView style={[styles.chat, this.props.style]}>
                 {this.props.messages.map((message, index) => {
                     return (
                         <ChatMessage
-                            style={styles.chatMessage}
+                            style={index !== 0 && styles.chatMessage}
                             avatarUrl={message.avatarUrl}
                             username={message.username}
                             message={message.message}
@@ -65,6 +61,9 @@ export class Chat extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+    chat: {
+        backgroundColor: "#f6f7f9"
+    },
     chatMessage: {
         marginTop: 32
     }
