@@ -45,37 +45,34 @@ export class RichTextInput extends PureComponent {
             <View style={[styles.richTextInput, this.props.style]}>
                 <View style={styles.buttons}>
                     <ButtonIcon
-                        icon={"happy-face"}
-                        size={30}
+                        icon={"camera"}
+                        size={32}
                         color={"#000000"}
-                        backgroundColor={"#ff00ff"}
-                        iconStrokeWidth={1}
+                        backgroundColor={"#ffffff"}
                         iconHeight={28}
                         iconWidth={28}
-                        onPress={() => alert("Button 1!")}
+                        onPress={() => alert("Photo !")}
                     />
                     <ButtonIcon
-                        icon={"happy-face"}
-                        size={30}
+                        icon={"clip"}
+                        size={32}
                         color={"#000000"}
-                        backgroundColor={"#ff00ff"}
-                        iconStrokeWidth={1}
+                        backgroundColor={"#ffffff"}
                         iconHeight={28}
                         iconWidth={28}
-                        onPress={() => alert("Button 2!")}
+                        onPress={() => alert("Attachment !")}
                     />
                 </View>
-
-                <TextArea />
+                <TextArea style={styles.textArea}/>
                 <ButtonIcon
-                    icon={"happy-face"}
-                    size={30}
+                    style={styles.sendButton}
+                    icon={"send"}
+                    size={32}
                     color={"#000000"}
-                    backgroundColor={"#ff00ff"}
-                    iconStrokeWidth={1}
-                    iconHeight={28}
-                    iconWidth={28}
-                    onPress={() => alert("Button 3!")}
+                    backgroundColor={"#ffffff"}
+                    iconHeight={27}
+                    iconWidth={27}
+                    onPress={() => alert("Send 3!")}
                 />
             </View>
         );
@@ -84,10 +81,19 @@ export class RichTextInput extends PureComponent {
 
 const styles = StyleSheet.create({
     richTextInput: {
-        backgroundColor: "#00ccff"
+        backgroundColor: "#00ccff",
+        flexDirection:'row',
+    },
+    textArea: {
+        flex: 1,
+        backgroundColor: "#cc0000",
     },
     buttons: {
+        flexDirection:'row',
         backgroundColor: "#00cc00"
+    },
+    sendButton: {
+        alignSelf: "flex-end" 
     }
 });
 
