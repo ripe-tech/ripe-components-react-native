@@ -36,7 +36,7 @@ export class Avatar extends PureComponent {
             {
                 width: this.props.size,
                 height: this.props.size,
-                borderRadius: this.props.size
+                borderRadius: 100
             },
             this.props.style
         ];
