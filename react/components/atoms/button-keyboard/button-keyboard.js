@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
 import PropTypes from "prop-types";
 
-import * as baseStyles from "../../../util/styles";
+import { baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
 
@@ -34,8 +34,7 @@ export class ButtonKeyboard extends PureComponent {
     };
 
     _style = () => {
-        const base = [styles.style];
-
+        const base = [styles.buttonKeyboard];
         switch (this.props.variant) {
             case "clean":
                 base.push(styles.cleanStyle);
@@ -63,7 +62,7 @@ export class ButtonKeyboard extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    style: {
+    buttonKeyboard: {
         flex: 1,
         maxHeight: 54,
         marginHorizontal: 2,
@@ -95,3 +94,5 @@ const styles = StyleSheet.create({
         marginTop: Platform.OS === "ios" ? 4 : 0
     }
 });
+
+export default ButtonKeyboard;
