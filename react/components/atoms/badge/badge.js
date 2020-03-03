@@ -12,6 +12,8 @@ export class Badge extends Component {
             borderRadius: PropTypes.number,
             color: PropTypes.string,
             count: PropTypes.number,
+            hasAnimation: PropTypes.boolean,
+            countThreshold: PropTypes.number,
             style: ViewPropTypes.style,
             text: PropTypes.string
         };
@@ -24,6 +26,8 @@ export class Badge extends Component {
             borderRadius: 8,
             color: "#ffffff",
             count: 0,
+            hasAnimation: true,
+            countThreshold: 99,
             style: {},
             text: undefined
         };
@@ -36,32 +40,41 @@ export class Badge extends Component {
             scale: new Animated.Value(1),
             text: this.props.text
         };
+
+        this.animating = false;
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.count !== this.state.count || nextProps.text !== this.state.text) {
-            this._animateCount(nextProps.count, nextProps.text);
+    componentWillUpdate(props, state) {
+        if (props.count !== state.count || props.text !== state.text) {
+            this._animateCount(props.count, props.text);
         }
     }
 
     _animateCount(newCount, newText) {
-        this.state.scale.stopAnimation();
-
-        Animated.sequence([
-            Animated.timing(this.state.scale, {
-                toValue: 1.1,
-                duration: this.props.animationDuration
-            }),
-            Animated.timing(this.state.scale, {
-                toValue: 1,
-                duration: this.props.animationDuration
-            })
-        ]).start(() => {
+        if (!this.animating && this.props.hasAnimation) {
+            this.animating = true;
+            Animated.sequence([
+                Animated.timing(this.state.scale, {
+                    toValue: 1.1,
+                    duration: this.props.animationDuration
+                }),
+                Animated.timing(this.state.scale, {
+                    toValue: 1,
+                    duration: this.props.animationDuration
+                })
+            ]).start(() => {
+                this.setState({
+                    count: newCount,
+                    text: newText
+                });
+                this.animating = false;
+            });
+        } else {
             this.setState({
                 count: newCount,
                 text: newText
             });
-        });
+        }
     }
 
     _style = () => {
@@ -77,7 +90,9 @@ export class Badge extends Component {
     };
 
     _getNumericCount = () => {
-        return this.state.count > 99 ? "99+" : this.state.count;
+        return this.state.count > this.props.countThreshold
+            ? `${this.props.countThreshold}+`
+            : this.state.count;
     };
 
     _getTextCount = () => {

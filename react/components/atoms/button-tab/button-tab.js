@@ -14,10 +14,13 @@ export class ButtonTab extends PureComponent {
 
     static get propTypes() {
         return {
-            badgeCount: PropTypes.number,
-            badgeText: PropTypes.string,
-            badgeColor: PropTypes.string,
+            badgeAnimationDuration: PropTypes.string,
             badgeBackgroundColor: PropTypes.string,
+            badgeColor: PropTypes.string,
+            badgeCount: PropTypes.number,
+            badgeCountThreshold: PropTypes.number,
+            badgeHasAnimation: PropTypes.boolean,
+            badgeText: PropTypes.string,
             text: PropTypes.string,
             icon: PropTypes.string,
             selected: PropTypes.bool,
@@ -29,10 +32,13 @@ export class ButtonTab extends PureComponent {
 
     static get defaultProps() {
         return {
-            badgeCount: undefined,
-            badgeText: undefined,
-            badgeColor: undefined,
+            badgeAnimationDuration: undefined,
             badgeBackgroundColor: undefined,
+            badgeColor: undefined,
+            badgeCount: undefined,
+            badgeCountThreshold: undefined,
+            badgeHasAnimation: true,
+            badgeText: undefined,
             text: undefined,
             selected: false,
             disabled: false,
@@ -77,10 +83,13 @@ export class ButtonTab extends PureComponent {
                         <Text style={this._labelStyle()}>{this.props.text}</Text>
                     ) : null}
                     <Badge
-                        count={this.props.badgeCount}
-                        text={this.props.badgeText}
-                        color={this.props.badgeColor}
+                        animationDuration={this.props.badgeAnimationDuration}
                         backgroundColor={this.props.badgeBackgroundColor}
+                        color={this.props.badgeColor}
+                        count={this.props.badgeCount}
+                        countThreshold={this.props.badgeCountThreshold}
+                        hasAnimation={this.props.badgeHasAnimation}
+                        text={this.props.badgeText}
                         style={{ position: "absolute", top: 0, right: 9 }}
                     />
                 </View>
