@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, Platform, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, capitalize } from "../../../util";
 
 import { Icon } from "../icon";
 
@@ -40,7 +40,7 @@ export class Tag extends PureComponent {
     _style = () => {
         return [
             styles.tag,
-            this.props.size === "small" ? styles.tagSmall : null,
+            styles[`tag${capitalize(this.props.size)}`],
             {
                 backgroundColor: this.props.backgroundColor,
                 borderColor: this.props.borderColor,
@@ -54,7 +54,7 @@ export class Tag extends PureComponent {
     _textStyle = () => {
         return [
             styles.text,
-            this.props.size === "small" ? styles.textSmall : null,
+            styles[`text${capitalize(this.props.size)}`],
             {
                 color: this.props.color,
                 marginLeft: this.props.icon ? 8 : undefined
