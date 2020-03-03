@@ -30,7 +30,7 @@ export class ButtonIcon extends PureComponent {
         };
     }
 
-    _styles() {
+    _style() {
         return [
             styles.buttonIcon,
             {
@@ -48,7 +48,7 @@ export class ButtonIcon extends PureComponent {
             <TouchableOpacity
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
-                style={this._styles()}
+                style={this._style()}
             >
                 <Icon
                     icon={this.props.icon}
@@ -68,3 +68,5 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     }
 });
+
+export default ButtonIcon;
