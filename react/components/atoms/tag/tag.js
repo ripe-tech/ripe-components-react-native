@@ -90,19 +90,20 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         paddingVertical: 6,
-        paddingHorizontal: 12
+        paddingHorizontal: 12,
+        letterSpacing: 0.25
     },
-    tagSmall: {
+    tagTiny: {
         paddingVertical: 3,
-        paddingHorizontal: 6
+        paddingHorizontal: 8
     },
     text: {
-        fontFamily: baseStyles.FONT_REGULAR,
+        fontFamily: baseStyles.FONT_BOOK,
         fontSize: 13,
         marginTop: Platform.OS === "ios" ? 2 : 0
     },
-    textSmall: {
-        fontSize: 11
+    textTiny: {
+        fontSize: 9
     }
 });
 
