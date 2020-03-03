@@ -1,11 +1,28 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs } from "@storybook/addon-knobs";
+import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 
 import { RichTextArea } from "../..";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("RichTextArea", () => {
-        return <RichTextArea />;
+        const onValue = value => {
+            console.log("[TextArea]", "onValue", value);
+        };
+        const value = text("Value", undefined);
+        const placeholder = text("Placeholder", "Placeholder example");
+        const multiline = boolean("Multiline", false);
+        const minHeight = number("Min Height", undefined);
+        const maxHeight = number("Max Height", undefined);
+        return (
+            <RichTextArea
+                value={value}
+                placeholder={placeholder}
+                multiline={multiline}
+                minHeight={minHeight}
+                maxHeight={maxHeight}
+                onValue={onValue}
+            />
+        );
     });
