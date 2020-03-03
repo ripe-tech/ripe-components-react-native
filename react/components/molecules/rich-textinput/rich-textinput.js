@@ -42,13 +42,8 @@ export class RichTextInput extends PureComponent {
         return [this.props.style];
     };
 
-
-    propsTest = () => {
-        return `${this.props.value}\n${this.props.placeholder}\n${this.props.multiline}\n${this.props.minHeight}\n${this.props.maxHeight}`
-    }
-
     render() {
-        return <Text>{this.propsTest()}</Text>;
+        return <Text>RichTextInput ! :D</Text>;
     }
 }
 
