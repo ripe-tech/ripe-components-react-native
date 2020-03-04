@@ -19,7 +19,7 @@ if (Platform.OS === "android") {
     }
 }
 
-const fadeAnimationTime = 400;
+const animationTime = 350;
 
 export class RichTextInput extends PureComponent {
     static get propTypes() {
@@ -67,7 +67,9 @@ export class RichTextInput extends PureComponent {
     }
 
     startAnimations = () => {
-        LayoutAnimation.configureNext(LayoutAnimation.create(0, LayoutAnimation.Types.keyboard));
+        LayoutAnimation.configureNext(
+            LayoutAnimation.create(animationTime, LayoutAnimation.Types.easeOut)
+        );
 
         if (this.state.buttonsVisible) this.startShowButtonsAnimation();
         else this.startHideButtonsAnimation();
@@ -77,11 +79,11 @@ export class RichTextInput extends PureComponent {
         Animated.parallel([
             Animated.timing(this.state.buttonsOpacityValue, {
                 toValue: 1,
-                duration: fadeAnimationTime
+                duration: animationTime
             }),
             Animated.timing(this.state.moreOptionsOpacityValue, {
                 toValue: 0,
-                duration: fadeAnimationTime
+                duration: animationTime
             })
         ]).start();
     };
@@ -90,11 +92,11 @@ export class RichTextInput extends PureComponent {
         Animated.parallel([
             Animated.timing(this.state.buttonsOpacityValue, {
                 toValue: 0,
-                duration: fadeAnimationTime
+                duration: animationTime
             }),
             Animated.timing(this.state.moreOptionsOpacityValue, {
                 toValue: 1,
-                duration: fadeAnimationTime
+                duration: animationTime
             })
         ]).start();
     };
