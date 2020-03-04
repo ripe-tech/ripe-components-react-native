@@ -8,16 +8,19 @@ import { ItemNotification } from "./item-notification";
 storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Notification Item", () => {
-        const avatarUrl = text("Avatar Url", "#000000");
-        const timestamp = number("Timestamp", "#000000");
-        const _text = text("Text", "Username");
-        const unread = boolean("Text", "Username");
+        const avatarUrl = text(
+            "Avatar Url",
+            "https://id.platforme.com/admin/accounts/v-fl%40platforme.com/avatar"
+        );
+        const timestamp = number("Timestamp", 1583257539);
+        const _text = text("Text", "Username changed the order status to Ready");
+        const unread = boolean("Unread", true);
         return (
             <View style={{ alignItems: "center", flex: 1 }}>
                 <ItemNotification
                     text={_text}
                     timestamp={timestamp}
-                    avatarUrl={avatarUrl}
+                    avatarURL={avatarUrl}
                     unread={unread}
                 />
             </View>
