@@ -77,15 +77,18 @@ const styles = StyleSheet.create({
     key: {
         marginTop: Platform.OS === "ios" ? 2 : 0,
         fontFamily: baseStyles.FONT,
-        fontSize: 12,
-        letterSpacing: 0.5,
+        fontSize: 14,
+        lineHeight: 18,
+        marginBottom: Platform.OS === "ios" ? 2 : 6,
+        letterSpacing: 0.25,
         color: "#4f7af8"
     },
     value: {
         marginTop: Platform.OS === "ios" ? 4 : 0,
         fontFamily: baseStyles.FONT,
         fontSize: 16,
-        letterSpacing: 0.5,
+        lineHeight: 18,
+        letterSpacing: 0.25,
         color: "#223645"
     },
     iconContainer: {

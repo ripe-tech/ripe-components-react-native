@@ -8,6 +8,7 @@ export class Avatar extends PureComponent {
         return {
             image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
             size: PropTypes.number,
+            borderRadius: PropTypes.number,
             resizeMode: PropTypes.string,
             hitSlop: PropTypes.shape({
                 top: PropTypes.number.isRequired,
@@ -23,6 +24,7 @@ export class Avatar extends PureComponent {
     static get defaultProps() {
         return {
             size: 40,
+            borderRadius: 100,
             resizeMode: "contain",
             hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
             style: {},
@@ -36,7 +38,7 @@ export class Avatar extends PureComponent {
             {
                 width: this.props.size,
                 height: this.props.size,
-                borderRadius: this.props.size
+                borderRadius: this.props.borderRadius
             },
             this.props.style
         ];
