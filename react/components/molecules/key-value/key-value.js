@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, Text, Platform } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Platform } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -18,7 +18,8 @@ export class KeyValue extends PureComponent {
             iconHeight: PropTypes.number,
             iconWidth: PropTypes.number,
             iconStrokeWidth: PropTypes.number,
-            iconOnPress: PropTypes.func
+            onPress: PropTypes.func,
+            onLongPress: PropTypes.func
         };
     }
 
@@ -31,13 +32,18 @@ export class KeyValue extends PureComponent {
             iconHeight: undefined,
             iconWidth: undefined,
             iconStrokeWidth: undefined,
-            iconOnPress: undefined
+            onPress: undefined,
+            onLongPress: undefined
         };
     }
 
     render() {
         return (
-            <View style={styles.keyValue}>
+            <TouchableOpacity
+                style={styles.keyValue}
+                onPress={this.props.onPress}
+                onLongPress={this.props.onLongPress}
+            >
                 <View style={styles.textContainer}>
                     <Text style={styles.key}>{this.props._key}</Text>
                     <Text style={styles.value}>{this.props.value}</Text>
@@ -52,12 +58,11 @@ export class KeyValue extends PureComponent {
                             iconWidth={this.props.iconWidth}
                             size={this.props.iconSize}
                             iconStrokeWidth={this.props.iconStrokeWidth}
-                            onPress={this.props.iconOnPress}
                             style={styles.iconStyle}
                         />
                     </View>
                 ) : null}
-            </View>
+            </TouchableOpacity>
         );
     }
 }
