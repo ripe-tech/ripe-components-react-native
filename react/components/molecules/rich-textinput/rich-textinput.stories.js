@@ -10,20 +10,14 @@ storiesOf("Atoms", module)
         const onValue = value => {
             console.log("[RichTextInput]", "onValue", value);
         };
-        const onAttachmentAdded = value => {
-            console.log("[RichTextInput]", "onAttachmentAdded", value);
+        const onPhotoAdded = photo => {
+            console.log("[RichTextInput]", "onPhotoAdded", photo);
         };
-        const onAttachmentRemoved = value => {
-            console.log("[RichTextInput]", "onAttachmentRemoved", value);
+        const onAttachmentAdded = attachment => {
+            console.log("[RichTextInput]", "onAttachmentAdded", attachment);
         };
-        const onImageAdded = value => {
-            console.log("[RichTextInput]", "onImageAdded", value);
-        };
-        const onImageRemoved = value => {
-            console.log("[RichTextInput]", "onImageRemoved", value);
-        };
-        const onSendMessage = () => {
-            console.log("[RichTextInput]", "onSendMessage");
+        const onSendMessage = text => {
+            console.log("[RichTextInput]", "onSendMessage", text);
         };
         const value = text("Value", undefined);
         const placeholder = text("Placeholder", "Placeholder example");
@@ -38,10 +32,8 @@ storiesOf("Atoms", module)
                 minHeight={minHeight}
                 maxHeight={maxHeight}
                 onValue={onValue}
+                onPhotoAdded={onPhotoAdded}
                 onAttachmentAdded={onAttachmentAdded}
-                onAttachmentRemoved={onAttachmentRemoved}
-                onImageAdded={onImageAdded}
-                onImageRemoved={onImageRemoved}
                 onSendMessage={onSendMessage}
             />
         );
