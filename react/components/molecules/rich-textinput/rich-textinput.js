@@ -18,6 +18,9 @@ if (Platform.OS === "android") {
         UIManager.setLayoutAnimationEnabledExperimental(true);
     }
 }
+
+const fadeAnimationTime = 400;
+
 export class RichTextInput extends PureComponent {
     static get propTypes() {
         return {
@@ -61,20 +64,66 @@ export class RichTextInput extends PureComponent {
         super(props);
 
         this.state = {
-            buttonsVisible: true
+            buttonsVisible: true,
+            buttonsOpacityValue: new Animated.Value(1),
+            moreOptionsOpacityValue: new Animated.Value(0)
         };
     }
 
     toggleButtonVisibility() {
         this.setState({ buttonsVisible: !this.state.buttonsVisible }, () => {
             LayoutAnimation.configureNext(
-                LayoutAnimation.create(400, LayoutAnimation.Types.keyboard)
+                LayoutAnimation.create(0, LayoutAnimation.Types.keyboard)
             );
+
+            if (this.state.buttonsVisible) this.startShowButtonsAnimation();
+            else this.startHideButtonsAnimation();
         });
     }
 
+    startShowButtonsAnimation = () => {
+        Animated.parallel([
+            Animated.timing(this.state.buttonsOpacityValue, {
+                toValue: 1,
+                duration: fadeAnimationTime
+            }),
+            Animated.timing(this.state.moreOptionsOpacityValue, {
+                toValue: 0,
+                duration: fadeAnimationTime
+            })
+        ]).start();
+    };
+
+    startHideButtonsAnimation = () => {
+        Animated.parallel([
+            Animated.timing(this.state.buttonsOpacityValue, {
+                toValue: 0,
+                duration: fadeAnimationTime
+            }),
+            Animated.timing(this.state.moreOptionsOpacityValue, {
+                toValue: 1,
+                duration: fadeAnimationTime
+            })
+        ]).start();
+    };
+
     _buttonsStyle = () => {
-        return this.state.buttonsVisible ? styles.buttons : [styles.buttons, styles.buttonsHidden];
+        const style = [styles.buttons, { opacity: this.state.buttonsOpacityValue }];
+
+        if (!this.state.buttonsVisible) style.push({ width: 0 });
+        return style;
+    };
+
+    _moreOptionsStyle = () => {
+        const style = [
+            styles.moreOptions,
+            {
+                opacity: this.state.moreOptionsOpacityValue
+            }
+        ];
+
+        if (this.state.buttonsVisible) style.push({ width: 0 });
+        return style;
     };
 
     onPhotoButtonPress = () => {
@@ -89,6 +138,11 @@ export class RichTextInput extends PureComponent {
         console.log("onAttachmentButtonPress");
 
         this.props.onAttachmentAdded();
+    };
+
+    onMoreOptionsButtonPress = () => {
+        // TODO
+        console.log("onMoreOptionsButtonPress");
     };
 
     onTextAreaFocus = () => {
@@ -108,7 +162,10 @@ export class RichTextInput extends PureComponent {
     render() {
         return (
             <View style={[styles.richTextInput, this.props.style]}>
-                <Animated.View style={this._buttonsStyle()}>
+                <Animated.View
+                    style={this._buttonsStyle()}
+                    pointerEvents={this.state.buttonsVisible ? undefined : "none"}
+                >
                     <ButtonIcon
                         style={styles.button}
                         icon={"camera"}
@@ -128,6 +185,17 @@ export class RichTextInput extends PureComponent {
                         iconHeight={28}
                         iconWidth={28}
                         onPress={() => this.onAttachmentButtonPress()}
+                    />
+                </Animated.View>
+                <Animated.View style={this._moreOptionsStyle()}>
+                    <ButtonIcon
+                        icon={"add"}
+                        size={32}
+                        color={"#375274"}
+                        backgroundColor={"#ffffff"}
+                        iconHeight={28}
+                        iconWidth={28}
+                        onPress={() => this.onMoreOptionsButtonPress()}
                     />
                 </Animated.View>
                 <TextArea
@@ -169,16 +237,10 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     buttons: {
-        //minWidth: "0%",
-        //backgroundColor: "red",
-
         flexDirection: "row",
         alignSelf: "flex-end",
         paddingLeft: 5,
         paddingRight: 5
-    },
-    buttonsHidden: {
-        width: 0
     },
     button: {
         marginLeft: 10
