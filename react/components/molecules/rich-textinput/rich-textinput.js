@@ -124,14 +124,16 @@ export class RichTextInput extends PureComponent {
         // TODO
         console.log("onPhotoButtonPress");
 
-        this.props.onImageAdded();
+        const photo = undefined;
+        this.props.onPhotoAdded(photo);
     };
 
     onAttachmentButtonPress = () => {
         // TODO
         console.log("onAttachmentButtonPress");
 
-        this.props.onAttachmentAdded();
+        const attachment = undefined;
+        this.props.onAttachmentAdded(attachment);
     };
 
     onMoreOptionsButtonPress = () => {
