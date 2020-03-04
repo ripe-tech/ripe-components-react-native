@@ -33,3 +33,8 @@ export const timeStringUTC = function(timestamp, separator = ":") {
 export const normalize = function(value) {
     return value.split("_").join(" ");
 };
+
+export const capitalize = function(value) {
+    if (!value) return value;
+    return value[0].toUpperCase() + value.slice(1);
+};
