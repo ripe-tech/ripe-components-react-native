@@ -48,7 +48,9 @@ export class ItemNotification extends PureComponent {
                     style={styles.avatar}
                 />
                 <Text style={styles.text}>{this.props.text}</Text>
-                <Text style={styles.timestamp}>{timeStringUTC(this.props.timestamp)}</Text>
+                {this.props.timestamp ? (
+                    <Text style={styles.timestamp}>{timeStringUTC(this.props.timestamp)} </Text>
+                ) : null}
             </TouchableOpacity>
         );
     }
