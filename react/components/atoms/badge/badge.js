@@ -96,8 +96,7 @@ export class Badge extends Component {
         return [
             styles.text,
             {
-                color: this.props.color,
-                paddingHorizontal: 8
+                color: this.props.color
             }
         ];
     };
@@ -126,7 +125,8 @@ const styles = StyleSheet.create({
         height: "100%",
         lineHeight: 17,
         textAlign: "center",
-        width: "100%"
+        width: "100%",
+        paddingHorizontal: 8
     }
 });
 
