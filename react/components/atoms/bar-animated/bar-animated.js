@@ -1,71 +1,43 @@
 import React, { PureComponent } from "react";
-import { Dimensions, Animated, ViewPropTypes, StyleSheet } from "react-native";
+import { Animated, ViewPropTypes, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
-
-const screen = Dimensions.get("screen");
 
 export class BarAnimated extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.generateItemWidth(props.numberOfItems);
-
         this.state = {
-            xPosition: new Animated.Value(this._calculatePositionX())
+            offset: new Animated.Value(this.props.offset)
         };
     }
 
     static get propTypes() {
         return {
-            activeItem: PropTypes.number,
+            offset: PropTypes.number.isRequired,
+            width: PropTypes.number.isRequired,
             color: PropTypes.string,
-            numberOfItems: PropTypes.number,
             style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
-            activeItem: 0,
             color: "#597cf0",
-            numberOfItems: 1,
             style: {}
         };
     }
 
-    generateItemWidth(numberOfItems) {
-        this.itemWidth = screen.width / numberOfItems;
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.numberOfItems !== this.props.numberOfItems) {
-            this.generateItemWidth(nextProps.numberOfItems);
-        }
-    }
-
     componentDidUpdate(prevProps) {
-        if (
-            prevProps.activeItem !== this.props.activeItem ||
-            prevProps.numberOfItems !== this.props.numberOfItems
-        ) {
-            this._startAnimations();
+        if (prevProps.offset !== this.props.offset || prevProps.width !== this.props.width) {
+            this._move();
         }
     }
 
-    _calculatePositionX() {
-        return (
-            this.itemWidth *
-            (this.props.activeItem >= this.props.numberOfItems
-                ? this.props.numberOfItems - 1
-                : this.props.activeItem)
-        );
-    }
+    _move() {
+        this.state.offset.stopAnimation();
 
-    _startAnimations() {
-        this.state.xPosition.stopAnimation();
-
-        Animated.spring(this.state.xPosition, {
-            toValue: this._calculatePositionX(),
+        Animated.spring(this.state.offset, {
+            toValue: this.props.offset,
             useNativeDriver: true
         }).start();
     }
@@ -75,10 +47,10 @@ export class BarAnimated extends PureComponent {
             styles.barAnimated,
             {
                 backgroundColor: this.props.color,
-                width: this.itemWidth,
+                width: this.props.width,
                 transform: [
                     {
-                        translateX: this.state.xPosition
+                        translateX: this.state.offset
                     }
                 ]
             },
@@ -93,8 +65,6 @@ export class BarAnimated extends PureComponent {
 
 const styles = StyleSheet.create({
     barAnimated: {
-        position: "absolute",
-        bottom: 0,
         height: 2
     }
 });

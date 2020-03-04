@@ -6,8 +6,8 @@ import { BarAnimated } from "../../";
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Bar Animated", () => {
-        const _color = color("Bar Color", "#000000");
-        const numberOfItems = number("Number of Items", 4);
-        const activeItem = number("Index of Active Item", 2);
-        return <BarAnimated numberOfItems={numberOfItems} activeItem={activeItem} color={_color} />;
+        const offset = number("Offset", 100);
+        const width = number("Width", 50);
+        const _color = color("Color", "#000000");
+        return <BarAnimated offset={offset} width={width} color={_color} />;
     });
