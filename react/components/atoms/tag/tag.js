@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, Platform, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, capitalize } from "../../../util";
 
 import { Icon } from "../icon";
 
@@ -16,6 +16,7 @@ export class Tag extends PureComponent {
             icon: PropTypes.string,
             iconWidth: PropTypes.number,
             iconHeight: PropTypes.number,
+            size: PropTypes.string,
             style: ViewPropTypes.style,
             onPress: PropTypes.func
         };
@@ -30,6 +31,7 @@ export class Tag extends PureComponent {
             icon: undefined,
             iconWidth: undefined,
             iconHeight: undefined,
+            size: "normal",
             style: {},
             onPress: undefined
         };
@@ -38,6 +40,7 @@ export class Tag extends PureComponent {
     _style = () => {
         return [
             styles.tag,
+            styles[`tag${capitalize(this.props.size)}`],
             {
                 backgroundColor: this.props.backgroundColor,
                 borderColor: this.props.borderColor,
@@ -51,6 +54,7 @@ export class Tag extends PureComponent {
     _textStyle = () => {
         return [
             styles.text,
+            styles[`text${capitalize(this.props.size)}`],
             {
                 color: this.props.color,
                 marginLeft: this.props.icon ? 8 : undefined
@@ -86,12 +90,20 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         paddingVertical: 6,
-        paddingHorizontal: 12
+        paddingHorizontal: 12,
+        letterSpacing: 0.25
+    },
+    tagTiny: {
+        paddingVertical: 3,
+        paddingHorizontal: 8
     },
     text: {
-        fontFamily: baseStyles.FONT_REGULAR,
+        fontFamily: baseStyles.FONT_BOOK,
         fontSize: 13,
         marginTop: Platform.OS === "ios" ? 2 : 0
+    },
+    textTiny: {
+        fontSize: 9
     }
 });
 

@@ -34,6 +34,11 @@ export const normalize = function(value) {
     return value.split("_").join(" ");
 };
 
+export const capitalize = function(value) {
+    if (!value) return value;
+    return value[0].toUpperCase() + value.slice(1);
+};
+
 export const isImage = function(fileName) {
     const regex = /\.(jpg|jpeg|png|gif)$/i;
     return regex.test(fileName);
