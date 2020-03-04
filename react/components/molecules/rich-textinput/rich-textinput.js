@@ -6,7 +6,8 @@ import {
     Animated,
     Platform,
     UIManager,
-    LayoutAnimation
+    LayoutAnimation,
+    Keyboard
 } from "react-native";
 
 import PropTypes from "prop-types";
@@ -137,10 +138,7 @@ export class RichTextInput extends PureComponent {
     };
 
     onMoreOptionsButtonPress = () => {
-        this.setState({ buttonsVisible: true }, () => this.startAnimations());
-
-        // TODO
-        console.log("onMoreOptionsButtonPress");
+        this.refs.textArea.blur();
     };
 
     onTextAreaFocus = () => {
@@ -197,6 +195,7 @@ export class RichTextInput extends PureComponent {
                     />
                 </Animated.View>
                 <TextArea
+                    ref="textArea"
                     style={styles.textArea}
                     value={this.props.value}
                     placeholder={this.props.placeholder}
