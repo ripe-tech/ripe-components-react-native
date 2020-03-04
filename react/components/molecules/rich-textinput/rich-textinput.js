@@ -1,10 +1,23 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, View, Text } from "react-native";
+import {
+    StyleSheet,
+    ViewPropTypes,
+    View,
+    Animated,
+    Platform,
+    UIManager,
+    LayoutAnimation
+} from "react-native";
 
 import PropTypes from "prop-types";
 
 import { ButtonIcon, TextArea } from "../..";
 
+if (Platform.OS === "android") {
+    if (UIManager.setLayoutAnimationEnabledExperimental) {
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+}
 export class RichTextInput extends PureComponent {
     static get propTypes() {
         return {
@@ -19,6 +32,8 @@ export class RichTextInput extends PureComponent {
             onImageAdded: PropTypes.func,
             onImageRemoved: PropTypes.func,
             onSendMessage: PropTypes.func,
+            onFocus: PropTypes.func,
+            onBlur: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -36,9 +51,31 @@ export class RichTextInput extends PureComponent {
             onImageAdded: () => {},
             onImageRemoved: () => {},
             onSendMessage: () => {},
+            onFocus: () => {},
+            onBlur: () => {},
             style: {}
         };
     }
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            buttonsVisible: true
+        };
+    }
+
+    toggleButtonVisibility() {
+        this.setState({ buttonsVisible: !this.state.buttonsVisible }, () => {
+            LayoutAnimation.configureNext(
+                LayoutAnimation.create(400, LayoutAnimation.Types.keyboard)
+            );
+        });
+    }
+
+    _buttonsStyle = () => {
+        return this.state.buttonsVisible ? styles.buttons : [styles.buttons, styles.buttonsHidden];
+    };
 
     onPhotoButtonPress = () => {
         // TODO
@@ -54,10 +91,24 @@ export class RichTextInput extends PureComponent {
         this.props.onAttachmentAdded();
     };
 
+    onTextAreaFocus = () => {
+        console.log("onTextAreaFocus");
+        this.toggleButtonVisibility();
+
+        this.props.onFocus();
+    };
+
+    onTextAreaBlur = () => {
+        console.log("onTextAreaBlur");
+        this.toggleButtonVisibility();
+
+        this.props.onBlur();
+    };
+
     render() {
         return (
             <View style={[styles.richTextInput, this.props.style]}>
-                <View style={styles.buttons}>
+                <Animated.View style={this._buttonsStyle()}>
                     <ButtonIcon
                         style={styles.button}
                         icon={"camera"}
@@ -78,7 +129,7 @@ export class RichTextInput extends PureComponent {
                         iconWidth={28}
                         onPress={() => this.onAttachmentButtonPress()}
                     />
-                </View>
+                </Animated.View>
                 <TextArea
                     style={styles.textArea}
                     value={this.props.value}
@@ -87,6 +138,8 @@ export class RichTextInput extends PureComponent {
                     minHeight={this.props.minHeight}
                     maxHeight={this.props.maxHeight}
                     onValue={this.props.onValue}
+                    onFocus={() => this.onTextAreaFocus()}
+                    onBlur={() => this.onTextAreaBlur()}
                 />
                 <ButtonIcon
                     style={styles.sendButton}
@@ -113,13 +166,19 @@ const styles = StyleSheet.create({
     textArea: {
         flex: 1,
         backgroundColor: "#f6f7f9",
-        borderRadius: 20,
+        borderRadius: 20
     },
     buttons: {
+        //minWidth: "0%",
+        //backgroundColor: "red",
+
         flexDirection: "row",
-        alignSelf: 'flex-end',
+        alignSelf: "flex-end",
         paddingLeft: 5,
         paddingRight: 5
+    },
+    buttonsHidden: {
+        width: 0
     },
     button: {
         marginLeft: 10
