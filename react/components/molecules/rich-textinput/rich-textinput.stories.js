@@ -13,8 +13,8 @@ storiesOf("Atoms", module)
         const onPhotoAdded = source => {
             console.log("[RichTextInput]", "onPhotoAdded", source);
         };
-        const onAttachmentAdded = attachment => {
-            console.log("[RichTextInput]", "onAttachmentAdded", attachment);
+        const onAttachmentsAdded = attachments => {
+            console.log("[RichTextInput]", "onAttachmentsAdded", attachments);
         };
         const onSendMessage = text => {
             console.log("[RichTextInput]", "onSendMessage", text);
@@ -33,7 +33,7 @@ storiesOf("Atoms", module)
                 maxHeight={maxHeight}
                 onValue={onValue}
                 onPhotoAdded={onPhotoAdded}
-                onAttachmentAdded={onAttachmentAdded}
+                onAttachmentsAdded={onAttachmentsAdded}
                 onSendMessage={onSendMessage}
             />
         );

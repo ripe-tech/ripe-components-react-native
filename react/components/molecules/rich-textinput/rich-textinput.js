@@ -9,6 +9,7 @@ import {
     LayoutAnimation
 } from "react-native";
 import ImagePicker from "react-native-image-picker";
+import DocumentPicker from "react-native-document-picker";
 
 import PropTypes from "prop-types";
 
@@ -32,7 +33,7 @@ export class RichTextInput extends PureComponent {
             maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onValue: PropTypes.func,
             onPhotoAdded: PropTypes.func,
-            onAttachmentAdded: PropTypes.func,
+            onAttachmentsAdded: PropTypes.func,
             onSendMessage: PropTypes.func,
             onFocus: PropTypes.func,
             onBlur: PropTypes.func,
@@ -49,7 +50,7 @@ export class RichTextInput extends PureComponent {
             maxHeight: undefined,
             onValue: value => {},
             onPhotoAdded: source => {},
-            onAttachmentAdded: attachment => {},
+            onAttachmentsAdded: attachments => {},
             onSendMessage: text => {},
             onFocus: () => {},
             onBlur: () => {},
@@ -130,12 +131,14 @@ export class RichTextInput extends PureComponent {
         });
     };
 
-    onAttachmentButtonPress = () => {
-        // TODO
-        console.log("onAttachmentButtonPress");
-
-        const attachment = undefined;
-        this.props.onAttachmentAdded(attachment);
+    onAttachmentButtonPress = async () => {
+        try {
+            const attachments = await DocumentPicker.pickMultiple();
+            this.props.onAttachmentsAdded(attachments);
+        } catch (err) {
+            if (DocumentPicker.isCancel(err)) return;
+            else throw err;
+        }
     };
 
     onMoreOptionsButtonPress = () => {
