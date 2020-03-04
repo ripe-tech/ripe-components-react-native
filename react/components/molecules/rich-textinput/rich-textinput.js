@@ -142,14 +142,12 @@ export class RichTextInput extends PureComponent {
     };
 
     onTextAreaFocus = () => {
-        console.log("onTextAreaFocus");
         this.setState({ buttonsVisible: false }, () => this.startAnimations());
 
         this.props.onFocus();
     };
 
     onTextAreaBlur = () => {
-        console.log("onTextAreaBlur");
         this.setState({ buttonsVisible: true }, () => this.startAnimations());
 
         this.props.onBlur();
