@@ -232,6 +232,9 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         paddingRight: 5
     },
+    moreOptions: {
+        alignSelf: "flex-end"
+    },
     button: {
         marginLeft: 10
     },
