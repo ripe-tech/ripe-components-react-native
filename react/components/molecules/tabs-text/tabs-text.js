@@ -9,8 +9,11 @@ export class TabsText extends PureComponent {
 
         this.state = {
             tabs: props.tabs,
-            tabSelected: props.tabSelected
+            tabSelected: props.tabSelected,
+            animatedBarWidth: undefined,
+            animatedBarOffset: undefined
         };
+        this.tabLayouts = {};
     }
 
     static get propTypes() {
@@ -38,8 +41,31 @@ export class TabsText extends PureComponent {
     }
 
     onTabPress = tabSelectedIndex => {
-        this.setState({ tabSelected: tabSelectedIndex });
-        this.props.onTabChange(tabSelectedIndex);
+        this.setState({ tabSelected: tabSelectedIndex }, () => {
+            this._updateBar();
+            this.props.onTabChange(this.state.tabSelected);
+        });
+    };
+
+    _updateBar = () => {
+        const i = this.state.tabSelected;
+        const tabLayout = this.tabLayouts[i];
+        this.setState({ animatedBarOffset: tabLayout.x, animatedBarWidth: tabLayout.width });
+    };
+
+    _animatedBarEnabled = () =>
+        Boolean(
+            this.props.hasAnimation &&
+                this.state.animatedBarWidth !== undefined &&
+                this.state.animatedBarOffset !== undefined
+        );
+
+    _onTabLayout = (event, index) => {
+        this.tabLayouts[index] = {
+            x: event.nativeEvent.layout.x,
+            width: event.nativeEvent.layout.width
+        };
+        this._updateBar();
     };
 
     _style() {
@@ -48,14 +74,18 @@ export class TabsText extends PureComponent {
 
     _renderTabs() {
         return this.props.tabs.map((tab, index) => (
-            <ButtonTabText
+            <View
                 key={tab.text}
-                text={tab.text}
-                onPress={() => this.onTabPress(index)}
-                active={this.state.tabSelected === index}
-                disabled={tab.disabled}
+                onLayout={event => this._onTabLayout(event, index)}
                 style={styles.button}
-            />
+            >
+                <ButtonTabText
+                    text={tab.text}
+                    onPress={() => this.onTabPress(index)}
+                    active={this.state.tabSelected === index}
+                    disabled={tab.disabled}
+                />
+            </View>
         ));
     }
 
@@ -63,10 +93,10 @@ export class TabsText extends PureComponent {
         return (
             <View style={this._style()}>
                 {this._renderTabs()}
-                {this.props.hasAnimation ? (
+                {this._animatedBarEnabled() ? (
                     <BarAnimated
-                        numberOfItems={this.props.tabs.length}
-                        activeItem={this.state.tabSelected}
+                        offset={this.state.animatedBarOffset}
+                        width={this.state.animatedBarWidth}
                         style={styles.barAnimated}
                     />
                 ) : null}
@@ -79,12 +109,14 @@ const styles = StyleSheet.create({
     tabsText: {
         borderBottomWidth: 1,
         borderBottomColor: "#e4e8f0",
-        flexDirection: "row"
+        flexDirection: "row",
+        position: "relative"
     },
     button: {
         flex: 1
     },
     barAnimated: {
-        bottom: -1
+        position: "absolute",
+        bottom: 0
     }
 });
