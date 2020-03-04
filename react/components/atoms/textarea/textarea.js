@@ -32,6 +32,14 @@ export class TextArea extends PureComponent {
         };
     }
 
+    focus() {
+        this.refs.textInput.focus();
+    }
+    
+    blur() {
+        this.refs.textInput.blur();
+    }
+
     _style = () => {
         return [
             styles.textArea,
@@ -47,6 +55,7 @@ export class TextArea extends PureComponent {
     render() {
         return (
             <TextInput
+                ref="textInput"
                 style={this._style()}
                 placeholder={this.props.placeholder}
                 multiline={this.props.multiline}
