@@ -1,22 +1,13 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, View } from "react-native";
+import { ViewPropTypes, StyleSheet, View, Text as RNText } from "react-native";
 
 import PropTypes from "prop-types";
 
-import { isImage, dateString, timeString } from "../../../util";
+import { baseStyles, isImage, dateTimeString } from "../../../util";
 
 import { Avatar, Text, Link, Lightbox } from "../../atoms";
 
 export class ChatMessage extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.dateData =
-            new Date().getDate() === new Date(props.date).getDate()
-                ? timeString(this.props.date)
-                : `${dateString(this.props.date)} ${timeString(this.props.date)}`;
-    }
-
     static get propTypes() {
         return {
             avatarUrl: PropTypes.string.isRequired,
@@ -44,32 +35,42 @@ export class ChatMessage extends PureComponent {
         };
     }
 
-    render() {
-        const attachedFile = (name, url) => {
-            return <Link text={name} url={url} />;
-        };
-        const attachedImage = imgPath => {
-            return <Lightbox height={180} uri={imgPath} resizeMode={"contain"} />;
-        };
+    _attachmentsStyle = () => {
+        return { marginTop: this.props.message ? 10 : 0 };
+    };
 
+    _attachmentStyle = index => {
+        return { marginTop: index > 0 ? 2 : 0 };
+    };
+
+    render() {
         return (
             <View style={[styles.chatMessage, this.props.style]}>
                 <Avatar style={styles.avatar} image={{ uri: this.props.avatarUrl }} size={32} />
                 <View style={styles.content}>
                     <View style={styles.header}>
-                        <Text style={styles.username}>{this.props.username}</Text>
-                        <Text style={styles.date}>{this.dateData}</Text>
+                        <RNText style={styles.username}>{this.props.username}</RNText>
+                        <RNText style={styles.date}>{dateTimeString(this.props.date)}</RNText>
                     </View>
-                    <Text>{this.props.message}</Text>
-                    {this.props.attachments.map((attachment, index) => {
-                        return (
-                            <View style={styles.attachment} key={index}>
-                                {isImage(attachment.name)
-                                    ? attachedImage(attachment.path)
-                                    : attachedFile(attachment.name, attachment.path)}
-                            </View>
-                        );
-                    })}
+                    {this.props.message ? <Text>{this.props.message}</Text> : null}
+                    {this.props.attachments.map((attachment, index) => (
+                        <View style={this._attachmentsStyle()} key={index}>
+                            {isImage(attachment.name) ? (
+                                <Lightbox
+                                    style={this._attachmentStyle(index)}
+                                    height={180}
+                                    uri={attachment.path}
+                                    resizeMode={"contain"}
+                                />
+                            ) : (
+                                <Link
+                                    style={this._attachmentStyle(index)}
+                                    text={attachment.name}
+                                    url={attachment.path}
+                                />
+                            )}
+                        </View>
+                    ))}
                 </View>
             </View>
         );
@@ -90,21 +91,21 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: "row",
-        marginTop: 5
+        marginTop: 3,
+        alignItems: "center"
     },
     username: {
-        fontWeight: "bold",
-        marginEnd: 5
+        fontFamily: baseStyles.FONT_BOLD,
+        marginEnd: 5,
+        fontSize: 14,
+        lineHeight: 22,
+        color: "#3e566a"
     },
     date: {
-        color: "#a4adb5"
-    },
-    attachment: {
-        marginTop: 10
-    },
-    attachedImage: {
-        width: "100%",
-        height: 180
+        fontFamily: baseStyles.FONT,
+        color: "#a4adb5",
+        fontSize: 11,
+        lineHeight: 22
     }
 });
 

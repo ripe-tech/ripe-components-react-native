@@ -4,20 +4,11 @@ import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
 
-import { dateString, timeString } from "../../../util";
+import { dateTimeString } from "../../../util";
 
 import { Icon, Text } from "../../atoms";
 
 export class Item extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.dateData =
-            new Date().getDate() === new Date(props.headerDate).getDate()
-                ? timeString(this.props.headerDate)
-                : `${dateString(this.props.headerDate)} ${timeString(this.props.headerDate)}`;
-    }
-
     static get propTypes() {
         return {
             header: PropTypes.bool,
@@ -74,7 +65,9 @@ export class Item extends PureComponent {
                                     {this.props.headerText}
                                 </Text>
                             </View>
-                            <Text style={styles.headerText}>{this.dateData}</Text>
+                            <Text style={styles.headerText}>
+                                {dateTimeString(this.props.headerDate)}
+                            </Text>
                         </View>
                     </LinearGradient>
                 )}

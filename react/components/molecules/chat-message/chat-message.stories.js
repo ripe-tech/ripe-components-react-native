@@ -31,8 +31,8 @@ storiesOf("Molecules", module)
             <ChatMessage
                 avatarUrl={avatarUrl}
                 username={username}
-                message={message}
-                date={date}
+                message={message || undefined}
+                date={date || new Date()}
                 attachments={attachments}
             />
         );
