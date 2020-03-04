@@ -70,16 +70,12 @@ export class RichTextInput extends PureComponent {
         };
     }
 
-    toggleButtonVisibility() {
-        this.setState({ buttonsVisible: !this.state.buttonsVisible }, () => {
-            LayoutAnimation.configureNext(
-                LayoutAnimation.create(0, LayoutAnimation.Types.keyboard)
-            );
+    startAnimations = () => {
+        LayoutAnimation.configureNext(LayoutAnimation.create(0, LayoutAnimation.Types.keyboard));
 
-            if (this.state.buttonsVisible) this.startShowButtonsAnimation();
-            else this.startHideButtonsAnimation();
-        });
-    }
+        if (this.state.buttonsVisible) this.startShowButtonsAnimation();
+        else this.startHideButtonsAnimation();
+    };
 
     startShowButtonsAnimation = () => {
         Animated.parallel([
@@ -141,20 +137,22 @@ export class RichTextInput extends PureComponent {
     };
 
     onMoreOptionsButtonPress = () => {
+        this.setState({ buttonsVisible: true }, () => this.startAnimations());
+
         // TODO
         console.log("onMoreOptionsButtonPress");
     };
 
     onTextAreaFocus = () => {
         console.log("onTextAreaFocus");
-        this.toggleButtonVisibility();
+        this.setState({ buttonsVisible: false }, () => this.startAnimations());
 
         this.props.onFocus();
     };
 
     onTextAreaBlur = () => {
         console.log("onTextAreaBlur");
-        this.toggleButtonVisibility();
+        this.setState({ buttonsVisible: true }, () => this.startAnimations());
 
         this.props.onBlur();
     };
