@@ -90,7 +90,7 @@ export class ButtonTab extends PureComponent {
                         countThreshold={this.props.badgeCountThreshold}
                         hasAnimation={this.props.badgeHasAnimation}
                         text={this.props.badgeText}
-                        style={{ position: "absolute", top: 0, right: 9 }}
+                        style={styles.badge}
                     />
                 </View>
             </TouchableWithoutFeedback>
@@ -116,6 +116,11 @@ const styles = StyleSheet.create({
     },
     labelSelected: {
         color: "#1d2631"
+    },
+    badge: {
+        position: "absolute",
+        top: 0,
+        right: 9
     }
 });
 

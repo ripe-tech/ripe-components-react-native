@@ -7,29 +7,27 @@ import { baseStyles } from "../../../util";
 export class Badge extends Component {
     static get propTypes() {
         return {
+            text: PropTypes.string,
+            count: PropTypes.number,
+            countThreshold: PropTypes.number,
+            hasAnimation: PropTypes.boolean,
             animationDuration: PropTypes.number,
             backgroundColor: PropTypes.string,
-            borderRadius: PropTypes.number,
             color: PropTypes.string,
-            count: PropTypes.number,
-            hasAnimation: PropTypes.boolean,
-            countThreshold: PropTypes.number,
-            style: ViewPropTypes.style,
-            text: PropTypes.string
+            style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
+            text: undefined,
+            count: 0,
+            countThreshold: 99,
+            hasAnimation: true,
             animationDuration: 200,
             backgroundColor: "#597cf0",
-            borderRadius: 8,
             color: "#ffffff",
-            count: 0,
-            hasAnimation: true,
-            countThreshold: 99,
-            style: {},
-            text: undefined
+            style: {}
         };
     }
 
@@ -51,7 +49,7 @@ export class Badge extends Component {
     }
 
     _animateCount(newCount, newText) {
-        if (!this.animating && this.props.hasAnimation) {
+        if (this.props.hasAnimation && !this.animating) {
             this.animating = true;
             Animated.sequence([
                 Animated.timing(this.state.scale, {
@@ -82,25 +80,16 @@ export class Badge extends Component {
             styles.badge,
             {
                 backgroundColor: this.props.backgroundColor,
-                borderRadius: this.props.borderRadius,
                 transform: [{ scale: this.state.scale }]
             },
             this.props.style
         ];
     };
 
-    _getNumericCount = () => {
+    _getCount = () => {
         return this.state.count > this.props.countThreshold
             ? `${this.props.countThreshold}+`
             : this.state.count;
-    };
-
-    _getTextCount = () => {
-        return this.state.text !== undefined ? this.state.text : null;
-    };
-
-    _getCount = () => {
-        return this._getNumericCount() ? this._getNumericCount() : this._getTextCount();
     };
 
     _textStyle = () => {
@@ -108,25 +97,27 @@ export class Badge extends Component {
             styles.text,
             {
                 color: this.props.color,
-                paddingHorizontal: this.state.count < 100 ? 7 : 3
+                paddingHorizontal: 8
             }
         ];
     };
 
     render() {
-        return this._getCount() ? (
+        return (
             <Animated.View style={this._style()}>
                 <Text style={this._textStyle()}>
-                    {this.state.text ? this._getTextCount() : this._getCount()}
+                    {this.state.text ? this.state.text : this._getCount()}
                 </Text>
             </Animated.View>
-        ) : null;
+        );
     }
 }
 
 const styles = StyleSheet.create({
     badge: {
-        height: 16
+        borderRadius: 100,
+        alignSelf: "flex-start",
+        height: 17
     },
     text: {
         fontFamily: baseStyles.FONT_BOLD,
