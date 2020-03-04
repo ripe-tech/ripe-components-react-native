@@ -49,7 +49,7 @@ export class ChatMessage extends PureComponent {
             return <Link text={name} url={url} />;
         };
         const attachedImage = imgPath => {
-            return <Lightbox height={180} uri={imgPath} />;
+            return <Lightbox height={180} uri={imgPath} resizeMode={"contain"} />;
         };
 
         return (
