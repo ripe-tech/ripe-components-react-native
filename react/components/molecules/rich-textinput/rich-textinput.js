@@ -8,6 +8,7 @@ import {
     UIManager,
     LayoutAnimation
 } from "react-native";
+import ImagePicker from "react-native-image-picker";
 
 import PropTypes from "prop-types";
 
@@ -47,7 +48,7 @@ export class RichTextInput extends PureComponent {
             minHeight: undefined,
             maxHeight: undefined,
             onValue: value => {},
-            onPhotoAdded: photo => {},
+            onPhotoAdded: source => {},
             onAttachmentAdded: attachment => {},
             onSendMessage: text => {},
             onFocus: () => {},
@@ -121,11 +122,12 @@ export class RichTextInput extends PureComponent {
     };
 
     onPhotoButtonPress = () => {
-        // TODO
-        console.log("onPhotoButtonPress");
-
-        const photo = undefined;
-        this.props.onPhotoAdded(photo);
+        ImagePicker.showImagePicker({}, response => {
+            if (!response.didCancel && !response.error) {
+                const source = { uri: response.uri };
+                this.props.onPhotoAdded(source);
+            }
+        });
     };
 
     onAttachmentButtonPress = () => {

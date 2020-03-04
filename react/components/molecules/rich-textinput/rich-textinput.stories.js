@@ -10,8 +10,8 @@ storiesOf("Atoms", module)
         const onValue = value => {
             console.log("[RichTextInput]", "onValue", value);
         };
-        const onPhotoAdded = photo => {
-            console.log("[RichTextInput]", "onPhotoAdded", photo);
+        const onPhotoAdded = source => {
+            console.log("[RichTextInput]", "onPhotoAdded", source);
         };
         const onAttachmentAdded = attachment => {
             console.log("[RichTextInput]", "onAttachmentAdded", attachment);
