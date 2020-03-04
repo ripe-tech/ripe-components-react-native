@@ -35,7 +35,7 @@ export class TextArea extends PureComponent {
     focus() {
         this.refs.textInput.focus();
     }
-    
+
     blur() {
         this.refs.textInput.blur();
     }
