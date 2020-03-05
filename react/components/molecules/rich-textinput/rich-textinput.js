@@ -58,14 +58,6 @@ export class RichTextInput extends PureComponent {
         };
     }
 
-    static getDerivedStateFromProps(props, state) {
-        if (props.value !== state.value) {
-            return { value: props.value };
-        }
-
-        return null;
-    }
-
     constructor(props) {
         super(props);
 
@@ -176,6 +168,7 @@ export class RichTextInput extends PureComponent {
 
     onSendButtonPress = () => {
         this.props.onSendMessage(this.state.value);
+        this.setState({ value: undefined }, this.props.onValue(undefined));
     };
 
     render() {
