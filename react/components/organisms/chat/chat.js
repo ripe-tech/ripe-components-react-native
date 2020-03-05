@@ -1,5 +1,12 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, KeyboardAvoidingView, SafeAreaView, ScrollView, Text } from "react-native";
+import {
+    ViewPropTypes,
+    StyleSheet,
+    KeyboardAvoidingView,
+    SafeAreaView,
+    ScrollView,
+    Text
+} from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -42,21 +49,30 @@ export class Chat extends PureComponent {
     }
 
     onRichTextInputPhotoAdded = source => {
+        // TODO
         console.log("onRichTextInputPhotoAdded");
     };
 
     onRichTextInputAttachmentsAdded = attachments => {
+        // TODO
         console.log("onRichTextInputAttachmentsAdded");
     };
 
     onRichTextInputSendMessage = text => {
+        // TODO
         console.log("onRichTextInputValue");
     };
 
     render() {
         return (
             <SafeAreaView style={styles.chat}>
-                <ScrollView style={[styles.chat, styles.chatMessagesContainer, this.props.style]}>
+                <ScrollView
+                    style={[styles.chatMessagesContainer, this.props.style]}
+                    ref={ref => (this.scrollViewComponent = ref)}
+                    onContentSizeChange={() =>
+                        this.scrollViewComponent.scrollToEnd({ animated: true })
+                    }
+                >
                     {this.props.messages.map((message, index) => {
                         return (
                             <ChatMessage
