@@ -1,7 +1,18 @@
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, Modal, View, TouchableOpacity } from "react-native";
+import {
+    Animated,
+    StyleSheet,
+    Modal,
+    View,
+    TouchableOpacity,
+    PanResponder,
+    Dimensions
+} from "react-native";
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 import PropTypes from "prop-types";
+
+const AndroidSoftBar = Dimensions.get("screen").height - Dimensions.get("window").height;
+const ScreenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
 
 export class ContainerSwipeable extends PureComponent {
     static get propTypes() {
@@ -12,14 +23,16 @@ export class ContainerSwipeable extends PureComponent {
                 left: PropTypes.number.isRequired,
                 right: PropTypes.number.isRequired,
                 bottom: PropTypes.number.isRequired
-            })
+            }),
+            hideThreshold: PropTypes.number
         };
     }
 
     static get defaultProps() {
         return {
             animationsDuration: 300,
-            hitSlop: { top: 20, left: 20, right: 20, bottom: 20 }
+            hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
+            hideThreshold: 100
         };
     }
 
@@ -29,13 +42,80 @@ export class ContainerSwipeable extends PureComponent {
         this.state = {
             visible: false,
             modalVisible: false,
-            containerChildrenHeight: null,
+            containerChildrenHeight: 0,
             containerBackgroundColorAnimated: new Animated.Value(0),
-            containerInnerHeightAnimated: new Animated.Value(0)
+            containerInnerPositionAnimated: new Animated.ValueXY({ x: 0, y: ScreenHeight })
         };
 
         this.animating = false;
+
+        this.panResponder = PanResponder.create({
+            // onMoveShouldSetPanResponderCapture: this.onMoveShouldSetPanResponderCapture,
+            onStartShouldSetPanResponder: (_evt, _gestureState) => true,
+            onPanResponderGrant: this.onPanResponderGrant,
+            onPanResponderMove: this.onPanResponderMove,
+
+            onPanResponderRelease: this.onPanResponderRelease
+        });
     }
+
+    // onMoveShouldSetPanResponderCapture = (_evt, gestureState) => {
+    //     // return gestureState.dx !== 0 && gestureState.dy !== 0;
+    //     return Math.abs(gestureState.dy) > 2;
+    //     // return true;
+    // };
+
+    onPanResponderGrant = (_evt, _gestureState) => {
+        this._initialViewPositionY = this.state.containerInnerPositionAnimated.__getValue().y;
+    };
+
+    onPanResponderMove = (_evt, gestureState) => {
+        if (gestureState.dy === 0) {
+            return;
+        }
+
+        //if the user is going up, we slow down the up movement  on each interaction
+        let gestureStateDistanceY = gestureState.dy > 0 ? gestureState.dy : gestureState.dy / 2;
+
+        const nextViewPositionY = this._initialViewPositionY + gestureStateDistanceY;
+        const hasReachedMaxTopPosition = nextViewPositionY <= 0;
+
+        if (hasReachedMaxTopPosition) {
+            return;
+        }
+
+        this.state.containerInnerPositionAnimated.setValue({
+            x: 0,
+            y: nextViewPositionY
+        });
+        // //@TODO MAYBE ANIMAtE
+        // Animated.spring(this.state.containerInnerPositionAnimated, {
+        //     toValue: {
+        //         x: 0,
+        //         y: nextViewPositionY
+        //     },
+        //     // duration: this.props.animationsDuration
+        // }).start();
+    };
+
+    onPanResponderRelease = (evt, gestureState) => {
+        const nextViewPositionY = this._initialViewPositionY + gestureState.dy;
+        const isInsideOfCloseThreshold =
+            nextViewPositionY - this.props.hideThreshold >
+            ScreenHeight - this.state.containerChildrenHeight;
+
+        if (isInsideOfCloseThreshold) {
+            this.toggle();
+        } else {
+            Animated.spring(this.state.containerInnerPositionAnimated, {
+                toValue: {
+                    x: 0,
+                    y: this._initialViewPositionY
+                },
+                duration: this.props.animationsDuration
+            }).start();
+        }
+    };
 
     toggle = () => {
         if (this.animating) {
@@ -47,28 +127,43 @@ export class ContainerSwipeable extends PureComponent {
                 {
                     visible: false
                 },
-                () => {
-                    this._toggleAnimations();
-                }
+                this._toggleAnimations
             );
         } else {
-            this.setState(
-                {
-                    visible: true,
-                    modalVisible: true
-                },
-                () => {
-                    this._toggleAnimations();
-                }
-            );
+            this.setState({
+                visible: true,
+                modalVisible: true
+            });
         }
     };
 
     onLayout = event => {
-        this.setState({
-            containerChildrenHeight: event.nativeEvent.layout.height
-        });
+        if (this.state.containerChildrenHeight) {
+            return;
+        }
+        this.setState(
+            {
+                containerChildrenHeight: event.nativeEvent.layout.height + AndroidSoftBar
+            },
+            this._toggleAnimations
+        );
     };
+
+    _calculateInitialPositionY() {
+        const isScreenBiggerThanChildren = ScreenHeight > this.state.containerChildrenHeight;
+        const x = 0;
+        let y = 0;
+
+        if (this.state.visible) {
+            if (isScreenBiggerThanChildren) {
+                y = ScreenHeight - this.state.containerChildrenHeight;
+            }
+        } else {
+            y = ScreenHeight;
+        }
+
+        return { x, y };
+    }
 
     _toggleAnimations = () => {
         this.animating = true;
@@ -78,15 +173,16 @@ export class ContainerSwipeable extends PureComponent {
                 toValue: this.state.visible ? 1 : 0,
                 duration: this.props.animationsDuration
             }),
-            Animated.timing(this.state.containerInnerHeightAnimated, {
-                toValue: this.state.visible ? 1 : 0,
+            Animated.timing(this.state.containerInnerPositionAnimated, {
+                toValue: this._calculateInitialPositionY(),
                 duration: this.props.animationsDuration
             })
         ]).start(() => {
             this.setState(
-                {
-                    modalVisible: this.state.visible
-                },
+                state => ({
+                    modalVisible: this.state.visible,
+                    containerChildrenHeight: this.state.visible ? state.containerChildrenHeight : 0
+                }),
                 () => {
                     this.animating = false;
                 }
@@ -110,10 +206,7 @@ export class ContainerSwipeable extends PureComponent {
         return [
             styles.containerInner,
             {
-                height: this.state.containerInnerHeightAnimated.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [1, this.state.containerChildrenHeight]
-                })
+                transform: this.state.containerInnerPositionAnimated.getTranslateTransform()
             }
         ];
     }
@@ -128,6 +221,7 @@ export class ContainerSwipeable extends PureComponent {
                     <Animated.View
                         style={this._containerInnerStyle()}
                         onStartShouldSetResponder={() => true}
+                        {...this.panResponder.panHandlers}
                     >
                         <View onLayout={this.onLayout} pointerEvents="auto">
                             <TouchableOpacity
@@ -135,6 +229,7 @@ export class ContainerSwipeable extends PureComponent {
                                 onPress={this.toggle}
                                 hitSlop={this.props.hitSlop}
                             />
+
                             {this.props.children}
                             <View style={styles.safeAreaBottom} />
                         </View>
@@ -156,14 +251,16 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         borderTopRightRadius: 6,
         borderTopLeftRadius: 6,
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        height: "100%",
+        maxHeight: ScreenHeight
     },
     safeAreaBottom: {
-        paddingBottom: initialWindowSafeAreaInsets.bottom
+        paddingBottom: initialWindowSafeAreaInsets.bottom + 20
     },
     buttonBar: {
-        alignSelf: "center",
         marginVertical: 6,
+        alignSelf: "center",
         width: 50,
         height: 5,
         opacity: 0.15,
