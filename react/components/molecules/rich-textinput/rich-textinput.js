@@ -250,8 +250,7 @@ const styles = StyleSheet.create({
     textArea: {
         flex: 1,
         backgroundColor: "#f6f7f9",
-        borderRadius: 20,
-        padding: -100
+        borderRadius: 20
     },
     buttons: {
         flexDirection: "row",
