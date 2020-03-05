@@ -68,6 +68,27 @@ storiesOf("Organisms", module)
                 message: "Lorem ipsum dolor sit.",
                 date: 1574950742823,
                 attachments: []
+            },
+            {
+                avatarUrl: "https://id.platforme.com/admin/accounts/v-fl%40platforme.com/avatar",
+                username: "FlaviooLima",
+                message: "Lorem ipsum dolor sit.",
+                date: 1574950742823,
+                attachments: []
+            },
+            {
+                avatarUrl: "https://id.platforme.com/admin/accounts/v-fl%40platforme.com/avatar",
+                username: "FlaviooLima",
+                message: "Lorem ipsum dolor sit.",
+                date: 1574950742823,
+                attachments: []
+            },
+            {
+                avatarUrl: "https://id.platforme.com/admin/accounts/v-fl%40platforme.com/avatar",
+                username: "FlaviooLima",
+                message: "Lorem ipsum dolor sit.",
+                date: 1574950742823,
+                attachments: []
             }
         ];
         return (

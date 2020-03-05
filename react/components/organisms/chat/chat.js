@@ -1,9 +1,11 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, ScrollView } from "react-native";
+import { ViewPropTypes, StyleSheet, KeyboardAvoidingView, SafeAreaView, ScrollView, Text } from "react-native";
 
 import PropTypes from "prop-types";
 
-import { ChatMessage } from "../..";
+import { baseStyles } from "../../../util";
+
+import { ChatMessage, RichTextInput } from "../..";
 
 export class Chat extends PureComponent {
     static get propTypes() {
@@ -39,30 +41,60 @@ export class Chat extends PureComponent {
         };
     }
 
+    onRichTextInputPhotoAdded = source => {
+        console.log("onRichTextInputPhotoAdded");
+    };
+
+    onRichTextInputAttachmentsAdded = attachments => {
+        console.log("onRichTextInputAttachmentsAdded");
+    };
+
+    onRichTextInputSendMessage = text => {
+        console.log("onRichTextInputValue");
+    };
+
     render() {
         return (
-            <ScrollView style={[styles.chat, this.props.style]}>
-                {this.props.messages.map((message, index) => {
-                    return (
-                        <ChatMessage
-                            style={index !== 0 && styles.chatMessage}
-                            avatarUrl={message.avatarUrl}
-                            username={message.username}
-                            message={message.message}
-                            date={message.date}
-                            attachments={message.attachments}
-                            key={index}
-                        />
-                    );
-                })}
-            </ScrollView>
+            <SafeAreaView style={styles.chat}>
+                <ScrollView style={[styles.chat, styles.chatMessagesContainer, this.props.style]}>
+                    {this.props.messages.map((message, index) => {
+                        return (
+                            <ChatMessage
+                                style={index !== 0 && styles.chatMessage}
+                                avatarUrl={message.avatarUrl}
+                                username={message.username}
+                                message={message.message}
+                                date={message.date}
+                                attachments={message.attachments}
+                                key={index}
+                            />
+                        );
+                    })}
+                </ScrollView>
+                <RichTextInput
+                    style={styles.richTextInput}
+                    placeholder={"Say something..."}
+                    multiline={true}
+                    maxHeight={baseStyles.FONT_SIZE * 5}
+                    onPhotoAdded={this.onRichTextInputPhotoAdded}
+                    onAttachmentsAdded={this.onRichTextInputAttachmentsAdded}
+                    onSendMessage={this.onRichTextInputSendMessage}
+                />
+            </SafeAreaView>
         );
     }
 }
 
 const styles = StyleSheet.create({
     chat: {
+        flex: 1
+    },
+    chatMessagesContainer: {
+        flex: 1,
         backgroundColor: "#f6f7f9"
+    },
+    richTextInput: {
+        height: "auto"
     },
     chatMessage: {
         marginTop: 32
