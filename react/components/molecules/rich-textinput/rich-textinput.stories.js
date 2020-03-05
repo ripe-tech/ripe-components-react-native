@@ -16,8 +16,8 @@ storiesOf("Atoms", module)
         const onAttachmentsAdded = attachments => {
             console.log("[RichTextInput]", "onAttachmentsAdded", attachments);
         };
-        const onSendMessage = _text => {
-            console.log("[RichTextInput]", "onSendMessage", _text);
+        const onSendMessage = messageText => {
+            console.log("[RichTextInput]", "onSendMessage", messageText);
         };
         const value = text("Value", undefined);
         const placeholder = text("Placeholder", "Placeholder example");
