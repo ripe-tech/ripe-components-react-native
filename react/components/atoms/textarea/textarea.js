@@ -71,6 +71,7 @@ export class TextArea extends PureComponent {
 
 const styles = StyleSheet.create({
     textArea: {
+        paddingVertical: 0,
         paddingLeft: 15,
         paddingRight: 15,
         color: "#3e566a"
