@@ -21,8 +21,6 @@ if (Platform.OS === "android") {
     }
 }
 
-const animationTime = 200;
-
 export class RichTextInput extends PureComponent {
     static get propTypes() {
         return {
@@ -31,6 +29,7 @@ export class RichTextInput extends PureComponent {
             multiline: PropTypes.bool,
             minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            animationTime: PropTypes.number,
             onValue: PropTypes.func,
             onPhotoAdded: PropTypes.func,
             onAttachmentsAdded: PropTypes.func,
@@ -48,6 +47,7 @@ export class RichTextInput extends PureComponent {
             multiline: false,
             minHeight: undefined,
             maxHeight: undefined,
+            animationTime: 200,
             onValue: value => {},
             onPhotoAdded: source => {},
             onAttachmentsAdded: attachments => {},
@@ -72,7 +72,7 @@ export class RichTextInput extends PureComponent {
     startAnimations = () => {
         LayoutAnimation.configureNext(
             LayoutAnimation.create(
-                animationTime,
+                this.props.animationTime,
                 LayoutAnimation.Types.easeOut,
                 LayoutAnimation.Properties.scaleXY
             )
@@ -86,11 +86,11 @@ export class RichTextInput extends PureComponent {
         Animated.parallel([
             Animated.timing(this.state.buttonsOpacityValue, {
                 toValue: 1,
-                duration: animationTime
+                duration: this.props.animationTime
             }),
             Animated.timing(this.state.moreOptionsOpacityValue, {
                 toValue: 0,
-                duration: animationTime
+                duration: this.props.animationTime
             })
         ]).start();
     };
@@ -99,11 +99,11 @@ export class RichTextInput extends PureComponent {
         Animated.parallel([
             Animated.timing(this.state.buttonsOpacityValue, {
                 toValue: 0,
-                duration: animationTime
+                duration: this.props.animationTime
             }),
             Animated.timing(this.state.moreOptionsOpacityValue, {
                 toValue: 1,
-                duration: animationTime
+                duration: this.props.animationTime
             })
         ]).start();
     };
