@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     filler: {
-        flex: 1
+        flex: 1,
+        marginHorizontal: 2
     }
 });
 
