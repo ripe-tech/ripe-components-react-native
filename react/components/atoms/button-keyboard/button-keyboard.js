@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, Platform, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -15,7 +15,7 @@ export class ButtonKeyboard extends PureComponent {
             value: PropTypes.any,
             variant: PropTypes.string,
             onPress: PropTypes.func,
-            style: PropTypes.object
+            style: ViewPropTypes.style
         };
     }
 
