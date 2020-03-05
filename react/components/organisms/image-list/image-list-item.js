@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, Image, View } from "react-native";
 import PropTypes from "prop-types";
-import { ButtonIcon } from "../../";
 
-export class ItemImage extends PureComponent {
+import { ButtonIcon } from "../../atoms";
+
+export class ImageListItem extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -22,7 +23,8 @@ export class ItemImage extends PureComponent {
             iconColor: PropTypes.string,
             iconSize: PropTypes.number,
             iconStrokeWidth: PropTypes.number,
-            onPressImage: PropTypes.func,
+            showIcon: PropTypes.bool,
+            onIconPress: PropTypes.func,
             size: PropTypes.number.isRequired,
             style: ViewPropTypes.style
         };
@@ -35,15 +37,12 @@ export class ItemImage extends PureComponent {
             iconColor: "#213054",
             iconSize: 20,
             iconStrokeWidth: 2,
-            onPressImage: undefined,
+            showIcon: true,
+            onIconPress: () => {},
             size: 80,
             style: {}
         };
     }
-
-    onPress = () => {
-        this.props.onPressImage(this.props.index);
-    };
 
     _styles() {
         return [
@@ -72,7 +71,7 @@ export class ItemImage extends PureComponent {
                 <View style={styles.containerImage}>
                     <Image source={this.props.image} style={styles.image} resizeMode={"cover"} />
                 </View>
-                {this.props.onPressImage ? (
+                {this.props.showIcon ? (
                     <ButtonIcon
                         backgroundColor={this.props.iconBackgroundColor}
                         icon={this.props.icon}
@@ -82,7 +81,7 @@ export class ItemImage extends PureComponent {
                         iconStrokeWidth={2}
                         size={this.props.iconSize}
                         style={this._iconStyles()}
-                        onPress={this.onPress}
+                        onPress={this.props.onIconPress}
                         hitBox={this.hitBox}
                     />
                 ) : null}

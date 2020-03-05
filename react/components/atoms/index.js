@@ -1,6 +1,5 @@
 export * from "./avatar";
 export * from "./button";
-export * from "./button-generic";
 export * from "./button-icon";
 export * from "./button-keyboard";
 export * from "./button-tab";

@@ -1,11 +1,12 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, Platform, TouchableOpacity, Text, View } from "react-native";
 import PropTypes from "prop-types";
-import { Icon } from "../../";
+
+import { Icon } from "../../atoms";
 
 import { baseStyles } from "../../../util";
 
-export class ButtonGeneric extends PureComponent {
+export class ImageListItemAdd extends PureComponent {
     static get propTypes() {
         return {
             backgroundColor: PropTypes.string,

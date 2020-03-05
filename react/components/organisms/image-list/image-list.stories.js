@@ -2,11 +2,11 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs } from "@storybook/addon-knobs";
 
-import { SelectorImage } from "../../";
+import { ImageList } from "../image-list";
 
-storiesOf("Molecules", module)
+storiesOf("Organisms", module)
     .addDecorator(withKnobs)
-    .add("Selector Image", () => {
+    .add("Image List", () => {
         const images = [
             {
                 uri:
@@ -18,5 +18,5 @@ storiesOf("Molecules", module)
             }
         ];
 
-        return <SelectorImage images={images} />;
+        return <ImageList images={images} />;
     });

@@ -1,0 +1,151 @@
+import React, { PureComponent } from "react";
+import { Alert, StyleSheet, Dimensions, ViewPropTypes, View } from "react-native";
+import PropTypes from "prop-types";
+import ImagePicker from "react-native-image-picker";
+
+import { ImageListItem } from "./image-list-item";
+import { ImageListItemAdd } from "./image-list-item-add";
+
+export class ImageList extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            images: props.images
+        };
+
+        this.itemsPerRow = Math.floor(Dimensions.get("window").width / 92);
+    }
+
+    static get propTypes() {
+        return {
+            enableAdd: PropTypes.bool,
+            enableRemove: PropTypes.bool,
+            onAddImage: PropTypes.func,
+            onRemoveImage: PropTypes.func,
+            style: ViewPropTypes.style
+        };
+    }
+
+    static get defaultProps() {
+        return {
+            enableAdd: true,
+            enableRemove: true,
+            onAddImage: () => {},
+            onRemoveImage: () => {},
+            style: {}
+        };
+    }
+
+    _addFillers() {
+        const imagesLength = this.state.images.length + (this.props.enableAdd ? 1 : 0);
+        const neededFillers = this.itemsPerRow - (imagesLength % this.itemsPerRow);
+
+        const fillers = [];
+        for (let index = 0; index < neededFillers; index++) {
+            fillers.push(<View style={styles.filler} key={`${index}`} />);
+        }
+
+        return fillers;
+    }
+
+    _onPressRemove = index => {
+        this.setState(state => {
+            const image = state.images[index];
+            const images = [...state.images];
+            images.splice(index, 1);
+
+            this.props.onRemoveImage(image);
+            return { images };
+        });
+    };
+
+    _onPressAdd = () => {
+        ImagePicker.showImagePicker(
+            {
+                title: "Select Image",
+                mediaType: "photo",
+                noData: true,
+                storageOptions: {
+                    skipBackup: true,
+                    path: "images"
+                }
+            },
+            response => {
+                if (response.didCancel) {
+                    return;
+                }
+
+                if (response.error) {
+                    Alert.alert("Error", "Could not load image", { cancelable: false });
+                    return;
+                }
+
+                const newImage = { uri: response.uri };
+
+                this.setState(
+                    state => ({ images: [...state.images, newImage] }),
+                    () => this.props.onAddImage(newImage)
+                );
+            }
+        );
+    };
+
+    _styles() {
+        return [styles.selectorImage, this.props.style];
+    }
+
+    render() {
+        return (
+            <View style={this._styles()}>
+                {this.props.enableAdd ? (
+                    <ImageListItemAdd
+                        borderColor={"#e4e8f0"}
+                        size={80}
+                        icon={"plus"}
+                        iconColor={"#a4adb5"}
+                        iconStrokeWidth={2}
+                        iconHeight={26}
+                        iconWidth={26}
+                        text={"Add photo"}
+                        onPress={this._onPressAdd}
+                        style={styles.buttonAdd}
+                    />
+                ) : null}
+                {this.state.images.map((image, index) => (
+                    <ImageListItem
+                        size={80}
+                        key={image.uri}
+                        index={index}
+                        image={image}
+                        showIcon={this.props.enableRemove}
+                        onIconPress={() => this._onPressRemove(index)}
+                        style={styles.itemImage}
+                    />
+                ))}
+                {this._addFillers()}
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    selectorImage: {
+        backgroundColor: "#ffffff",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+        alignItems: "center"
+    },
+    buttonAdd: {
+        margin: 6
+    },
+    itemImage: {
+        margin: 6
+    },
+    filler: {
+        margin: 6,
+        width: 80,
+        height: 80
+    }
+});
