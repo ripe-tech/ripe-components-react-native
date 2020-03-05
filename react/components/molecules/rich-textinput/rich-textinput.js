@@ -151,7 +151,7 @@ export class RichTextInput extends PureComponent {
     };
 
     onMoreOptionsButtonPress = () => {
-        this.refs.textArea.blur();
+        this.textAreaComponent.blur();
     };
 
     onTextAreaValue = value => {
@@ -214,7 +214,7 @@ export class RichTextInput extends PureComponent {
                     />
                 </Animated.View>
                 <TextArea
-                    ref="textArea"
+                    ref={el => (this.textAreaComponent = el)}
                     style={styles.textArea}
                     value={this.state.value}
                     placeholder={this.props.placeholder}
