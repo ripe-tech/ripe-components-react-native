@@ -7,7 +7,6 @@ export * from "./button-tab";
 export * from "./button-tab-text";
 export * from "./container-swipeable";
 export * from "./icon";
-export * from "./key-value";
 export * from "./lightbox";
 export * from "./link";
 export * from "./tag";
