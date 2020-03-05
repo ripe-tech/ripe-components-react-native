@@ -14,7 +14,8 @@ export class ButtonKeyboard extends PureComponent {
             text: PropTypes.string,
             value: PropTypes.any,
             variant: PropTypes.string,
-            onPress: PropTypes.func
+            onPress: PropTypes.func,
+            style: PropTypes.object
         };
     }
 
@@ -25,6 +26,7 @@ export class ButtonKeyboard extends PureComponent {
             text: undefined,
             value: undefined,
             variant: undefined,
+            style: {},
             onPress: () => {}
         };
     }
@@ -34,7 +36,7 @@ export class ButtonKeyboard extends PureComponent {
     };
 
     _style = () => {
-        const base = [styles.buttonKeyboard];
+        const base = [styles.buttonKeyboard, this.props.style];
         switch (this.props.variant) {
             case "clean":
                 base.push(styles.cleanStyle);
@@ -65,7 +67,6 @@ const styles = StyleSheet.create({
     buttonKeyboard: {
         flex: 1,
         maxHeight: 54,
-        marginHorizontal: 2,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#ffffff",
