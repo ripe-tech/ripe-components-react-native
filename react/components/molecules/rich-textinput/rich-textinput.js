@@ -8,18 +8,11 @@ import {
     UIManager,
     LayoutAnimation
 } from "react-native";
-import ImagePicker from "react-native-image-picker";
-import DocumentPicker from "react-native-document-picker";
 
 import PropTypes from "prop-types";
 
 import { ButtonIcon, TextArea } from "../..";
-
-if (Platform.OS === "android") {
-    if (UIManager.setLayoutAnimationEnabledExperimental) {
-        UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
-}
+import { pickImage, pickDocuments } from "../../../util";
 
 export class RichTextInput extends PureComponent {
     static get propTypes() {
@@ -27,10 +20,9 @@ export class RichTextInput extends PureComponent {
             value: PropTypes.string,
             placeholder: PropTypes.string,
             multiline: PropTypes.bool,
-            minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-            maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            textareaMinHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            textareaMaxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             animationTime: PropTypes.number,
-            onValue: PropTypes.func,
             onPhotoAdded: PropTypes.func,
             onAttachmentsAdded: PropTypes.func,
             onSendMessage: PropTypes.func,
@@ -45,11 +37,10 @@ export class RichTextInput extends PureComponent {
             value: undefined,
             placeholder: undefined,
             multiline: false,
-            minHeight: undefined,
-            maxHeight: undefined,
+            textareaMinHeight: undefined,
+            textareaMaxHeight: undefined,
             animationTime: 200,
-            onValue: value => {},
-            onPhotoAdded: source => {},
+            onPhotoAdded: image => {},
             onAttachmentsAdded: attachments => {},
             onSendMessage: text => {},
             onFocus: () => {},
@@ -67,6 +58,10 @@ export class RichTextInput extends PureComponent {
             buttonsOpacityValue: new Animated.Value(1),
             moreOptionsOpacityValue: new Animated.Value(0)
         };
+
+        if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
+            UIManager.setLayoutAnimationEnabledExperimental(true);
+        }
     }
 
     startAnimations = () => {
@@ -78,8 +73,11 @@ export class RichTextInput extends PureComponent {
             )
         );
 
-        if (this.state.buttonsVisible) this.startShowButtonsAnimation();
-        else this.startHideButtonsAnimation();
+        if (this.state.buttonsVisible) {
+            this.startShowButtonsAnimation();
+        } else {
+            this.startHideButtonsAnimation();
+        }
     };
 
     startShowButtonsAnimation = () => {
@@ -108,6 +106,49 @@ export class RichTextInput extends PureComponent {
         ]).start();
     };
 
+    onPhotoButtonPress = async () => {
+        const image = await pickImage();
+
+        if (image) {
+            this.props.onPhotoAdded(image);
+        }
+    };
+
+    onAttachmentButtonPress = async () => {
+        const attachments = await pickDocuments();
+
+        if (attachments) {
+            this.props.onAttachmentsAdded(attachments);
+        }
+    };
+
+    onMoreOptionsButtonPress = () => {
+        this.textAreaComponent.blur();
+    };
+
+    onTextAreaValue = value => {
+        this.setState({ value: value });
+    };
+
+    onTextAreaFocus = () => {
+        this.setState({ buttonsVisible: false }, () => {
+            this.startAnimations();
+            this.props.onFocus();
+        });
+    };
+
+    onTextAreaBlur = () => {
+        this.setState({ buttonsVisible: true }, () => {
+            this.startAnimations();
+            this.props.onBlur();
+        });
+    };
+
+    onSendButtonPress = () => {
+        const value = this.state.value;
+        this.setState({ value: undefined }, () => this.props.onSendMessage(value));
+    };
+
     _buttonsStyle = () => {
         const style = [styles.buttons, { opacity: this.state.buttonsOpacityValue }];
 
@@ -125,50 +166,6 @@ export class RichTextInput extends PureComponent {
 
         if (this.state.buttonsVisible) style.push({ width: 0 });
         return style;
-    };
-
-    onPhotoButtonPress = () => {
-        ImagePicker.showImagePicker({}, response => {
-            if (!response.didCancel && !response.error) {
-                const source = { uri: response.uri };
-                this.props.onPhotoAdded(source);
-            }
-        });
-    };
-
-    onAttachmentButtonPress = async () => {
-        try {
-            const attachments = await DocumentPicker.pickMultiple();
-            this.props.onAttachmentsAdded(attachments);
-        } catch (err) {
-            if (DocumentPicker.isCancel(err)) return;
-            else throw err;
-        }
-    };
-
-    onMoreOptionsButtonPress = () => {
-        this.textAreaComponent.blur();
-    };
-
-    onTextAreaValue = value => {
-        this.setState({ value: value }, this.props.onValue(value));
-    };
-
-    onTextAreaFocus = () => {
-        this.setState({ buttonsVisible: false }, () => this.startAnimations());
-
-        this.props.onFocus();
-    };
-
-    onTextAreaBlur = () => {
-        this.setState({ buttonsVisible: true }, () => this.startAnimations());
-
-        this.props.onBlur();
-    };
-
-    onSendButtonPress = () => {
-        this.props.onSendMessage(this.state.value);
-        this.setState({ value: undefined }, this.props.onValue(undefined));
     };
 
     render() {
@@ -216,8 +213,8 @@ export class RichTextInput extends PureComponent {
                     value={this.state.value}
                     placeholder={this.props.placeholder}
                     multiline={this.props.multiline}
-                    minHeight={this.props.minHeight}
-                    maxHeight={this.props.maxHeight}
+                    textareaMinHeight={this.props.textareaMinHeight}
+                    textareaMaxHeight={this.props.textareaMaxHeight}
                     onValue={value => this.onTextAreaValue(value)}
                     onFocus={() => this.onTextAreaFocus()}
                     onBlur={() => this.onTextAreaBlur()}
