@@ -12,6 +12,8 @@ export class TextArea extends PureComponent {
             minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onValue: PropTypes.func,
+            onFocus: PropTypes.func,
+            onBlur: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -24,8 +26,18 @@ export class TextArea extends PureComponent {
             minHeight: undefined,
             maxHeight: undefined,
             onValue: () => {},
+            onFocus: () => {},
+            onBlur: () => {},
             style: {}
         };
+    }
+
+    focus() {
+        this.textInputComponent.focus();
+    }
+
+    blur() {
+        this.textInputComponent.blur();
     }
 
     _style = () => {
@@ -43,10 +55,13 @@ export class TextArea extends PureComponent {
     render() {
         return (
             <TextInput
+                ref={el => (this.textInputComponent = el)}
                 style={this._style()}
                 placeholder={this.props.placeholder}
                 multiline={this.props.multiline}
                 onChangeText={this.props.onValue}
+                onFocus={this.props.onFocus}
+                onBlur={this.props.onBlur}
             >
                 {this.props.value}
             </TextInput>

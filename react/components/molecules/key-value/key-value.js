@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.FONT,
         fontSize: 14,
         lineHeight: 18,
-        marginBottom: 8,
+        marginBottom: Platform.OS === "ios" ? 2 : 6,
         letterSpacing: 0.25,
         color: "#4f7af8"
     },
