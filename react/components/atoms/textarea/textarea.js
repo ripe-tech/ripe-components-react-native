@@ -44,7 +44,7 @@ export class TextArea extends PureComponent {
         return [
             styles.textArea,
             {
-                verticalPadding: this.props.multiline ? 20 : undefined,
+                paddingVertical: this.props.multiline ? 20 : 0,
                 minHeight: this.props.minHeight,
                 maxHeight: this.props.maxHeight
             },
