@@ -170,6 +170,10 @@ export class RichTextInput extends PureComponent {
         this.props.onBlur();
     };
 
+    onSendButtonPress = () => {
+        this.props.onSendMessage(this.state.value);
+    };
+
     render() {
         return (
             <View style={[styles.richTextInput, this.props.style]}>
@@ -229,7 +233,7 @@ export class RichTextInput extends PureComponent {
                     backgroundColor={"#ffffff"}
                     iconHeight={27}
                     iconWidth={27}
-                    onPress={() => this.props.onSendMessage()}
+                    onPress={() => this.onSendButtonPress()}
                 />
             </View>
         );
