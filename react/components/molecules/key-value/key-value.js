@@ -19,6 +19,7 @@ export class KeyValue extends PureComponent {
             iconWidth: PropTypes.number,
             iconStrokeWidth: PropTypes.number,
             onPress: PropTypes.func,
+            onButtonIconPress: PropTypes.func,
             onLongPress: PropTypes.func
         };
     }
@@ -33,6 +34,7 @@ export class KeyValue extends PureComponent {
             iconWidth: undefined,
             iconStrokeWidth: undefined,
             onPress: undefined,
+            onButtonIconPress: undefined,
             onLongPress: undefined
         };
     }
@@ -59,6 +61,7 @@ export class KeyValue extends PureComponent {
                             size={this.props.iconSize}
                             iconStrokeWidth={this.props.iconStrokeWidth}
                             style={styles.iconStyle}
+                            onPress={this.props.onButtonIconPress}
                         />
                     </View>
                 ) : null}
