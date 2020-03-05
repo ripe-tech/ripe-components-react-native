@@ -36,7 +36,7 @@ export class ButtonTab extends PureComponent {
         return this.props.selected || this.state.pressed ? "#1d2631" : "#a6adb4";
     };
 
-    _labelStyles = () => {
+    _labelStyle = () => {
         return [
             styles.label,
             this.props.selected || this.state.pressed ? styles.labelSelected : {}
@@ -65,7 +65,7 @@ export class ButtonTab extends PureComponent {
                         <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
                     ) : null}
                     {this.props.text ? (
-                        <Text style={this._labelStyles()}>{this.props.text}</Text>
+                        <Text style={this._labelStyle()}>{this.props.text}</Text>
                     ) : null}
                 </View>
             </TouchableWithoutFeedback>

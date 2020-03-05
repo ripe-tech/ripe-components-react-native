@@ -1,6 +1,6 @@
 {
     "name": "ripe-components-react-native",
-    "version": "0.1.9",
+    "version": "0.1.16",
     "description": "RIPE Components for React Native",
     "keywords": [
         "components",
@@ -51,16 +51,16 @@
         "react-native-svg": "^11.0.1"
     },
     "devDependencies": {
-        "@babel/core": "^7.8.4",
+        "@babel/core": "^7.8.6",
         "@babel/runtime": "^7.8.4",
         "@react-native-community/eslint-config": "^0.0.7",
         "babel-jest": "^25.1.0",
         "eslint": "^6.8.0",
         "jest": "^25.1.0",
         "metro-react-native-babel-preset": "^0.58.0",
-        "mocha": "^7.0.1",
+        "mocha": "^7.1.0",
         "prettier": "^1.19.1",
-        "react-test-renderer": "^16.12.0"
+        "react-test-renderer": "^16.13.0"
     },
     "jest": {
         "preset": "react-native"

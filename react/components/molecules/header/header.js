@@ -41,7 +41,8 @@ export class Header extends PureComponent {
         };
     }
 
-    goBack = () => this.props.navigation && this.props.navigation.pop(1);
+    goBack = () =>
+        this.props.navigation && this.props.navigation.canGoBack() && this.props.navigation.pop(1);
 
     render() {
         return (
@@ -106,13 +107,17 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     containerButtonLeft: {
+        zIndex: 1,
         position: "absolute",
         top: 18,
         left: 10
     },
     containerButtonRight: {
+        zIndex: 1,
         position: "absolute",
         top: 18,
         right: 10
     }
 });
+
+export default Header;

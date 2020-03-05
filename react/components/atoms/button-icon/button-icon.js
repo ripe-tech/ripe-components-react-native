@@ -6,13 +6,15 @@ import { Icon } from "../../";
 export class ButtonIcon extends PureComponent {
     static get propTypes() {
         return {
+            icon: PropTypes.string.isRequired,
+            size: PropTypes.number.isRequired,
             backgroundColor: PropTypes.string,
             color: PropTypes.string,
-            icon: PropTypes.string.isRequired,
             iconHeight: PropTypes.number,
             iconWidth: PropTypes.number,
             iconStrokeWidth: PropTypes.number,
             onPress: PropTypes.func,
+<<<<<<< HEAD
             size: PropTypes.number.isRequired,
             style: ViewPropTypes.style,
             hitBox: PropTypes.shape({
@@ -21,6 +23,9 @@ export class ButtonIcon extends PureComponent {
                 bottom: PropTypes.number,
                 left: PropTypes.number
             })
+=======
+            style: ViewPropTypes.style
+>>>>>>> master
         };
     }
 
@@ -42,7 +47,7 @@ export class ButtonIcon extends PureComponent {
         };
     }
 
-    _styles() {
+    _style() {
         return [
             styles.buttonIcon,
             {
@@ -60,7 +65,7 @@ export class ButtonIcon extends PureComponent {
             <TouchableOpacity
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
-                style={this._styles()}
+                style={this._style()}
             >
                 <Icon
                     icon={this.props.icon}
@@ -80,3 +85,5 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     }
 });
+
+export default ButtonIcon;

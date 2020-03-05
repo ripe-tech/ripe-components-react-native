@@ -10,7 +10,11 @@ storiesOf("Atoms", module)
         const _text = text("Text", "Subscribed");
         const icon = select(
             "Icon",
-            { None: null, Add: "add", "Volume Loud": "volume-loud" },
+            {
+                Unset: undefined,
+                Add: "add",
+                "Volume Loud": "volume-loud"
+            },
             "volume-loud"
         );
         const iconWidth = number("Icon Width", 14);
