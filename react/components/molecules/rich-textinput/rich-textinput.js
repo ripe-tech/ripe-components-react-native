@@ -21,7 +21,7 @@ if (Platform.OS === "android") {
     }
 }
 
-const animationTime = 350;
+const animationTime = 200;
 
 export class RichTextInput extends PureComponent {
     static get propTypes() {
