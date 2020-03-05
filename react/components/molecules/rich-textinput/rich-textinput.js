@@ -58,10 +58,19 @@ export class RichTextInput extends PureComponent {
         };
     }
 
+    static getDerivedStateFromProps(props, state) {
+        if (props.value !== state.value) {
+            return { value: props.value };
+        }
+
+        return null;
+    }
+
     constructor(props) {
         super(props);
 
         this.state = {
+            value: this.props.value,
             buttonsVisible: true,
             buttonsOpacityValue: new Animated.Value(1),
             moreOptionsOpacityValue: new Animated.Value(0)
@@ -145,6 +154,10 @@ export class RichTextInput extends PureComponent {
         this.refs.textArea.blur();
     };
 
+    onTextAreaValue = value => {
+        this.setState({ value: value }, this.props.onValue(value));
+    };
+
     onTextAreaFocus = () => {
         this.setState({ buttonsVisible: false }, () => this.startAnimations());
 
@@ -199,12 +212,12 @@ export class RichTextInput extends PureComponent {
                 <TextArea
                     ref="textArea"
                     style={styles.textArea}
-                    value={this.props.value}
+                    value={this.state.value}
                     placeholder={this.props.placeholder}
                     multiline={this.props.multiline}
                     minHeight={this.props.minHeight}
                     maxHeight={this.props.maxHeight}
-                    onValue={this.props.onValue}
+                    onValue={value => this.onTextAreaValue(value)}
                     onFocus={() => this.onTextAreaFocus()}
                     onBlur={() => this.onTextAreaBlur()}
                 />
