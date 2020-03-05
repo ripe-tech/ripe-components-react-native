@@ -79,7 +79,7 @@ export class RichTextInput extends PureComponent {
 
     startAnimations = () => {
         LayoutAnimation.configureNext(
-            LayoutAnimation.create(animationTime, LayoutAnimation.Types.easeOut)
+            LayoutAnimation.create(animationTime, LayoutAnimation.Types.easeOut, LayoutAnimation.Properties.scaleXY)
         );
 
         if (this.state.buttonsVisible) this.startShowButtonsAnimation();
@@ -250,7 +250,8 @@ const styles = StyleSheet.create({
     textArea: {
         flex: 1,
         backgroundColor: "#f6f7f9",
-        borderRadius: 20
+        borderRadius: 20,
+        padding: -100
     },
     buttons: {
         flexDirection: "row",
