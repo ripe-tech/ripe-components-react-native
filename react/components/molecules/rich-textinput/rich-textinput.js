@@ -79,7 +79,11 @@ export class RichTextInput extends PureComponent {
 
     startAnimations = () => {
         LayoutAnimation.configureNext(
-            LayoutAnimation.create(animationTime, LayoutAnimation.Types.easeOut, LayoutAnimation.Properties.scaleXY)
+            LayoutAnimation.create(
+                animationTime,
+                LayoutAnimation.Types.easeOut,
+                LayoutAnimation.Properties.scaleXY
+            )
         );
 
         if (this.state.buttonsVisible) this.startShowButtonsAnimation();
