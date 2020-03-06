@@ -11,6 +11,7 @@ import {
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 import PropTypes from "prop-types";
 
+//@TODO This method for AndroidSoftBar
 const AndroidSoftBar = Dimensions.get("screen").height - Dimensions.get("window").height;
 const ScreenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
 
@@ -40,30 +41,23 @@ export class ContainerSwipeable extends PureComponent {
         super(props);
 
         this.state = {
-            visible: false,
+            itemsVisible: false,
             modalVisible: false,
             containerChildrenHeight: 0,
             containerBackgroundColorAnimated: new Animated.Value(0),
             containerInnerPositionAnimated: new Animated.ValueXY({ x: 0, y: ScreenHeight })
         };
 
+        this._initialViewPositionY = ScreenHeight;
         this.animating = false;
 
         this.panResponder = PanResponder.create({
-            // onMoveShouldSetPanResponderCapture: this.onMoveShouldSetPanResponderCapture,
             onStartShouldSetPanResponder: (_evt, _gestureState) => true,
             onPanResponderGrant: this.onPanResponderGrant,
             onPanResponderMove: this.onPanResponderMove,
-
             onPanResponderRelease: this.onPanResponderRelease
         });
     }
-
-    // onMoveShouldSetPanResponderCapture = (_evt, gestureState) => {
-    //     // return gestureState.dx !== 0 && gestureState.dy !== 0;
-    //     return Math.abs(gestureState.dy) > 2;
-    //     // return true;
-    // };
 
     onPanResponderGrant = (_evt, _gestureState) => {
         this._initialViewPositionY = this.state.containerInnerPositionAnimated.__getValue().y;
@@ -77,7 +71,7 @@ export class ContainerSwipeable extends PureComponent {
         //if the user is going up, we slow down the up movement  on each interaction
         let gestureStateDistanceY = gestureState.dy > 0 ? gestureState.dy : gestureState.dy / 2;
 
-        const nextViewPositionY = this._initialViewPositionY + gestureStateDistanceY;
+        const nextViewPositionY = this._nextViewPositionY(gestureStateDistanceY);
         const hasReachedMaxTopPosition = nextViewPositionY <= 0;
 
         if (hasReachedMaxTopPosition) {
@@ -88,18 +82,10 @@ export class ContainerSwipeable extends PureComponent {
             x: 0,
             y: nextViewPositionY
         });
-        // //@TODO MAYBE ANIMAtE
-        // Animated.spring(this.state.containerInnerPositionAnimated, {
-        //     toValue: {
-        //         x: 0,
-        //         y: nextViewPositionY
-        //     },
-        //     // duration: this.props.animationsDuration
-        // }).start();
     };
 
-    onPanResponderRelease = (evt, gestureState) => {
-        const nextViewPositionY = this._initialViewPositionY + gestureState.dy;
+    onPanResponderRelease = (_evt, gestureState) => {
+        const nextViewPositionY = this._nextViewPositionY(gestureState.dy);
         const isInsideOfCloseThreshold =
             nextViewPositionY - this.props.hideThreshold >
             ScreenHeight - this.state.containerChildrenHeight;
@@ -107,11 +93,10 @@ export class ContainerSwipeable extends PureComponent {
         if (isInsideOfCloseThreshold) {
             this.toggle();
         } else {
+            const toValue = { x: 0, y: this._initialViewPositionY };
+
             Animated.spring(this.state.containerInnerPositionAnimated, {
-                toValue: {
-                    x: 0,
-                    y: this._initialViewPositionY
-                },
+                toValue,
                 duration: this.props.animationsDuration
             }).start();
         }
@@ -122,16 +107,16 @@ export class ContainerSwipeable extends PureComponent {
             return;
         }
 
-        if (this.state.visible) {
+        if (this.state.itemsVisible) {
             this.setState(
                 {
-                    visible: false
+                    itemsVisible: false
                 },
                 this._toggleAnimations
             );
         } else {
             this.setState({
-                visible: true,
+                itemsVisible: true,
                 modalVisible: true
             });
         }
@@ -149,12 +134,16 @@ export class ContainerSwipeable extends PureComponent {
         );
     };
 
+    _nextViewPositionY(gestureStateDistanceY) {
+        return this._initialViewPositionY + gestureStateDistanceY;
+    }
+
     _calculateInitialPositionY() {
         const isScreenBiggerThanChildren = ScreenHeight > this.state.containerChildrenHeight;
         const x = 0;
         let y = 0;
 
-        if (this.state.visible) {
+        if (this.state.itemsVisible) {
             if (isScreenBiggerThanChildren) {
                 y = ScreenHeight - this.state.containerChildrenHeight;
             }
@@ -170,7 +159,7 @@ export class ContainerSwipeable extends PureComponent {
 
         Animated.parallel([
             Animated.timing(this.state.containerBackgroundColorAnimated, {
-                toValue: this.state.visible ? 1 : 0,
+                toValue: this.state.itemsVisible ? 1 : 0,
                 duration: this.props.animationsDuration
             }),
             Animated.timing(this.state.containerInnerPositionAnimated, {
@@ -180,8 +169,10 @@ export class ContainerSwipeable extends PureComponent {
         ]).start(() => {
             this.setState(
                 state => ({
-                    modalVisible: this.state.visible,
-                    containerChildrenHeight: this.state.visible ? state.containerChildrenHeight : 0
+                    modalVisible: this.state.itemsVisible,
+                    containerChildrenHeight: this.state.itemsVisible
+                        ? state.containerChildrenHeight
+                        : 0
                 }),
                 () => {
                     this.animating = false;
@@ -229,7 +220,6 @@ export class ContainerSwipeable extends PureComponent {
                                 onPress={this.toggle}
                                 hitSlop={this.props.hitSlop}
                             />
-
                             {this.props.children}
                             <View style={styles.safeAreaBottom} />
                         </View>
