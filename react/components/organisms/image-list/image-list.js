@@ -10,10 +10,7 @@ export class ImageList extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.state = {
-            images: props.images
-        };
-
+        this.state = { images: [] };
         this.itemsPerRow = Math.floor(Dimensions.get("window").width / 92);
     }
 
@@ -35,6 +32,10 @@ export class ImageList extends PureComponent {
             onRemoveImage: () => {},
             style: {}
         };
+    }
+
+    setImages(images) {
+        this.setState({ images: images });
     }
 
     _addFillers() {
