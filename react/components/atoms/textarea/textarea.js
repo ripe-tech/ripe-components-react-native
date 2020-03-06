@@ -11,6 +11,7 @@ export class TextArea extends PureComponent {
             multiline: PropTypes.bool,
             minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            onSubmit: PropTypes.func,
             onValue: PropTypes.func,
             onFocus: PropTypes.func,
             onBlur: PropTypes.func,
@@ -60,6 +61,7 @@ export class TextArea extends PureComponent {
                 placeholder={this.props.placeholder}
                 multiline={this.props.multiline}
                 onChangeText={this.props.onValue}
+                onSubmitEditing={this.props.onSubmit}
                 onFocus={this.props.onFocus}
                 onBlur={this.props.onBlur}
             >
