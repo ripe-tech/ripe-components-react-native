@@ -31,7 +31,9 @@ storiesOf("Atoms", module)
                 iconHeight={iconHeight}
                 iconWidth={iconWidth}
                 iconStrokeWidth={iconStrokeWidth}
+                clickable={true}
                 onPress={() => alert("Thanks for the press!")}
+                onButtonIconPress={() => alert("Thanks for pressing the icon!")}
             />
         );
     });
