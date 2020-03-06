@@ -53,18 +53,39 @@ export class Chat extends PureComponent {
     };
 
     onRichTextInputPhotoAdded = source => {
-        // TODO
-        console.log("onRichTextInputPhotoAdded");
+        const message = {
+            avatarUrl: this.props.avatarUrl,
+            username: this.props.username,
+            message: undefined,
+            date: Date.now(),
+            attachments: [source]
+        };
+
+        this.props.onNewMessage(message);
     };
 
     onRichTextInputAttachmentsAdded = attachments => {
-        // TODO
-        console.log("onRichTextInputAttachmentsAdded");
+        const message = {
+            avatarUrl: this.props.avatarUrl,
+            username: this.props.username,
+            message: undefined,
+            date: Date.now(),
+            attachments: attachments
+        };
+
+        this.props.onNewMessage(message);
     };
 
     onRichTextInputSendMessage = text => {
-        // TODO
-        console.log("onRichTextInputValue");
+        const message = {
+            avatarUrl: this.props.avatarUrl,
+            username: this.props.username,
+            message: text,
+            date: Date.now(),
+            attachments: []
+        };
+
+        this.props.onNewMessage(message);
     };
 
     render() {
@@ -99,9 +120,11 @@ export class Chat extends PureComponent {
                         multiline={true}
                         textareaMaxHeight={baseStyles.FONT_SIZE * 5}
                         onFocus={this._scrollToEnd}
-                        onPhotoAdded={this.onRichTextInputPhotoAdded}
-                        onAttachmentsAdded={this.onRichTextInputAttachmentsAdded}
-                        onSendMessage={this.onRichTextInputSendMessage}
+                        onPhotoAdded={image => this.onRichTextInputPhotoAdded(image)}
+                        onAttachmentsAdded={attachments =>
+                            this.onRichTextInputAttachmentsAdded(attachments)
+                        }
+                        onSendMessage={text => this.onRichTextInputSendMessage(text)}
                     />
                 </SafeAreaView>
             </KeyboardAvoidingView>

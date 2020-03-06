@@ -8,6 +8,7 @@ storiesOf("Organisms", module)
     .addDecorator(withKnobs)
     .add("Chat", () => {
         const onNewMessage = message => {
+            messages.push(message);
             console.log("New Message", message);
         };
         const avatarUrl = text(
