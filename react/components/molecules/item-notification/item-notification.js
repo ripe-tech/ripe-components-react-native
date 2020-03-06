@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
 import { Avatar } from "../../atoms/avatar";
-import { timeStringUTC } from "../../../util";
+import { dateTimeString } from "../../../util";
 
 export class ItemNotification extends PureComponent {
     static get propTypes() {
@@ -18,8 +18,8 @@ export class ItemNotification extends PureComponent {
 
     static get defaultProps() {
         return {
-            onPress: undefined,
-            text: null,
+            onPress: () => {},
+            text: undefined,
             unread: false
         };
     }
@@ -28,7 +28,7 @@ export class ItemNotification extends PureComponent {
         return [
             styles.style,
             {
-                backgroundColor: this.props.unread ? "#e5ebfd" : "#fff"
+                backgroundColor: this.props.unread ? "#e5ebfd" : "#ffffff"
             }
         ];
     }
@@ -49,7 +49,7 @@ export class ItemNotification extends PureComponent {
                 />
                 <Text style={styles.text}>{this.props.text}</Text>
                 {this.props.timestamp ? (
-                    <Text style={styles.timestamp}>{timeStringUTC(this.props.timestamp)} </Text>
+                    <Text style={styles.timestamp}>{dateTimeString(this.props.timestamp)} </Text>
                 ) : null}
             </TouchableOpacity>
         );
@@ -58,7 +58,7 @@ export class ItemNotification extends PureComponent {
 const styles = StyleSheet.create({
     style: {
         alignItems: "center",
-        backgroundColor: "#fff",
+        backgroundColor: "#ffffff",
         borderBottomColor: "#e4e8f0",
         borderBottomWidth: 2,
         flexDirection: "row",
@@ -67,20 +67,15 @@ const styles = StyleSheet.create({
         paddingBottom: 15,
         paddingLeft: 14,
         paddingTop: 19,
-        paddingRight: 20,
-        position: "relative",
-        width: "100%"
+        paddingRight: 20
     },
     text: {
-        flex: 1,
-        flexDirection: "row",
         fontSize: 16,
         paddingLeft: 14
     },
     timestamp: {
         color: "#a8b3bb",
         fontSize: 14,
-        justifyContent: "center",
         right: 0,
         textAlign: "center",
         width: 65
