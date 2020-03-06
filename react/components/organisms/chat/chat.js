@@ -5,7 +5,7 @@ import {
     KeyboardAvoidingView,
     SafeAreaView,
     ScrollView,
-    Text
+    Platform
 } from "react-native";
 
 import PropTypes from "prop-types";
@@ -65,38 +65,43 @@ export class Chat extends PureComponent {
 
     render() {
         return (
-            <SafeAreaView style={styles.chat}>
-                <ScrollView
-                    style={[styles.chatMessagesContainer, this.props.style]}
-                    ref={ref => (this.scrollViewComponent = ref)}
-                    onContentSizeChange={() =>
-                        this.scrollViewComponent.scrollToEnd({ animated: true })
-                    }
-                >
-                    {this.props.messages.map((message, index) => {
-                        return (
-                            <ChatMessage
-                                style={index !== 0 && styles.chatMessage}
-                                avatarUrl={message.avatarUrl}
-                                username={message.username}
-                                message={message.message}
-                                date={message.date}
-                                attachments={message.attachments}
-                                key={index}
-                            />
-                        );
-                    })}
-                </ScrollView>
-                <RichTextInput
-                    style={styles.richTextInput}
-                    placeholder={"Say something..."}
-                    multiline={true}
-                    maxHeight={baseStyles.FONT_SIZE * 5}
-                    onPhotoAdded={this.onRichTextInputPhotoAdded}
-                    onAttachmentsAdded={this.onRichTextInputAttachmentsAdded}
-                    onSendMessage={this.onRichTextInputSendMessage}
-                />
-            </SafeAreaView>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "height" : undefined}
+                style={styles.chat}
+            >
+                <SafeAreaView style={styles.chat}>
+                    <ScrollView
+                        style={[styles.chatMessagesContainer, this.props.style]}
+                        ref={ref => (this.scrollViewComponent = ref)}
+                        onContentSizeChange={() =>
+                            this.scrollViewComponent.scrollToEnd({ animated: true })
+                        }
+                    >
+                        {this.props.messages.map((message, index) => {
+                            return (
+                                <ChatMessage
+                                    style={index !== 0 && styles.chatMessage}
+                                    avatarUrl={message.avatarUrl}
+                                    username={message.username}
+                                    message={message.message}
+                                    date={message.date}
+                                    attachments={message.attachments}
+                                    key={index}
+                                />
+                            );
+                        })}
+                    </ScrollView>
+                    <RichTextInput
+                        style={styles.richTextInput}
+                        placeholder={"Say something..."}
+                        multiline={true}
+                        maxHeight={baseStyles.FONT_SIZE * 5}
+                        onPhotoAdded={this.onRichTextInputPhotoAdded}
+                        onAttachmentsAdded={this.onRichTextInputAttachmentsAdded}
+                        onSendMessage={this.onRichTextInputSendMessage}
+                    />
+                </SafeAreaView>
+            </KeyboardAvoidingView>
         );
     }
 }
