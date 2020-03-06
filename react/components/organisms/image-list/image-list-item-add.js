@@ -39,7 +39,7 @@ export class ImageListItemAdd extends PureComponent {
         };
     }
 
-    _styles() {
+    _style() {
         return [
             styles.buttonIcon,
             {
@@ -68,7 +68,7 @@ export class ImageListItemAdd extends PureComponent {
             <TouchableOpacity
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
-                style={this._styles()}
+                style={this._style()}
             >
                 {this.props.icon ? (
                     <View style={styles.container}>

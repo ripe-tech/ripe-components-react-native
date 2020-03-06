@@ -44,7 +44,7 @@ export class ImageListItem extends PureComponent {
         };
     }
 
-    _styles() {
+    _style() {
         return [
             styles.itemImage,
             {
@@ -67,7 +67,7 @@ export class ImageListItem extends PureComponent {
 
     render() {
         return (
-            <View style={this._styles()}>
+            <View style={this._style()}>
                 <View style={styles.containerImage}>
                     <Image source={this.props.image} style={styles.image} resizeMode={"cover"} />
                 </View>

@@ -96,13 +96,13 @@ export class ImageList extends PureComponent {
         );
     };
 
-    _styles() {
+    _style() {
         return [styles.selectorImage, this.props.style];
     }
 
     render() {
         return (
-            <View style={this._styles()}>
+            <View style={this._style()}>
                 {this.props.enableAdd ? (
                     <ImageListItemAdd
                         borderColor={"#e4e8f0"}
