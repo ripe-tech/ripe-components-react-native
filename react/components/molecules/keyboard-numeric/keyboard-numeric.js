@@ -21,24 +21,75 @@ export class KeyboardNumeric extends PureComponent {
         return (
             <View style={styles.keyboardNumeric}>
                 <View style={styles.row}>
-                    <ButtonKeyboard text={"1"} value={1} onPress={this.props.onKeyPress} />
-                    <ButtonKeyboard text={"2"} value={2} onPress={this.props.onKeyPress} />
-                    <ButtonKeyboard text={"3"} value={3} onPress={this.props.onKeyPress} />
-                </View>
-                <View style={styles.row}>
-                    <ButtonKeyboard text={"4"} value={4} onPress={this.props.onKeyPress} />
-                    <ButtonKeyboard text={"5"} value={5} onPress={this.props.onKeyPress} />
-                    <ButtonKeyboard text={"6"} value={6} onPress={this.props.onKeyPress} />
-                </View>
-                <View style={styles.row}>
-                    <ButtonKeyboard text={"7"} value={7} onPress={this.props.onKeyPress} />
-                    <ButtonKeyboard text={"8"} value={8} onPress={this.props.onKeyPress} />
-                    <ButtonKeyboard text={"9"} value={9} onPress={this.props.onKeyPress} />
-                </View>
-                <View style={styles.row}>
-                    <View style={styles.filler} />
-                    <ButtonKeyboard text={"0"} value={0} onPress={this.props.onKeyPress} />
                     <ButtonKeyboard
+                        style={styles.buttonKeyboard}
+                        text={"1"}
+                        value={1}
+                        onPress={this.props.onKeyPress}
+                    />
+                    <ButtonKeyboard
+                        style={styles.buttonKeyboard}
+                        text={"2"}
+                        value={2}
+                        onPress={this.props.onKeyPress}
+                    />
+                    <ButtonKeyboard
+                        style={styles.buttonKeyboard}
+                        text={"3"}
+                        value={3}
+                        onPress={this.props.onKeyPress}
+                    />
+                </View>
+                <View style={styles.row}>
+                    <ButtonKeyboard
+                        style={styles.buttonKeyboard}
+                        text={"4"}
+                        value={4}
+                        onPress={this.props.onKeyPress}
+                    />
+                    <ButtonKeyboard
+                        style={styles.buttonKeyboard}
+                        text={"5"}
+                        value={5}
+                        onPress={this.props.onKeyPress}
+                    />
+                    <ButtonKeyboard
+                        style={styles.buttonKeyboard}
+                        text={"6"}
+                        value={6}
+                        onPress={this.props.onKeyPress}
+                    />
+                </View>
+                <View style={styles.row}>
+                    <ButtonKeyboard
+                        style={styles.buttonKeyboard}
+                        text={"7"}
+                        value={7}
+                        onPress={this.props.onKeyPress}
+                    />
+                    <ButtonKeyboard
+                        style={styles.buttonKeyboard}
+                        text={"8"}
+                        value={8}
+                        onPress={this.props.onKeyPress}
+                    />
+                    <ButtonKeyboard
+                        style={styles.buttonKeyboard}
+                        text={"9"}
+                        value={9}
+                        onPress={this.props.onKeyPress}
+                    />
+                </View>
+                <View style={styles.row}>
+                    <View style={[styles.filler, styles.buttonKeyboard]} />
+                    <ButtonKeyboard
+                        style={styles.buttonKeyboard}
+                        text={"0"}
+                        value={0}
+                        onPress={this.props.onKeyPress}
+                    />
+                    <ButtonKeyboard
+                        style={styles.buttonKeyboard}
                         icon="chevron-left"
                         variant={"clean"}
                         value={"delete"}
@@ -63,6 +114,9 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         marginBottom: 5
+    },
+    buttonKeyboard: {
+        marginHorizontal: 2
     },
     filler: {
         flex: 1
