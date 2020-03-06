@@ -42,6 +42,10 @@ export class TextArea extends PureComponent {
         this.textInputComponent.blur();
     }
 
+    onSubmit = () => {
+        if (!this.props.multiline) this.props.onSubmit;
+    };
+
     _style = () => {
         return [
             styles.textArea,
@@ -61,7 +65,7 @@ export class TextArea extends PureComponent {
                 style={this._style()}
                 placeholder={this.props.placeholder}
                 multiline={this.props.multiline}
-                onSubmitEditing={this.props.onSubmit}
+                onSubmitEditing={() => this.onSubmit()}
                 onChangeText={this.props.onValue}
                 onFocus={this.props.onFocus}
                 onBlur={this.props.onBlur}
