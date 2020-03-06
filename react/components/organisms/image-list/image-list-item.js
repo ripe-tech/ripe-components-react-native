@@ -55,7 +55,7 @@ export class ImageListItem extends PureComponent {
         ];
     }
 
-    _iconStyles() {
+    _iconStyle() {
         return [
             styles.icon,
             {
@@ -80,7 +80,7 @@ export class ImageListItem extends PureComponent {
                         iconHeight={18}
                         iconStrokeWidth={2}
                         size={this.props.iconSize}
-                        style={this._iconStyles()}
+                        style={this._iconStyle()}
                         onPress={this.props.onIconPress}
                         hitBox={this.hitBox}
                     />

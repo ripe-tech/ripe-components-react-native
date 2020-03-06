@@ -54,7 +54,7 @@ export class ImageListItemAdd extends PureComponent {
         ];
     }
 
-    _textStyles() {
+    _textStyle() {
         return [
             styles.text,
             {
@@ -81,7 +81,7 @@ export class ImageListItemAdd extends PureComponent {
                         />
                     </View>
                 ) : null}
-                {this.props.text ? <Text style={this._textStyles()}>{this.props.text}</Text> : null}
+                {this.props.text ? <Text style={this._textStyle()}>{this.props.text}</Text> : null}
             </TouchableOpacity>
         );
     }
