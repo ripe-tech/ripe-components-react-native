@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Alert, StyleSheet, Dimensions, ViewPropTypes, View } from "react-native";
+import { Alert, StyleSheet, Dimensions, ViewPropTypes, LayoutAnimation, View } from "react-native";
 import PropTypes from "prop-types";
 import ImagePicker from "react-native-image-picker";
 
@@ -50,6 +50,8 @@ export class ImageList extends PureComponent {
     }
 
     _onPressRemove = index => {
+        LayoutAnimation.easeInEaseOut();
+
         this.setState(state => {
             const image = state.images[index];
             const images = [...state.images];
@@ -82,6 +84,8 @@ export class ImageList extends PureComponent {
                 }
 
                 const newImage = { uri: response.uri };
+
+                LayoutAnimation.easeInEaseOut();
 
                 this.setState(
                     state => ({ images: [...state.images, newImage] }),
