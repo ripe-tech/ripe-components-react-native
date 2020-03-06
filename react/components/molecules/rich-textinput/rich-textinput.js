@@ -221,8 +221,8 @@ export class RichTextInput extends PureComponent {
                     value={this.state.value}
                     placeholder={this.props.placeholder}
                     multiline={this.props.multiline}
-                    textareaMinHeight={this.props.textareaMinHeight}
-                    textareaMaxHeight={this.props.textareaMaxHeight}
+                    minHeight={this.props.textareaMinHeight}
+                    maxHeight={this.props.textareaMaxHeight}
                     onValue={value => this.onTextAreaValue(value)}
                     onSubmit={() => this.onTextAreaSubmit()}
                     onFocus={() => this.onTextAreaFocus()}
