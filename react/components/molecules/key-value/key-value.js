@@ -18,7 +18,7 @@ export class KeyValue extends PureComponent {
             iconHeight: PropTypes.number,
             iconWidth: PropTypes.number,
             iconStrokeWidth: PropTypes.number,
-            clickable: PropTypes.boolean,
+            pressable: PropTypes.boolean,
             onPress: PropTypes.func,
             onButtonIconPress: PropTypes.func,
             onLongPress: PropTypes.func
@@ -34,7 +34,7 @@ export class KeyValue extends PureComponent {
             iconHeight: undefined,
             iconWidth: undefined,
             iconStrokeWidth: undefined,
-            clickable: true,
+            pressable: true,
             onPress: () => {},
             onButtonIconPress: () => {},
             onLongPress: () => {}
@@ -45,7 +45,7 @@ export class KeyValue extends PureComponent {
         return (
             <TouchableOpacity
                 style={styles.keyValue}
-                disabled={!this.props.clickable}
+                disabled={!this.props.pressable}
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
             >
