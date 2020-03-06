@@ -136,7 +136,7 @@ export class RichTextInput extends PureComponent {
     };
 
     onTextAreaSubmit = () => {
-        if (!this.props.multiline) this.sendMessage();
+        this.sendMessage();
     };
 
     onTextAreaFocus = () => {
