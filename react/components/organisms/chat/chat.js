@@ -48,10 +48,6 @@ export class Chat extends PureComponent {
         };
     }
 
-    _scrollToEnd = () => {
-        this.scrollViewComponent.scrollToEnd({ animated: true });
-    };
-
     onRichTextInputPhotoAdded = source => {
         // TODO
         console.log("onRichTextInputPhotoAdded");
@@ -77,7 +73,9 @@ export class Chat extends PureComponent {
                     <ScrollView
                         style={[styles.chatMessagesContainer, this.props.style]}
                         ref={ref => (this.scrollViewComponent = ref)}
-                        onContentSizeChange={this._scrollToEnd}
+                        onContentSizeChange={() =>
+                            this.scrollViewComponent.scrollToEnd({ animated: true })
+                        }
                     >
                         {this.props.messages.map((message, index) => {
                             return (
@@ -97,8 +95,7 @@ export class Chat extends PureComponent {
                         style={styles.richTextInput}
                         placeholder={"Say something..."}
                         multiline={true}
-                        textareaMaxHeight={baseStyles.FONT_SIZE * 5}
-                        onFocus={this._scrollToEnd}
+                        maxHeight={baseStyles.FONT_SIZE * 5}
                         onPhotoAdded={this.onRichTextInputPhotoAdded}
                         onAttachmentsAdded={this.onRichTextInputAttachmentsAdded}
                         onSendMessage={this.onRichTextInputSendMessage}
