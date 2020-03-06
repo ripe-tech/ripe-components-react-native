@@ -106,6 +106,11 @@ export class RichTextInput extends PureComponent {
         ]).start();
     };
 
+    sendMessage = () => {
+        const value = this.state.value;
+        this.setState({ value: undefined }, () => this.props.onSendMessage(value));
+    };
+
     onPhotoButtonPress = async () => {
         const image = await pickImage();
 
@@ -130,6 +135,10 @@ export class RichTextInput extends PureComponent {
         this.setState({ value: value });
     };
 
+    onTextAreaSubmit = () => {
+        if (!this.props.multiline) this.sendMessage();
+    };
+
     onTextAreaFocus = () => {
         this.setState({ buttonsVisible: false }, () => {
             this.startAnimations();
@@ -145,8 +154,7 @@ export class RichTextInput extends PureComponent {
     };
 
     onSendButtonPress = () => {
-        const value = this.state.value;
-        this.setState({ value: undefined }, () => this.props.onSendMessage(value));
+        this.sendMessage();
     };
 
     _buttonsStyle = () => {
@@ -216,6 +224,7 @@ export class RichTextInput extends PureComponent {
                     textareaMinHeight={this.props.textareaMinHeight}
                     textareaMaxHeight={this.props.textareaMaxHeight}
                     onValue={value => this.onTextAreaValue(value)}
+                    onSubmit={() => this.onTextAreaSubmit()}
                     onFocus={() => this.onTextAreaFocus()}
                     onBlur={() => this.onTextAreaBlur()}
                 />
