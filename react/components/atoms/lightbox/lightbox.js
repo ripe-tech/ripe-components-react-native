@@ -72,9 +72,9 @@ export class Lightbox extends PureComponent {
         ];
     };
 
-    _imageFullScreenStyle = () => {
+    _imageFullscreenStyle = () => {
         return [
-            styles.fullscreenImage,
+            styles.imageFullscreen,
             {
                 resizeMode: this.props.resizeModeFullScreen
             }
@@ -94,7 +94,7 @@ export class Lightbox extends PureComponent {
                     onRequestClose={this.onBackButtonPress}
                 >
                     <View style={styles.fullscreenContainer}>
-                        <Image style={styles.fullscreenImage} source={this._imageSource()} />
+                        <Image style={this._imageFullscreenStyle()} source={this._imageSource()} />
                     </View>
                 </Modal>
             </View>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     image: {
         resizeMode: "contain"
     },
-    fullscreenImage: {
+    imageFullscreen: {
         flex: 1,
         resizeMode: "contain"
     },
