@@ -18,7 +18,7 @@ export class KeyValue extends PureComponent {
             iconHeight: PropTypes.number,
             iconWidth: PropTypes.number,
             iconStrokeWidth: PropTypes.number,
-            pressable: PropTypes.boolean,
+            pressable: PropTypes.bool,
             onPress: PropTypes.func,
             onButtonIconPress: PropTypes.func,
             onLongPress: PropTypes.func
