@@ -3,7 +3,6 @@ import {
     ViewPropTypes,
     StyleSheet,
     KeyboardAvoidingView,
-    SafeAreaView,
     ScrollView,
     Platform
 } from "react-native";
@@ -54,7 +53,7 @@ export class Chat extends PureComponent {
 
     onRichTextInputFocus = () => {
         this.scrollToEnd();
-    }
+    };
 
     onRichTextInputPhotoAdded = source => {
         const message = {
@@ -98,37 +97,37 @@ export class Chat extends PureComponent {
                 behavior={Platform.OS === "ios" ? "height" : undefined}
                 style={[styles.chat, this.props.style]}
             >
-                    <ScrollView
-                        style={styles.chatMessagesContainer}
-                        ref={ref => (this.scrollViewComponent = ref)}
-                        onContentSizeChange={this.scrollToEnd}
-                    >
-                        {this.props.messages.map((message, index) => {
-                            return (
-                                <ChatMessage
-                                    style={index !== 0 && styles.chatMessage}
-                                    avatarUrl={message.avatarUrl}
-                                    username={message.username}
-                                    message={message.message}
-                                    date={message.date}
-                                    attachments={message.attachments}
-                                    key={index}
-                                />
-                            );
-                        })}
-                    </ScrollView>
-                    <RichTextInput
-                        style={styles.richTextInput}
-                        placeholder={"Say something..."}
-                        multiline={true}
-                        textareaMaxHeight={baseStyles.FONT_SIZE * 5}
-                        onFocus={this.onRichTextInputFocus}
-                        onPhotoAdded={image => this.onRichTextInputPhotoAdded(image)}
-                        onAttachmentsAdded={attachments =>
-                            this.onRichTextInputAttachmentsAdded(attachments)
-                        }
-                        onSendMessage={text => this.onRichTextInputSendMessage(text)}
-                    />
+                <ScrollView
+                    style={styles.chatMessagesContainer}
+                    ref={ref => (this.scrollViewComponent = ref)}
+                    onContentSizeChange={this.scrollToEnd}
+                >
+                    {this.props.messages.map((message, index) => {
+                        return (
+                            <ChatMessage
+                                style={index !== 0 && styles.chatMessage}
+                                avatarUrl={message.avatarUrl}
+                                username={message.username}
+                                message={message.message}
+                                date={message.date}
+                                attachments={message.attachments}
+                                key={index}
+                            />
+                        );
+                    })}
+                </ScrollView>
+                <RichTextInput
+                    style={styles.richTextInput}
+                    placeholder={"Say something..."}
+                    multiline={true}
+                    textareaMaxHeight={baseStyles.FONT_SIZE * 5}
+                    onFocus={this.onRichTextInputFocus}
+                    onPhotoAdded={image => this.onRichTextInputPhotoAdded(image)}
+                    onAttachmentsAdded={attachments =>
+                        this.onRichTextInputAttachmentsAdded(attachments)
+                    }
+                    onSendMessage={text => this.onRichTextInputSendMessage(text)}
+                />
             </KeyboardAvoidingView>
         );
     }

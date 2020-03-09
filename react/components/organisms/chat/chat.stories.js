@@ -69,8 +69,7 @@ storiesOf("Organisms", module)
             {
                 avatarUrl: "https://id.platforme.com/admin/accounts/ns%40platforme.com/avatar",
                 username: "NFSS10",
-                message:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                 date: 1574950742823,
                 attachments: [
                     {
@@ -83,8 +82,7 @@ storiesOf("Organisms", module)
             {
                 avatarUrl: "https://id.platforme.com/admin/accounts/t-ms%40platforme.com/avatar",
                 username: "BeeMargarida",
-                message:
-                    "Praesent a lectus non libero facilisis tincidunt ut.",
+                message: "Praesent a lectus non libero facilisis tincidunt ut.",
                 date: 1574950742823,
                 attachments: []
             },
@@ -103,7 +101,8 @@ storiesOf("Organisms", module)
             {
                 avatarUrl: "https://id.platforme.com/admin/accounts/ns%40platforme.com/avatar",
                 username: "NFSS10",
-                message: "Sed tristique faucibus interdum. Cras egestas efficitur sem id mollis. Cras varius malesuada orci, in vulputate urna vulputate a.",
+                message:
+                    "Sed tristique faucibus interdum. Cras egestas efficitur sem id mollis. Cras varius malesuada orci, in vulputate urna vulputate a.",
                 date: 1574950742823,
                 attachments: []
             },
@@ -115,11 +114,5 @@ storiesOf("Organisms", module)
                 attachments: []
             }
         ];
-        return (
-            <Chat
-                avatarUrl={avatarUrl}
-                username={username}
-                messages={messages}
-            />
-        );
+        return <Chat avatarUrl={avatarUrl} username={username} messages={messages} />;
     });
