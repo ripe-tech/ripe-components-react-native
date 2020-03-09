@@ -1,5 +1,6 @@
 export * from "./header";
 export * from "./item";
+export * from "./item-notification";
 export * from "./key-value";
 export * from "./key-values";
 export * from "./keyboard-numeric";
