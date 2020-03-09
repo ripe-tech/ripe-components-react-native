@@ -8,10 +8,10 @@ storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Button Tab", () => {
         const _text = text("Text", "User");
-        const badgeAnimationDuration = number("Badge AnimationDuration", 200);
+        const badgeAnimationDuration = number("Badge Animation Duration", 200);
         const badgeBackgroundColor = color("Badge Background Color", "red");
         const badgeCount = number("Badge Count", 999);
-        const badgeCountThreshold = number("Badge Count Threshould", 99);
+        const badgeCountThreshold = number("Badge Count Threshold", 99);
         const badgeHasAnimation = boolean("Badge Has Animation", true);
         const disabled = boolean("Disabled", false);
         const icon = select(
