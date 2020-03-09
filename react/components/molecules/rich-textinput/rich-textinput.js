@@ -58,10 +58,6 @@ export class RichTextInput extends PureComponent {
             buttonsOpacityValue: new Animated.Value(1),
             moreOptionsOpacityValue: new Animated.Value(0)
         };
-
-        if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
-            UIManager.setLayoutAnimationEnabledExperimental(true);
-        }
     }
 
     startAnimations = () => {
