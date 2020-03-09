@@ -12,6 +12,7 @@ export class Lightbox extends PureComponent {
             height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             borderRadius: PropTypes.number,
             resizeMode: PropTypes.string,
+            resizeModeFullScreen: PropTypes.string,
             style: ViewPropTypes.style,
             onVisible: PropTypes.func
         };
@@ -25,6 +26,7 @@ export class Lightbox extends PureComponent {
             height: "100%",
             borderRadius: undefined,
             resizeMode: undefined,
+            resizeModeFullScreen: undefined,
             style: {},
             onVisible: () => {}
         };
@@ -70,6 +72,15 @@ export class Lightbox extends PureComponent {
         ];
     };
 
+    _imageFullscreenStyle = () => {
+        return [
+            styles.imageFullscreen,
+            {
+                resizeMode: this.props.resizeModeFullScreen
+            }
+        ];
+    };
+
     render() {
         return (
             <View>
@@ -83,7 +94,7 @@ export class Lightbox extends PureComponent {
                     onRequestClose={this.onBackButtonPress}
                 >
                     <View style={styles.fullscreenContainer}>
-                        <Image style={styles.fullscreenImage} source={this._imageSource()} />
+                        <Image style={this._imageFullscreenStyle()} source={this._imageSource()} />
                     </View>
                 </Modal>
             </View>
@@ -92,7 +103,10 @@ export class Lightbox extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    fullscreenImage: {
+    image: {
+        resizeMode: "contain"
+    },
+    imageFullscreen: {
         flex: 1,
         resizeMode: "contain"
     },
