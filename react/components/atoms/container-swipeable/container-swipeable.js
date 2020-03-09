@@ -94,7 +94,7 @@ export class ContainerSwipeable extends PureComponent {
         });
     };
 
-    _containerStyles() {
+    _containerStyle() {
         return [
             styles.containerSwipeable,
             {
@@ -106,7 +106,7 @@ export class ContainerSwipeable extends PureComponent {
         ];
     }
 
-    _containerInnerStyles() {
+    _containerInnerStyle() {
         return [
             styles.containerInner,
             {
@@ -122,11 +122,11 @@ export class ContainerSwipeable extends PureComponent {
         return (
             <Modal animationType="none" transparent={true} visible={this.state.modalVisible}>
                 <Animated.View
-                    style={this._containerStyles()}
+                    style={this._containerStyle()}
                     onStartShouldSetResponder={this.toggle}
                 >
                     <Animated.View
-                        style={this._containerInnerStyles()}
+                        style={this._containerInnerStyle()}
                         onStartShouldSetResponder={() => true}
                     >
                         <View onLayout={this.onLayout} pointerEvents="auto">

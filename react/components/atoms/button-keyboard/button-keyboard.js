@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, Platform, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, capitalize } from "../../../util";
 
 import { Icon } from "../icon";
 
@@ -14,7 +14,8 @@ export class ButtonKeyboard extends PureComponent {
             text: PropTypes.string,
             value: PropTypes.any,
             variant: PropTypes.string,
-            onPress: PropTypes.func
+            onPress: PropTypes.func,
+            style: ViewPropTypes.style
         };
     }
 
@@ -25,6 +26,7 @@ export class ButtonKeyboard extends PureComponent {
             text: undefined,
             value: undefined,
             variant: undefined,
+            style: {},
             onPress: () => {}
         };
     }
@@ -34,15 +36,11 @@ export class ButtonKeyboard extends PureComponent {
     };
 
     _style = () => {
-        const base = [styles.buttonKeyboard];
-        switch (this.props.variant) {
-            case "clean":
-                base.push(styles.cleanStyle);
-                break;
-            default:
-                break;
-        }
-        return base;
+        return [
+            styles.buttonKeyboard,
+            styles[`buttonKeyboard${capitalize(this.props.variant)}`],
+            this.props.style
+        ];
     };
 
     render() {
@@ -65,7 +63,6 @@ const styles = StyleSheet.create({
     buttonKeyboard: {
         flex: 1,
         maxHeight: 54,
-        marginHorizontal: 2,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#ffffff",
@@ -78,7 +75,7 @@ const styles = StyleSheet.create({
             height: 3
         }
     },
-    cleanStyle: {
+    buttonKeyboardClean: {
         backgroundColor: "transparent",
         elevation: 0,
         shadowOpacity: 0
