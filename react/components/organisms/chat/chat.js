@@ -96,11 +96,10 @@ export class Chat extends PureComponent {
         return (
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "height" : undefined}
-                style={styles.chat}
+                style={[styles.chat, this.props.style]}
             >
-                <SafeAreaView style={styles.chat}>
                     <ScrollView
-                        style={[styles.chatMessagesContainer, this.props.style]}
+                        style={styles.chatMessagesContainer}
                         ref={ref => (this.scrollViewComponent = ref)}
                         onContentSizeChange={this.scrollToEnd}
                     >
@@ -130,7 +129,6 @@ export class Chat extends PureComponent {
                         }
                         onSendMessage={text => this.onRichTextInputSendMessage(text)}
                     />
-                </SafeAreaView>
             </KeyboardAvoidingView>
         );
     }
