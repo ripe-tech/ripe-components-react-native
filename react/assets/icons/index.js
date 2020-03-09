@@ -165,7 +165,6 @@ import id from "./id.svg";
 import image from "./image.svg";
 import inboxAlt from "./inbox-alt.svg";
 import inbox from "./inbox.svg";
-import index from "./index.js";
 import info from "./info.svg";
 import iphone from "./iphone.svg";
 import justify from "./justify.svg";
@@ -496,7 +495,6 @@ const icons = {
     image: image,
     "inbox-alt": inboxAlt,
     inbox: inbox,
-    index: index,
     info: info,
     iphone: iphone,
     justify: justify,

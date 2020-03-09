@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
-import { Icon } from "../../";
+
+import { Icon } from "../icon";
 
 export class ButtonIcon extends PureComponent {
     static get propTypes() {

@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, View } from "react-native";
-import { ButtonTabText, BarAnimated } from "../../";
 import PropTypes from "prop-types";
+
+import { ButtonTabText, BarAnimated } from "../../atoms";
 
 export class TabsText extends PureComponent {
     constructor(props) {
