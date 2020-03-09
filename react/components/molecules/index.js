@@ -1,3 +1,4 @@
+export * from "./chat-message";
 export * from "./header";
 export * from "./item";
 export * from "./item-notification";
