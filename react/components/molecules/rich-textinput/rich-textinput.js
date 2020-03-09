@@ -1,13 +1,5 @@
 import React, { PureComponent } from "react";
-import {
-    StyleSheet,
-    ViewPropTypes,
-    View,
-    Animated,
-    Platform,
-    UIManager,
-    LayoutAnimation
-} from "react-native";
+import { StyleSheet, ViewPropTypes, View, Animated, LayoutAnimation } from "react-native";
 
 import PropTypes from "prop-types";
 
