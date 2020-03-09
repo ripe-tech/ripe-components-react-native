@@ -1,9 +1,8 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, View, Animated, LayoutAnimation } from "react-native";
-
 import PropTypes from "prop-types";
 
-import { ButtonIcon, TextArea } from "../..";
+import { ButtonIcon, TextArea } from "../../atoms";
 import { pickImage, pickDocuments } from "../../../util";
 
 export class RichTextInput extends PureComponent {
