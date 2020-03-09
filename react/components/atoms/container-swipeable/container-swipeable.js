@@ -211,7 +211,6 @@ export class ContainerSwipeable extends PureComponent {
                 >
                     <Animated.View
                         style={this._containerInnerStyle()}
-                        onStartShouldSetResponder={() => true}
                         {...this.panResponder.panHandlers}
                     >
                         <View onLayout={this.onLayout} pointerEvents="auto">
