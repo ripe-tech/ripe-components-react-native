@@ -19,7 +19,7 @@ export class ButtonTab extends PureComponent {
             badgeColor: PropTypes.string,
             badgeCount: PropTypes.number,
             badgeCountThreshold: PropTypes.number,
-            badgeHasAnimation: PropTypes.boolean,
+            badgeHasAnimation: PropTypes.bool,
             badgeText: PropTypes.string,
             text: PropTypes.string,
             icon: PropTypes.string,
@@ -82,16 +82,18 @@ export class ButtonTab extends PureComponent {
                     {this.props.text ? (
                         <Text style={this._labelStyle()}>{this.props.text}</Text>
                     ) : null}
-                    <Badge
-                        animationDuration={this.props.badgeAnimationDuration}
-                        backgroundColor={this.props.badgeBackgroundColor}
-                        color={this.props.badgeColor}
-                        count={this.props.badgeCount}
-                        countThreshold={this.props.badgeCountThreshold}
-                        hasAnimation={this.props.badgeHasAnimation}
-                        text={this.props.badgeText}
-                        style={styles.badge}
-                    />
+                    {this.props.badgeCount > 0 ? (
+                        <Badge
+                            animationDuration={this.props.badgeAnimationDuration}
+                            backgroundColor={this.props.badgeBackgroundColor}
+                            color={this.props.badgeColor}
+                            count={this.props.badgeCount}
+                            countThreshold={this.props.badgeCountThreshold}
+                            hasAnimation={this.props.badgeHasAnimation}
+                            text={this.props.badgeText}
+                            style={styles.badge}
+                        />
+                    ) : null}
                 </View>
             </TouchableWithoutFeedback>
         );
