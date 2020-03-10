@@ -1,4 +1,89 @@
 import React, { PureComponent } from "react";
+import { ViewPropTypes, StyleSheet, View } from "react-native";
+import PropTypes from "prop-types";
+import Modal from "react-native-modal";
+
+export class ContainerSwipeable extends PureComponent {
+    static get propTypes() {
+        return {
+            animationsDuration: PropTypes.number,
+            style: ViewPropTypes.style
+        };
+    }
+
+    static get defaultProps() {
+        return {
+            animationsDuration: 300,
+            style: {}
+        };
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            visible: false
+        };
+
+        this.animating = false;
+    }
+
+    toggle = () => {
+        if (this.animating) return;
+
+        if (this.state.visible) {
+            this.setState({ visible: false }, () => {
+                this.startAnimations();
+            });
+        } else {
+            this.setState({ visible: true }, () => {
+                this.startAnimations();
+            });
+        }
+    };
+
+    onLayout = event => {
+        this.setState({ containerChildrenHeight: event.nativeEvent.layout.height });
+    };
+
+    startAnimations = () => {
+        this.animating = true;
+
+        //TODO
+    };
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <View style={styles.knob} />
+                <View>{this.props.children}</View>
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        //position: "absolute",
+
+        width: "100%",
+        //height: "100%",
+        //bottom: 0,
+        backgroundColor: "#ff9999"
+    },
+    knob: {
+        alignSelf: "center",
+        width: 50,
+        height: 5,
+        marginVertical: 6,
+        borderRadius: 100,
+        backgroundColor: "#1a2632",
+        opacity: 0.15
+    }
+});
+
+/*
+import React, { PureComponent } from "react";
 import { Animated, StyleSheet, Modal, View, TouchableOpacity } from "react-native";
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 import PropTypes from "prop-types";
@@ -48,7 +133,7 @@ export class ContainerSwipeable extends PureComponent {
                     visible: false
                 },
                 () => {
-                    this._toggleAnimations();
+                    this.startAnimations();
                 }
             );
         } else {
@@ -58,7 +143,7 @@ export class ContainerSwipeable extends PureComponent {
                     modalVisible: true
                 },
                 () => {
-                    this._toggleAnimations();
+                    this.startAnimations();
                 }
             );
         }
@@ -70,7 +155,7 @@ export class ContainerSwipeable extends PureComponent {
         });
     };
 
-    _toggleAnimations = () => {
+    startAnimations = () => {
         this.animating = true;
 
         Animated.parallel([
@@ -171,3 +256,5 @@ const styles = StyleSheet.create({
         backgroundColor: "#1a2632"
     }
 });
+
+ */
