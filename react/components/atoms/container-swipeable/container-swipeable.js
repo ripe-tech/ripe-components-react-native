@@ -1,6 +1,6 @@
-
+/* 
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, View, Dimensions, TouchableOpacity} from "react-native";
+import { ViewPropTypes, StyleSheet, View, Dimensions, TouchableOpacity, Animated, Easing } from "react-native";
 import PropTypes from "prop-types";
 import Modal from "react-native-modal";
 
@@ -20,7 +20,7 @@ export class ContainerSwipeable extends PureComponent {
 
     static get defaultProps() {
         return {
-            animationsDuration: 300,
+            animationsDuration: 5000,
             onVisible: visible => {}, 
             style: {}
         };
@@ -30,14 +30,27 @@ export class ContainerSwipeable extends PureComponent {
         super(props);
 
         this.state = {
-            visible: true
+            initialLoad: true,
+            visible: true,
+            heightAnimationValue: new Animated.Value(0),
         };
 
+        this.modalHeight= 0;
         this.animating = false;
     }
     
 
     open() {
+        console.log("stuff");
+        Animated.timing(
+            this.state.heightAnimationValue,
+            {
+              toValue: 1,
+              duration: this.props.animationsDuration,
+              easing: Easing.inOut(Easing.ease)
+            }
+          ).start();
+          
         this.setState({visible: true});
     }
 
@@ -46,6 +59,7 @@ export class ContainerSwipeable extends PureComponent {
     }
 
     onOverlayPress = () => {
+        console.log("yaaa")
         this.close();
     }
 
@@ -53,23 +67,39 @@ export class ContainerSwipeable extends PureComponent {
         this.close();
     }
 
+    onModalLayout = event => {
+        this.modalHeight=event.nativeEvent.layout.height;
+        console.log("stuff");
+        console.log(this.modalHeight);
+    }
+
+    _testStyle = () => {
+        const heightValue = this.state.heightAnimationValue.interpolate({inputRange: [0, 1], outputRange: ["0%", "100%"]})
+        const translateValue = this.state.heightAnimationValue.interpolate({inputRange: [0, 1], outputRange: ["100%", "0%"]})
+
+        return { 
+            height: heightValue,
+            transform: [{translateY: this.modalHeight}]
+        }
+    }
+
     _container = () => {
         return (
             <>
-            <TouchableOpacity style={styles.overlay} onPress={this.onOverlayPress} />
-            <View style={[styles.contentContainer, /* { height: "100%" } */]}>
+            <TouchableOpacity style={[styles.overlay, this.state.initialLoad ? {opacity: 0}: undefined]} activeOpacity={0} onPress={this.onOverlayPress} />
+            <Animated.View style={[styles.contentContainer, this._testStyle()]} ref={el => (this.containerComponent = el)} >
                 <View style={styles.knob} />
-                <View>{this.props.children}</View>
+                <View style={styles.content}>{this.props.children}</View>
                 <View style={styles.safeAreaBottom} />
-            </View>
+            </Animated.View>
             </>
         );
     };
 
     render() {
         return (
-            <Modal style={styles.modal} visible={this.state.visible} onRequestClose={this.onModalRequestClose}>
-                {this._container()}
+            <Modal style={styles.modal} visible={this.state.visible} onRequestClose={this.onModalRequestClose} onLayout={event => this.onModalLayout(event)}>
+                {this._container() }
             </Modal>
         );
     }
@@ -93,8 +123,9 @@ const styles = StyleSheet.create({
     contentContainer: {
         backgroundColor: "#aaffff",
         
-        
-        height: "100%"
+        //height: "100%",
+        //top: 50,
+        //transform: [{translateY: "250%"}]
     },
     knob: {
         alignSelf: "center",
@@ -105,6 +136,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#1a2632",
         opacity: 0.15
     },
+    content: {},
     safeAreaBottom: {
         height: initialWindowSafeAreaInsets.bottom
     }
@@ -112,11 +144,11 @@ const styles = StyleSheet.create({
 
 
 
+ */
 
-
-/*
+/* 
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, Modal, View, TouchableOpacity } from "react-native";
+import { Animated, StyleSheet, Modal, View, TouchableOpacity, PanResponder } from "react-native";
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 import PropTypes from "prop-types";
 
@@ -148,10 +180,42 @@ export class ContainerSwipeable extends PureComponent {
             modalVisible: false,
             containerChildrenHeight: null,
             containerBackgroundColorAnimated: new Animated.Value(0),
-            containerInnerHeightAnimated: new Animated.Value(0)
+            containerInnerHeightAnimated: new Animated.Value(0.5)
         };
 
         this.animating = false;
+        this.moving = false;
+
+
+
+
+        this._panResponder = PanResponder.create({
+            // Ask to be the responder:
+            // onStartShouldSetPanResponder: (evt, gestureState) => true,
+            // onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+            // onMoveShouldSetPanResponder: (evt, gestureState) => true,
+            onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+      
+            onPanResponderGrant: (evt, gestureState) => {
+                console.log("onPanResponderGrant")
+
+              // The gesture has started. Show visual feedback so the user knows
+              // what is happening!
+              // gestureState.d{x,y} will be set to zero now
+            },
+            onPanResponderMove: (evt, gestureState) => {
+                this.moving = true;
+                let val = gestureState.dy / 180; //TODO total height instead of hardcoded val
+                if(val < 0) val = 1-val;
+                console.log("move:\t", gestureState.dy, "val: ", val, this.state.containerChildrenHeight);
+
+                this.state.containerInnerHeightAnimated.setValue(val);
+              // The most recent move distance is gestureState.move{X,Y}
+              // The accumulated gesture distance since becoming responder is
+              // gestureState.d{x,y}
+            }
+          });
+
     }
 
     toggle = () => {
@@ -182,6 +246,8 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     onLayout = event => {
+        if(this.moving) return;
+
         this.setState({
             containerChildrenHeight: event.nativeEvent.layout.height
         });
@@ -237,14 +303,13 @@ export class ContainerSwipeable extends PureComponent {
 
     render() {
         return (
-            <Modal animationType="none" transparent={true} visible={this.state.modalVisible}>
                 <Animated.View
                     style={this._containerStyle()}
-                    onStartShouldSetResponder={this.toggle}
                 >
                     <Animated.View
                         style={this._containerInnerStyle()}
                         onStartShouldSetResponder={() => true}
+                        {...this._panResponder.panHandlers} 
                     >
                         <View onLayout={this.onLayout} pointerEvents="auto">
                             <TouchableOpacity
@@ -257,13 +322,14 @@ export class ContainerSwipeable extends PureComponent {
                         </View>
                     </Animated.View>
                 </Animated.View>
-            </Modal>
         );
     }
 }
 
 const styles = StyleSheet.create({
     containerSwipeable: {
+        position: "absolute",
+        bottom: 0,
         overflow: "hidden",
         flex: 1,
         backgroundColor: "transparent",
@@ -289,4 +355,4 @@ const styles = StyleSheet.create({
     }
 });
 
- */
+  */

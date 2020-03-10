@@ -9,8 +9,8 @@ import { Text } from "../..";
 storiesOf("Atoms", module).add("Container Swipeable", () => {
     const ref = React.createRef();
     return (
-        <View>
-            <Button title="Toggle Container" onPress={() => {ref.current.open()}} />
+        <View style={{flex:1, backgroundColor: "#ff0000"}}>
+            <Button title="Toggle Container" onPress={() => {ref.current.toggle()}} />
             <View style={styles.otherContent}>
                 <Text>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -31,14 +31,7 @@ storiesOf("Atoms", module).add("Container Swipeable", () => {
                     voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
                     occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
                     id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                    sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </Text>
             </View>
             <ContainerSwipeable ref={ref}>
