@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     keyValue: {
         flexDirection: "row",
         paddingVertical: 16,
-        paddingHorizontal: 14,
+        paddingHorizontal: 16,
         borderBottomWidth: 1,
         borderBottomColor: "#e4e8f0"
     },
