@@ -46,27 +46,33 @@ export class ContainerSwipeable extends PureComponent {
     }
 
     open() {
+        if(this.animating) return;
         this.setState({ visible: true }, this.startOpenAnimation());
     }
 
     close() {
+        if(this.animating) return;
         this.startCloseAnimation(() => this.setState({ visible: false }));
     }
 
     startOpenAnimation() {
+        this.animating = true;
+
         Animated.timing(this.state.heightAnimationValue, {
             toValue: 1,
             duration: this.props.animationsDuration,
             easing: Easing.inOut(Easing.ease)
-        }).start();
+        }).start(() => {this.animating=false});
     }
 
     startCloseAnimation(callback) {
+        this.animating = true;
+
         Animated.timing(this.state.heightAnimationValue, {
             toValue: 0,
             duration: this.props.animationsDuration,
             easing: Easing.inOut(Easing.ease)
-        }).start(callback);
+        }).start(() => {callback(); this.animating=false});
     }
 
     onOverlayPress = () => {
