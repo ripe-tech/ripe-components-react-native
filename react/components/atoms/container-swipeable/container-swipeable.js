@@ -30,15 +30,14 @@ export class ContainerSwipeable extends PureComponent {
         super(props);
 
         this.state = {
-            initialLoad: true,
-            visible: true,
+            initialLoading: true,
+            visible: false,
             heightAnimationValue: new Animated.Value(0),
         };
 
         this.modalHeight= 0;
         this.animating = false;
     }
-    
 
     open() {
         console.log("stuff");
@@ -69,6 +68,7 @@ export class ContainerSwipeable extends PureComponent {
 
     onModalLayout = event => {
         this.modalHeight=event.nativeEvent.layout.height;
+        this.setState({initialLoading: false});
         console.log("stuff");
         console.log(this.modalHeight);
     }
@@ -86,7 +86,7 @@ export class ContainerSwipeable extends PureComponent {
     _container = () => {
         return (
             <>
-            <TouchableOpacity style={[styles.overlay, this.state.initialLoad ? {opacity: 0}: undefined]} activeOpacity={0} onPress={this.onOverlayPress} />
+            {!this.state.initialLoading && <TouchableOpacity style={styles.overlay} activeOpacity={0} onPress={this.onOverlayPress} />}
             <Animated.View style={[styles.contentContainer, this._testStyle()]} ref={el => (this.containerComponent = el)} >
                 <View style={styles.knob} />
                 <View style={styles.content}>{this.props.children}</View>
@@ -98,7 +98,7 @@ export class ContainerSwipeable extends PureComponent {
 
     render() {
         return (
-            <Modal style={styles.modal} visible={this.state.visible} onRequestClose={this.onModalRequestClose} onLayout={event => this.onModalLayout(event)}>
+            <Modal style={styles.modal} visible={this.state.visible || this.state.initialLoading} onRequestClose={this.onModalRequestClose} onLayout={event => this.onModalLayout(event)}>
                 {this._container() }
             </Modal>
         );

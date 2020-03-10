@@ -10,7 +10,7 @@ storiesOf("Atoms", module).add("Container Swipeable", () => {
     const ref = React.createRef();
     return (
         <View style={{flex:1, backgroundColor: "#ff0000"}}>
-            <Button title="Toggle Container" onPress={() => {ref.current.toggle()}} />
+            <Button title="Toggle Container" onPress={() => {ref.current.open()}} />
             <View style={styles.otherContent}>
                 <Text>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
