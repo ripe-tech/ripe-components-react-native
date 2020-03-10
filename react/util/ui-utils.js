@@ -24,18 +24,6 @@ export const pickDocuments = async function(options = {}) {
     }
 };
 
-const authorizeCamera = function() {
-    Alert.alert(
-        "Authorize camera access in settings",
-        null,
-        [
-            { text: "Not now" },
-            { text: "Settings", onPress: () => Linking.openURL("app-settings:") }
-        ],
-        { cancelable: false }
-    );
-};
-
 const normalizeImage = function(image) {
     return {
         uri: image.uri,
@@ -69,9 +57,20 @@ export const pickImage = async function(options) {
             }
 
             if (response.error) {
-                Platform.OS === "ios" && response.error === "Camera permissions not granted"
-                    ? authorizeCamera()
-                    : Alert.alert("Error", "Could not load image", { cancelable: false });
+                if (Platform.OS === "ios" && response.error === "Camera permissions not granted") {
+                    Alert.alert(
+                        "Authorize camera access in settings",
+                        null,
+                        [
+                            { text: "Not now" },
+                            { text: "Settings", onPress: () => Linking.openURL("app-settings:") }
+                        ],
+                        { cancelable: false }
+                    );
+                } else {
+                    Alert.alert("Error", "Could not load image", { cancelable: false });
+                }
+
                 reject(new Error({ reason: "error", message: response.error }));
                 return;
             }
