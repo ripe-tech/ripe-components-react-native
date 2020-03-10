@@ -58,7 +58,6 @@ export class ContainerSwipeable extends PureComponent {
     }
 
     onOverlayPress = () => {
-        console.log("yaaa")
         this.close();
     }
 
@@ -67,19 +66,17 @@ export class ContainerSwipeable extends PureComponent {
     }
 
     onModalLayout = event => {
-        this.modalHeight=event.nativeEvent.layout.height;
+        if(!this.state.initialLoading) return;
+
+        this.modalHeight = event.nativeEvent.layout.height;
         this.setState({initialLoading: false});
-        console.log("stuff");
-        console.log(this.modalHeight);
     }
 
     _testStyle = () => {
-        const heightValue = this.state.heightAnimationValue.interpolate({inputRange: [0, 1], outputRange: ["0%", "100%"]})
-        const translateValue = this.state.heightAnimationValue.interpolate({inputRange: [0, 1], outputRange: ["100%", "0%"]})
+        if(this.state.initialLoading) return{opacity: 0};
 
         return { 
-            height: heightValue,
-            transform: [{translateY: this.modalHeight}]
+            height: this.state.heightAnimationValue.interpolate({inputRange: [0, 1], outputRange: [0, this.modalHeight]})
         }
     }
 
