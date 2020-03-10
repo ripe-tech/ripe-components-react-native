@@ -66,5 +66,8 @@
     },
     "jest": {
         "preset": "react-native"
+    },
+    "dependencies": {
+        "react-native-document-picker": "^3.3.0"
     }
 }
