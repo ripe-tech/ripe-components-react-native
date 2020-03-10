@@ -59,7 +59,7 @@ export class ImageList extends PureComponent {
             const images = [...state.images];
             images.splice(index, 1);
 
-            this.props.onRemoveImage(image);
+            this.props.onRemoveImage(image, index);
             return { images };
         });
     };

@@ -49,6 +49,7 @@ export class TextArea extends PureComponent {
     _style = () => {
         return [
             styles.textArea,
+            this.props.multiline ? styles.textAreaMultiline : {},
             {
                 minHeight: this.props.minHeight,
                 maxHeight: this.props.maxHeight
@@ -64,7 +65,7 @@ export class TextArea extends PureComponent {
                 style={this._style()}
                 placeholder={this.props.placeholder}
                 multiline={this.props.multiline}
-                onSubmitEditing={e => this.onSubmit(e)}
+                onSubmitEditing={this.onSubmit}
                 onChangeText={this.props.onValue}
                 onFocus={this.props.onFocus}
                 onBlur={this.props.onBlur}
@@ -78,9 +79,12 @@ export class TextArea extends PureComponent {
 const styles = StyleSheet.create({
     textArea: {
         paddingVertical: 0,
-        paddingLeft: 15,
-        paddingRight: 15,
-        color: "#3e566a"
+        paddingHorizontal: 15,
+        color: "#3e566a",
+        backgroundColor: "#ffffff"
+    },
+    textAreaMultiline: {
+        paddingVertical: 14
     }
 });
 

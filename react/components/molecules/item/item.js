@@ -110,7 +110,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2
     },
     itemContentFull: {
-        borderRadius: 0
+        borderRadius: 0,
+        elevation: 0
     },
     gradient: {
         borderTopLeftRadius: 6,
