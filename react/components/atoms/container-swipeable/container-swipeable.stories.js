@@ -12,7 +12,9 @@ storiesOf("Atoms", module).add("Container Swipeable", () => {
         <View>
             <Button
                 title="Toggle Container"
-                onPress={() => {ref.current.open();}}
+                onPress={() => {
+                    ref.current.open();
+                }}
             />
             <View style={styles.otherContent}>
                 <Text>
