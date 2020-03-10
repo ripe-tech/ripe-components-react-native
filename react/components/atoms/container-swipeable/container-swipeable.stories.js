@@ -10,6 +10,7 @@ storiesOf("Atoms", module).add("Container Swipeable", () => {
     const ref = React.createRef();
     return (
         <View>
+            <Button title="Toggle Container" onPress={() => {ref.current.open()}} />
             <View style={styles.otherContent}>
                 <Text>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -35,11 +36,13 @@ storiesOf("Atoms", module).add("Container Swipeable", () => {
                     consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
                     dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
                     sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </Text>
             </View>
-            <Button title="Toggle" onPress={() => ref.current.toggle()} />
             <ContainerSwipeable ref={ref}>
-                <Text style={styles.text}>
+                <Text>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
                     nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -54,12 +57,6 @@ storiesOf("Atoms", module).add("Container Swipeable", () => {
 
 const styles = StyleSheet.create({
     otherContent: {
-        width: "100%",
         backgroundColor: "#ff00ff"
-    },
-    text: {
-        paddingVertical: 12,
-        paddingHorizontal: 12,
-        lineHeight: 24
     }
 });

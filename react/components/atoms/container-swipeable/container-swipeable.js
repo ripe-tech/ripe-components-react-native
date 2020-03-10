@@ -1,12 +1,19 @@
+
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, View } from "react-native";
+import { ViewPropTypes, StyleSheet, View, Dimensions, TouchableOpacity} from "react-native";
 import PropTypes from "prop-types";
 import Modal from "react-native-modal";
+
+import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
+
+
+const screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
 
 export class ContainerSwipeable extends PureComponent {
     static get propTypes() {
         return {
             animationsDuration: PropTypes.number,
+            onVisible: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -14,6 +21,7 @@ export class ContainerSwipeable extends PureComponent {
     static get defaultProps() {
         return {
             animationsDuration: 300,
+            onVisible: visible => {}, 
             style: {}
         };
     }
@@ -22,54 +30,71 @@ export class ContainerSwipeable extends PureComponent {
         super(props);
 
         this.state = {
-            visible: false
+            visible: true
         };
 
         this.animating = false;
     }
+    
 
-    toggle = () => {
-        if (this.animating) return;
+    open() {
+        this.setState({visible: true});
+    }
 
-        if (this.state.visible) {
-            this.setState({ visible: false }, () => {
-                this.startAnimations();
-            });
-        } else {
-            this.setState({ visible: true }, () => {
-                this.startAnimations();
-            });
-        }
-    };
+    close() {
+        this.setState({visible: false});
+    }
 
-    onLayout = event => {
-        this.setState({ containerChildrenHeight: event.nativeEvent.layout.height });
-    };
+    onOverlayPress = () => {
+        this.close();
+    }
 
-    startAnimations = () => {
-        this.animating = true;
+    onModalRequestClose = () => {
+        this.close();
+    }
 
-        //TODO
+    _container = () => {
+        return (
+            <>
+            <TouchableOpacity style={styles.overlay} onPress={this.onOverlayPress} />
+            <View style={[styles.contentContainer, /* { height: "100%" } */]}>
+                <View style={styles.knob} />
+                <View>{this.props.children}</View>
+                <View style={styles.safeAreaBottom} />
+            </View>
+            </>
+        );
     };
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.knob} />
-                <View>{this.props.children}</View>
-            </View>
+            <Modal style={styles.modal} visible={this.state.visible} onRequestClose={this.onModalRequestClose}>
+                {this._container()}
+            </Modal>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        //position: "absolute",
-
+    overlay: {
+        position: "absolute",
+        backgroundColor: "#000000",
+        opacity: 0.5,
+        height: screenHeight, //Device height
         width: "100%",
-        //height: "100%",
-        //bottom: 0,
-        backgroundColor: "#ff9999"
+        bottom: 0
+    },
+    modal: {
+        position: "absolute",
+        width: "100%",
+        margin: 0,
+        bottom: 0
+    },
+    contentContainer: {
+        backgroundColor: "#aaffff",
+        
+        
+        height: "100%"
     },
     knob: {
         alignSelf: "center",
@@ -79,8 +104,15 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         backgroundColor: "#1a2632",
         opacity: 0.15
+    },
+    safeAreaBottom: {
+        height: initialWindowSafeAreaInsets.bottom
     }
 });
+
+
+
+
 
 /*
 import React, { PureComponent } from "react";
