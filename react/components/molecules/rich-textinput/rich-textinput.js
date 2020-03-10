@@ -163,9 +163,13 @@ export class RichTextInput extends PureComponent {
         return style;
     };
 
+    _style = () => {
+        return [styles.richTextInput, this.props.style];
+    };
+
     render() {
         return (
-            <View style={[styles.richTextInput, this.props.style]}>
+            <View style={this._style()}>
                 <Animated.View
                     style={this._buttonsStyle()}
                     pointerEvents={this.state.buttonsVisible ? undefined : "none"}
@@ -239,7 +243,6 @@ const styles = StyleSheet.create({
     },
     textArea: {
         flex: 1,
-        backgroundColor: "#f6f7f9",
         borderRadius: 20
     },
     buttons: {
