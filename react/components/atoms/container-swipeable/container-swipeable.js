@@ -1,11 +1,17 @@
-
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, View, Dimensions, TouchableOpacity, Animated, Easing } from "react-native";
+import {
+    ViewPropTypes,
+    StyleSheet,
+    View,
+    Dimensions,
+    TouchableOpacity,
+    Animated,
+    Easing
+} from "react-native";
 import PropTypes from "prop-types";
 import Modal from "react-native-modal";
 
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
-
 
 const screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
 
@@ -21,7 +27,7 @@ export class ContainerSwipeable extends PureComponent {
     static get defaultProps() {
         return {
             animationsDuration: 5000,
-            onVisible: visible => {}, 
+            onVisible: visible => {},
             style: {}
         };
     }
@@ -32,71 +38,85 @@ export class ContainerSwipeable extends PureComponent {
         this.state = {
             initialLoading: true,
             visible: false,
-            heightAnimationValue: new Animated.Value(0),
+            heightAnimationValue: new Animated.Value(0)
         };
 
-        this.modalHeight= 0;
+        this.modalHeight = 0;
         this.animating = false;
     }
 
     open() {
         console.log("stuff");
-        Animated.timing(
-            this.state.heightAnimationValue,
-            {
-              toValue: 1,
-              duration: this.props.animationsDuration,
-              easing: Easing.inOut(Easing.ease)
-            }
-          ).start();
-          
-        this.setState({visible: true});
+        Animated.timing(this.state.heightAnimationValue, {
+            toValue: 1,
+            duration: this.props.animationsDuration,
+            easing: Easing.inOut(Easing.ease)
+        }).start();
+
+        this.setState({ visible: true });
     }
 
     close() {
-        this.setState({visible: false});
+        this.setState({ visible: false });
     }
 
     onOverlayPress = () => {
         this.close();
-    }
+    };
 
     onModalRequestClose = () => {
         this.close();
-    }
+    };
 
     onModalLayout = event => {
-        if(!this.state.initialLoading) return;
+        if (!this.state.initialLoading) return;
 
         this.modalHeight = event.nativeEvent.layout.height;
-        this.setState({initialLoading: false});
-    }
+        this.setState({ initialLoading: false });
+    };
 
     _testStyle = () => {
-        if(this.state.initialLoading) return{opacity: 0};
+        if (this.state.initialLoading) return { opacity: 0 };
 
-        return { 
-            height: this.state.heightAnimationValue.interpolate({inputRange: [0, 1], outputRange: [0, this.modalHeight]})
-        }
-    }
+        return {
+            height: this.state.heightAnimationValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, this.modalHeight]
+            })
+        };
+    };
 
     _container = () => {
         return (
             <>
-            {!this.state.initialLoading && <TouchableOpacity style={styles.overlay} activeOpacity={0} onPress={this.onOverlayPress} />}
-            <Animated.View style={[styles.contentContainer, this._testStyle()]} ref={el => (this.containerComponent = el)} >
-                <View style={styles.knob} />
-                <View style={styles.content}>{this.props.children}</View>
-                <View style={styles.safeAreaBottom} />
-            </Animated.View>
+                {!this.state.initialLoading && (
+                    <TouchableOpacity
+                        style={styles.overlay}
+                        activeOpacity={0}
+                        onPress={this.onOverlayPress}
+                    />
+                )}
+                <Animated.View
+                    style={[styles.contentContainer, this._testStyle()]}
+                    ref={el => (this.containerComponent = el)}
+                >
+                    <View style={styles.knob} />
+                    <View style={styles.content}>{this.props.children}</View>
+                    <View style={styles.safeAreaBottom} />
+                </Animated.View>
             </>
         );
     };
 
     render() {
         return (
-            <Modal style={styles.modal} visible={this.state.visible || this.state.initialLoading} onRequestClose={this.onModalRequestClose} onLayout={event => this.onModalLayout(event)}>
-                {this._container() }
+            <Modal
+                style={styles.modal}
+                visible={this.state.visible || this.state.initialLoading}
+                onRequestClose={this.onModalRequestClose}
+                onLayout={event => this.onModalLayout(event)}
+            >
+                {this._container()}
             </Modal>
         );
     }
@@ -118,8 +138,8 @@ const styles = StyleSheet.create({
         bottom: 0
     },
     contentContainer: {
-        backgroundColor: "#aaffff",
-        
+        backgroundColor: "#aaffff"
+
         //height: "100%",
         //top: 50,
         //transform: [{translateY: "250%"}]
@@ -139,11 +159,7 @@ const styles = StyleSheet.create({
     }
 });
 
-
-
-
-
-/* 
+/*
 import React, { PureComponent } from "react";
 import { Animated, StyleSheet, Modal, View, TouchableOpacity, PanResponder } from "react-native";
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
@@ -192,7 +208,7 @@ export class ContainerSwipeable extends PureComponent {
             // onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
             // onMoveShouldSetPanResponder: (evt, gestureState) => true,
             onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-      
+
             onPanResponderGrant: (evt, gestureState) => {
                 console.log("onPanResponderGrant")
 
@@ -306,7 +322,7 @@ export class ContainerSwipeable extends PureComponent {
                     <Animated.View
                         style={this._containerInnerStyle()}
                         onStartShouldSetResponder={() => true}
-                        {...this._panResponder.panHandlers} 
+                        {...this._panResponder.panHandlers}
                     >
                         <View onLayout={this.onLayout} pointerEvents="auto">
                             <TouchableOpacity
