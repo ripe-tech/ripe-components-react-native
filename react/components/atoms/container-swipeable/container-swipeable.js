@@ -26,7 +26,7 @@ export class ContainerSwipeable extends PureComponent {
 
     static get defaultProps() {
         return {
-            animationsDuration: 5000,
+            animationsDuration: 2000,
             onVisible: visible => {},
             style: {}
         };
@@ -46,18 +46,27 @@ export class ContainerSwipeable extends PureComponent {
     }
 
     open() {
-        console.log("stuff");
+        this.setState({ visible: true }, this.startOpenAnimation());
+    }
+
+    close() {
+        this.startCloseAnimation(() => this.setState({ visible: false }));
+    }
+
+    startOpenAnimation() {
         Animated.timing(this.state.heightAnimationValue, {
             toValue: 1,
             duration: this.props.animationsDuration,
             easing: Easing.inOut(Easing.ease)
         }).start();
-
-        this.setState({ visible: true });
     }
 
-    close() {
-        this.setState({ visible: false });
+    startCloseAnimation(callback) {
+        Animated.timing(this.state.heightAnimationValue, {
+            toValue: 0,
+            duration: this.props.animationsDuration,
+            easing: Easing.inOut(Easing.ease)
+        }).start(callback);
     }
 
     onOverlayPress = () => {
