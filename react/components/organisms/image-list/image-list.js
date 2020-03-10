@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
-import { Alert, StyleSheet, Dimensions, ViewPropTypes, LayoutAnimation, View } from "react-native";
+import { StyleSheet, Dimensions, ViewPropTypes, LayoutAnimation, View } from "react-native";
 import PropTypes from "prop-types";
-import ImagePicker from "react-native-image-picker";
+
+import { pickImage } from "../../../util";
 
 import { ImageListItem } from "./image-list-item";
 import { ImageListItemAdd } from "./image-list-item-add";
@@ -58,42 +59,22 @@ export class ImageList extends PureComponent {
             const images = [...state.images];
             images.splice(index, 1);
 
-            this.props.onRemoveImage(image);
+            this.props.onRemoveImage(image, index);
             return { images };
         });
     };
 
-    _onPressAdd = () => {
-        ImagePicker.showImagePicker(
-            {
-                title: "Select Image",
-                mediaType: "photo",
-                noData: true,
-                storageOptions: {
-                    skipBackup: true,
-                    path: "images"
-                }
-            },
-            response => {
-                if (response.didCancel) {
-                    return;
-                }
+    _onPressAdd = async () => {
+        const image = await pickImage();
 
-                if (response.error) {
-                    Alert.alert("Error", "Could not load image", { cancelable: false });
-                    return;
-                }
+        if (image) {
+            LayoutAnimation.easeInEaseOut();
 
-                const newImage = { uri: response.uri };
-
-                LayoutAnimation.easeInEaseOut();
-
-                this.setState(
-                    state => ({ images: [...state.images, newImage] }),
-                    () => this.props.onAddImage(newImage)
-                );
-            }
-        );
+            this.setState(
+                state => ({ images: [...state.images, image] }),
+                () => this.props.onAddImage(image)
+            );
+        }
     };
 
     _style() {

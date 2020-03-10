@@ -1,27 +1,9 @@
 import React, { PureComponent } from "react";
-import {
-    StyleSheet,
-    ViewPropTypes,
-    View,
-    Animated,
-    Platform,
-    UIManager,
-    LayoutAnimation
-} from "react-native";
-import ImagePicker from "react-native-image-picker";
-import DocumentPicker from "react-native-document-picker";
-
+import { StyleSheet, ViewPropTypes, View, Animated, LayoutAnimation } from "react-native";
 import PropTypes from "prop-types";
 
-import { ButtonIcon, TextArea } from "../..";
-
-if (Platform.OS === "android") {
-    if (UIManager.setLayoutAnimationEnabledExperimental) {
-        UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
-}
-
-const animationTime = 200;
+import { ButtonIcon, TextArea } from "../../atoms";
+import { pickImage, pickDocuments } from "../../../util";
 
 export class RichTextInput extends PureComponent {
     static get propTypes() {
@@ -29,9 +11,9 @@ export class RichTextInput extends PureComponent {
             value: PropTypes.string,
             placeholder: PropTypes.string,
             multiline: PropTypes.bool,
-            minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-            maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-            onValue: PropTypes.func,
+            textareaMinHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            textareaMaxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            animationTime: PropTypes.number,
             onPhotoAdded: PropTypes.func,
             onAttachmentsAdded: PropTypes.func,
             onSendMessage: PropTypes.func,
@@ -46,10 +28,10 @@ export class RichTextInput extends PureComponent {
             value: undefined,
             placeholder: undefined,
             multiline: false,
-            minHeight: undefined,
-            maxHeight: undefined,
-            onValue: value => {},
-            onPhotoAdded: source => {},
+            textareaMinHeight: undefined,
+            textareaMaxHeight: undefined,
+            animationTime: 200,
+            onPhotoAdded: image => {},
             onAttachmentsAdded: attachments => {},
             onSendMessage: text => {},
             onFocus: () => {},
@@ -72,25 +54,28 @@ export class RichTextInput extends PureComponent {
     startAnimations = () => {
         LayoutAnimation.configureNext(
             LayoutAnimation.create(
-                animationTime,
+                this.props.animationTime,
                 LayoutAnimation.Types.easeOut,
                 LayoutAnimation.Properties.scaleXY
             )
         );
 
-        if (this.state.buttonsVisible) this.startShowButtonsAnimation();
-        else this.startHideButtonsAnimation();
+        if (this.state.buttonsVisible) {
+            this.startShowButtonsAnimation();
+        } else {
+            this.startHideButtonsAnimation();
+        }
     };
 
     startShowButtonsAnimation = () => {
         Animated.parallel([
             Animated.timing(this.state.buttonsOpacityValue, {
                 toValue: 1,
-                duration: animationTime
+                duration: this.props.animationTime
             }),
             Animated.timing(this.state.moreOptionsOpacityValue, {
                 toValue: 0,
-                duration: animationTime
+                duration: this.props.animationTime
             })
         ]).start();
     };
@@ -99,13 +84,64 @@ export class RichTextInput extends PureComponent {
         Animated.parallel([
             Animated.timing(this.state.buttonsOpacityValue, {
                 toValue: 0,
-                duration: animationTime
+                duration: this.props.animationTime
             }),
             Animated.timing(this.state.moreOptionsOpacityValue, {
                 toValue: 1,
-                duration: animationTime
+                duration: this.props.animationTime
             })
         ]).start();
+    };
+
+    sendMessage = () => {
+        const value = this.state.value;
+        this.setState({ value: undefined }, () => this.props.onSendMessage(value));
+    };
+
+    onPhotoButtonPress = async () => {
+        const image = await pickImage();
+
+        if (image) {
+            this.props.onPhotoAdded(image);
+        }
+    };
+
+    onAttachmentButtonPress = async () => {
+        const attachments = await pickDocuments();
+
+        if (attachments) {
+            this.props.onAttachmentsAdded(attachments);
+        }
+    };
+
+    onMoreOptionsButtonPress = () => {
+        this.textAreaComponent.blur();
+    };
+
+    onTextAreaValue = value => {
+        this.setState({ value: value });
+    };
+
+    onTextAreaSubmit = () => {
+        this.sendMessage();
+    };
+
+    onTextAreaFocus = () => {
+        this.setState({ buttonsVisible: false }, () => {
+            this.startAnimations();
+            this.props.onFocus();
+        });
+    };
+
+    onTextAreaBlur = () => {
+        this.setState({ buttonsVisible: true }, () => {
+            this.startAnimations();
+            this.props.onBlur();
+        });
+    };
+
+    onSendButtonPress = () => {
+        this.sendMessage();
     };
 
     _buttonsStyle = () => {
@@ -127,53 +163,13 @@ export class RichTextInput extends PureComponent {
         return style;
     };
 
-    onPhotoButtonPress = () => {
-        ImagePicker.showImagePicker({}, response => {
-            if (!response.didCancel && !response.error) {
-                const source = { uri: response.uri };
-                this.props.onPhotoAdded(source);
-            }
-        });
-    };
-
-    onAttachmentButtonPress = async () => {
-        try {
-            const attachments = await DocumentPicker.pickMultiple();
-            this.props.onAttachmentsAdded(attachments);
-        } catch (err) {
-            if (DocumentPicker.isCancel(err)) return;
-            else throw err;
-        }
-    };
-
-    onMoreOptionsButtonPress = () => {
-        this.textAreaComponent.blur();
-    };
-
-    onTextAreaValue = value => {
-        this.setState({ value: value }, this.props.onValue(value));
-    };
-
-    onTextAreaFocus = () => {
-        this.setState({ buttonsVisible: false }, () => this.startAnimations());
-
-        this.props.onFocus();
-    };
-
-    onTextAreaBlur = () => {
-        this.setState({ buttonsVisible: true }, () => this.startAnimations());
-
-        this.props.onBlur();
-    };
-
-    onSendButtonPress = () => {
-        this.props.onSendMessage(this.state.value);
-        this.setState({ value: undefined }, this.props.onValue(undefined));
+    _style = () => {
+        return [styles.richTextInput, this.props.style];
     };
 
     render() {
         return (
-            <View style={[styles.richTextInput, this.props.style]}>
+            <View style={this._style()}>
                 <Animated.View
                     style={this._buttonsStyle()}
                     pointerEvents={this.state.buttonsVisible ? undefined : "none"}
@@ -216,9 +212,10 @@ export class RichTextInput extends PureComponent {
                     value={this.state.value}
                     placeholder={this.props.placeholder}
                     multiline={this.props.multiline}
-                    minHeight={this.props.minHeight}
-                    maxHeight={this.props.maxHeight}
+                    minHeight={this.props.textareaMinHeight}
+                    maxHeight={this.props.textareaMaxHeight}
                     onValue={value => this.onTextAreaValue(value)}
+                    onSubmit={() => this.onTextAreaSubmit()}
                     onFocus={() => this.onTextAreaFocus()}
                     onBlur={() => this.onTextAreaBlur()}
                 />
@@ -246,7 +243,6 @@ const styles = StyleSheet.create({
     },
     textArea: {
         flex: 1,
-        backgroundColor: "#f6f7f9",
         borderRadius: 20
     },
     buttons: {

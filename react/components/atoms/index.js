@@ -1,4 +1,6 @@
 export * from "./avatar";
+export * from "./badge";
+export * from "./bar-animated";
 export * from "./button";
 export * from "./button-icon";
 export * from "./button-keyboard";

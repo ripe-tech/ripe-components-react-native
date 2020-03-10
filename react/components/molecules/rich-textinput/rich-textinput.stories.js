@@ -7,9 +7,6 @@ import { RichTextInput } from "../..";
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("RichTextInput", () => {
-        const onValue = value => {
-            console.log("[RichTextInput]", "onValue", value);
-        };
         const onPhotoAdded = source => {
             console.log("[RichTextInput]", "onPhotoAdded", source);
         };
@@ -22,16 +19,17 @@ storiesOf("Atoms", module)
         const value = text("Value", undefined);
         const placeholder = text("Placeholder", "Placeholder example");
         const multiline = boolean("Multiline", false);
-        const minHeight = number("Min Height", undefined);
-        const maxHeight = number("Max Height", undefined);
+        const textareaMinHeight = number("TextArea Min Height", undefined);
+        const textareaMaxHeight = number("TextArea Max Height", undefined);
+        const animationTime = number("Animation Time", 200);
         return (
             <RichTextInput
                 value={value}
                 placeholder={placeholder}
                 multiline={multiline}
-                minHeight={minHeight}
-                maxHeight={maxHeight}
-                onValue={onValue}
+                textareaMinHeight={textareaMinHeight}
+                textareaMaxHeight={textareaMaxHeight}
+                animationTime={animationTime}
                 onPhotoAdded={onPhotoAdded}
                 onAttachmentsAdded={onAttachmentsAdded}
                 onSendMessage={onSendMessage}
