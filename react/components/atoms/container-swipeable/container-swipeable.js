@@ -1,4 +1,4 @@
-/* 
+
 import React, { PureComponent } from "react";
 import { ViewPropTypes, StyleSheet, View, Dimensions, TouchableOpacity, Animated, Easing } from "react-native";
 import PropTypes from "prop-types";
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
 
 
 
- */
+
 
 /* 
 import React, { PureComponent } from "react";
