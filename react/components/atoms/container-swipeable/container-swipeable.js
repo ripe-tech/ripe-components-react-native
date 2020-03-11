@@ -167,14 +167,10 @@ const styles = StyleSheet.create({
         bottom: 0
     },
     contentContainer: {
-        backgroundColor: "#aaffff",
-
         position: "absolute",
         overflow: "hidden",
         bottom: 0,
-        //height: "100%",
-        //top: 50,
-        //transform: [{translateY: "250%"}]
+        backgroundColor: "#aaffff"
     },
     knob: {
         alignSelf: "center",
