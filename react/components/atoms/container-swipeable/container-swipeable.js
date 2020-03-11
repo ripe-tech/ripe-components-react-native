@@ -27,7 +27,7 @@ export class ContainerSwipeable extends PureComponent {
     static get defaultProps() {
         return {
             animationsDuration: 500,
-            onVisible: visible => {},
+            onVisible: visible => { },
             style: {}
         };
     }
@@ -41,17 +41,17 @@ export class ContainerSwipeable extends PureComponent {
             heightAnimationValue: new Animated.Value(0)
         };
 
-        this.modalHeight = 0;
+        this.containerHeight = 0;
         this.animating = false;
     }
 
     open() {
-        if(this.animating) return;
+        if (this.animating) return;
         this.setState({ visible: true }, this.startOpenAnimation());
     }
 
     close() {
-        if(this.animating) return;
+        if (this.animating) return;
         this.startCloseAnimation(() => this.setState({ visible: false }));
     }
 
@@ -62,7 +62,7 @@ export class ContainerSwipeable extends PureComponent {
             toValue: 1,
             duration: this.props.animationsDuration,
             easing: Easing.inOut(Easing.ease)
-        }).start(() => {this.animating=false});
+        }).start(() => { this.animating = false });
     }
 
     startCloseAnimation(callback) {
@@ -72,7 +72,7 @@ export class ContainerSwipeable extends PureComponent {
             toValue: 0,
             duration: this.props.animationsDuration,
             easing: Easing.inOut(Easing.ease)
-        }).start(() => {callback(); this.animating=false});
+        }).start(() => { callback(); this.animating = false });
     }
 
     onOverlayPress = () => {
@@ -86,7 +86,7 @@ export class ContainerSwipeable extends PureComponent {
     _onContainerLayout = event => {
         if (!this.state.initialLoading) return;
 
-        this.modalHeight = event.nativeEvent.layout.height;
+        this.containerHeight = event.nativeEvent.layout.height;
         this.setState({ initialLoading: false });
     };
 
@@ -96,7 +96,7 @@ export class ContainerSwipeable extends PureComponent {
         return {
             height: this.state.heightAnimationValue.interpolate({
                 inputRange: [0, 1],
-                outputRange: [0, this.modalHeight]
+                outputRange: [0, this.containerHeight]
             })
         };
     };
@@ -126,13 +126,27 @@ export class ContainerSwipeable extends PureComponent {
 
     render() {
         return (
-            <Modal
-                style={styles.modal}
-                visible={this.state.visible || this.state.initialLoading}
-                onRequestClose={this.onModalRequestClose}
-            >
-                {this._container()}
-            </Modal>
+            <>
+                {this.props.fullscreen ? (
+                    <Modal
+                        style={styles.modal}
+                        visible={this.state.visible || this.state.initialLoading}
+                        onRequestClose={this.onModalRequestClose}
+                    >
+                        {this._container()}
+                    </Modal>
+                ) : (
+                        <Animated.View
+                            style={[styles.contentContainer, this._testStyle()]}
+                            ref={el => (this.containerComponent = el)}
+                            onLayout={event => this._onContainerLayout(event)}
+                        >
+                            <View style={styles.knob} />
+                            <View style={styles.content}>{this.props.children}</View>
+                            <View style={styles.safeAreaBottom} />
+                        </Animated.View>
+                    )}
+            </>
         );
     }
 }
@@ -153,8 +167,11 @@ const styles = StyleSheet.create({
         bottom: 0
     },
     contentContainer: {
-        backgroundColor: "#aaffff"
+        backgroundColor: "#aaffff",
 
+        position: "absolute",
+        overflow: "hidden",
+        bottom: 0,
         //height: "100%",
         //top: 50,
         //transform: [{translateY: "250%"}]
