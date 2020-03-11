@@ -52,7 +52,7 @@ export class ContainerSwipeable extends PureComponent {
     }
 
     isLoaded = () => {
-        return this.state.containerHeightLoaded;// && this.state.headerHeightLoaded;  
+        return this.state.containerHeightLoaded && this.state.headerHeightLoaded;  
     }
 
     open() {
