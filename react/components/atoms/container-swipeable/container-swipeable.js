@@ -100,21 +100,6 @@ export class ContainerSwipeable extends PureComponent {
     _onContainerLayout = event => {
         if (this.state.containerHeightLoaded) return;
 
-
-        /* const newState = {}
-        newState.containerHeight = event.nativeEvent.layout.height;
-        newState.initialLoading = false;
-        console.log("containerHeight", newState.containerHeight);
-        if (this.props.header) {
-            
-            this.headerComponent.measure((x, y, w, h) => {
-                console.log("hhhh", h);
-                newState.headerHeight = h;
-                this.setState(newState);
-            })
-        } */
-        //this.setState(newState, () => console.log("asdas"));
-
         this.containerHeight = event.nativeEvent.layout.height;
         this.setState({ containerHeightLoaded: true });
     };
