@@ -11,7 +11,6 @@ import {
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 import PropTypes from "prop-types";
 
-//@TODO This method for AndroidSoftBar
 const AndroidSoftBar = Dimensions.get("screen").height - Dimensions.get("window").height;
 const ScreenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
 
@@ -123,9 +122,8 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     onLayout = event => {
-        if (this.state.containerChildrenHeight) {
-            return;
-        }
+        if (this.state.containerChildrenHeight) return;
+        
         this.setState(
             {
                 containerChildrenHeight: event.nativeEvent.layout.height + AndroidSoftBar
