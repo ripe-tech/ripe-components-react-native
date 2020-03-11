@@ -127,6 +127,15 @@ export class ContainerSwipeable extends PureComponent {
         this.setState({ headerHeightLoaded: true });
     };
 
+    _overlayStyle = () => {
+        return [
+            styles.overlay,
+            {
+                position: this.props.fullscreen ? undefined : "absolute" //TODO, test if it works in iOS when not using absolute in fullscreen
+            }
+        ];
+    };
+
     _testStyle = () => {
         if (!this.isLoaded()) return { opacity: 0 };
 
@@ -141,10 +150,10 @@ export class ContainerSwipeable extends PureComponent {
     _container = () => {
         return (
             <>
-                {this.overlayVisible() && ( //TODO fix overlay
+                {this.overlayVisible() && (
                     <TouchableOpacity
-                        style={styles.overlay}
-                        activeOpacity={0.5} //TODO, test if it works in iOS too
+                        style={this._overlayStyle()}
+                        activeOpacity={0.5} //TODO, test if it works in iOS too, shouldn't show feedback when pressing on overlay
                         onPress={this.onOverlayPress}
                     />
                 )}
@@ -189,7 +198,6 @@ export class ContainerSwipeable extends PureComponent {
 
 const styles = StyleSheet.create({
     overlay: {
-        //position: "absolute", //TODO, test if it works in iOS too (if not fullscreen set as abso)
         backgroundColor: "#000000",
         opacity: 0.5,
         height: screenHeight, //Device height
