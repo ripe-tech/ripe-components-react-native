@@ -9,8 +9,8 @@ storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Toast Message", () => {
         const ref = React.createRef();
-        const _text = text("Text", "Marked as read. lala qwqwd qwdqwdqwd wqdqwdqwd qwdqwdqw ");
-        const linkText = text("Link Text", "Go back");
+        const _text = text("Text", "Marked as read.");
+        const linkText = text("Link Text", "Undo");
         const link = text("Link", "http://www.platforme.com");
         return (
             <View>
