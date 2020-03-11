@@ -14,6 +14,7 @@ import Modal from "react-native-modal";
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 
 const screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
+const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
 export class ContainerSwipeable extends PureComponent {
     static get propTypes() {
@@ -43,7 +44,8 @@ export class ContainerSwipeable extends PureComponent {
             containerHeightLoaded: false,
             headerHeightLoaded: false,
             visible: false,
-            heightAnimationValue: new Animated.Value(0)
+            overlayOpacityAnimationValue: new Animated.Value(0),
+            contentHeightAnimationValue: new Animated.Value(0)
         };
 
         this.headerHeight = 0;
@@ -82,11 +84,18 @@ export class ContainerSwipeable extends PureComponent {
     startOpenAnimation() {
         this.animating = true;
 
-        Animated.timing(this.state.heightAnimationValue, {
-            toValue: 1,
-            duration: this.props.animationsDuration,
-            easing: Easing.inOut(Easing.ease)
-        }).start(() => {
+        Animated.parallel([
+            Animated.timing(this.state.contentHeightAnimationValue, {
+                toValue: 1,
+                duration: this.props.animationsDuration,
+                easing: Easing.inOut(Easing.ease)
+            }),
+            Animated.timing(this.state.overlayOpacityAnimationValue, {
+                toValue: 0.5,
+                duration: this.props.animationsDuration,
+                easing: Easing.inOut(Easing.ease)
+            })
+        ]).start(() => {
             this.animating = false;
         });
     }
@@ -94,11 +103,18 @@ export class ContainerSwipeable extends PureComponent {
     startCloseAnimation(callback) {
         this.animating = true;
 
-        Animated.timing(this.state.heightAnimationValue, {
-            toValue: 0,
-            duration: this.props.animationsDuration,
-            easing: Easing.inOut(Easing.ease)
-        }).start(() => {
+        Animated.parallel([
+            Animated.timing(this.state.contentHeightAnimationValue, {
+                toValue: 0,
+                duration: this.props.animationsDuration,
+                easing: Easing.inOut(Easing.ease)
+            }),
+            Animated.timing(this.state.overlayOpacityAnimationValue, {
+                toValue: 0,
+                duration: this.props.animationsDuration,
+                easing: Easing.inOut(Easing.ease)
+            })
+        ]).start(() => {
             callback();
             this.animating = false;
         });
@@ -136,7 +152,8 @@ export class ContainerSwipeable extends PureComponent {
         return [
             styles.overlay,
             {
-                position: this.props.fullscreen ? undefined : "absolute" //TODO, test if it works in iOS when not using absolute in fullscreen
+                position: this.props.fullscreen ? undefined : "absolute", //TODO, test if it works in iOS when not using absolute in fullscreen
+                opacity: this.state.overlayOpacityAnimationValue
             }
         ];
     };
@@ -145,7 +162,7 @@ export class ContainerSwipeable extends PureComponent {
         if (!this.isLoaded()) return { opacity: 0 };
 
         return {
-            height: this.state.heightAnimationValue.interpolate({
+            height: this.state.contentHeightAnimationValue.interpolate({
                 inputRange: [0, 1],
                 outputRange: [this.headerHeight, this.containerHeight]
             })
@@ -156,7 +173,7 @@ export class ContainerSwipeable extends PureComponent {
         return (
             <>
                 {this.overlayVisible() && (
-                    <TouchableOpacity
+                    <AnimatedTouchable
                         style={this._overlayStyle()}
                         activeOpacity={0.5} //TODO, test if it works in iOS too, shouldn't show feedback when pressing on overlay
                         onPress={this.onOverlayPress}
@@ -204,7 +221,6 @@ export class ContainerSwipeable extends PureComponent {
 const styles = StyleSheet.create({
     overlay: {
         backgroundColor: "#000000",
-        opacity: 0.5,
         height: screenHeight, //Device height
         width: "100%",
         bottom: 0
