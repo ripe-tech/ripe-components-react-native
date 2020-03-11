@@ -8,9 +8,9 @@ export class ToastMessage extends PureComponent {
         return {
             text: PropTypes.string,
             linkText: PropTypes.string,
-            link: PropTypes.string,
-            animationTime: PropTypes.number,
-            onPress: PropTypes.string,
+            linkUrl: PropTypes.string,
+            animationDuration: PropTypes.number,
+            duration:  PropTypes.number,
             style: ViewPropTypes.style
         };
     }
@@ -19,9 +19,9 @@ export class ToastMessage extends PureComponent {
         return {
             text: undefined,
             linkText: undefined,
-            animationTime: 250,
-            link: undefined,
-            onPress: () => {},
+            animationDuration: 300,
+            duration: 1000,
+            linkUrl: undefined,
             style: {}
         };
     }
@@ -29,29 +29,46 @@ export class ToastMessage extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            opacity: new Animated.Value(0)
+            opacity: new Animated.Value(1),
+            text: this.props.text,
+            animationDuration: this.props.animationDuration,
+            timeout: null,
+            linkText: this.props.linkText,
         };
     }
 
     async componentDidMount() {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.animateShow();
     }
 
-    animateShow() {
+    animateShow(duration) {
         Animated.timing(this.state.opacity, {
             toValue: 1,
-            duration: this.props.animationTime,
+            duration: duration || this.props.animationDuration,
             useNativeDriver: true
         }).start();
     }
 
-    animateHide() {
+    animateHide(duration) {
         Animated.timing(this.state.opacity, {
             toValue: 0,
-            duration: this.props.animationTime,
+            duration: duration || this.props.animationDuration,
             useNativeDriver: true
         }).start();
+    }
+
+    show(){
+        console.log("yooo");
+        this.state.opacity.stopAnimation();
+        this.state.opacity.setValue(0);
+        if (this.state.timeout) clearTimeout(this.state.timeout);
+        console.log(this.state.timeout);
+        this.animateShow();
+        this.state.timeout = setTimeout(() => this.animateHide(), this.props.duration)
+    }
+
+    _hasLink() {
+        return this.props.linkText || this.props.linkText === 0;
     }
 
     _styleRoot = () => {
@@ -64,12 +81,27 @@ export class ToastMessage extends PureComponent {
         ];
     };
 
+    _styleText = () => {
+        const fullWidthStyle = {
+            marginRight: 42
+        };
+
+        const sideWidthStyle = {
+            width: "65%"
+        };
+        return [
+            styles.text,
+            this._hasLink() ? sideWidthStyle: fullWidthStyle,
+            this.props.style
+        ];
+    };
+
     render() {
         return (
-            <Animated.View style={this._styleRoot()} onPress={this.props.onPress}>
-                <Text style={styles.text}>{this.props.text}</Text>
-                {this.props.linkText ? (
-                    <Link text={this.props.linkText} url={this.props.link} style={styles.link} />
+            <Animated.View style={this._styleRoot()}>
+                <Text style={this._styleText()}>{this.props.text}</Text>
+                {this._hasLink() ? (
+                    <Link text={this.props.linkText} url={this.props.linkUrl} style={styles.link} />
                 ) : null}
             </Animated.View>
         );
@@ -84,7 +116,8 @@ const styles = StyleSheet.create({
         borderColor: "transparent",
         borderWidth: 1,
         borderRadius: 6,
-        shadowColor: "rgba(59, 74, 116, 0.14)",
+        shadowColor: "#384671",
+        elevation: 5,
         shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 1,
         height: 60,
@@ -93,12 +126,14 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     text: {
-        paddingLeft: 42,
+        marginLeft: 42,
         color: "#1d2631"
     },
     link: {
         color: "#597cf0",
-        paddingRight: 42,
+        marginRight: 42,
+        marginLeft: 10,
+        textAlign: "center",
         textDecorationLine: "underline",
         fontWeight: "bold"
     }
