@@ -34,7 +34,7 @@ export class KeyValue extends PureComponent {
             iconHeight: undefined,
             iconWidth: undefined,
             iconStrokeWidth: undefined,
-            pressable: true,
+            pressable: false,
             onPress: () => {},
             onButtonIconPress: () => {},
             onLongPress: () => {}
