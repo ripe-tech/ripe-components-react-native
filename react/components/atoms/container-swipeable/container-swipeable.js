@@ -100,7 +100,7 @@ export class ContainerSwipeable extends PureComponent {
     }
 
     onOverlayPress = () => {
-        console.log("ffff");
+        console.log("overlay Pressed");
         this.close();
     };
 
@@ -109,7 +109,7 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     onHeaderPress = () => {
-        console.log("pressed");
+        console.log("header pressed");
         this.toggle();
     };
 
@@ -174,7 +174,7 @@ export class ContainerSwipeable extends PureComponent {
                 {this.props.fullscreen ? (
                     <Modal
                         style={styles.modal}
-                        visible={this.state.visible || this.isLoaded()}
+                        visible={this.state.visible || !this.isLoaded()}
                         onRequestClose={this.onModalRequestClose}
                     >
                         {this._container()}
@@ -189,7 +189,7 @@ export class ContainerSwipeable extends PureComponent {
 
 const styles = StyleSheet.create({
     overlay: {
-        position: "absolute", //TODO, test if it works in iOS too (if not fullscreen, set as absolute and it will work I think)
+        //position: "absolute", //TODO, test if it works in iOS too (if not fullscreen set as abso)
         backgroundColor: "#000000",
         opacity: 0.5,
         height: screenHeight, //Device height
