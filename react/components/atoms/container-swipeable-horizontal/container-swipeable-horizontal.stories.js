@@ -9,7 +9,7 @@ storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Container Swipeable Horizontal", () => {
         const triggerActionThreshold = number("Trigger Action Threshold Value", 0.4);
-        const leftOptionEnabled = boolean("Left Option Enabled", false);
+        const leftOptionEnabled = boolean("Left Option Enabled", true);
         const rightOptionEnabled = boolean("Right Option Enabled", false);
         const leftOptionText = text("Left Option Text", "Add");
         const rightOptionText = text("Right Option Text", "Add");
