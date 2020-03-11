@@ -1,4 +1,4 @@
-import { Alert } from "react-native";
+import { Alert, Linking, Platform } from "react-native";
 import DocumentPicker from "react-native-document-picker";
 import ImagePicker from "react-native-image-picker";
 
@@ -57,7 +57,20 @@ export const pickImage = async function(options) {
             }
 
             if (response.error) {
-                Alert.alert("Error", "Could not load image", { cancelable: false });
+                if (Platform.OS === "ios" && response.error === "Camera permissions not granted") {
+                    Alert.alert(
+                        "Authorize camera access in settings",
+                        null,
+                        [
+                            { text: "Not now" },
+                            { text: "Settings", onPress: () => Linking.openURL("app-settings:") }
+                        ],
+                        { cancelable: false }
+                    );
+                } else {
+                    Alert.alert("Error", "Could not load image", { cancelable: false });
+                }
+
                 reject(new Error({ reason: "error", message: response.error }));
                 return;
             }

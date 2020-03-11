@@ -1,17 +1,8 @@
 import React, { PureComponent } from "react";
-import {
-    StyleSheet,
-    ViewPropTypes,
-    View,
-    Animated,
-    Platform,
-    UIManager,
-    LayoutAnimation
-} from "react-native";
-
+import { StyleSheet, ViewPropTypes, View, Animated, LayoutAnimation } from "react-native";
 import PropTypes from "prop-types";
 
-import { ButtonIcon, TextArea } from "../..";
+import { ButtonIcon, TextArea } from "../../atoms";
 import { pickImage, pickDocuments } from "../../../util";
 
 export class RichTextInput extends PureComponent {
@@ -172,9 +163,13 @@ export class RichTextInput extends PureComponent {
         return style;
     };
 
+    _style = () => {
+        return [styles.richTextInput, this.props.style];
+    };
+
     render() {
         return (
-            <View style={[styles.richTextInput, this.props.style]}>
+            <View style={this._style()}>
                 <Animated.View
                     style={this._buttonsStyle()}
                     pointerEvents={this.state.buttonsVisible ? undefined : "none"}
@@ -248,7 +243,6 @@ const styles = StyleSheet.create({
     },
     textArea: {
         flex: 1,
-        backgroundColor: "#f6f7f9",
         borderRadius: 20
     },
     buttons: {

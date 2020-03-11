@@ -10,7 +10,7 @@ export class Badge extends Component {
             text: PropTypes.string,
             count: PropTypes.number,
             countThreshold: PropTypes.number,
-            hasAnimation: PropTypes.boolean,
+            hasAnimation: PropTypes.bool,
             animationDuration: PropTypes.number,
             backgroundColor: PropTypes.string,
             color: PropTypes.string,

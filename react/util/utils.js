@@ -30,6 +30,20 @@ export const timeStringUTC = function(timestamp, separator = ":") {
     return hours + separator + minutes + separator + seconds;
 };
 
+export const sameDay = function(first, second) {
+    return (
+        first.getFullYear() === second.getFullYear() &&
+        first.getMonth() === second.getMonth() &&
+        first.getDate() === second.getDate()
+    );
+};
+
+export const dateTimeString = function(timestamp) {
+    return sameDay(new Date(), new Date(timestamp))
+        ? timeString(timestamp)
+        : `${dateString(timestamp)} ${timeString(timestamp)}`;
+};
+
 export const normalize = function(value) {
     return value.split("_").join(" ");
 };
@@ -37,4 +51,9 @@ export const normalize = function(value) {
 export const capitalize = function(value) {
     if (!value) return value;
     return value[0].toUpperCase() + value.slice(1);
+};
+
+export const isImage = function(fileName) {
+    const regex = /\.(jpg|jpeg|png|gif)$/i;
+    return regex.test(fileName);
 };
