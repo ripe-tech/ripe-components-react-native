@@ -22,7 +22,7 @@ storiesOf("Atoms", module)
                 <Button
                     title="Toggle Container"
                     onPress={() => {
-                        ref.current.open();
+                        ref.current.toggle();
                     }}
                 />
                 <View style={styles.otherContent}>
