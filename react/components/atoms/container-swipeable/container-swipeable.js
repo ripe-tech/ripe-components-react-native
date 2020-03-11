@@ -40,13 +40,19 @@ export class ContainerSwipeable extends PureComponent {
         super(props);
 
         this.state = {
-            initialLoading: true,
+            containerHeightLoaded: false,
+            headerHeightLoaded: false,
             visible: false,
             heightAnimationValue: new Animated.Value(0)
         };
 
+        this.headerHeight = 0;
         this.containerHeight = 0;
         this.animating = false;
+    }
+
+    isLoaded = () => {
+        return this.state.containerHeightLoaded;// && this.state.headerHeightLoaded;  
     }
 
     open() {
@@ -80,7 +86,6 @@ export class ContainerSwipeable extends PureComponent {
     }
 
     onOverlayPress = () => {
-        console.log("overlaaay");
         this.close();
     };
 
@@ -88,20 +93,46 @@ export class ContainerSwipeable extends PureComponent {
         this.close();
     };
 
+    onHeaderPress = () => {
+        this.open();
+    }
+
     _onContainerLayout = event => {
-        if (!this.state.initialLoading) return;
+        if (this.state.containerHeightLoaded) return;
+
+
+        /* const newState = {}
+        newState.containerHeight = event.nativeEvent.layout.height;
+        newState.initialLoading = false;
+        console.log("containerHeight", newState.containerHeight);
+        if (this.props.header) {
+            
+            this.headerComponent.measure((x, y, w, h) => {
+                console.log("hhhh", h);
+                newState.headerHeight = h;
+                this.setState(newState);
+            })
+        } */
+        //this.setState(newState, () => console.log("asdas"));
 
         this.containerHeight = event.nativeEvent.layout.height;
-        this.setState({ initialLoading: false });
+        this.setState({ containerHeightLoaded: true });
     };
 
+    _onHeaderLayout = event => {
+        if (this.state.headerHeightLoaded) return;
+
+        this.headerHeight = event.nativeEvent.layout.height;
+        this.setState({ headerHeightLoaded: true });
+    } 
+
     _testStyle = () => {
-        if (this.state.initialLoading) return { opacity: 0 };
+        if (!this.isLoaded()) return { opacity: 0 };
 
         return {
             height: this.state.heightAnimationValue.interpolate({
                 inputRange: [0, 1],
-                outputRange: [0, this.containerHeight]
+                outputRange: [this.headerHeight, this.containerHeight]
             })
         };
     };
@@ -121,7 +152,13 @@ export class ContainerSwipeable extends PureComponent {
                     ref={el => (this.containerComponent = el)}
                     onLayout={event => this._onContainerLayout(event)}
                 >
-                    <TouchableOpacity style={styles.contentHeader} activeOpacity={1}>
+                    <TouchableOpacity
+                        ref={el => (this.headerComponent = el)}
+                        onLayout={event => this._onHeaderLayout(event)}
+                        style={styles.contentHeader}
+                        activeOpacity={1}
+                        onPress={this.onHeaderPress}
+                    >
                         <View style={styles.knob} />
                         <View style={styles.header}>{this.props.header}</View>
                     </TouchableOpacity>
@@ -138,7 +175,7 @@ export class ContainerSwipeable extends PureComponent {
                 {this.props.fullscreen ? (
                     <Modal
                         style={styles.modal}
-                        visible={this.state.visible || this.state.initialLoading}
+                        visible={this.state.visible || this.isLoaded()}
                         onRequestClose={this.onModalRequestClose}
                     >
                         {this._container()}
