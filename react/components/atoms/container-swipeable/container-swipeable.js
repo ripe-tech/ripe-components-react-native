@@ -123,7 +123,7 @@ export class ContainerSwipeable extends PureComponent {
 
     onLayout = event => {
         if (this.state.containerChildrenHeight) return;
-        
+
         this.setState(
             {
                 containerChildrenHeight: event.nativeEvent.layout.height + AndroidSoftBar
