@@ -19,6 +19,8 @@ export class ContainerSwipeable extends PureComponent {
     static get propTypes() {
         return {
             animationsDuration: PropTypes.number,
+            header: PropTypes.element,
+            fullscreen: PropTypes.bool,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -27,6 +29,8 @@ export class ContainerSwipeable extends PureComponent {
     static get defaultProps() {
         return {
             animationsDuration: 500,
+            fullscreen: false,
+            header: undefined,
             onVisible: visible => { },
             style: {}
         };
@@ -76,6 +80,7 @@ export class ContainerSwipeable extends PureComponent {
     }
 
     onOverlayPress = () => {
+        console.log("overlaaay");
         this.close();
     };
 
@@ -104,19 +109,22 @@ export class ContainerSwipeable extends PureComponent {
     _container = () => {
         return (
             <>
-                {!this.state.initialLoading && (
+                {/*                 {!this.state.initialLoading && ( //TODO fix overlay
                     <TouchableOpacity
                         style={styles.overlay}
                         activeOpacity={0.5} //TODO, test if it works in iOS too
                         onPress={this.onOverlayPress}
                     />
-                )}
+                )} */}
                 <Animated.View
                     style={[styles.contentContainer, this._testStyle()]}
                     ref={el => (this.containerComponent = el)}
                     onLayout={event => this._onContainerLayout(event)}
                 >
-                    <View style={styles.knob} />
+                    <TouchableOpacity style={styles.contentHeader} activeOpacity={1}>
+                        <View style={styles.knob} />
+                        <View style={styles.header}>{this.props.header}</View>
+                    </TouchableOpacity>
                     <View style={styles.content}>{this.props.children}</View>
                     <View style={styles.safeAreaBottom} />
                 </Animated.View>
@@ -135,17 +143,7 @@ export class ContainerSwipeable extends PureComponent {
                     >
                         {this._container()}
                     </Modal>
-                ) : (
-                        <Animated.View
-                            style={[styles.contentContainer, this._testStyle()]}
-                            ref={el => (this.containerComponent = el)}
-                            onLayout={event => this._onContainerLayout(event)}
-                        >
-                            <View style={styles.knob} />
-                            <View style={styles.content}>{this.props.children}</View>
-                            <View style={styles.safeAreaBottom} />
-                        </Animated.View>
-                    )}
+                ) : (this._container())}
             </>
         );
     }
@@ -172,6 +170,9 @@ const styles = StyleSheet.create({
         bottom: 0,
         backgroundColor: "#aaffff"
     },
+    contentHeader: {
+
+    },
     knob: {
         alignSelf: "center",
         width: 50,
@@ -180,6 +181,9 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         backgroundColor: "#1a2632",
         opacity: 0.15
+    },
+    header: {
+
     },
     content: {},
     safeAreaBottom: {
