@@ -29,7 +29,7 @@ export class ToastMessage extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            opacity: new Animated.Value(1),
+            opacity: new Animated.Value(0),
             text: this.props.text,
             animationDuration: this.props.animationDuration,
             timeout: null,
