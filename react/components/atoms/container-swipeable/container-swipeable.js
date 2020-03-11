@@ -19,8 +19,8 @@ export class ContainerSwipeable extends PureComponent {
     static get propTypes() {
         return {
             animationsDuration: PropTypes.number,
-            header: PropTypes.element,
             fullscreen: PropTypes.bool,
+            header: PropTypes.element,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -28,7 +28,7 @@ export class ContainerSwipeable extends PureComponent {
 
     static get defaultProps() {
         return {
-            animationsDuration: 500,
+            animationsDuration: 300,
             fullscreen: false,
             header: undefined,
             onVisible: visible => {},
@@ -61,12 +61,17 @@ export class ContainerSwipeable extends PureComponent {
 
     open() {
         if (this.animating) return;
-        this.setState({ visible: true }, this.startOpenAnimation());
+        this.setState({ visible: true }, () => {
+            this.props.onVisible(true);
+            this.startOpenAnimation();
+        });
     }
 
     close() {
         if (this.animating) return;
-        this.startCloseAnimation(() => this.setState({ visible: false }));
+        this.startCloseAnimation(() =>
+            this.setState({ visible: false }, this.props.onVisible(false))
+        );
     }
 
     toggle() {
