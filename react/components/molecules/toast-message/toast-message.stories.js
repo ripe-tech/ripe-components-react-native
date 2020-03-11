@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, View } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Button, View } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text } from "@storybook/addon-knobs";
 
@@ -14,17 +13,10 @@ storiesOf("Molecules", module)
         const linkText = text("Link Text", "Go back");
         const link = text("Link", "http://www.platforme.com");
         return (
-            <View style={styles.root}>
-                <Button title="Toggle" onPress={() => ref.current.show()} />
+            <View>
+                <Button title="Show" onPress={() => ref.current.show()} />
+                <Button title="Hide" onPress={() => ref.current.hide()} />
                 <ToastMessage text={_text} linkText={linkText} link={link} ref={ref} />
             </View>
         );
     });
-
-const styles = StyleSheet.create({
-    root: {
-        backgroundColor: "white",
-        height: "100%",
-        flex: 1
-    }
-});

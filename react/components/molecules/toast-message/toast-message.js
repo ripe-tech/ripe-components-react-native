@@ -9,8 +9,8 @@ export class ToastMessage extends PureComponent {
             text: PropTypes.string,
             linkText: PropTypes.string,
             linkUrl: PropTypes.string,
+            toastDuration: PropTypes.number,
             animationDuration: PropTypes.number,
-            duration:  PropTypes.number,
             style: ViewPropTypes.style
         };
     }
@@ -19,9 +19,9 @@ export class ToastMessage extends PureComponent {
         return {
             text: undefined,
             linkText: undefined,
-            animationDuration: 300,
-            duration: 1000,
             linkUrl: undefined,
+            toastDuration: 1000,
+            animationDuration: 300,
             style: {}
         };
     }
@@ -29,11 +29,11 @@ export class ToastMessage extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            opacity: new Animated.Value(0),
             text: this.props.text,
-            animationDuration: this.props.animationDuration,
-            timeout: null,
             linkText: this.props.linkText,
+            animationDuration: this.props.animationDuration,
+            opacity: new Animated.Value(0),
+            toastTimeout: null
         };
     }
 
@@ -41,30 +41,37 @@ export class ToastMessage extends PureComponent {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
 
-    animateShow(duration) {
+    _animateShow() {
         Animated.timing(this.state.opacity, {
             toValue: 1,
-            duration: duration || this.props.animationDuration,
+            duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
     }
 
-    animateHide(duration) {
+    _animateHide() {
         Animated.timing(this.state.opacity, {
             toValue: 0,
-            duration: duration || this.props.animationDuration,
+            duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
     }
 
-    show(){
-        console.log("yooo");
+    _stopPrevAnimations() {
         this.state.opacity.stopAnimation();
         this.state.opacity.setValue(0);
-        if (this.state.timeout) clearTimeout(this.state.timeout);
-        console.log(this.state.timeout);
-        this.animateShow();
-        this.state.timeout = setTimeout(() => this.animateHide(), this.props.duration)
+        if (this.state.toastTimeout) clearTimeout(this.state.toastTimeout);
+    }
+
+    show() {
+        this._stopPrevAnimations();
+        this._animateShow();
+        this.state.toastTimeout = setTimeout(() => this._animateHide(), this.props.toastDuration);
+    }
+
+    hide() {
+        clearTimeout(this.state.toastTimeout);
+        this._animateHide();
     }
 
     _hasLink() {
@@ -89,11 +96,7 @@ export class ToastMessage extends PureComponent {
         const sideWidthStyle = {
             width: "65%"
         };
-        return [
-            styles.text,
-            this._hasLink() ? sideWidthStyle: fullWidthStyle,
-            this.props.style
-        ];
+        return [styles.text, this._hasLink() ? sideWidthStyle : fullWidthStyle, this.props.style];
     };
 
     render() {
@@ -110,32 +113,32 @@ export class ToastMessage extends PureComponent {
 
 const styles = StyleSheet.create({
     root: {
+        alignItems: "center",
         backgroundColor: "#ffffff",
-        marginLeft: 6,
-        marginRight: 6,
         borderColor: "transparent",
         borderWidth: 1,
         borderRadius: 6,
-        shadowColor: "#384671",
         elevation: 5,
-        shadowOffset: { width: 1, height: 1 },
-        shadowOpacity: 1,
-        height: 60,
         flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between"
+        height: 60,
+        justifyContent: "space-between",
+        marginLeft: 6,
+        marginRight: 6,
+        shadowColor: "#384671",
+        shadowOffset: { width: 1, height: 1 },
+        shadowOpacity: 1
     },
     text: {
-        marginLeft: 42,
-        color: "#1d2631"
+        color: "#1d2631",
+        marginLeft: 42
     },
     link: {
         color: "#597cf0",
+        fontWeight: "bold",
         marginRight: 42,
         marginLeft: 10,
         textAlign: "center",
-        textDecorationLine: "underline",
-        fontWeight: "bold"
+        textDecorationLine: "underline"
     }
 });
 
