@@ -83,7 +83,7 @@ export class ContainerSwipeable extends PureComponent {
         this.close();
     };
 
-    _onModalLayout = event => {
+    _onContainerLayout = event => {
         if (!this.state.initialLoading) return;
 
         this.modalHeight = event.nativeEvent.layout.height;
@@ -114,6 +114,7 @@ export class ContainerSwipeable extends PureComponent {
                 <Animated.View
                     style={[styles.contentContainer, this._testStyle()]}
                     ref={el => (this.containerComponent = el)}
+                    onLayout={event => this._onContainerLayout(event)}
                 >
                     <View style={styles.knob} />
                     <View style={styles.content}>{this.props.children}</View>
@@ -129,7 +130,6 @@ export class ContainerSwipeable extends PureComponent {
                 style={styles.modal}
                 visible={this.state.visible || this.state.initialLoading}
                 onRequestClose={this.onModalRequestClose}
-                onLayout={event => this._onModalLayout(event)}
             >
                 {this._container()}
             </Modal>
