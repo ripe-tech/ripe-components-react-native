@@ -65,6 +65,11 @@ export class ContainerSwipeable extends PureComponent {
         this.startCloseAnimation(() => this.setState({ visible: false }));
     }
 
+    toggle() {
+        if(this.state.visible) this.close();
+        else this.open();
+    }
+
     startOpenAnimation() {
         this.animating = true;
 
@@ -94,7 +99,7 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     onHeaderPress = () => {
-        this.open();
+        this.toggle();
     }
 
     _onContainerLayout = event => {
