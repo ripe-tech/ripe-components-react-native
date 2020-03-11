@@ -18,7 +18,7 @@ export class KeyValue extends PureComponent {
             iconHeight: PropTypes.number,
             iconWidth: PropTypes.number,
             iconStrokeWidth: PropTypes.number,
-            pressable: PropTypes.boolean,
+            pressable: PropTypes.bool,
             onPress: PropTypes.func,
             onButtonIconPress: PropTypes.func,
             onLongPress: PropTypes.func
@@ -34,7 +34,7 @@ export class KeyValue extends PureComponent {
             iconHeight: undefined,
             iconWidth: undefined,
             iconStrokeWidth: undefined,
-            pressable: true,
+            pressable: false,
             onPress: () => {},
             onButtonIconPress: () => {},
             onLongPress: () => {}
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     keyValue: {
         flexDirection: "row",
         paddingVertical: 16,
-        paddingHorizontal: 14,
+        paddingHorizontal: 16,
         borderBottomWidth: 1,
         borderBottomColor: "#e4e8f0"
     },

@@ -41,6 +41,7 @@ export class ButtonTabText extends PureComponent {
             {
                 color: this.props.color
             },
+            this.props.disabled ? styles.textDisabled : {},
             this.props.active ? {} : styles.textUnselected
         ];
     }
@@ -70,6 +71,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         letterSpacing: 0.25,
         textAlign: "center"
+    },
+    textDisabled: {
+        opacity: 0.4
     },
     textUnselected: {
         color: "#a4adb5"
