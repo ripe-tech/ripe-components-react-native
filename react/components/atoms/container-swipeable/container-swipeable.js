@@ -246,8 +246,8 @@ const styles = StyleSheet.create({
         paddingBottom: initialWindowSafeAreaInsets.bottom + 20
     },
     buttonBar: {
-        marginVertical: 6,
         alignSelf: "center",
+        marginVertical: 6,
         width: 50,
         height: 5,
         opacity: 0.15,
