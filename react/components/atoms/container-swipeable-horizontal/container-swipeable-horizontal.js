@@ -1,13 +1,5 @@
 import React, { PureComponent } from "react";
-import {
-    StyleSheet,
-    ViewPropTypes,
-    Animated,
-    PanResponder,
-    Dimensions,
-    View,
-    Easing
-} from "react-native";
+import { StyleSheet, ViewPropTypes, Animated, PanResponder, Dimensions, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
@@ -42,55 +34,63 @@ export class ContainerSwipeableHorizontal extends PureComponent {
         return {
             triggerActionThreshold: PropTypes.number,
             style: ViewPropTypes.style,
-            swipeLeft: PropTypes.bool,
-            swipeRight: PropTypes.bool,
-            swipeLeftIcon: PropTypes.string,
-            swipeRightIcon: PropTypes.string,
-            swipeLeftIconColor: PropTypes.string,
-            swipeRightIconColor: PropTypes.string,
-            swipeLeftText: PropTypes.string,
-            swipeRightText: PropTypes.string,
-            swipeLeftGradientColors: PropTypes.array,
-            swipeRightGradientColors: PropTypes.array,
-            onSwipeLeft: PropTypes.func,
-            onSwipeRight: PropTypes.func
+            optionContainerStyle: ViewPropTypes.style,
+            leftOptionEnabled: PropTypes.bool,
+            rightOptionEnabled: PropTypes.bool,
+            onLeftOptionTrigger: PropTypes.func,
+            onRightOptionTrigger: PropTypes.func,
+            leftOptionGradientColors: PropTypes.array,
+            rightOptionGradientColors: PropTypes.array,
+            leftOptionText: PropTypes.string,
+            rightOptionText: PropTypes.string,
+            leftOptionTextColor: PropTypes.string,
+            rightOptionTextColor: PropTypes.string,
+            leftOptionTextStyle: ViewPropTypes.style,
+            rightOptionTextStyle: ViewPropTypes.style,
+            leftOptionIcon: PropTypes.string,
+            rightOptionIcon: PropTypes.string,
+            leftOptionIconColor: PropTypes.string,
+            rightOptionIconColor: PropTypes.string,
+            leftOptionIconHeight: PropTypes.number,
+            rightOptionIconHeight: PropTypes.number,
+            leftOptionIconWidth: PropTypes.number,
+            rightOptionIconWidth: PropTypes.number,
+            leftOptionIconStrokeWidth: PropTypes.number,
+            rightOptionIconStrokeWidth: PropTypes.number,
+            leftOptionIconStyle: ViewPropTypes.style,
+            rightOptionIconStyle: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
-        // return {
-        //     triggerActionThreshold: 0.3,
-        //     style: {},
-        //     swipeLeft: false,
-        //     swipeRight: false,
-        //     swipeLeftIcon: undefined,
-        //     swipeRightIcon: undefined,
-        //     swipeLeftIconColor: undefined,
-        //     swipeRightIconColor: undefined,
-        //     swipeLeftText: undefined,
-        //     swipeRightText: undefined,
-        //     swipeLeftGradientColors: undefined,
-        //     swipeRightGradientColors: undefined,
-        //     onSwipeLeft: () => null,
-        //     onSwipeRight: () => null
-        // };
         return {
             triggerActionThreshold: 0.3,
             style: {},
-            leftOptionEnabled: true,
-            rightOptionEnabled: true,
-            onLeftOptionTrigger: () => alert("onLeftOptionTrigger"),
-            onRightOptionTrigger: () => alert("onRightOptionTrigger")
-
-            // leftOptionGradientColors: [],
-            // leftOptionText: undefined,
-            // leftOptionTextColor:
-            // leftOptionTextStyle:
-            // leftOptionIcon:
-            // leftOptionIconColor:
-            // leftOptionIconWidth:
-            // leftOptionIconHeight:
-            // leftOptionIconStyle:
+            optionContainerStyle: {},
+            leftOptionEnabled: false,
+            rightOptionEnabled: false,
+            onLeftOptionTrigger: () => null,
+            onRightOptionTrigger: () => null,
+            leftOptionGradientColors: [],
+            rightOptionGradientColors: [],
+            leftOptionText: undefined,
+            rightOptionText: undefined,
+            leftOptionTextColor: "#ffffff",
+            rightOptionTextColor: "#ffffff",
+            leftOptionTextStyle: {},
+            rightOptionTextStyle: {},
+            leftOptionIcon: undefined,
+            rightOptionIcon: undefined,
+            leftOptionIconColor: "#ffffff",
+            rightOptionIconColor: "#ffffff",
+            leftOptionIconHeight: 32,
+            rightOptionIconHeight: 32,
+            leftOptionIconWidth: 32,
+            rightOptionIconWidth: 32,
+            leftOptionIconStrokeWidth: 1,
+            rightOptionIconStrokeWidth: 1,
+            leftOptionIconStyle: undefined,
+            rightOptionIconStyle: undefined
         };
     }
 
@@ -135,8 +135,7 @@ export class ContainerSwipeableHorizontal extends PureComponent {
         this._triggerOptionsOnThreshold(gestureState);
 
         Animated.timing(this.state.animationPositionX, {
-            toValue: 0,
-            easing: Easing.ease //TODO fix make it ease on the finish of the animation
+            toValue: 0
         }).start(() => {
             this._isAnimating = false;
         });
@@ -161,15 +160,11 @@ export class ContainerSwipeableHorizontal extends PureComponent {
 
         if (this._isAnimating) {
             return false;
-        }
-        // else if (gestureState.dx === 0) {
-        //     return true;
-        // }
-        else if (isSwipingLeftToRight && this.props.leftOptionEnabled) {
-            // this.setState({ activeOption: "leftOption" });
+        } else if (isSwipingLeftToRight && this.props.leftOptionEnabled) {
+            this.setState({ activeOption: "leftOption" });
             return true;
         } else if (isSwipingRightToLeft && this.props.rightOptionEnabled) {
-            // this.setState({ activeOption: "rightOption" });
+            this.setState({ activeOption: "rightOption" });
             return true;
         }
 
@@ -187,96 +182,117 @@ export class ContainerSwipeableHorizontal extends PureComponent {
         return absGestureStateX > 0 && absGestureStateX > slowDownThreshold;
     }
 
+    _renderLeftOption = () => {
+        return (
+            <LinearGradient
+                key="leftOption"
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                colors={this.props.leftOptionGradientColors}
+                style={styles.containerGradient}
+            >
+                <View style={this._containerOptionStyles()}>
+                    {this.props.leftOptionIcon ? (
+                        <Icon
+                            icon={this.props.leftOptionIcon}
+                            color={this.props.leftOptionIconColor}
+                            height={this.props.leftOptionIconHeight}
+                            width={this.props.leftOptionIconWidth}
+                            strokeWidth={this.props.leftOptionIconStrokeWidth}
+                            style={this.props.leftOptionIconStyle}
+                        />
+                    ) : null}
+                    {this.props.leftOptionText ? (
+                        <Text style={this._leftOptionTextStyles()}>
+                            {this.props.leftOptionText}
+                        </Text>
+                    ) : null}
+                </View>
+            </LinearGradient>
+        );
+    };
+
+    _renderRightOption = () => {
+        return (
+            <LinearGradient
+                key="rightOption"
+                start={{ x: 1, y: 0 }}
+                end={{ x: 0, y: 0 }}
+                colors={this.props.rightOptionGradientColors}
+                style={[styles.containerGradient, styles.containerGradientOptionRight]}
+            >
+                <View style={this._containerOptionStyles()}>
+                    {this.props.rightOptionIcon ? (
+                        <Icon
+                            icon={this.props.rightOptionIcon}
+                            color={this.props.rightOptionIconColor}
+                            height={this.props.rightOptionIconHeight}
+                            width={this.props.rightOptionIconWidth}
+                            strokeWidth={this.props.rightOptionIconStrokeWidth}
+                            style={this.props.rightOptionIconStyle}
+                        />
+                    ) : null}
+                    {this.props.rightOptionText ? (
+                        <Text style={this._rightOptionTextStyles()}>
+                            {this.props.rightOptionText}
+                        </Text>
+                    ) : null}
+                </View>
+            </LinearGradient>
+        );
+    };
+
+    _renderOptions = () => {
+        const toRender = [];
+
+        switch (this.state.activeOption) {
+            case "rightOption":
+                toRender.push(this._renderRightOption());
+                break;
+            case "leftOption":
+                toRender.push(this._renderLeftOption());
+                break;
+
+            default:
+                if (this.props.rightOptionEnabled) {
+                    toRender.push(this._renderRightOption());
+                }
+                if (this.props.leftOptionEnabled) {
+                    toRender.push(this._renderLeftOption());
+                }
+                break;
+        }
+
+        return toRender;
+    };
+
     _style = () => {
         return [styles.containerSwipeableHorizontal, this.props.style];
     };
 
     _contentStyle = () => {
+        return [{ transform: [{ translateX: this.state.animationPositionX }] }];
+    };
+
+    _containerOptionStyles() {
+        return [styles.containerOption, this.props.optionContainerStyle];
+    }
+
+    _leftOptionTextStyles() {
         return [
-            styles.containerChildren,
-            { transform: [{ translateX: this.state.animationPositionX }] }
+            styles.textOption,
+            { color: this.props.leftOptionTextColor },
+            this.props.leftOptionTextStyle
         ];
-    };
+    }
 
-    // // @TODO FIX THIS create  only one item render that we pass all the info that we need
-    // _renderLeftOption = () => {
-    //     return (
-    //         <LinearGradient
-    //             start={{ x: 0, y: 0 }}
-    //             end={{ x: 1, y: 0 }}
-    //             colors={this.props.swipeRightGradientColors}
-    //             style={styles.containerOption}
-    //         >
-    //             {this.props.swipeRightIcon ? (
-    //                 <Icon
-    //                     icon={this.props.swipeRightIcon}
-    //                     color={this.props.swipeRightIconColor}
-    //                     height={32}
-    //                     width={32}
-    //                 />
-    //             ) : null}
-
-    //             {this.props.swipeRightText ? (
-    //                 <Text style={styles.textOption}>{this.props.swipeRightText}</Text>
-    //             ) : null}
-    //         </LinearGradient>
-    //     );
-    // };
-
-    // _renderRightOption = () => {
-    //     return (
-    //         <LinearGradient
-    //             start={{ x: 1, y: 0 }}
-    //             end={{ x: 0, y: 0 }}
-    //             colors={this.props.swipeLeftGradientColors}
-    //             style={styles.containerGradient}
-    //         >
-    //             <View style={styles.containerOption}>
-    //                 {this.props.swipeLeftIcon ? (
-    //                     <Icon
-    //                         icon={this.props.swipeLeftIcon}
-    //                         color={this.props.swipeLeftIconColor}
-    //                         height={32}
-    //                         width={32}
-    //                     />
-    //                 ) : null}
-
-    //                 {this.props.swipeLeftText ? (
-    //                     <Text style={styles.textOption}>{this.props.swipeLeftText}</Text>
-    //                 ) : null}
-    //             </View>
-    //         </LinearGradient>
-    //     );
-    // };
-
-    _renderOptions = () => {
-        const toRender = [];
-
-        // switch (this.state.activeOption) {
-        //     case "rightOption":
-        //         if (this.props.swipeRight) {
-        //             toRender.push(this._renderLeftOption());
-        //         }
-        //         break;
-        //     case "leftOption":
-        //         if (this.props.swipeLeft) {
-        //             toRender.push(this._renderRightOption());
-        //         }
-        //         break;
-
-        //     default:
-        //         if (this.props.swipeLeft) {
-        //             toRender.push(this._renderRightOption());
-        //         }
-        //         if (this.props.swipeRight) {
-        //             toRender.push(this._renderLeftOption());
-        //         }
-
-        //         break;
-        // }
-
-        return toRender;
-    };
+    _rightOptionTextStyles() {
+        return [
+            styles.textOption,
+            { color: this.props.rightOptionTextColor },
+            this.props.rightOptionTextStyle
+        ];
+    }
 
     render() {
         return (
@@ -291,7 +307,6 @@ export class ContainerSwipeableHorizontal extends PureComponent {
 const styles = StyleSheet.create({
     containerSwipeableHorizontal: {},
     containerOptions: {
-        flexDirection: "row",
         position: "absolute",
         height: "100%",
         width: "100%"
@@ -300,19 +315,18 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row"
     },
+    containerGradientOptionRight: {
+        justifyContent: "flex-end"
+    },
     containerOption: {
-        margin: 14,
-        justifyContent: "space-around",
+        marginHorizontal: 14,
+        flexDirection: "column",
+        justifyContent: "space-evenly",
         alignItems: "center"
     },
     textOption: {
         fontFamily: baseStyles.FONT,
         fontSize: 14,
-        letterSpacing: 0.5,
-        color: "#ffffff"
-    },
-    containerChildren: {
-        // backgroundColor: "white"
-        backgroundColor: "transparent"
+        letterSpacing: 0.5
     }
 });
