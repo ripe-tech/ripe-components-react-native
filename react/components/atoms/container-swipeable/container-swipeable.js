@@ -26,7 +26,7 @@ export class ContainerSwipeable extends PureComponent {
 
     static get defaultProps() {
         return {
-            animationsDuration: 2000,
+            animationsDuration: 500,
             onVisible: visible => {},
             style: {}
         };
@@ -107,7 +107,7 @@ export class ContainerSwipeable extends PureComponent {
                 {!this.state.initialLoading && (
                     <TouchableOpacity
                         style={styles.overlay}
-                        activeOpacity={0}
+                        activeOpacity={0.5} //TODO, test if it works in iOS too
                         onPress={this.onOverlayPress}
                     />
                 )}
@@ -139,7 +139,7 @@ export class ContainerSwipeable extends PureComponent {
 
 const styles = StyleSheet.create({
     overlay: {
-        position: "absolute",
+        //position: "absolute", //TODO, test if it works in iOS too
         backgroundColor: "#000000",
         opacity: 0.5,
         height: screenHeight, //Device height
