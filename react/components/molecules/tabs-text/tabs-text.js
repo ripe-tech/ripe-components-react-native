@@ -49,9 +49,14 @@ export class TabsText extends PureComponent {
     };
 
     _updateBar = () => {
-        const i = this.state.tabSelected;
-        const tabLayout = this.tabLayouts[i];
-        this.setState({ animatedBarOffset: tabLayout.x, animatedBarWidth: tabLayout.width });
+        const index = this.state.tabSelected;
+        const tabLayout = this.tabLayouts[index];
+
+        if (tabLayout) {
+            this.setState({ animatedBarOffset: tabLayout.x, animatedBarWidth: tabLayout.width });
+        } else {
+            this.setState({ animatedBarOffset: undefined, animatedBarWidth: undefined });
+        }
     };
 
     _animatedBarEnabled = () =>
