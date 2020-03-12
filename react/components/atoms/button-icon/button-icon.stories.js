@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, number, text, select } from "@storybook/addon-knobs";
+import { withKnobs, number, color, select } from "@storybook/addon-knobs";
 
 import { ButtonIcon } from "./button-icon";
 
@@ -17,8 +17,8 @@ storiesOf("Atoms", module)
             "add"
         );
         const size = number("Size", 30);
-        const color = text("Color", "#ffffff");
-        const backgroundColor = text("Background Color", "#000000");
+        const _color = color("Color", "#ffffff");
+        const backgroundColor = color("Background Color", "#000000");
         const height = number("Icon Height", 20);
         const width = number("Icon Width", 20);
         const strokeWidth = number("Icon Stroke Width", 1);
@@ -26,7 +26,7 @@ storiesOf("Atoms", module)
             <ButtonIcon
                 icon={icon}
                 size={size}
-                color={color}
+                color={_color}
                 backgroundColor={backgroundColor}
                 iconStrokeWidth={strokeWidth}
                 iconHeight={height}

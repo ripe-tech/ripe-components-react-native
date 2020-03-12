@@ -27,6 +27,7 @@ export class ButtonIcon extends PureComponent {
 
     static get defaultProps() {
         return {
+            size: 30,
             backgroundColor: "#ffffff",
             color: "#000000",
             iconHeight: 20,
