@@ -121,7 +121,6 @@ export class ContainerSwipeable extends PureComponent {
     }
 
     onOverlayPress = () => {
-        console.log("overlay Pressed");
         this.close();
     };
 
@@ -130,7 +129,6 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     onHeaderPress = () => {
-        console.log("header pressed");
         this.toggle();
     };
 
@@ -152,7 +150,7 @@ export class ContainerSwipeable extends PureComponent {
         return [
             styles.overlay,
             {
-                position: this.props.fullscreen ? undefined : "absolute", //TODO, test if it works in iOS when not using absolute in fullscreen
+                position: this.props.fullscreen ? undefined : "absolute",
                 opacity: this.state.overlayOpacityAnimationValue
             }
         ];
