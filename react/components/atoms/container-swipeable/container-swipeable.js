@@ -79,7 +79,7 @@ export class ContainerSwipeable extends PureComponent {
         if (this.state.visible) this.close();
         else this.open();
     }
-//TODO useNativeDriver
+
     startOpenAnimation() {
         this.animating = true;
 
@@ -92,6 +92,7 @@ export class ContainerSwipeable extends PureComponent {
             Animated.timing(this.state.overlayOpacityAnimationValue, {
                 toValue: 0.5,
                 duration: this.props.animationsDuration,
+                useNativeDriver: true,
                 easing: Easing.inOut(Easing.ease)
             })
         ]).start(() => {
@@ -111,6 +112,7 @@ export class ContainerSwipeable extends PureComponent {
             Animated.timing(this.state.overlayOpacityAnimationValue, {
                 toValue: 0,
                 duration: this.props.animationsDuration,
+                useNativeDriver: true,
                 easing: Easing.inOut(Easing.ease)
             })
         ]).start(() => {
@@ -155,7 +157,7 @@ export class ContainerSwipeable extends PureComponent {
         ];
     };
 
-    _testStyle = () => { //TODO rename
+    _containerStyle = () => {
         if (!this.isLoaded()) return { opacity: 0 };
 
         return {
@@ -172,12 +174,12 @@ export class ContainerSwipeable extends PureComponent {
                 {this.overlayVisible() && (
                     <Animated.View
                         style={this._overlayStyle()}
-                        onStartShouldSetResponder={(evt) => true}
+                        onStartShouldSetResponder={evt => true}
                         onResponderRelease={this.onOverlayPress}
                     />
                 )}
                 <Animated.View
-                    style={[styles.contentContainer, this._testStyle()]}
+                    style={[styles.contentContainer, this._containerStyle()]}
                     onLayout={event => this._onContainerLayout(event)}
                 >
                     <TouchableOpacity
