@@ -109,8 +109,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 5
     },
     text: {
-        flex: 1,
-        color: "#1d2631"
+        flex: 1
     },
     link: {
         marginLeft: 20
