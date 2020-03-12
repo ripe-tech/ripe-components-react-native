@@ -154,13 +154,10 @@ export class ContainerSwipeable extends PureComponent {
     };
     //TODO check if overlay still works
     _overlayStyle = () => {
-        return [
-            styles.overlay,
-            {
-                position: this.props.fullscreen ? undefined : "absolute",
-                opacity: this.state.overlayOpacityAnimationValue
-            }
-        ];
+        return {
+            position: this.props.fullscreen ? undefined : "absolute",
+            opacity: this.state.overlayOpacityAnimationValue
+        };
     };
 
     _containerStyle = () => {
@@ -169,7 +166,7 @@ export class ContainerSwipeable extends PureComponent {
         return {
             height: this.state.contentHeightAnimationValue.interpolate({
                 inputRange: [0, 1],
-                outputRange: [this.headerHeight, this.containerHeight] // TODO: move maxHeight here, with logic
+                outputRange: [this.headerHeight, this.containerHeight]
             }),
             maxHeight: this.props.fullscreen ? screenHeight : this.containerPosY
         };
@@ -180,7 +177,7 @@ export class ContainerSwipeable extends PureComponent {
             <>
                 {this.overlayVisible() && (
                     <Animated.View
-                        style={this._overlayStyle()}
+                        style={[styles.overlay, this._overlayStyle()]}
                         onStartShouldSetResponder={evt => true}
                         onResponderRelease={this.onOverlayPress}
                     />
