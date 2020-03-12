@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { Animated, LayoutAnimation, StyleSheet, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
+
 import { Link } from "../../atoms";
 
 export class ToastMessage extends PureComponent {
@@ -28,6 +29,7 @@ export class ToastMessage extends PureComponent {
 
     constructor(props) {
         super(props);
+
         this.state = {
             text: this.props.text,
             linkText: this.props.linkText,
@@ -40,38 +42,29 @@ export class ToastMessage extends PureComponent {
     async componentDidMount() {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
+    _stopPrevAnimations() {
+        this.state.opacity.stopAnimation();
+        this.state.opacity.setValue(0);
+        clearTimeout(this.toastTimeout);
+    }
 
-    _animateShow() {
+    show() {
+        this._stopPrevAnimations();
         Animated.timing(this.state.opacity, {
             toValue: 1,
             duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
+        this.toastTimeout = setTimeout(() => this._animateHide(), this.props.toastDuration);
     }
 
-    _animateHide() {
+    hide() {
+        clearTimeout(this.toastTimeout);
         Animated.timing(this.state.opacity, {
             toValue: 0,
             duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
-    }
-
-    _stopPrevAnimations() {
-        this.state.opacity.stopAnimation();
-        this.state.opacity.setValue(0);
-        if (this.state.toastTimeout) clearTimeout(this.state.toastTimeout);
-    }
-
-    show() {
-        this._stopPrevAnimations();
-        this._animateShow();
-        this.state.toastTimeout = setTimeout(() => this._animateHide(), this.props.toastDuration);
-    }
-
-    hide() {
-        clearTimeout(this.state.toastTimeout);
-        this._animateHide();
     }
 
     _hasLink() {
@@ -104,7 +97,12 @@ export class ToastMessage extends PureComponent {
             <Animated.View style={this._styleRoot()}>
                 <Text style={this._styleText()}>{this.props.text}</Text>
                 {this._hasLink() ? (
-                    <Link text={this.props.linkText} url={this.props.linkUrl} style={styles.link} />
+                    <Link
+                        text={this.props.linkText}
+                        url={this.props.linkUrl}
+                        color={"blue"}
+                        style={styles.link}
+                    />
                 ) : null}
             </Animated.View>
         );
@@ -133,12 +131,8 @@ const styles = StyleSheet.create({
         marginLeft: 42
     },
     link: {
-        color: "#597cf0",
-        fontWeight: "bold",
         marginRight: 42,
-        marginLeft: 10,
-        textAlign: "center",
-        textDecorationLine: "underline"
+        marginLeft: 10
     }
 });
 

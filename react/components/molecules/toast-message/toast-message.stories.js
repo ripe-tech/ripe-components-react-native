@@ -11,12 +11,12 @@ storiesOf("Molecules", module)
         const ref = React.createRef();
         const _text = text("Text", "Marked as read.");
         const linkText = text("Link Text", "Undo");
-        const link = text("Link", "http://www.platforme.com");
+        const linkUrl = text("Link URL", "http://www.platforme.com");
         return (
             <View>
                 <Button title="Show" onPress={() => ref.current.show()} />
                 <Button title="Hide" onPress={() => ref.current.hide()} />
-                <ToastMessage text={_text} linkText={linkText} link={link} ref={ref} />
+                <ToastMessage text={_text} linkText={linkText} linkUrl={linkUrl} ref={ref} />
             </View>
         );
     });

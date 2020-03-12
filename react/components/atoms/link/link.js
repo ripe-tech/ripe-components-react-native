@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, Text, TouchableOpacity, Linking } from "react-native";
-
 import PropTypes from "prop-types";
 
 export class Link extends PureComponent {
@@ -9,6 +8,7 @@ export class Link extends PureComponent {
             text: PropTypes.string,
             url: PropTypes.string.isRequired,
             onPress: PropTypes.func,
+            color: PropTypes.string,
             style: ViewPropTypes.style
         };
     }
@@ -18,8 +18,18 @@ export class Link extends PureComponent {
             text: undefined,
             url: undefined,
             onPress: undefined,
+            color: undefined,
             style: {}
         };
+    }
+
+    _colorToHex(color) {
+        switch (color) {
+            case "blue":
+                return "#597cf0";
+            default:
+                return color;
+        }
     }
 
     onLinkPress = event => {
@@ -31,12 +41,16 @@ export class Link extends PureComponent {
     };
 
     _style = () => {
-        return [styles.link, this.props.style];
+        return [styles.text, { color: this._colorToHex(this.props.color) }];
     };
 
     render() {
         return (
-            <TouchableOpacity activeOpacity={0.4} onPress={() => this.onLinkPress()}>
+            <TouchableOpacity
+                style={this.props.style}
+                activeOpacity={0.4}
+                onPress={() => this.onLinkPress()}
+            >
                 <Text style={this._style()}>
                     {this.props.text ? this.props.text : this.props.url}
                 </Text>
@@ -46,8 +60,9 @@ export class Link extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    link: {
+    text: {
         color: "#1d2631",
+        fontWeight: "bold",
         textDecorationLine: "underline"
     }
 });
