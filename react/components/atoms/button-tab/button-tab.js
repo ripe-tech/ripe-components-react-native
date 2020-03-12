@@ -14,7 +14,7 @@ export class ButtonTab extends PureComponent {
 
     static get propTypes() {
         return {
-            badgeAnimationDuration: PropTypes.string,
+            badgeAnimationDuration: PropTypes.number,
             badgeBackgroundColor: PropTypes.string,
             badgeColor: PropTypes.string,
             badgeCount: PropTypes.number,
