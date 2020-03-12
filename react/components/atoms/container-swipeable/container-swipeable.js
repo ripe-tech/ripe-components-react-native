@@ -184,14 +184,13 @@ export class ContainerSwipeable extends PureComponent {
                 >
                     <TouchableOpacity
                         onLayout={event => this._onHeaderLayout(event)}
-                        style={styles.contentHeader}
                         activeOpacity={1}
                         onPress={this.onHeaderPress}
                     >
                         <View style={styles.knob} />
-                        <View style={styles.header}>{this.props.header}</View>
+                        <View>{this.props.header}</View>
                     </TouchableOpacity>
-                    <View style={styles.content}>{this.props.children}</View>
+                    <View>{this.props.children}</View>
                     <View style={styles.safeAreaBottom} />
                 </Animated.View>
             </>
@@ -220,7 +219,7 @@ export class ContainerSwipeable extends PureComponent {
 const styles = StyleSheet.create({
     overlay: {
         backgroundColor: "#000000",
-        height: screenHeight, //Device height
+        height: screenHeight,
         width: "100%",
         bottom: 0
     },
@@ -236,7 +235,6 @@ const styles = StyleSheet.create({
         bottom: 0,
         backgroundColor: "#aaffff"
     },
-    contentHeader: {},
     knob: {
         alignSelf: "center",
         width: 50,
@@ -246,8 +244,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#1a2632",
         opacity: 0.15
     },
-    header: {},
-    content: {},
     safeAreaBottom: {
         height: initialWindowSafeAreaInsets.bottom
     }
