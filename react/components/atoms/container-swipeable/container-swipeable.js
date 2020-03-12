@@ -152,7 +152,7 @@ export class ContainerSwipeable extends PureComponent {
         this.headerHeight = event.nativeEvent.layout.height;
         this.setState({ headerHeightLoaded: true });
     };
-    //TODO check if overlay still works
+
     _overlayStyle = () => {
         return {
             position: this.props.fullscreen ? undefined : "absolute",
