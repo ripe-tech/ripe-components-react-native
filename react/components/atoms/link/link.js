@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     text: {
         color: "#1d2631",
         textDecorationLine: "underline",
-        fontFamily: baseStyles.FONT_BOLD,
+        fontFamily: baseStyles.FONT_BOOK,
         fontSize: baseStyles.FONT_SIZE
     }
 });
