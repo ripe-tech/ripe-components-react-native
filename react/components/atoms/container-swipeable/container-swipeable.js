@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
     contentContainer: {
         position: "absolute",
         overflow: "hidden",
+        width: "100%",
         bottom: 0,
         backgroundColor: "#aaffff"
     },
