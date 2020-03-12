@@ -50,8 +50,10 @@ export class TabsText extends PureComponent {
 
     _updateBar = () => {
         const i = this.state.tabSelected;
-        const tabLayout = this.tabLayouts[i];
-        this.setState({ animatedBarOffset: tabLayout.x, animatedBarWidth: tabLayout.width });
+        if (this.tabLayouts.hasOwnProperty(i)) {
+            const tabLayout = this.tabLayouts[i];
+            this.setState({ animatedBarOffset: tabLayout.x, animatedBarWidth: tabLayout.width });
+        }
     };
 
     _animatedBarEnabled = () =>
