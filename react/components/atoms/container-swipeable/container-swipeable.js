@@ -16,7 +16,7 @@ import Modal from "react-native-modal";
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 
 let screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
-if(Platform.OS === "android") screenHeight -= StatusBar.currentHeight;
+if (Platform.OS === "android") screenHeight -= StatusBar.currentHeight;
 
 export class ContainerSwipeable extends PureComponent {
     static get propTypes() {
@@ -142,7 +142,7 @@ export class ContainerSwipeable extends PureComponent {
 
         this.containerHeight = event.nativeEvent.layout.height;
         this.containerPosY = event.nativeEvent.layout.y + this.containerHeight;
-        
+
         this.setState({ containerHeightLoaded: true });
     };
 
