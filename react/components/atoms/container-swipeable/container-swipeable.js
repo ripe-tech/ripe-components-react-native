@@ -6,14 +6,17 @@ import {
     Dimensions,
     TouchableOpacity,
     Animated,
-    Easing
+    Easing,
+    StatusBar,
+    Platform
 } from "react-native";
 import PropTypes from "prop-types";
 import Modal from "react-native-modal";
 
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 
-const screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
+let screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
+if(Platform.OS === "android") screenHeight -= StatusBar.currentHeight;
 
 export class ContainerSwipeable extends PureComponent {
     static get propTypes() {
@@ -49,6 +52,7 @@ export class ContainerSwipeable extends PureComponent {
 
         this.headerHeight = 0;
         this.containerHeight = 0;
+        this.containerPosY = 0;
         this.animating = false;
     }
 
@@ -137,6 +141,8 @@ export class ContainerSwipeable extends PureComponent {
         if (this.state.containerHeightLoaded) return;
 
         this.containerHeight = event.nativeEvent.layout.height;
+        this.containerPosY = event.nativeEvent.layout.y + this.containerHeight;
+        
         this.setState({ containerHeightLoaded: true });
     };
 
@@ -146,7 +152,7 @@ export class ContainerSwipeable extends PureComponent {
         this.headerHeight = event.nativeEvent.layout.height;
         this.setState({ headerHeightLoaded: true });
     };
-
+    //TODO check if overlay still works
     _overlayStyle = () => {
         return [
             styles.overlay,
@@ -163,8 +169,9 @@ export class ContainerSwipeable extends PureComponent {
         return {
             height: this.state.contentHeightAnimationValue.interpolate({
                 inputRange: [0, 1],
-                outputRange: [this.headerHeight, this.containerHeight]
-            })
+                outputRange: [this.headerHeight, this.containerHeight] // TODO: move maxHeight here, with logic
+            }),
+            maxHeight: this.props.fullscreen ? screenHeight : this.containerPosY
         };
     };
 
