@@ -14,7 +14,6 @@ import Modal from "react-native-modal";
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 
 const screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
-const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
 export class ContainerSwipeable extends PureComponent {
     static get propTypes() {
@@ -80,7 +79,7 @@ export class ContainerSwipeable extends PureComponent {
         if (this.state.visible) this.close();
         else this.open();
     }
-
+//TODO useNativeDriver
     startOpenAnimation() {
         this.animating = true;
 
@@ -156,7 +155,7 @@ export class ContainerSwipeable extends PureComponent {
         ];
     };
 
-    _testStyle = () => {
+    _testStyle = () => { //TODO rename
         if (!this.isLoaded()) return { opacity: 0 };
 
         return {
@@ -171,10 +170,10 @@ export class ContainerSwipeable extends PureComponent {
         return (
             <>
                 {this.overlayVisible() && (
-                    <AnimatedTouchable
+                    <Animated.View
                         style={this._overlayStyle()}
-                        activeOpacity={0.5} //TODO, test if it works in iOS too, shouldn't show feedback when pressing on overlay
-                        onPress={this.onOverlayPress}
+                        onStartShouldSetResponder={(evt) => true}
+                        onResponderRelease={this.onOverlayPress}
                     />
                 )}
                 <Animated.View

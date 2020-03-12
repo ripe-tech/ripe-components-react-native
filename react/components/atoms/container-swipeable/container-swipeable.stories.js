@@ -14,7 +14,7 @@ storiesOf("Atoms", module)
         const fullscreen = boolean("Fullscreen", false);
         const customHeader = (
             <View style={{ height: 30, backgroundColor: "#ffaaaa" }}>
-                <Text>Press me to open</Text>
+                <Text>I'm a custom header, press me</Text>
             </View>
         );
         return (
