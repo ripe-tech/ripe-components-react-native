@@ -28,7 +28,7 @@ export class Text extends PureComponent {
 const styles = StyleSheet.create({
     text: {
         fontFamily: baseStyles.FONT_BOOK,
-        fontSize: 14,
+        fontSize: baseStyles.FONT_SIZE,
         lineHeight: 22,
         color: "#3e566a"
     }
