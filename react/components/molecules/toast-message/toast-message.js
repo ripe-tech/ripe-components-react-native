@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
-import { Animated, LayoutAnimation, StyleSheet, Text, ViewPropTypes } from "react-native";
+import { Animated, StyleSheet, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { Link } from "../../atoms";
+import { Link, Text } from "../../atoms";
 
 export class ToastMessage extends PureComponent {
     static get propTypes() {
@@ -21,7 +21,7 @@ export class ToastMessage extends PureComponent {
             text: undefined,
             linkText: undefined,
             linkUrl: undefined,
-            toastDuration: 1000,
+            toastDuration: 2000,
             animationDuration: 300,
             style: {}
         };
@@ -39,9 +39,6 @@ export class ToastMessage extends PureComponent {
         };
     }
 
-    async componentDidMount() {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    }
     _stopPrevAnimations() {
         this.state.opacity.stopAnimation();
         this.state.opacity.setValue(0);
@@ -55,7 +52,7 @@ export class ToastMessage extends PureComponent {
             duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
-        this.toastTimeout = setTimeout(() => this._animateHide(), this.props.toastDuration);
+        this.toastTimeout = setTimeout(() => this.hide(), this.props.toastDuration);
     }
 
     hide() {
@@ -67,13 +64,9 @@ export class ToastMessage extends PureComponent {
         }).start();
     }
 
-    _hasLink() {
-        return this.props.linkText || this.props.linkText === 0;
-    }
-
-    _styleRoot = () => {
+    _style = () => {
         return [
-            styles.root,
+            styles.toast,
             {
                 opacity: this.state.opacity
             },
@@ -81,22 +74,11 @@ export class ToastMessage extends PureComponent {
         ];
     };
 
-    _styleText = () => {
-        const fullWidthStyle = {
-            marginRight: 42
-        };
-
-        const sideWidthStyle = {
-            width: "65%"
-        };
-        return [styles.text, this._hasLink() ? sideWidthStyle : fullWidthStyle, this.props.style];
-    };
-
     render() {
         return (
-            <Animated.View style={this._styleRoot()}>
-                <Text style={this._styleText()}>{this.props.text}</Text>
-                {this._hasLink() ? (
+            <Animated.View style={this._style()}>
+                <Text style={styles.text}>{this.props.text}</Text>
+                {this.props.linkText ? (
                     <Link
                         text={this.props.linkText}
                         url={this.props.linkUrl}
@@ -110,7 +92,7 @@ export class ToastMessage extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    root: {
+    toast: {
         alignItems: "center",
         backgroundColor: "#ffffff",
         borderColor: "transparent",
@@ -118,21 +100,20 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         elevation: 5,
         flexDirection: "row",
-        height: 60,
-        justifyContent: "space-between",
-        marginLeft: 6,
-        marginRight: 6,
         shadowColor: "#384671",
         shadowOffset: { width: 1, height: 1 },
-        shadowOpacity: 1
+        shadowOpacity: 1,
+        overflow: "hidden",
+        paddingHorizontal: 22,
+        paddingVertical: 18,
+        marginHorizontal: 5
     },
     text: {
-        color: "#1d2631",
-        marginLeft: 42
+        flex: 1,
+        color: "#1d2631"
     },
     link: {
-        marginRight: 42,
-        marginLeft: 10
+        marginLeft: 20
     }
 });
 
