@@ -60,27 +60,32 @@ export class ContainerSwipeable extends PureComponent {
         return this.state.containerHeightLoaded && this.state.headerHeightLoaded;
     };
 
+    overlayVisible = () => {
+        return this.isLoaded() && this.state.visible;
+    };
+
     open() {
         if (this.animating) return;
 
         this.animating = true;
 
-        Animated.parallel([
-            Animated.timing(this.state.contentHeight, {
-                toValue: 1,
-                duration: this.props.animationsDuration,
-                easing: Easing.inOut(Easing.ease)
-            }),
-            Animated.timing(this.state.overlayOpacity, {
-                toValue: 0.5,
-                duration: this.props.animationsDuration,
-                useNativeDriver: true,
-                easing: Easing.inOut(Easing.ease)
-            })
-        ]).start(() => {
-            this.animating = false;
-            this.setState({ visible: true }, () => {
-                this.props.onVisible(true);
+        this.setState({ visible: true }, () => {
+            this.props.onVisible(true);
+
+            Animated.parallel([
+                Animated.timing(this.state.contentHeight, {
+                    toValue: 1,
+                    duration: this.props.animationsDuration,
+                    easing: Easing.inOut(Easing.ease)
+                }),
+                Animated.timing(this.state.overlayOpacity, {
+                    toValue: 0.5,
+                    duration: this.props.animationsDuration,
+                    useNativeDriver: true,
+                    easing: Easing.inOut(Easing.ease)
+                })
+            ]).start(() => {
+                this.animating = false;
             });
         });
     }
@@ -169,11 +174,15 @@ export class ContainerSwipeable extends PureComponent {
     _container = () => {
         return (
             <>
-                <Animated.View
-                    style={this._overlayStyle()}
-                    onStartShouldSetResponder={e => true}
-                    onResponderRelease={this.onOverlayPress}
-                />
+                {/* This condition allows for touches to work on the initial 3 frames
+                where the trick of getting the elements heights is done */}
+                {this.overlayVisible() && (
+                    <Animated.View
+                        style={this._overlayStyle()}
+                        onStartShouldSetResponder={e => true}
+                        onResponderRelease={this.onOverlayPress}
+                    />
+                )}
                 <Animated.View
                     style={this._containerStyle()}
                     onLayout={event => this._onContainerLayout(event)}
@@ -187,7 +196,7 @@ export class ContainerSwipeable extends PureComponent {
                         {this.props.header}
                     </TouchableOpacity>
                     {this.props.children}
-                    <View style={styles.safeAreaBottom} />
+                    {this.props.fullscreen && <View style={styles.safeAreaBottom} />}
                 </Animated.View>
             </>
         );
@@ -230,7 +239,7 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         width: "100%",
         bottom: 0,
-        backgroundColor: "#aaffff"
+        backgroundColor: "#ffffff"
     },
     knob: {
         alignSelf: "center",
