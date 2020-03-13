@@ -54,9 +54,8 @@ export class ContainerSwipeable extends PureComponent {
         this.headerHeight = 0;
         this.containerHeight = 0;
         this.containerPosY = 0;
-        this.initialContentHeightAnimationValue = 0;
+        this.initialContentHeight = 0;
         this.animating = false;
-
 
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (_evt, _gestureState) => true,
@@ -71,8 +70,9 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     maxHeight = () => {
+        console.log("maxHeight", this.props.fullscreen ? screenHeight : this.containerPosY);
         return this.props.fullscreen ? screenHeight : this.containerPosY;
-    }
+    };
 
     open() {
         if (this.animating) return;
@@ -148,36 +148,36 @@ export class ContainerSwipeable extends PureComponent {
 
 
 
+
+
     onPanResponderGrant = (_evt, _gestureState) => {
-        this.initialContentHeightAnimationValue = this.state.contentHeightAnimationValue._value;
+        this.initialContentHeight = this.state.contentHeight._value;
     };
 
     onPanResponderMove = (_evt, gestureState) => {
         if (gestureState.dy === 0) return;
         const gestureStateDistanceY = gestureState.dy > 0 ? gestureState.dy : gestureState.dy * 2;
 
-
         // Calculate maxHeightValue
         const maxHeight = this.maxHeight();
-        const maxHeightValue = (maxHeight-this.headerHeight)/(this.containerHeight-this.headerHeight);
-        console.log("\nmaxHeightValue", maxHeightValue.toFixed(4))
-
+        const maxHeightValue =
+            (maxHeight - this.headerHeight) / (this.containerHeight - this.headerHeight);
+        console.log("\nmaxHeightValue", maxHeightValue.toFixed(4));
 
         // Calculate heightValue
-        const heightMoveValue = -(gestureStateDistanceY/this.containerPosY);
-        let heightValue = this.initialContentHeightAnimationValue + heightMoveValue;
-        console.log("dY:", gestureStateDistanceY,  "heightValue:", heightValue.toFixed(4));
-
-        
-
+        const heightMoveValue = -(gestureStateDistanceY / this.containerPosY);
+        let heightValue = this.initialContentHeight + heightMoveValue;
+        console.log("dY:", gestureStateDistanceY, "heightValue:", heightValue.toFixed(4));
 
         if (heightValue <= 0) heightValue = 0;
         else if (heightValue >= maxHeightValue) heightValue = maxHeightValue;
 
-        this.state.contentHeightAnimationValue.setValue(heightValue);
+        console.log("\nheightValue: ", heightValue);
+
+        this.state.contentHeight.setValue(heightValue);
     };
 
-    onPanResponderRelease = (_evt, gestureState) =>  {
+    onPanResponderRelease = (_evt, gestureState) => {
         /* const nextViewPositionY = this._nextViewPositionY(gestureState.dy);
         const isInsideOfCloseThreshold =
             nextViewPositionY - this.props.hideThreshold >
@@ -202,7 +202,7 @@ export class ContainerSwipeable extends PureComponent {
 
 
 
- 
+    
 
     _onContainerLayout = event => {
         if (this.state.containerHeightLoaded) return;
