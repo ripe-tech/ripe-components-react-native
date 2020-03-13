@@ -8,7 +8,8 @@ import {
     Animated,
     Easing,
     StatusBar,
-    Platform
+    Platform,
+    PanResponder
 } from "react-native";
 import PropTypes from "prop-types";
 import Modal from "react-native-modal";
@@ -53,12 +54,25 @@ export class ContainerSwipeable extends PureComponent {
         this.headerHeight = 0;
         this.containerHeight = 0;
         this.containerPosY = 0;
+        this.initialContentHeightAnimationValue = 0;
         this.animating = false;
+
+
+        this.panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: (_evt, _gestureState) => true,
+            onPanResponderGrant: this.onPanResponderGrant,
+            onPanResponderMove: this.onPanResponderMove,
+            onPanResponderRelease: this.onPanResponderRelease
+        });
     }
 
     isLoaded = () => {
         return this.state.containerHeightLoaded && this.state.headerHeightLoaded;
     };
+
+    maxHeight = () => {
+        return this.props.fullscreen ? screenHeight : this.containerPosY;
+    }
 
     overlayVisible = () => {
         return this.isLoaded() && this.state.visible;
@@ -137,6 +151,70 @@ export class ContainerSwipeable extends PureComponent {
         this.toggle();
     };
 
+
+
+
+
+
+
+
+
+    onPanResponderGrant = (_evt, _gestureState) => {
+        this.initialContentHeightAnimationValue = this.state.contentHeightAnimationValue._value;
+    };
+
+    onPanResponderMove = (_evt, gestureState) => {
+        if (gestureState.dy === 0) return;
+        const gestureStateDistanceY = gestureState.dy > 0 ? gestureState.dy : gestureState.dy * 2;
+
+
+        // Calculate maxHeightValue
+        const maxHeight = this.maxHeight();
+        const maxHeightValue = (maxHeight-this.headerHeight)/(this.containerHeight-this.headerHeight);
+        console.log("\nmaxHeightValue", maxHeightValue.toFixed(4))
+
+
+        // Calculate heightValue
+        const heightMoveValue = -(gestureStateDistanceY/this.containerPosY);
+        let heightValue = this.initialContentHeightAnimationValue + heightMoveValue;
+        console.log("dY:", gestureStateDistanceY,  "heightValue:", heightValue.toFixed(4));
+
+        
+
+
+        if (heightValue <= 0) heightValue = 0;
+        else if (heightValue >= maxHeightValue) heightValue = maxHeightValue;
+
+        this.state.contentHeightAnimationValue.setValue(heightValue);
+    };
+
+    onPanResponderRelease = (_evt, gestureState) =>  {
+        /* const nextViewPositionY = this._nextViewPositionY(gestureState.dy);
+        const isInsideOfCloseThreshold =
+            nextViewPositionY - this.props.hideThreshold >
+            ScreenHeight - this.state.containerChildrenHeight;
+
+        if (isInsideOfCloseThreshold) {
+            this.toggle();
+        } else {
+            const toValue = { x: 0, y: this._initialViewPositionY };
+
+            Animated.spring(this.state.containerInnerPositionAnimated, {
+                toValue,
+                duration: this.props.animationsDuration
+            }).start();
+        } */
+    };
+
+
+
+
+
+
+
+
+ 
+
     _onContainerLayout = event => {
         if (this.state.containerHeightLoaded) return;
 
@@ -168,7 +246,7 @@ export class ContainerSwipeable extends PureComponent {
                 inputRange: [0, 1],
                 outputRange: [this.headerHeight, this.containerHeight]
             }),
-            maxHeight: this.props.fullscreen ? screenHeight : this.containerPosY
+            maxHeight: this.maxHeight()
         };
     };
 
@@ -185,6 +263,7 @@ export class ContainerSwipeable extends PureComponent {
                 <Animated.View
                     style={[styles.contentContainer, this._containerStyle()]}
                     onLayout={event => this._onContainerLayout(event)}
+                    {...this.panResponder.panHandlers}
                 >
                     <TouchableOpacity
                         onLayout={event => this._onHeaderLayout(event)}
