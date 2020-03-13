@@ -152,7 +152,8 @@ export class ContainerSwipeable extends PureComponent {
         const gestureStateDistanceY = gestureState.dy > 0 ? gestureState.dy : gestureState.dy * 2;
 
         // @TODO: Find place to put this code after layout
-        this.maxHeightValue = (this.maxHeight() - this.headerHeight) / (this.containerHeight - this.headerHeight);
+        this.maxHeightValue =
+            (this.maxHeight() - this.headerHeight) / (this.containerHeight - this.headerHeight);
 
         // Calculate heightValue
         const heightMoveValue = -(gestureStateDistanceY / this.maxHeight());
