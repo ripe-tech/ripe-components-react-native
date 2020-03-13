@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, text, select, boolean, number, color } from "@storybook/addon-knobs";
+import { withKnobs, text, select, boolean, number } from "@storybook/addon-knobs";
 
 import { ButtonTab } from "./button-tab";
 
@@ -9,7 +9,7 @@ storiesOf("Atoms", module)
     .add("Button Tab", () => {
         const _text = text("Text", "User");
         const badgeAnimationDuration = number("Badge Animation Duration", 200);
-        const badgeBackgroundColor = color("Badge Background Color", "red");
+        const badgeBackgroundColor = text("Badge Background Color", "red");
         const badgeCount = number("Badge Count", 999);
         const badgeCountThreshold = number("Badge Count Threshold", 99);
         const badgeHasAnimation = boolean("Badge Has Animation", true);

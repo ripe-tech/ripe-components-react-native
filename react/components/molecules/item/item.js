@@ -4,7 +4,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
 
-import { capitalize, dateString, timeString } from "../../../util";
+import { capitalize } from "../../../util";
 
 import { Icon, Text } from "../../atoms";
 

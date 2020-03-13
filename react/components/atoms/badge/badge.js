@@ -42,35 +42,37 @@ export class Badge extends Component {
         this.animating = false;
     }
 
-    componentWillUpdate(props, state) {
-        if (props.count !== state.count || props.text !== state.text) {
-            this._animateCount(props.count, props.text);
+    componentDidUpdate(prevProps) {
+        if (prevProps.count !== this.props.count || prevProps.text !== this.props.text) {
+            this._animateCount();
         }
     }
 
-    _animateCount(newCount, newText) {
+    _animateCount() {
         if (this.props.hasAnimation && !this.animating) {
             this.animating = true;
             Animated.sequence([
                 Animated.timing(this.state.scale, {
                     toValue: 1.1,
-                    duration: this.props.animationDuration
+                    duration: this.props.animationDuration,
+                    useNativeDriver: true
                 }),
                 Animated.timing(this.state.scale, {
                     toValue: 1,
-                    duration: this.props.animationDuration
+                    duration: this.props.animationDuration,
+                    useNativeDriver: true
                 })
             ]).start(() => {
                 this.setState({
-                    count: newCount,
-                    text: newText
+                    count: this.props.count,
+                    text: this.props.text
                 });
                 this.animating = false;
             });
         } else {
             this.setState({
-                count: newCount,
-                text: newText
+                count: this.props.count,
+                text: this.props.text
             });
         }
     }

@@ -17,7 +17,7 @@ storiesOf("Atoms", module)
             "add"
         );
         const size = number("Size", 30);
-        const color = text("Color", "#ffffff");
+        const _color = text("Color", "#ffffff");
         const backgroundColor = text("Background Color", "#000000");
         const height = number("Icon Height", 20);
         const width = number("Icon Width", 20);
@@ -26,7 +26,7 @@ storiesOf("Atoms", module)
             <ButtonIcon
                 icon={icon}
                 size={size}
-                color={color}
+                color={_color}
                 backgroundColor={backgroundColor}
                 iconStrokeWidth={strokeWidth}
                 iconHeight={height}
