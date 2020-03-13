@@ -46,8 +46,8 @@ export class ContainerSwipeable extends PureComponent {
             containerHeightLoaded: false,
             headerHeightLoaded: false,
             visible: false,
-            overlayOpacityAnimationValue: new Animated.Value(0),
-            contentHeightAnimationValue: new Animated.Value(0)
+            overlayOpacity: new Animated.Value(0),
+            contentHeight: new Animated.Value(0)
         };
 
         this.headerHeight = 0;
@@ -60,40 +60,18 @@ export class ContainerSwipeable extends PureComponent {
         return this.state.containerHeightLoaded && this.state.headerHeightLoaded;
     };
 
-    overlayVisible = () => {
-        return this.isLoaded() && this.state.visible;
-    };
-
     open() {
         if (this.animating) return;
-        this.setState({ visible: true }, () => {
-            this.props.onVisible(true);
-            this.startOpenAnimation();
-        });
-    }
 
-    close() {
-        if (this.animating) return;
-        this.startCloseAnimation(() =>
-            this.setState({ visible: false }, this.props.onVisible(false))
-        );
-    }
-
-    toggle() {
-        if (this.state.visible) this.close();
-        else this.open();
-    }
-
-    startOpenAnimation() {
         this.animating = true;
 
         Animated.parallel([
-            Animated.timing(this.state.contentHeightAnimationValue, {
+            Animated.timing(this.state.contentHeight, {
                 toValue: 1,
                 duration: this.props.animationsDuration,
                 easing: Easing.inOut(Easing.ease)
             }),
-            Animated.timing(this.state.overlayOpacityAnimationValue, {
+            Animated.timing(this.state.overlayOpacity, {
                 toValue: 0.5,
                 duration: this.props.animationsDuration,
                 useNativeDriver: true,
@@ -101,28 +79,38 @@ export class ContainerSwipeable extends PureComponent {
             })
         ]).start(() => {
             this.animating = false;
+            this.setState({ visible: true }, () => {
+                this.props.onVisible(true);
+            });
         });
     }
 
-    startCloseAnimation(callback) {
+    close() {
+        if (this.animating) return;
+
         this.animating = true;
 
         Animated.parallel([
-            Animated.timing(this.state.contentHeightAnimationValue, {
+            Animated.timing(this.state.contentHeight, {
                 toValue: 0,
                 duration: this.props.animationsDuration,
                 easing: Easing.inOut(Easing.ease)
             }),
-            Animated.timing(this.state.overlayOpacityAnimationValue, {
+            Animated.timing(this.state.overlayOpacity, {
                 toValue: 0,
                 duration: this.props.animationsDuration,
                 useNativeDriver: true,
                 easing: Easing.inOut(Easing.ease)
             })
         ]).start(() => {
-            callback();
             this.animating = false;
+            this.setState({ visible: false }, this.props.onVisible(false));
         });
+    }
+
+    toggle() {
+        if (this.state.visible) this.close();
+        else this.open();
     }
 
     onOverlayPress = () => {
@@ -154,17 +142,20 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     _overlayStyle = () => {
-        return {
-            position: this.props.fullscreen ? undefined : "absolute",
-            opacity: this.state.overlayOpacityAnimationValue
-        };
+        return [
+            styles.overlay,
+            {
+                position: this.props.fullscreen ? undefined : "absolute",
+                opacity: this.state.overlayOpacity
+            }
+        ];
     };
 
     _containerStyle = () => {
         if (!this.isLoaded()) return { opacity: 0 };
 
         return {
-            height: this.state.contentHeightAnimationValue.interpolate({
+            height: this.state.contentHeight.interpolate({
                 inputRange: [0, 1],
                 outputRange: [this.headerHeight, this.containerHeight]
             }),
@@ -175,13 +166,11 @@ export class ContainerSwipeable extends PureComponent {
     _container = () => {
         return (
             <>
-                {this.overlayVisible() && (
-                    <Animated.View
-                        style={[styles.overlay, this._overlayStyle()]}
-                        onStartShouldSetResponder={evt => true}
-                        onResponderRelease={this.onOverlayPress}
-                    />
-                )}
+                <Animated.View
+                    style={this._overlayStyle()}
+                    onStartShouldSetResponder={e => true}
+                    onResponderRelease={this.onOverlayPress}
+                />
                 <Animated.View
                     style={[styles.contentContainer, this._containerStyle()]}
                     onLayout={event => this._onContainerLayout(event)}
@@ -192,9 +181,9 @@ export class ContainerSwipeable extends PureComponent {
                         onPress={this.onHeaderPress}
                     >
                         <View style={styles.knob} />
-                        <View>{this.props.header}</View>
+                        {this.props.header}
                     </TouchableOpacity>
-                    <View>{this.props.children}</View>
+                    {this.props.children}
                     <View style={styles.safeAreaBottom} />
                 </Animated.View>
             </>
