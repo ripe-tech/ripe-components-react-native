@@ -24,7 +24,9 @@ export class ContainerSwipeable extends PureComponent {
         return {
             animationsDuration: PropTypes.number,
             fullscreen: PropTypes.bool,
+            doFullscreenSnap: PropTypes.bool,
             header: PropTypes.element,
+            snapThreshold: PropTypes.number,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -32,9 +34,11 @@ export class ContainerSwipeable extends PureComponent {
 
     static get defaultProps() {
         return {
-            animationsDuration: 300,
+            animationsDuration: 1000,
             fullscreen: false,
+            doFullscreenSnap: false,
             header: undefined,
+            snapThreshold: 0.5,
             onVisible: visible => {},
             style: {}
         };
@@ -70,7 +74,6 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     maxHeight = () => {
-        console.log("maxHeight", this.props.fullscreen ? screenHeight : this.containerPosY);
         return this.props.fullscreen ? screenHeight : this.containerPosY;
     };
 
@@ -140,16 +143,6 @@ export class ContainerSwipeable extends PureComponent {
         this.toggle();
     };
 
-
-
-
-
-
-
-
-
-
-
     onPanResponderGrant = (_evt, _gestureState) => {
         this.initialContentHeight = this.state.contentHeight._value;
     };
@@ -158,57 +151,45 @@ export class ContainerSwipeable extends PureComponent {
         if (gestureState.dy === 0) return;
         const gestureStateDistanceY = gestureState.dy > 0 ? gestureState.dy : gestureState.dy * 2;
 
-        // Calculate maxHeightValue
-        const maxHeight = this.maxHeight();
-        const maxHeightValue =
-            (maxHeight - this.headerHeight) / (this.containerHeight - this.headerHeight);
-        console.log("\nmaxHeightValue", maxHeightValue.toFixed(4));
+        // @TODO: Find place to put this code after layout
+        this.maxHeightValue = (this.maxHeight() - this.headerHeight) / (this.containerHeight - this.headerHeight);
 
         // Calculate heightValue
         const heightMoveValue = -(gestureStateDistanceY / this.containerPosY);
-        let heightValue = this.initialContentHeight + heightMoveValue;
-        console.log("dY:", gestureStateDistanceY, "heightValue:", heightValue.toFixed(4));
+        this.heightValue = this.initialContentHeight + heightMoveValue;
 
-        if (heightValue <= 0) heightValue = 0;
-        else if (heightValue >= maxHeightValue) heightValue = maxHeightValue;
+        if (this.heightValue <= 0) this.heightValue = 0;
+        else if (this.heightValue >= this.maxHeightValue) this.heightValue = this.maxHeightValue;
 
-        console.log("\nheightValue: ", heightValue);
-
-        this.state.contentHeight.setValue(heightValue);
+        this.state.contentHeight.setValue(this.heightValue);
     };
 
     onPanResponderRelease = (_evt, gestureState) => {
-        /* const nextViewPositionY = this._nextViewPositionY(gestureState.dy);
-        const isInsideOfCloseThreshold =
-            nextViewPositionY - this.props.hideThreshold >
-            ScreenHeight - this.state.containerChildrenHeight;
+        const snapFullscreenValue = this.maxHeightValue - this.props.snapThreshold;
 
-        if (isInsideOfCloseThreshold) {
-            this.toggle();
-        } else {
-            const toValue = { x: 0, y: this._initialViewPositionY };
+        if(this.props.doFullscreenSnap && this.heightValue > snapFullscreenValue) {
+            this.animating = true;
 
-            Animated.spring(this.state.containerInnerPositionAnimated, {
-                toValue,
+            Animated.spring(this.state.contentHeight, {
+                toValue: this.maxHeightValue,
                 duration: this.props.animationsDuration
-            }).start();
-        } */
+            }).start(() => {
+                this.animating = false;
+            });
+            return;
+        }
+
+        if(this.heightValue > 1) this.open();
+        else if(this.heightValue <= this.props.snapThreshold) this.close();
     };
-
-
-
-
-
-
-
-
-    
 
     _onContainerLayout = event => {
         if (this.state.containerHeightLoaded) return;
 
         this.containerHeight = event.nativeEvent.layout.height;
         this.containerPosY = event.nativeEvent.layout.y + this.containerHeight;
+
+        console.log("containerHeight", this.containerHeight, "containerPosY", this.containerPosY);
 
         this.setState({ containerHeightLoaded: true });
     };
