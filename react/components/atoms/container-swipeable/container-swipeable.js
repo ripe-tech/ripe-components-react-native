@@ -151,13 +151,8 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     onPanResponderMove = (_evt, gestureState) => {
-        if (gestureState.dy === 0) return;
+        const heightMoveValue = -(gestureState.dy / (this.containerHeight - this.headerHeight));
 
-        // Why the magic number 4, you ask? See https://github.com/react-native-community/react-native-modal/pull/197
-        const gestureStateDistanceY = gestureState.dy * 4;
-
-        // Calculate heightValue
-        const heightMoveValue = -(gestureStateDistanceY / this.maxHeight());
         this.heightValue = this.initialContentHeight + heightMoveValue;
 
         if (this.heightValue <= 0) this.heightValue = 0;
