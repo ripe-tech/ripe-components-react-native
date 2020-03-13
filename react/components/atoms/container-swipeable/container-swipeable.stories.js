@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, boolean } from "@storybook/addon-knobs";
+import { withKnobs, boolean, number } from "@storybook/addon-knobs";
 import { Button, View, StyleSheet } from "react-native";
 
 import { ContainerSwipeable } from "./container-swipeable";
@@ -18,6 +18,7 @@ storiesOf("Atoms", module)
                 <Text>I'm a custom header, press me</Text>
             </View>
         );
+        const snapThreshold = number("Snap Threshold", 0.5);
         return (
             <View>
                 <Button
@@ -51,8 +52,9 @@ storiesOf("Atoms", module)
                 </View>
                 <ContainerSwipeable
                     fullscreen={fullscreen}
-                    header={customHeader}
                     doFullscreenSnap={doFullscreenSnap}
+                    header={customHeader}
+                    snapThreshold={snapThreshold}
                     ref={ref}
                 >
                     <Text style={styles.content}>
