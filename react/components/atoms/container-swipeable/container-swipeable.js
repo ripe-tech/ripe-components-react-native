@@ -61,6 +61,7 @@ export class ContainerSwipeable extends PureComponent {
         this.containerPosY = 0;
         this.initialContentHeight = 0;
         this.animating = false;
+        this.panMoving = false;
 
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (_evt, _gestureState) => true,
@@ -151,6 +152,8 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     onPanResponderMove = (_evt, gestureState) => {
+        if(Math.abs(gestureState.dy) > this.props.pressThreshold) this.panMoving=true;
+
         const heightMoveValue = -(gestureState.dy / (this.containerHeight - this.headerHeight));
 
         this.heightValue = this.initialContentHeight + heightMoveValue;
@@ -162,7 +165,9 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     onPanResponderRelease = (_evt, gestureState) => {
-        if (Math.abs(gestureState.dy) <= this.props.pressThreshold) this.onHeaderPress();
+        if (!this.panMoving && Math.abs(gestureState.dy) <= this.props.pressThreshold) this.onHeaderPress();
+        
+        if(this.panMoving) this.panMoving = false;
 
         const snapFullscreenValue = this.maxHeightValue - this.props.snapThreshold;
 
