@@ -93,6 +93,29 @@ export class Chat extends PureComponent {
 
     render() {
         return (
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "height" : undefined}
+                style={[styles.chat, this.props.style]}
+            >
+                <ScrollView
+                    style={styles.chatMessagesContainer}
+                    ref={ref => (this.scrollViewComponent = ref)}
+                    onContentSizeChange={this.scrollToEnd}
+                >
+                    {this.props.messages.map((message, index) => {
+                        return (
+                            <ChatMessage
+                                style={index !== 0 && styles.chatMessage}
+                                avatarUrl={message.avatarUrl}
+                                username={message.username}
+                                message={message.message}
+                                date={message.date}
+                                attachments={message.attachments}
+                                key={index}
+                            />
+                        );
+                    })}
+                </ScrollView>
                 <RichTextInput
                     style={styles.richTextInput}
                     placeholder={"Say something..."}
@@ -105,6 +128,7 @@ export class Chat extends PureComponent {
                     }
                     onSendMessage={text => this.onRichTextInputSendMessage(text)}
                 />
+            </KeyboardAvoidingView>
         );
     }
 }
