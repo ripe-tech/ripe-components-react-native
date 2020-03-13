@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, TextInput } from "react-native";
-
 import PropTypes from "prop-types";
+
+import { capitalize } from "../../../util";
 
 export class TextArea extends PureComponent {
     static get propTypes() {
@@ -15,6 +16,8 @@ export class TextArea extends PureComponent {
             onValue: PropTypes.func,
             onFocus: PropTypes.func,
             onBlur: PropTypes.func,
+            color: PropTypes.string,
+            variant: PropTypes.string,
             style: ViewPropTypes.style
         };
     }
@@ -30,6 +33,8 @@ export class TextArea extends PureComponent {
             onValue: () => {},
             onFocus: () => {},
             onBlur: () => {},
+            color: undefined,
+            variant: undefined,
             style: {}
         };
     }
@@ -49,11 +54,12 @@ export class TextArea extends PureComponent {
     _style = () => {
         return [
             styles.textArea,
-            this.props.multiline ? styles.textAreaMultiline : {},
             {
                 minHeight: this.props.minHeight,
                 maxHeight: this.props.maxHeight
             },
+            styles[`textArea${capitalize(this.props.color)}`],
+            styles[`textArea${capitalize(this.props.variant)}`],
             this.props.style
         ];
     };
@@ -78,13 +84,16 @@ export class TextArea extends PureComponent {
 
 const styles = StyleSheet.create({
     textArea: {
-        paddingVertical: 0,
+        paddingVertical: 4,
         paddingHorizontal: 15,
         color: "#3e566a",
         backgroundColor: "#ffffff"
     },
     textAreaMultiline: {
         paddingVertical: 14
+    },
+    textAreaGrey: {
+        backgroundColor: "#f6f7f9"
     }
 });
 

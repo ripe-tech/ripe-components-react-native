@@ -75,7 +75,7 @@ export class ImageListItem extends PureComponent {
                     <ButtonIcon
                         backgroundColor={this.props.iconBackgroundColor}
                         icon={this.props.icon}
-                        color={this.props.iconColor}
+                        iconStrokeColor={this.props.iconColor}
                         iconWidth={18}
                         iconHeight={18}
                         iconStrokeWidth={2}

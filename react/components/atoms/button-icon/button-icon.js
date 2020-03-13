@@ -10,9 +10,10 @@ export class ButtonIcon extends PureComponent {
             icon: PropTypes.string.isRequired,
             size: PropTypes.number.isRequired,
             backgroundColor: PropTypes.string,
-            color: PropTypes.string,
+            iconFill: PropTypes.string,
             iconHeight: PropTypes.number,
             iconWidth: PropTypes.number,
+            iconStrokeColor: PropTypes.string,
             iconStrokeWidth: PropTypes.number,
             hitBox: PropTypes.shape({
                 top: PropTypes.number,
@@ -29,9 +30,10 @@ export class ButtonIcon extends PureComponent {
         return {
             size: 30,
             backgroundColor: "#ffffff",
-            color: "#000000",
+            iconFill: undefined,
             iconHeight: 20,
             iconWidth: 20,
+            iconStrokeColor: "#000000",
             iconStrokeWidth: 1,
             hitBox: {
                 top: 20,
@@ -66,7 +68,8 @@ export class ButtonIcon extends PureComponent {
             >
                 <Icon
                     icon={this.props.icon}
-                    color={this.props.color}
+                    color={this.props.iconStrokeColor}
+                    fill={this.props.iconFill}
                     width={this.props.iconWidth}
                     height={this.props.iconHeight}
                     strokeWidth={this.props.iconStrokeWidth}

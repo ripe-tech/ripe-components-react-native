@@ -57,7 +57,7 @@ export class KeyValue extends PureComponent {
                     <View style={styles.iconContainer}>
                         <ButtonIcon
                             backgroundColor={this.props.iconBackgroundColor}
-                            color={this.props.iconColor}
+                            iconStrokeColor={this.props.iconColor}
                             icon={this.props.icon}
                             iconHeight={this.props.iconHeight}
                             iconWidth={this.props.iconWidth}
