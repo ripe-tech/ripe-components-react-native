@@ -4,7 +4,6 @@ import {
     StyleSheet,
     View,
     Dimensions,
-    TouchableOpacity,
     Animated,
     Easing,
     StatusBar,
@@ -27,6 +26,7 @@ export class ContainerSwipeable extends PureComponent {
             doFullscreenSnap: PropTypes.bool,
             header: PropTypes.element,
             snapThreshold: PropTypes.number,
+            pressThreshold: PropTypes.number,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -39,6 +39,7 @@ export class ContainerSwipeable extends PureComponent {
             doFullscreenSnap: false,
             header: undefined,
             snapThreshold: 0.5,
+            pressThreshold: 2.5,
             onVisible: visible => {},
             style: {}
         };
@@ -153,7 +154,7 @@ export class ContainerSwipeable extends PureComponent {
         if (gestureState.dy === 0) return;
 
         // Why the magic number 4, you ask? See https://github.com/react-native-community/react-native-modal/pull/197
-        const gestureStateDistanceY = gestureState.dy * 4; 
+        const gestureStateDistanceY = gestureState.dy * 4;
 
         // Calculate heightValue
         const heightMoveValue = -(gestureStateDistanceY / this.maxHeight());
@@ -166,6 +167,8 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     onPanResponderRelease = (_evt, gestureState) => {
+        if (Math.abs(gestureState.dy) <= this.props.pressThreshold) this.onHeaderPress();
+
         const snapFullscreenValue = this.maxHeightValue - this.props.snapThreshold;
 
         if (this.props.doFullscreenSnap && this.heightValue > snapFullscreenValue) {
@@ -236,18 +239,16 @@ export class ContainerSwipeable extends PureComponent {
                     // The "contentContainer" style needs to always be applied for the correct height to be applied
                     style={[styles.contentContainer, this._containerStyle()]}
                     onLayout={event => this._onContainerLayout(event)}
-                    {...this.panResponder.panHandlers}
                 >
-                    <TouchableOpacity
+                    <View
                         onLayout={event => this._onHeaderLayout(event)}
-                        activeOpacity={1}
-                        onPress={this.onHeaderPress}
+                        {...this.panResponder.panHandlers}
                     >
                         <View style={styles.knob} />
                         {this.props.header}
-                    </TouchableOpacity>
+                    </View>
                     {this.props.children}
-                    {this.props.fullscreen && <View style={styles.safeAreaBottom} />}
+                    <View style={styles.safeAreaBottom} />
                 </Animated.View>
             </>
         );
