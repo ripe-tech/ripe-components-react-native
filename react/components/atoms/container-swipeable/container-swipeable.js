@@ -74,10 +74,6 @@ export class ContainerSwipeable extends PureComponent {
         return this.props.fullscreen ? screenHeight : this.containerPosY;
     }
 
-    overlayVisible = () => {
-        return this.isLoaded() && this.state.visible;
-    };
-
     open() {
         if (this.animating) return;
 
@@ -237,24 +233,19 @@ export class ContainerSwipeable extends PureComponent {
     _containerStyle = () => {
         if (!this.isLoaded()) return { opacity: 0 };
 
-        return [
-            styles.contentContainer,
-            {
-                height: this.state.contentHeight.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [this.headerHeight, this.containerHeight]
-                }),
-                maxHeight: this.maxHeight()
-            }
-        ];
+        return {
+            height: this.state.contentHeight.interpolate({
+                inputRange: [0, 1],
+                outputRange: [this.headerHeight, this.containerHeight]
+            }),
+            maxHeight: this.maxHeight()
+        };
     };
 
     _container = () => {
         return (
             <>
-                {/* This condition allows for touches to work on the initial 3 frames
-                where the trick of getting the elements heights is done */}
-                {this.overlayVisible() && (
+                {this.state.visible && (
                     <Animated.View
                         style={this._overlayStyle()}
                         onStartShouldSetResponder={e => true}
@@ -262,7 +253,8 @@ export class ContainerSwipeable extends PureComponent {
                     />
                 )}
                 <Animated.View
-                    style={this._containerStyle()}
+                    // The "contentContainer" style needs to always be applied for the correct height to be applied
+                    style={[styles.contentContainer, this._containerStyle()]}
                     onLayout={event => this._onContainerLayout(event)}
                     {...this.panResponder.panHandlers}
                 >
