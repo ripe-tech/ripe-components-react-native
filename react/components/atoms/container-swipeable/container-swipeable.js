@@ -60,10 +60,6 @@ export class ContainerSwipeable extends PureComponent {
         return this.state.containerHeightLoaded && this.state.headerHeightLoaded;
     };
 
-    overlayVisible = () => {
-        return this.isLoaded() && this.state.visible;
-    };
-
     open() {
         if (this.animating) return;
 
@@ -171,9 +167,7 @@ export class ContainerSwipeable extends PureComponent {
     _container = () => {
         return (
             <>
-                {/* This condition allows for touches to work on the initial 3 frames
-                where the trick of getting the elements heights is done */}
-                {this.overlayVisible() && (
+                {this.state.visible && (
                     <Animated.View
                         style={this._overlayStyle()}
                         onStartShouldSetResponder={e => true}
