@@ -33,64 +33,62 @@ export class ContainerSwipeableHorizontal extends PureComponent {
     static get propTypes() {
         return {
             triggerActionThreshold: PropTypes.number,
-            style: ViewPropTypes.style,
-            optionContainerStyle: ViewPropTypes.style,
             leftOptionEnabled: PropTypes.bool,
-            rightOptionEnabled: PropTypes.bool,
-            onLeftOptionTrigger: PropTypes.func,
-            onRightOptionTrigger: PropTypes.func,
             leftOptionGradientColors: PropTypes.array,
-            rightOptionGradientColors: PropTypes.array,
             leftOptionText: PropTypes.string,
-            rightOptionText: PropTypes.string,
             leftOptionTextColor: PropTypes.string,
-            rightOptionTextColor: PropTypes.string,
             leftOptionTextStyle: ViewPropTypes.style,
-            rightOptionTextStyle: ViewPropTypes.style,
             leftOptionIcon: PropTypes.string,
-            rightOptionIcon: PropTypes.string,
             leftOptionIconColor: PropTypes.string,
-            rightOptionIconColor: PropTypes.string,
             leftOptionIconHeight: PropTypes.number,
-            rightOptionIconHeight: PropTypes.number,
             leftOptionIconWidth: PropTypes.number,
-            rightOptionIconWidth: PropTypes.number,
             leftOptionIconStrokeWidth: PropTypes.number,
-            rightOptionIconStrokeWidth: PropTypes.number,
             leftOptionIconStyle: ViewPropTypes.style,
-            rightOptionIconStyle: ViewPropTypes.style
+            onLeftOptionTrigger: PropTypes.func,
+            rightOptionEnabled: PropTypes.bool,
+            rightOptionGradientColors: PropTypes.array,
+            rightOptionText: PropTypes.string,
+            rightOptionTextColor: PropTypes.string,
+            rightOptionIconHeight: PropTypes.number,
+            rightOptionTextStyle: ViewPropTypes.style,
+            rightOptionIcon: PropTypes.string,
+            rightOptionIconColor: PropTypes.string,
+            rightOptionIconWidth: PropTypes.number,
+            rightOptionIconStrokeWidth: PropTypes.number,
+            rightOptionIconStyle: ViewPropTypes.style,
+            onRightOptionTrigger: PropTypes.func,
+            style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
             triggerActionThreshold: 0.3,
-            style: {},
-            optionContainerStyle: {},
             leftOptionEnabled: false,
-            rightOptionEnabled: false,
-            onLeftOptionTrigger: () => null,
-            onRightOptionTrigger: () => null,
             leftOptionGradientColors: [],
-            rightOptionGradientColors: [],
             leftOptionText: undefined,
-            rightOptionText: undefined,
             leftOptionTextColor: "#ffffff",
-            rightOptionTextColor: "#ffffff",
             leftOptionTextStyle: {},
-            rightOptionTextStyle: {},
             leftOptionIcon: undefined,
-            rightOptionIcon: undefined,
             leftOptionIconColor: "#ffffff",
-            rightOptionIconColor: "#ffffff",
             leftOptionIconHeight: 32,
-            rightOptionIconHeight: 32,
             leftOptionIconWidth: 32,
-            rightOptionIconWidth: 32,
             leftOptionIconStrokeWidth: 1,
-            rightOptionIconStrokeWidth: 1,
             leftOptionIconStyle: undefined,
-            rightOptionIconStyle: undefined
+            onLeftOptionTrigger: () => null,
+            rightOptionEnabled: false,
+            rightOptionGradientColors: [],
+            rightOptionText: undefined,
+            rightOptionTextColor: "#ffffff",
+            rightOptionTextStyle: {},
+            rightOptionIcon: undefined,
+            rightOptionIconColor: "#ffffff",
+            rightOptionIconHeight: 32,
+            rightOptionIconWidth: 32,
+            rightOptionIconStrokeWidth: 1,
+            rightOptionIconStyle: undefined,
+            onRightOptionTrigger: () => null,
+            style: {}
         };
     }
 
@@ -191,7 +189,7 @@ export class ContainerSwipeableHorizontal extends PureComponent {
                 colors={this.props.leftOptionGradientColors}
                 style={styles.containerGradient}
             >
-                <View style={this._containerOptionStyles()}>
+                <View style={styles.containerOption}>
                     {this.props.leftOptionIcon ? (
                         <Icon
                             icon={this.props.leftOptionIcon}
@@ -221,7 +219,7 @@ export class ContainerSwipeableHorizontal extends PureComponent {
                 colors={this.props.rightOptionGradientColors}
                 style={[styles.containerGradient, styles.containerGradientOptionRight]}
             >
-                <View style={this._containerOptionStyles()}>
+                <View style={styles.containerOption}>
                     {this.props.rightOptionIcon ? (
                         <Icon
                             icon={this.props.rightOptionIcon}
@@ -273,10 +271,6 @@ export class ContainerSwipeableHorizontal extends PureComponent {
     _contentStyle = () => {
         return [{ transform: [{ translateX: this.state.animationPositionX }] }];
     };
-
-    _containerOptionStyles() {
-        return [styles.containerOption, this.props.optionContainerStyle];
-    }
 
     _leftOptionTextStyles() {
         return [
