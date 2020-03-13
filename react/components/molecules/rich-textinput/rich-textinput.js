@@ -175,39 +175,40 @@ export class RichTextInput extends PureComponent {
                     pointerEvents={this.state.buttonsVisible ? undefined : "none"}
                 >
                     <ButtonIcon
-                        style={styles.button}
                         icon={"camera"}
-                        size={32}
-                        color={"#375274"}
+                        size={27}
+                        iconStrokeColor={"#ffffff"}
+                        iconFill={"#375274"}
                         backgroundColor={"#ffffff"}
-                        iconHeight={28}
-                        iconWidth={28}
+                        iconHeight={27}
+                        iconWidth={27}
                         onPress={() => this.onPhotoButtonPress()}
                     />
                     <ButtonIcon
-                        style={styles.button}
+                        style={styles.buttonAttachment}
                         icon={"clip"}
-                        size={32}
-                        color={"#375274"}
-                        backgroundColor={"#ffffff"}
-                        iconHeight={28}
-                        iconWidth={28}
+                        size={20}
+                        iconStrokeColor={"#375274"}
+                        iconStrokeWidth={2}
+                        iconHeight={20}
+                        iconWidth={20}
                         onPress={() => this.onAttachmentButtonPress()}
                     />
                 </Animated.View>
                 <Animated.View style={this._moreOptionsStyle()}>
                     <ButtonIcon
                         icon={"add"}
-                        size={32}
-                        color={"#375274"}
-                        backgroundColor={"#ffffff"}
-                        iconHeight={28}
-                        iconWidth={28}
+                        size={20}
+                        iconStrokeColor={"#375274"}
+                        iconStrokeWidth={2}
+                        iconHeight={20}
+                        iconWidth={20}
                         onPress={() => this.onMoreOptionsButtonPress()}
                     />
                 </Animated.View>
                 <TextArea
                     ref={el => (this.textAreaComponent = el)}
+                    color={"grey"}
                     style={styles.textArea}
                     value={this.state.value}
                     placeholder={this.props.placeholder}
@@ -222,11 +223,13 @@ export class RichTextInput extends PureComponent {
                 <ButtonIcon
                     style={styles.sendButton}
                     icon={"send"}
-                    size={32}
-                    color={"#375274"}
+                    size={24}
+                    iconStrokeColor={"#ffffff"}
+                    iconFill={"#375274"}
+                    iconStrokeWidth={0.5}
                     backgroundColor={"#ffffff"}
-                    iconHeight={27}
-                    iconWidth={27}
+                    iconHeight={24}
+                    iconWidth={24}
                     onPress={() => this.onSendButtonPress()}
                 />
             </View>
@@ -238,29 +241,25 @@ const styles = StyleSheet.create({
     richTextInput: {
         flexDirection: "row",
         backgroundColor: "#ffffff",
-        paddingTop: 8,
-        paddingBottom: 8
+        alignItems: "center",
+        paddingVertical: 8,
+        paddingHorizontal: 10
     },
     textArea: {
         flex: 1,
-        borderRadius: 20
-    },
-    buttons: {
-        flexDirection: "row",
-        alignSelf: "flex-end",
-        paddingLeft: 5,
-        paddingRight: 5
-    },
-    moreOptions: {
-        alignSelf: "flex-end"
-    },
-    button: {
+        borderRadius: 20,
+        marginRight: 15,
         marginLeft: 10
     },
-    sendButton: {
-        alignSelf: "flex-end",
-        marginLeft: 5,
-        marginRight: 5
+    buttons: {
+        alignItems: "center",
+        flexDirection: "row"
+    },
+    moreOptions: {
+        justifyContent: "center"
+    },
+    buttonAttachment: {
+        marginLeft: 10
     }
 });
 
