@@ -244,7 +244,7 @@ export class ContainerSwipeable extends PureComponent {
                     inputRange: [0, 1],
                     outputRange: [this.headerHeight, this.containerHeight]
                 }),
-                maxHeight: this.props.fullscreen ? screenHeight : this.containerPosY
+                maxHeight: this.maxHeight()
             }
         ];
     };
