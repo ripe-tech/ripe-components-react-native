@@ -16,7 +16,7 @@ import Modal from "react-native-modal";
 
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 
-let screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
+let screenHeight = Dimensions.get("window").height - initialWindowSafeAreaInsets.top;
 if (Platform.OS === "android") screenHeight -= StatusBar.currentHeight;
 
 export class ContainerSwipeable extends PureComponent {
@@ -155,7 +155,7 @@ export class ContainerSwipeable extends PureComponent {
         this.maxHeightValue = (this.maxHeight() - this.headerHeight) / (this.containerHeight - this.headerHeight);
 
         // Calculate heightValue
-        const heightMoveValue = -(gestureStateDistanceY / this.containerPosY);
+        const heightMoveValue = -(gestureStateDistanceY / this.maxHeight());
         this.heightValue = this.initialContentHeight + heightMoveValue;
 
         if (this.heightValue <= 0) this.heightValue = 0;
@@ -167,7 +167,7 @@ export class ContainerSwipeable extends PureComponent {
     onPanResponderRelease = (_evt, gestureState) => {
         const snapFullscreenValue = this.maxHeightValue - this.props.snapThreshold;
 
-        if(this.props.doFullscreenSnap && this.heightValue > snapFullscreenValue) {
+        if (this.props.doFullscreenSnap && this.heightValue > snapFullscreenValue) {
             this.animating = true;
 
             Animated.spring(this.state.contentHeight, {
@@ -179,8 +179,8 @@ export class ContainerSwipeable extends PureComponent {
             return;
         }
 
-        if(this.heightValue > 1) this.open();
-        else if(this.heightValue <= this.props.snapThreshold) this.close();
+        if (this.heightValue > 1) this.open();
+        else if (this.heightValue <= this.props.snapThreshold) this.close();
     };
 
     _onContainerLayout = event => {
@@ -188,8 +188,6 @@ export class ContainerSwipeable extends PureComponent {
 
         this.containerHeight = event.nativeEvent.layout.height;
         this.containerPosY = event.nativeEvent.layout.y + this.containerHeight;
-
-        console.log("containerHeight", this.containerHeight, "containerPosY", this.containerPosY);
 
         this.setState({ containerHeightLoaded: true });
     };

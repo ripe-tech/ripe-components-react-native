@@ -12,6 +12,7 @@ storiesOf("Atoms", module)
     .add("Container Swipeable", () => {
         const ref = React.createRef();
         const fullscreen = boolean("Fullscreen", false);
+        const doFullscreenSnap = boolean("Fullscreen Snap", false);
         const customHeader = (
             <View style={{ height: 30, backgroundColor: "#ffaaaa" }}>
                 <Text>I'm a custom header, press me</Text>
@@ -48,7 +49,12 @@ storiesOf("Atoms", module)
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                     </Text>
                 </View>
-                <ContainerSwipeable fullscreen={fullscreen} header={customHeader} ref={ref}>
+                <ContainerSwipeable
+                    fullscreen={fullscreen}
+                    header={customHeader}
+                    doFullscreenSnap={doFullscreenSnap}
+                    ref={ref}
+                >
                     <Text style={styles.content}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
