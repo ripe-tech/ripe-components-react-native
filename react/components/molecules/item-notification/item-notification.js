@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
         borderBottomColor: "#e4e8f0",
         borderBottomWidth: 2,
         flexDirection: "row",
-        height: 86,
         justifyContent: "center",
         paddingBottom: 15,
         paddingLeft: 14,
@@ -72,12 +71,12 @@ const styles = StyleSheet.create({
     text: {
         flex: 1,
         fontSize: 16,
-        paddingLeft: 14
+        marginLeft: 14
     },
     timestamp: {
         color: "#a8b3bb",
         fontSize: 14,
-        textAlign: "center",
+        textAlign: "right",
         maxWidth: 80
     }
 });
