@@ -47,8 +47,8 @@ export class ContainerSwipeable extends PureComponent {
             containerHeightLoaded: false,
             headerHeightLoaded: false,
             visible: false,
-            overlayOpacityAnimationValue: new Animated.Value(0),
-            contentHeightAnimationValue: new Animated.Value(0)
+            overlayOpacity: new Animated.Value(0),
+            contentHeight: new Animated.Value(0)
         };
 
         this.headerHeight = 0;
@@ -80,63 +80,56 @@ export class ContainerSwipeable extends PureComponent {
 
     open() {
         if (this.animating) return;
+
+        this.animating = true;
+
         this.setState({ visible: true }, () => {
             this.props.onVisible(true);
-            this.startOpenAnimation();
+
+            Animated.parallel([
+                Animated.timing(this.state.contentHeight, {
+                    toValue: 1,
+                    duration: this.props.animationsDuration,
+                    easing: Easing.inOut(Easing.ease)
+                }),
+                Animated.timing(this.state.overlayOpacity, {
+                    toValue: 0.5,
+                    duration: this.props.animationsDuration,
+                    useNativeDriver: true,
+                    easing: Easing.inOut(Easing.ease)
+                })
+            ]).start(() => {
+                this.animating = false;
+            });
         });
     }
 
     close() {
         if (this.animating) return;
-        this.startCloseAnimation(() =>
-            this.setState({ visible: false }, this.props.onVisible(false))
-        );
+
+        this.animating = true;
+
+        Animated.parallel([
+            Animated.timing(this.state.contentHeight, {
+                toValue: 0,
+                duration: this.props.animationsDuration,
+                easing: Easing.inOut(Easing.ease)
+            }),
+            Animated.timing(this.state.overlayOpacity, {
+                toValue: 0,
+                duration: this.props.animationsDuration,
+                useNativeDriver: true,
+                easing: Easing.inOut(Easing.ease)
+            })
+        ]).start(() => {
+            this.animating = false;
+            this.setState({ visible: false }, this.props.onVisible(false));
+        });
     }
 
     toggle() {
         if (this.state.visible) this.close();
         else this.open();
-    }
-
-    startOpenAnimation() {
-        this.animating = true;
-
-        Animated.parallel([
-            Animated.timing(this.state.contentHeightAnimationValue, {
-                toValue: 1,
-                duration: this.props.animationsDuration,
-                easing: Easing.inOut(Easing.ease)
-            }),
-            Animated.timing(this.state.overlayOpacityAnimationValue, {
-                toValue: 0.5,
-                duration: this.props.animationsDuration,
-                useNativeDriver: true,
-                easing: Easing.inOut(Easing.ease)
-            })
-        ]).start(() => {
-            this.animating = false;
-        });
-    }
-
-    startCloseAnimation(callback) {
-        this.animating = true;
-
-        Animated.parallel([
-            Animated.timing(this.state.contentHeightAnimationValue, {
-                toValue: 0,
-                duration: this.props.animationsDuration,
-                easing: Easing.inOut(Easing.ease)
-            }),
-            Animated.timing(this.state.overlayOpacityAnimationValue, {
-                toValue: 0,
-                duration: this.props.animationsDuration,
-                useNativeDriver: true,
-                easing: Easing.inOut(Easing.ease)
-            })
-        ]).start(() => {
-            callback();
-            this.animating = false;
-        });
     }
 
     onOverlayPress = () => {
@@ -232,36 +225,44 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     _overlayStyle = () => {
-        return {
-            position: this.props.fullscreen ? undefined : "absolute",
-            opacity: this.state.overlayOpacityAnimationValue
-        };
+        return [
+            styles.overlay,
+            {
+                position: this.props.fullscreen ? undefined : "absolute",
+                opacity: this.state.overlayOpacity
+            }
+        ];
     };
 
     _containerStyle = () => {
         if (!this.isLoaded()) return { opacity: 0 };
 
-        return {
-            height: this.state.contentHeightAnimationValue.interpolate({
-                inputRange: [0, 1],
-                outputRange: [this.headerHeight, this.containerHeight]
-            }),
-            maxHeight: this.maxHeight()
-        };
+        return [
+            styles.contentContainer,
+            {
+                height: this.state.contentHeight.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [this.headerHeight, this.containerHeight]
+                }),
+                maxHeight: this.props.fullscreen ? screenHeight : this.containerPosY
+            }
+        ];
     };
 
     _container = () => {
         return (
             <>
+                {/* This condition allows for touches to work on the initial 3 frames
+                where the trick of getting the elements heights is done */}
                 {this.overlayVisible() && (
                     <Animated.View
-                        style={[styles.overlay, this._overlayStyle()]}
-                        onStartShouldSetResponder={evt => true}
+                        style={this._overlayStyle()}
+                        onStartShouldSetResponder={e => true}
                         onResponderRelease={this.onOverlayPress}
                     />
                 )}
                 <Animated.View
-                    style={[styles.contentContainer, this._containerStyle()]}
+                    style={this._containerStyle()}
                     onLayout={event => this._onContainerLayout(event)}
                     {...this.panResponder.panHandlers}
                 >
@@ -271,10 +272,10 @@ export class ContainerSwipeable extends PureComponent {
                         onPress={this.onHeaderPress}
                     >
                         <View style={styles.knob} />
-                        <View>{this.props.header}</View>
+                        {this.props.header}
                     </TouchableOpacity>
-                    <View>{this.props.children}</View>
-                    <View style={styles.safeAreaBottom} />
+                    {this.props.children}
+                    {this.props.fullscreen && <View style={styles.safeAreaBottom} />}
                 </Animated.View>
             </>
         );
@@ -317,7 +318,7 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         width: "100%",
         bottom: 0,
-        backgroundColor: "#aaffff"
+        backgroundColor: "#ffffff"
     },
     knob: {
         alignSelf: "center",

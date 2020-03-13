@@ -4,7 +4,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
 
-import { capitalize } from "../../../util";
+import { capitalize, dateTimeString } from "../../../util";
 
 import { Icon, Text } from "../../atoms";
 
@@ -78,7 +78,9 @@ export class Item extends PureComponent {
                                         {this.props.headerText}
                                     </Text>
                                 </View>
-                                <Text style={styles.headerText}>{this.dateData}</Text>
+                                <Text style={styles.headerText}>
+                                    {dateTimeString(this.props.headerDate)}
+                                </Text>
                             </View>
                         </LinearGradient>
                     )}
