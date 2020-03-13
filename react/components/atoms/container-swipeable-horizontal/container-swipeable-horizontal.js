@@ -7,22 +7,20 @@ import PropTypes from "prop-types";
 import { Icon, Text } from "../../";
 import { baseStyles } from "../../../util";
 
-const { width } = Dimensions.get("screen");
-
 export class ContainerSwipeableHorizontal extends PureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            activeOption: null,
+            swipingDirection: undefined,
             animationPositionX: new Animated.Value(0)
         };
 
-        this._isAnimating = false;
-        this._initialViewPositionX = 0;
-        this._latestFullVelocityGestureXValue = 0;
+        this.screenWidth = Dimensions.get("screen").width;
+        this.slowDownThreshold = this.screenWidth * this.props.swipeThreshold;
+        this.animating = false;
 
-        this._panResponder = PanResponder.create({
+        this.panResponder = PanResponder.create({
             onMoveShouldSetPanResponderCapture: this.onMoveShouldSetPanResponderCapture,
             onPanResponderGrant: this.onPanResponderGrant,
             onPanResponderMove: this.onPanResponderMove,
@@ -32,8 +30,9 @@ export class ContainerSwipeableHorizontal extends PureComponent {
 
     static get propTypes() {
         return {
-            triggerActionThreshold: PropTypes.number,
-            leftOptionEnabled: PropTypes.bool,
+            swipeThreshold: PropTypes.number,
+            afterThresholdSlowdown: PropTypes.number,
+            swipeLeftEnabled: PropTypes.bool,
             leftOptionGradientColors: PropTypes.array,
             leftOptionText: PropTypes.string,
             leftOptionTextColor: PropTypes.string,
@@ -45,7 +44,7 @@ export class ContainerSwipeableHorizontal extends PureComponent {
             leftOptionIconStrokeWidth: PropTypes.number,
             leftOptionIconStyle: ViewPropTypes.style,
             onLeftOptionTrigger: PropTypes.func,
-            rightOptionEnabled: PropTypes.bool,
+            swipeRightEnabled: PropTypes.bool,
             rightOptionGradientColors: PropTypes.array,
             rightOptionText: PropTypes.string,
             rightOptionTextColor: PropTypes.string,
@@ -63,8 +62,9 @@ export class ContainerSwipeableHorizontal extends PureComponent {
 
     static get defaultProps() {
         return {
-            triggerActionThreshold: 0.3,
-            leftOptionEnabled: false,
+            swipeThreshold: 0.25,
+            afterThresholdSlowdown: 8,
+            swipeLeftEnabled: false,
             leftOptionGradientColors: [],
             leftOptionText: undefined,
             leftOptionTextColor: "#ffffff",
@@ -76,7 +76,7 @@ export class ContainerSwipeableHorizontal extends PureComponent {
             leftOptionIconStrokeWidth: 1,
             leftOptionIconStyle: undefined,
             onLeftOptionTrigger: () => null,
-            rightOptionEnabled: false,
+            swipeRightEnabled: false,
             rightOptionGradientColors: [],
             rightOptionText: undefined,
             rightOptionTextColor: "#ffffff",
@@ -92,98 +92,99 @@ export class ContainerSwipeableHorizontal extends PureComponent {
         };
     }
 
-    onMoveShouldSetPanResponderCapture = (_ev, _gestureState) => {
-        if (!this.props.leftOptionEnabled && !this.props.rightOptionEnabled) {
+    isAfterThreshold(offset) {
+        const distance = Math.abs(offset);
+        return distance > 0 && distance > this.slowDownThreshold;
+    }
+
+    setSwipingDirection(offset) {
+        if (offset > 0 && this.props.swipeLeftEnabled) {
+            this.setState({ swipingDirection: "left" });
+            return true;
+        } else if (offset < 0 && this.props.swipeRightEnabled) {
+            this.setState({ swipingDirection: "right" });
+            return true;
+        }
+
+        this.setState({ swipingDirection: undefined });
+        return false;
+    }
+
+    onMoveShouldSetPanResponderCapture = (event, gestureState) => {
+        if (!this.props.swipeLeftEnabled && !this.props.swipeRightEnabled) {
             return false;
         }
-        return !this._isAnimating;
+        return !this.animating;
     };
 
-    onPanResponderGrant = (_ev, _gestureState) => {
-        this._initialViewPositionX = this.state.animationPositionX.__getValue();
-    };
+    onPanResponderMove = (event, gestureState) => {
+        if (this.animating) return;
 
-    onPanResponderMove = (_evt, gestureState) => {
-        if (!this._isAllowedToSwipe(gestureState)) {
-            const finalValuePositionNotFinished = this._latestFullVelocityGestureXValue !== 0;
-            if (finalValuePositionNotFinished) {
-                this.state.animationPositionX.setValue(0);
-            }
+        if (!this.setSwipingDirection(gestureState.dx)) {
+            this.state.animationPositionX.setValue(0);
             return;
         }
 
-        let gestureStateDistanceX = 0;
-        const hasReachedSlowDownThreshold = this._hasReachedSlowDownThreshold(gestureState);
+        if (this.isAfterThreshold(gestureState.dx)) {
+            const sign = this.state.swipingDirection === "left" ? 1 : -1;
+            const base = sign * this.slowDownThreshold;
+            const offset = base + (gestureState.dx - base) / this.props.afterThresholdSlowdown;
 
-        if (hasReachedSlowDownThreshold) {
-            const diff = (gestureState.dx - this._latestFullVelocityGestureXValue) / 4;
-            gestureStateDistanceX = this._latestFullVelocityGestureXValue + diff;
+            this.state.animationPositionX.setValue(offset);
         } else {
-            this._latestFullVelocityGestureXValue = gestureState.dx;
-            gestureStateDistanceX = gestureState.dx;
+            this.state.animationPositionX.setValue(gestureState.dx);
         }
-
-        const nextViewPositionX = this._initialViewPositionX + gestureStateDistanceX;
-        this.state.animationPositionX.setValue(nextViewPositionX);
     };
 
-    onPanResponderRelease = (_evt, gestureState) => {
-        this._isAnimating = true;
-        this._latestFullVelocityGestureXValue = 0;
-        this._triggerOptionsOnThreshold(gestureState);
+    onPanResponderRelease = (eventt, gestureState) => {
+        this.animating = true;
+
+        if (this.isAfterThreshold(gestureState.dx)) {
+            if (this.state.swipingDirection === "left") {
+                this.props.onLeftOptionTrigger();
+            } else {
+                this.props.onRightOptionTrigger();
+            }
+        }
 
         Animated.timing(this.state.animationPositionX, {
             toValue: 0
         }).start(() => {
-            this._isAnimating = false;
+            this.animating = false;
         });
     };
 
-    _triggerOptionsOnThreshold(gestureState) {
-        const hasGestureReachedThreshold = Math.abs(gestureState.dx) > this._getValueThreshold();
-        const gestureStateDX = Math.sign(gestureState.dx);
-
-        if (hasGestureReachedThreshold) {
-            if (gestureStateDX === 1 && this.props.leftOptionEnabled) {
-                this.props.onLeftOptionTrigger();
-            } else if (gestureStateDX === -1 && this.props.rightOptionEnabled) {
-                this.props.onRightOptionTrigger();
-            }
-        }
+    _leftOptionTextStyle() {
+        return [
+            styles.textOption,
+            { color: this.props.leftOptionTextColor },
+            this.props.leftOptionTextStyle
+        ];
     }
 
-    _isAllowedToSwipe(gestureState) {
-        const isSwipingLeftToRight = gestureState.dx > 0;
-        const isSwipingRightToLeft = gestureState.dx < 0;
-
-        if (this._isAnimating) {
-            return false;
-        } else if (isSwipingLeftToRight && this.props.leftOptionEnabled) {
-            this.setState({ activeOption: "leftOption" });
-            return true;
-        } else if (isSwipingRightToLeft && this.props.rightOptionEnabled) {
-            this.setState({ activeOption: "rightOption" });
-            return true;
-        }
-
-        this.setState({ activeOption: null });
-        return false;
+    _rightOptionTextStyle() {
+        return [
+            styles.textOption,
+            { color: this.props.rightOptionTextColor },
+            this.props.rightOptionTextStyle
+        ];
     }
 
-    _getValueThreshold() {
-        return width * this.props.triggerActionThreshold;
+    _rightOptionsGradientStyle() {
+        return [styles.containerGradient, styles.containerGradientOptionRight];
     }
 
-    _hasReachedSlowDownThreshold(gestureState) {
-        const slowDownThreshold = this._getValueThreshold();
-        const absGestureStateX = Math.abs(gestureState.dx);
-        return absGestureStateX > 0 && absGestureStateX > slowDownThreshold;
-    }
+    _contentStyle = () => {
+        return [{ transform: [{ translateX: this.state.animationPositionX }] }];
+    };
+
+    _style = () => {
+        return [styles.containerSwipeableHorizontal, this.props.style];
+    };
 
     _renderLeftOption = () => {
         return (
             <LinearGradient
-                key="leftOption"
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 colors={this.props.leftOptionGradientColors}
@@ -201,9 +202,7 @@ export class ContainerSwipeableHorizontal extends PureComponent {
                         />
                     ) : null}
                     {this.props.leftOptionText ? (
-                        <Text style={this._leftOptionTextStyles()}>
-                            {this.props.leftOptionText}
-                        </Text>
+                        <Text style={this._leftOptionTextStyle()}>{this.props.leftOptionText}</Text>
                     ) : null}
                 </View>
             </LinearGradient>
@@ -213,11 +212,10 @@ export class ContainerSwipeableHorizontal extends PureComponent {
     _renderRightOption = () => {
         return (
             <LinearGradient
-                key="rightOption"
                 start={{ x: 1, y: 0 }}
                 end={{ x: 0, y: 0 }}
                 colors={this.props.rightOptionGradientColors}
-                style={[styles.containerGradient, styles.containerGradientOptionRight]}
+                style={this._rightOptionsGradientStyle()}
             >
                 <View style={styles.containerOption}>
                     {this.props.rightOptionIcon ? (
@@ -231,7 +229,7 @@ export class ContainerSwipeableHorizontal extends PureComponent {
                         />
                     ) : null}
                     {this.props.rightOptionText ? (
-                        <Text style={this._rightOptionTextStyles()}>
+                        <Text style={this._rightOptionTextStyle()}>
                             {this.props.rightOptionText}
                         </Text>
                     ) : null}
@@ -240,58 +238,17 @@ export class ContainerSwipeableHorizontal extends PureComponent {
         );
     };
 
-    _renderOptions = () => {
-        const toRender = [];
-
-        switch (this.state.activeOption) {
-            case "rightOption":
-                toRender.push(this._renderRightOption());
-                break;
-            case "leftOption":
-                toRender.push(this._renderLeftOption());
-                break;
-
-            default:
-                if (this.props.rightOptionEnabled) {
-                    toRender.push(this._renderRightOption());
-                }
-                if (this.props.leftOptionEnabled) {
-                    toRender.push(this._renderLeftOption());
-                }
-                break;
-        }
-
-        return toRender;
-    };
-
-    _style = () => {
-        return [styles.containerSwipeableHorizontal, this.props.style];
-    };
-
-    _contentStyle = () => {
-        return [{ transform: [{ translateX: this.state.animationPositionX }] }];
-    };
-
-    _leftOptionTextStyles() {
-        return [
-            styles.textOption,
-            { color: this.props.leftOptionTextColor },
-            this.props.leftOptionTextStyle
-        ];
-    }
-
-    _rightOptionTextStyles() {
-        return [
-            styles.textOption,
-            { color: this.props.rightOptionTextColor },
-            this.props.rightOptionTextStyle
-        ];
-    }
-
     render() {
         return (
-            <View style={this._style()} {...this._panResponder.panHandlers}>
-                <View style={styles.containerOptions}>{this._renderOptions()}</View>
+            <View style={this._style()} {...this.panResponder.panHandlers}>
+                <View style={styles.containerOptions}>
+                    {this.props.swipeLeftEnabled && this.state.swipingDirection === "left"
+                        ? this._renderLeftOption()
+                        : null}
+                    {this.props.swipeRightEnabled && this.state.swipingDirection === "right"
+                        ? this._renderRightOption()
+                        : null}
+                </View>
                 <Animated.View style={this._contentStyle()}>{this.props.children}</Animated.View>
             </View>
         );
@@ -313,14 +270,15 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end"
     },
     containerOption: {
-        marginHorizontal: 14,
+        paddingHorizontal: 20,
+        paddingVertical: 20,
         flexDirection: "column",
-        justifyContent: "space-evenly",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "center"
     },
     textOption: {
         fontFamily: baseStyles.FONT,
-        fontSize: 14,
+        fontSize: baseStyles.FONT_SIZE,
         letterSpacing: 0.5
     }
 });
