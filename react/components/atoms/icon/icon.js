@@ -9,6 +9,11 @@ export class Icon extends PureComponent {
     static get propTypes() {
         return {
             icon: PropTypes.string.isRequired,
+            fill: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.number,
+                PropTypes.arrayOf(PropTypes.number)
+            ]),
             color: PropTypes.oneOfType([
                 PropTypes.string,
                 PropTypes.number,
@@ -22,6 +27,7 @@ export class Icon extends PureComponent {
 
     static get defaultProps() {
         return {
+            fill: undefined,
             color: "#000000",
             height: 20,
             width: 20,
@@ -41,6 +47,7 @@ export class Icon extends PureComponent {
                 xml={this._icon()}
                 height={this.props.height}
                 width={this.props.width}
+                fill={this.props.fill}
                 stroke={this.props.color}
                 strokeWidth={this.props.strokeWidth}
                 style={this.props.style}
