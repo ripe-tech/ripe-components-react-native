@@ -70,14 +70,14 @@ const styles = StyleSheet.create({
         paddingRight: 20
     },
     text: {
+        flex: 1,
         fontSize: 16,
         paddingLeft: 14
     },
     timestamp: {
         color: "#a8b3bb",
         fontSize: 14,
-        right: 0,
         textAlign: "center",
-        width: 65
+        maxWidth: 80
     }
 });
