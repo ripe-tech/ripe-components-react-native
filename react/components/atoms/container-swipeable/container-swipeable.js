@@ -175,7 +175,7 @@ export class ContainerSwipeable extends PureComponent {
                     onResponderRelease={this.onOverlayPress}
                 />
                 <Animated.View
-                    style={this.containerStyle()}
+                    style={this._containerStyle()}
                     onLayout={event => this._onContainerLayout(event)}
                 >
                     <TouchableOpacity
