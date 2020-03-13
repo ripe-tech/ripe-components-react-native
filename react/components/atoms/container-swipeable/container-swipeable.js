@@ -249,7 +249,7 @@ export class ContainerSwipeable extends PureComponent {
                         {this.props.header}
                     </View>
                     {this.props.children}
-                    <View style={styles.safeAreaBottom} />
+                    {this.props.fullscreen && <View style={styles.safeAreaBottom} />}
                 </Animated.View>
             </>
         );
