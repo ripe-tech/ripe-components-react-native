@@ -18,7 +18,9 @@ storiesOf("Atoms", module)
                 <Text>I'm a custom header, press me</Text>
             </View>
         );
-        const snapThreshold = number("Snap Threshold", 0.5);
+        const snapFullscreenThreshold = number("Snap Fullscreen Threshold", 0.9);
+        const snapHideThreshold = number("Snap Hide Threshold", 0.5);
+        
         return (
             <View>
                 <Button
@@ -54,7 +56,8 @@ storiesOf("Atoms", module)
                     fullscreen={fullscreen}
                     doFullscreenSnap={doFullscreenSnap}
                     header={customHeader}
-                    snapThreshold={snapThreshold}
+                    snapFullscreenThreshold={snapFullscreenThreshold}
+                    snapHideThreshold={snapHideThreshold}
                     ref={ref}
                 >
                     <Text style={styles.content}>
