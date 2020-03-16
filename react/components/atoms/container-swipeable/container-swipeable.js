@@ -93,7 +93,7 @@ export class ContainerSwipeable extends PureComponent {
 
             Animated.parallel([
                 Animated.timing(this.state.contentHeight, {
-                    toValue: this.maxHeightValue < 1 ? this.maxHeightValue: 1,
+                    toValue: this.maxHeightValue < 1 ? this.maxHeightValue : 1,
                     duration: this.props.animationsDuration,
                     easing: Easing.inOut(Easing.ease)
                 }),
@@ -179,7 +179,7 @@ export class ContainerSwipeable extends PureComponent {
             this.animating = true;
 
             Animated.spring(this.state.contentHeight, {
-                toValue: this.maxHeightValue < 1 ? this.maxHeightValue: 1,
+                toValue: this.maxHeightValue < 1 ? this.maxHeightValue : 1,
                 duration: this.props.animationsDuration
             }).start(() => {
                 this.animating = false;
