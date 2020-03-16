@@ -76,7 +76,9 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     maxHeight = () => {
-        return this.props.fullscreen ? screenHeight : this.containerPosY - initialWindowSafeAreaInsets.top;;
+        return this.props.fullscreen
+            ? screenHeight
+            : this.containerPosY - initialWindowSafeAreaInsets.top;
     };
 
     open() {
