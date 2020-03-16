@@ -39,7 +39,7 @@ export class ContainerSwipeable extends PureComponent {
             fullscreen: false,
             doFullscreenSnap: false,
             header: undefined,
-            snapFullscreenThreshold: 0.9,
+            snapFullscreenThreshold: 0.8,
             snapHideThreshold: 0.5,
             pressThreshold: 2.5,
             onVisible: visible => {},
@@ -93,7 +93,7 @@ export class ContainerSwipeable extends PureComponent {
 
             Animated.parallel([
                 Animated.timing(this.state.contentHeight, {
-                    toValue: this.maxHeightValue,
+                    toValue: this.maxHeightValue < 1? this.maxHeightValue: 1,
                     duration: this.props.animationsDuration,
                     easing: Easing.inOut(Easing.ease)
                 }),
@@ -179,7 +179,7 @@ export class ContainerSwipeable extends PureComponent {
             this.animating = true;
 
             Animated.spring(this.state.contentHeight, {
-                toValue: this.maxHeightValue,
+                toValue: this.maxHeightValue < 1 ? this.maxHeightValue: 1,
                 duration: this.props.animationsDuration
             }).start(() => {
                 this.animating = false;
