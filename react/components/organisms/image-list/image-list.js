@@ -8,15 +8,9 @@ import { ImageListItem } from "./image-list-item";
 import { ImageListItemAdd } from "./image-list-item-add";
 
 export class ImageList extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = { images: [] };
-        this.itemsPerRow = Math.floor(Dimensions.get("window").width / 92);
-    }
-
     static get propTypes() {
         return {
+            images: PropTypes.arrayOf(PropTypes.shape({ uri: PropTypes.string.isRequired })),
             enableAdd: PropTypes.bool,
             enableRemove: PropTypes.bool,
             onAddImage: PropTypes.func,
@@ -27,6 +21,7 @@ export class ImageList extends PureComponent {
 
     static get defaultProps() {
         return {
+            images: [],
             enableAdd: true,
             enableRemove: true,
             onAddImage: () => {},
@@ -35,8 +30,29 @@ export class ImageList extends PureComponent {
         };
     }
 
-    setImages(images) {
-        this.setState({ images: images });
+    static _differentImages(one, other) {
+        if (one.length !== other.length) return true;
+
+        for (let index = 0; index < one.length; index++) {
+            if (one[index].uri !== other[index].uri) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.state = { images: props.images };
+        this.itemsPerRow = Math.floor(Dimensions.get("window").width / 92);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (ImageList._differentImages(this.props.images, prevProps.images)) {
+            this.setState({ images: this.props.images });
+        }
     }
 
     _addFillers() {
