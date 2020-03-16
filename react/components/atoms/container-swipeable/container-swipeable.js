@@ -93,7 +93,7 @@ export class ContainerSwipeable extends PureComponent {
 
             Animated.parallel([
                 Animated.timing(this.state.contentHeight, {
-                    toValue: 1,
+                    toValue: this.maxHeightValue,
                     duration: this.props.animationsDuration,
                     easing: Easing.inOut(Easing.ease)
                 }),
