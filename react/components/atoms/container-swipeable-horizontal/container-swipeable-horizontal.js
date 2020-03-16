@@ -33,7 +33,9 @@ export class ContainerSwipeableHorizontal extends PureComponent {
             swipeThreshold: PropTypes.number,
             afterThresholdSlowdown: PropTypes.number,
             swipeLeftEnabled: PropTypes.bool,
+            leftOptionGradientAngle: PropTypes.number,
             leftOptionGradientColors: PropTypes.array,
+            leftOptionGradientLocations: PropTypes.arrayOf(PropTypes.number),
             leftOptionText: PropTypes.string,
             leftOptionTextColor: PropTypes.string,
             leftOptionTextStyle: ViewPropTypes.style,
@@ -45,7 +47,9 @@ export class ContainerSwipeableHorizontal extends PureComponent {
             leftOptionIconStyle: ViewPropTypes.style,
             onLeftOptionTrigger: PropTypes.func,
             swipeRightEnabled: PropTypes.bool,
+            rightOptionGradientAngle: PropTypes.number,
             rightOptionGradientColors: PropTypes.array,
+            rightOptionGradientLocations: PropTypes.arrayOf(PropTypes.number),
             rightOptionText: PropTypes.string,
             rightOptionTextColor: PropTypes.string,
             rightOptionIconHeight: PropTypes.number,
@@ -65,7 +69,9 @@ export class ContainerSwipeableHorizontal extends PureComponent {
             swipeThreshold: 0.25,
             afterThresholdSlowdown: 8,
             swipeLeftEnabled: false,
+            leftOptionGradientAngle: 62,
             leftOptionGradientColors: [],
+            leftOptionGradientLocations: [0.1, 0.64],
             leftOptionText: undefined,
             leftOptionTextColor: "#ffffff",
             leftOptionTextStyle: {},
@@ -77,7 +83,9 @@ export class ContainerSwipeableHorizontal extends PureComponent {
             leftOptionIconStyle: undefined,
             onLeftOptionTrigger: () => null,
             swipeRightEnabled: false,
+            rightOptionGradientAngle: 62,
             rightOptionGradientColors: [],
+            rightOptionGradientLocations: [0.84, 0.4],
             rightOptionText: undefined,
             rightOptionTextColor: "#ffffff",
             rightOptionTextStyle: {},
@@ -185,9 +193,10 @@ export class ContainerSwipeableHorizontal extends PureComponent {
     _renderLeftOption = () => {
         return (
             <LinearGradient
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
+                angle={this.props.leftOptionGradientAngle}
                 colors={this.props.leftOptionGradientColors}
+                locations={this.props.leftOptionGradientLocations}
+                useAngle={true}
                 style={styles.containerGradient}
             >
                 <View style={styles.containerOption}>
@@ -212,9 +221,10 @@ export class ContainerSwipeableHorizontal extends PureComponent {
     _renderRightOption = () => {
         return (
             <LinearGradient
-                start={{ x: 1, y: 0 }}
-                end={{ x: 0, y: 0 }}
+                angle={this.props.rightOptionGradientAngle}
                 colors={this.props.rightOptionGradientColors}
+                locations={this.props.rightOptionGradientLocations}
+                useAngle={true}
                 style={this._rightOptionsGradientStyle()}
             >
                 <View style={styles.containerOption}>
