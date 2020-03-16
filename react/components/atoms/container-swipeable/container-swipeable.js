@@ -25,7 +25,8 @@ export class ContainerSwipeable extends PureComponent {
             fullscreen: PropTypes.bool,
             doFullscreenSnap: PropTypes.bool,
             header: PropTypes.element,
-            snapThreshold: PropTypes.number,
+            snapFullscreenThreshold: PropTypes.number,
+            snapHideThreshold: PropTypes.number,
             pressThreshold: PropTypes.number,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style
@@ -38,7 +39,8 @@ export class ContainerSwipeable extends PureComponent {
             fullscreen: false,
             doFullscreenSnap: false,
             header: undefined,
-            snapThreshold: 0.5,
+            snapFullscreenThreshold: 0.9,
+            snapHideThreshold: 0.5,
             pressThreshold: 2.5,
             onVisible: visible => {},
             style: {}
@@ -172,8 +174,7 @@ export class ContainerSwipeable extends PureComponent {
 
         if (this.panMoving) this.panMoving = false;
 
-        const snapFullscreenValue = this.maxHeightValue - this.props.snapThreshold;
-
+        const snapFullscreenValue = this.maxHeightValue * this.props.snapFullscreenThreshold;
         if (this.props.doFullscreenSnap && this.heightValue > snapFullscreenValue) {
             this.animating = true;
 
@@ -187,7 +188,7 @@ export class ContainerSwipeable extends PureComponent {
         }
 
         if (this.heightValue > 1) this.open();
-        else if (this.heightValue <= this.props.snapThreshold) this.close();
+        else if (this.heightValue <= this.props.snapHideThreshold) this.close();
     };
 
     _onContainerLayout = event => {
