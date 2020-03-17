@@ -24,7 +24,6 @@ storiesOf("Atoms", module)
                 <Text style={styles.textOption}>Add</Text>
             </View>
         );
-
         return (
             <View>
                 <ContainerSwipeable
@@ -33,9 +32,9 @@ storiesOf("Atoms", module)
                     leftOptionComponent={leftOptionComponent}
                     leftOptionGradientColors={["#ff0000", "#ffffff"]}
                     swipeRightEnabled={swipeRightEnabled}
-                    onLeftOptionTrigger={() => alert("swiped left to right")}
                     rightOptionComponent={rightOptionComponent}
                     rightOptionGradientColors={["#ff0000", "#ffffff"]}
+                    onLeftOptionTrigger={() => alert("swiped left to right")}
                     onRightOptionTrigger={() => alert("swiped right to left")}
                 >
                     <View style={styles.containerFiller} />
