@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, TouchableOpacity, View } from "react-native";
+import { StyleSheet, ViewPropTypes, TouchableOpacity, View, Text } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
 
-import { capitalize, dateTimeString } from "../../../util";
+import { capitalize, dateTimeString, baseStyles } from "../../../util";
 
-import { Icon, Text } from "../../atoms";
+import { Icon } from "../../atoms";
 
 export class Item extends PureComponent {
     static get propTypes() {
@@ -41,12 +41,12 @@ export class Item extends PureComponent {
         };
     }
 
-    _style = () => {
-        return [styles.item, styles[`item${capitalize(this.props.variant)}`], this.props.style];
-    };
-
     _contentStyle = () => {
         return [styles.itemContent, styles[`itemContent${capitalize(this.props.variant)}`]];
+    };
+
+    _style = () => {
+        return [styles.item, styles[`item${capitalize(this.props.variant)}`], this.props.style];
     };
 
     render() {
@@ -70,15 +70,13 @@ export class Item extends PureComponent {
                                 <View style={styles.headerTextContainer}>
                                     <Icon
                                         icon={this.props.headerIcon}
-                                        width={24}
-                                        height={24}
+                                        width={17}
+                                        height={17}
                                         color="#ffffff"
                                     />
-                                    <Text style={[styles.headerMargin, styles.headerText]}>
-                                        {this.props.headerText}
-                                    </Text>
+                                    <Text style={styles.headerText}>{this.props.headerText}</Text>
                                 </View>
-                                <Text style={styles.headerText}>
+                                <Text style={styles.headerDate}>
                                     {dateTimeString(this.props.headerDate)}
                                 </Text>
                             </View>
@@ -120,23 +118,25 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 6
     },
     header: {
-        height: 28,
         flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginRight: 12,
-        marginLeft: 12
+        height: 28,
+        paddingHorizontal: 12,
+        alignItems: "center"
     },
     headerTextContainer: {
         flexDirection: "row",
         alignItems: "center"
     },
-    headerMargin: {
-        marginLeft: 7
-    },
     headerText: {
         color: "#ffffff",
-        lineHeight: 30
+        marginLeft: 6,
+        fontFamily: baseStyles.FONT
+    },
+    headerDate: {
+        color: "#ffffff",
+        flex: 1,
+        textAlign: "right",
+        fontFamily: baseStyles.FONT
     }
 });
 
