@@ -4,9 +4,6 @@ import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
 
-import { Icon, Text } from "../../";
-import { baseStyles } from "../../../util";
-
 export class ContainerSwipeableHorizontal extends PureComponent {
     constructor(props) {
         super(props);
@@ -33,32 +30,22 @@ export class ContainerSwipeableHorizontal extends PureComponent {
             swipeThreshold: PropTypes.number,
             afterThresholdSlowdown: PropTypes.number,
             swipeLeftEnabled: PropTypes.bool,
+            leftOptionComponent: PropTypes.oneOfType([
+                PropTypes.arrayOf(PropTypes.node),
+                PropTypes.node
+            ]),
             leftOptionGradientAngle: PropTypes.number,
             leftOptionGradientColors: PropTypes.array,
             leftOptionGradientLocations: PropTypes.arrayOf(PropTypes.number),
-            leftOptionText: PropTypes.string,
-            leftOptionTextColor: PropTypes.string,
-            leftOptionTextStyle: ViewPropTypes.style,
-            leftOptionIcon: PropTypes.string,
-            leftOptionIconColor: PropTypes.string,
-            leftOptionIconHeight: PropTypes.number,
-            leftOptionIconWidth: PropTypes.number,
-            leftOptionIconStrokeWidth: PropTypes.number,
-            leftOptionIconStyle: ViewPropTypes.style,
             onLeftOptionTrigger: PropTypes.func,
             swipeRightEnabled: PropTypes.bool,
+            rightOptionComponent: PropTypes.oneOfType([
+                PropTypes.arrayOf(PropTypes.node),
+                PropTypes.node
+            ]),
             rightOptionGradientAngle: PropTypes.number,
             rightOptionGradientColors: PropTypes.array,
             rightOptionGradientLocations: PropTypes.arrayOf(PropTypes.number),
-            rightOptionText: PropTypes.string,
-            rightOptionTextColor: PropTypes.string,
-            rightOptionIconHeight: PropTypes.number,
-            rightOptionTextStyle: ViewPropTypes.style,
-            rightOptionIcon: PropTypes.string,
-            rightOptionIconColor: PropTypes.string,
-            rightOptionIconWidth: PropTypes.number,
-            rightOptionIconStrokeWidth: PropTypes.number,
-            rightOptionIconStyle: ViewPropTypes.style,
             onRightOptionTrigger: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -72,29 +59,11 @@ export class ContainerSwipeableHorizontal extends PureComponent {
             leftOptionGradientAngle: 62,
             leftOptionGradientColors: [],
             leftOptionGradientLocations: [0.1, 0.64],
-            leftOptionText: undefined,
-            leftOptionTextColor: "#ffffff",
-            leftOptionTextStyle: {},
-            leftOptionIcon: undefined,
-            leftOptionIconColor: "#ffffff",
-            leftOptionIconHeight: 32,
-            leftOptionIconWidth: 32,
-            leftOptionIconStrokeWidth: 1,
-            leftOptionIconStyle: undefined,
             onLeftOptionTrigger: () => null,
             swipeRightEnabled: false,
             rightOptionGradientAngle: 62,
             rightOptionGradientColors: [],
             rightOptionGradientLocations: [0.84, 0.4],
-            rightOptionText: undefined,
-            rightOptionTextColor: "#ffffff",
-            rightOptionTextStyle: {},
-            rightOptionIcon: undefined,
-            rightOptionIconColor: "#ffffff",
-            rightOptionIconHeight: 32,
-            rightOptionIconWidth: 32,
-            rightOptionIconStrokeWidth: 1,
-            rightOptionIconStyle: undefined,
             onRightOptionTrigger: () => null,
             style: {}
         };
@@ -162,22 +131,6 @@ export class ContainerSwipeableHorizontal extends PureComponent {
         });
     };
 
-    _leftOptionTextStyle() {
-        return [
-            styles.textOption,
-            { color: this.props.leftOptionTextColor },
-            this.props.leftOptionTextStyle
-        ];
-    }
-
-    _rightOptionTextStyle() {
-        return [
-            styles.textOption,
-            { color: this.props.rightOptionTextColor },
-            this.props.rightOptionTextStyle
-        ];
-    }
-
     _rightOptionsGradientStyle() {
         return [styles.containerGradient, styles.containerGradientOptionRight];
     }
@@ -199,21 +152,7 @@ export class ContainerSwipeableHorizontal extends PureComponent {
                 useAngle={true}
                 style={styles.containerGradient}
             >
-                <View style={styles.containerOption}>
-                    {this.props.leftOptionIcon ? (
-                        <Icon
-                            icon={this.props.leftOptionIcon}
-                            color={this.props.leftOptionIconColor}
-                            height={this.props.leftOptionIconHeight}
-                            width={this.props.leftOptionIconWidth}
-                            strokeWidth={this.props.leftOptionIconStrokeWidth}
-                            style={this.props.leftOptionIconStyle}
-                        />
-                    ) : null}
-                    {this.props.leftOptionText ? (
-                        <Text style={this._leftOptionTextStyle()}>{this.props.leftOptionText}</Text>
-                    ) : null}
-                </View>
+                <View style={styles.containerOption}>{this.props.leftOptionComponent}</View>
             </LinearGradient>
         );
     };
@@ -227,23 +166,7 @@ export class ContainerSwipeableHorizontal extends PureComponent {
                 useAngle={true}
                 style={this._rightOptionsGradientStyle()}
             >
-                <View style={styles.containerOption}>
-                    {this.props.rightOptionIcon ? (
-                        <Icon
-                            icon={this.props.rightOptionIcon}
-                            color={this.props.rightOptionIconColor}
-                            height={this.props.rightOptionIconHeight}
-                            width={this.props.rightOptionIconWidth}
-                            strokeWidth={this.props.rightOptionIconStrokeWidth}
-                            style={this.props.rightOptionIconStyle}
-                        />
-                    ) : null}
-                    {this.props.rightOptionText ? (
-                        <Text style={this._rightOptionTextStyle()}>
-                            {this.props.rightOptionText}
-                        </Text>
-                    ) : null}
-                </View>
+                <View style={styles.containerOption}>{this.props.rightOptionComponent}</View>
             </LinearGradient>
         );
     };
@@ -285,10 +208,5 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center"
-    },
-    textOption: {
-        fontFamily: baseStyles.FONT,
-        fontSize: baseStyles.FONT_SIZE,
-        letterSpacing: 0.5
     }
 });
