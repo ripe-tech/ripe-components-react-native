@@ -236,15 +236,20 @@ export class ContainerSwipeable extends PureComponent {
     };
 
     _containerStyle = () => {
-        if (!this.isLoaded()) return { opacity: 0 };
+        if (!this.isLoaded()) {
+            return [styles.contentContainer, { opacity: 0 }];
+        }
 
-        return {
-            height: this.state.contentHeight.interpolate({
-                inputRange: [0, 1],
-                outputRange: [this.headerHeight, this.containerHeight]
-            }),
-            maxHeight: this.maxHeight()
-        };
+        return [
+            styles.contentContainer,
+            {
+                height: this.state.contentHeight.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [this.headerHeight, this.containerHeight]
+                }),
+                maxHeight: this.maxHeight()
+            }
+        ];
     };
 
     _container = () => {
@@ -258,8 +263,7 @@ export class ContainerSwipeable extends PureComponent {
                     />
                 )}
                 <Animated.View
-                    // The "contentContainer" style needs to always be applied for the correct height to be applied
-                    style={[styles.contentContainer, this._containerStyle()]}
+                    style={this._containerStyle()}
                     onLayout={event => this._onContainerLayout(event)}
                 >
                     <View
