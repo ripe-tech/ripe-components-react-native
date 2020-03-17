@@ -137,7 +137,6 @@ export class ContainerSwipeable extends PureComponent {
         else this.open();
     }
 
-
     fullscreenSnapOpen() {
         if (this.animating) return;
 
@@ -160,7 +159,7 @@ export class ContainerSwipeable extends PureComponent {
             ]).start(() => {
                 this.animating = false;
             });
-        }); 
+        });
     }
 
     onOverlayPress = () => {
