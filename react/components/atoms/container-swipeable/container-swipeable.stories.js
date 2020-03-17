@@ -3,12 +3,12 @@ import { storiesOf } from "@storybook/react-native";
 import { View, StyleSheet, Text } from "react-native";
 import { withKnobs, number, boolean } from "@storybook/addon-knobs";
 
-import { ContainerSwipeableHorizontal, Icon } from "../..";
+import { ContainerSwipeable, Icon } from "../../";
 import { baseStyles } from "../../../util";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
-    .add("Container Swipeable Horizontal", () => {
+    .add("Container Swipeable", () => {
         const swipeThreshold = number("Trigger Action Threshold Value", 0.25);
         const swipeLeftEnabled = boolean("Left Option Enabled", true);
         const swipeRightEnabled = boolean("Right Option Enabled", true);
@@ -27,7 +27,7 @@ storiesOf("Atoms", module)
 
         return (
             <View>
-                <ContainerSwipeableHorizontal
+                <ContainerSwipeable
                     swipeThreshold={swipeThreshold}
                     swipeLeftEnabled={swipeLeftEnabled}
                     leftOptionComponent={leftOptionComponent}
@@ -39,7 +39,7 @@ storiesOf("Atoms", module)
                     onRightOptionTrigger={() => alert("swiped right to left")}
                 >
                     <View style={styles.containerFiller} />
-                </ContainerSwipeableHorizontal>
+                </ContainerSwipeable>
             </View>
         );
     });

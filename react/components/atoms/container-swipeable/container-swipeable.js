@@ -4,7 +4,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
 
-export class ContainerSwipeableHorizontal extends PureComponent {
+export class ContainerSwipeable extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -140,7 +140,7 @@ export class ContainerSwipeableHorizontal extends PureComponent {
     };
 
     _style = () => {
-        return [styles.containerSwipeableHorizontal, this.props.style];
+        return [styles.containerSwipeable, this.props.style];
     };
 
     _renderLeftOption = () => {
@@ -189,7 +189,7 @@ export class ContainerSwipeableHorizontal extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    containerSwipeableHorizontal: {},
+    containerSwipeable: {},
     containerOptions: {
         position: "absolute",
         height: "100%",

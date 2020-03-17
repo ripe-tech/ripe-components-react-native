@@ -14,4 +14,4 @@ export * from "./tag";
 export * from "./text";
 export * from "./textarea";
 export * from "./bar-animated";
-export * from "./container-swipeable-horizontal";
+export * from "./container-swipeable";
