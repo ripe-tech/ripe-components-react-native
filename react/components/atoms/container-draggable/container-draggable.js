@@ -3,7 +3,7 @@ import { Animated, StyleSheet, Modal, View, TouchableOpacity } from "react-nativ
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 import PropTypes from "prop-types";
 
-export class ContainerSwipeable extends PureComponent {
+export class ContainerDraggable extends PureComponent {
     static get propTypes() {
         return {
             animationsDuration: PropTypes.number,
@@ -96,7 +96,7 @@ export class ContainerSwipeable extends PureComponent {
 
     _containerStyle() {
         return [
-            styles.containerSwipeable,
+            styles.containerDraggable,
             {
                 backgroundColor: this.state.containerBackgroundColorAnimated.interpolate({
                     inputRange: [0, 1],
@@ -146,7 +146,7 @@ export class ContainerSwipeable extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    containerSwipeable: {
+    containerDraggable: {
         overflow: "hidden",
         flex: 1,
         backgroundColor: "transparent",
