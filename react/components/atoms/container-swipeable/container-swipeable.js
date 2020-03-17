@@ -183,6 +183,7 @@ export class ContainerSwipeable extends PureComponent {
                 duration: this.props.animationsDuration
             }).start(() => {
                 this.animating = false;
+                this.props.onVisible(true);
             });
             return;
         }
