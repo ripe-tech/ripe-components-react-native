@@ -1,3 +1,5 @@
+import { Dimensions } from "react-native";
+
 export const dateString = function(timestamp, separator = "/") {
     const date = new Date(timestamp * 1000);
     const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
@@ -56,4 +58,12 @@ export const capitalize = function(value) {
 export const isImage = function(fileName) {
     const regex = /\.(jpg|jpeg|png|gif)$/i;
     return regex.test(fileName);
+};
+
+const GUIDELINE_BASE_WIDTH = 414;
+
+export const scale = function(size) {
+    const { width } = Dimensions.get("window");
+    const scaledSize = (width / GUIDELINE_BASE_WIDTH) * size;
+    return scaledSize > size ? size : scaledSize;
 };
