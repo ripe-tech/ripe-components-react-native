@@ -1,5 +1,7 @@
 import { Dimensions } from "react-native";
 
+const GUIDELINE_BASE_WIDTH = 414;
+
 export const dateString = function(timestamp, separator = "/") {
     const date = new Date(timestamp * 1000);
     const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
@@ -60,8 +62,14 @@ export const isImage = function(fileName) {
     return regex.test(fileName);
 };
 
-const GUIDELINE_BASE_WIDTH = 414;
-
+/**
+ * Scales a size according to the window width. This means that
+ * if the current window width is half of the guideline value,
+ * then the size will be halvened.
+ *
+ * @param {Number} size The size to scale.
+ * @returns {Number} The size after scaling.
+ */
 export const scale = function(size) {
     const { width } = Dimensions.get("window");
     const scaledSize = (width / GUIDELINE_BASE_WIDTH) * size;
