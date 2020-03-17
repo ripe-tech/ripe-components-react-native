@@ -137,6 +137,32 @@ export class ContainerSwipeable extends PureComponent {
         else this.open();
     }
 
+
+    fullscreenSnapOpen() {
+        if (this.animating) return;
+
+        this.animating = true;
+
+        this.setState({ visible: true }, () => {
+            this.props.onVisible(true);
+
+            Animated.parallel([
+                Animated.spring(this.state.contentHeight, {
+                    toValue: this.maxHeightValue < 1 ? this.maxHeightValue : 1,
+                    duration: this.props.animationsDuration
+                }),
+                Animated.timing(this.state.overlayOpacity, {
+                    toValue: 0.5,
+                    duration: this.props.animationsDuration,
+                    useNativeDriver: true,
+                    easing: Easing.inOut(Easing.ease)
+                })
+            ]).start(() => {
+                this.animating = false;
+            });
+        }); 
+    }
+
     onOverlayPress = () => {
         this.close();
     };
@@ -176,15 +202,7 @@ export class ContainerSwipeable extends PureComponent {
 
         const snapFullscreenValue = this.maxHeightValue * this.props.snapFullscreenThreshold;
         if (this.props.doFullscreenSnap && this.heightValue > snapFullscreenValue) {
-            this.animating = true;
-
-            Animated.spring(this.state.contentHeight, {
-                toValue: this.maxHeightValue < 1 ? this.maxHeightValue : 1,
-                duration: this.props.animationsDuration
-            }).start(() => {
-                this.animating = false;
-                this.props.onVisible(true);
-            });
+            this.fullscreenSnapOpen();
             return;
         }
 
