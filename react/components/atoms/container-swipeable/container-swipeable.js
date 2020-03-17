@@ -37,7 +37,6 @@ export class ContainerSwipeable extends PureComponent {
             leftOptionGradientAngle: PropTypes.number,
             leftOptionGradientColors: PropTypes.array,
             leftOptionGradientLocations: PropTypes.arrayOf(PropTypes.number),
-            onLeftOptionTrigger: PropTypes.func,
             swipeRightEnabled: PropTypes.bool,
             rightOptionComponent: PropTypes.oneOfType([
                 PropTypes.arrayOf(PropTypes.node),
@@ -46,6 +45,7 @@ export class ContainerSwipeable extends PureComponent {
             rightOptionGradientAngle: PropTypes.number,
             rightOptionGradientColors: PropTypes.array,
             rightOptionGradientLocations: PropTypes.arrayOf(PropTypes.number),
+            onLeftOptionTrigger: PropTypes.func,
             onRightOptionTrigger: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -59,11 +59,11 @@ export class ContainerSwipeable extends PureComponent {
             leftOptionGradientAngle: 62,
             leftOptionGradientColors: [],
             leftOptionGradientLocations: [0.1, 0.64],
-            onLeftOptionTrigger: () => null,
             swipeRightEnabled: false,
             rightOptionGradientAngle: 62,
             rightOptionGradientColors: [],
             rightOptionGradientLocations: [0.84, 0.4],
+            onLeftOptionTrigger: () => null,
             onRightOptionTrigger: () => null,
             style: {}
         };
@@ -113,7 +113,7 @@ export class ContainerSwipeable extends PureComponent {
         }
     };
 
-    onPanResponderRelease = (eventt, gestureState) => {
+    onPanResponderRelease = (event, gestureState) => {
         this.animating = true;
 
         if (this.isAfterThreshold(gestureState.dx)) {
