@@ -2,16 +2,16 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { Button, View, StyleSheet } from "react-native";
 
-import { ContainerSwipeable } from "./container-swipeable";
+import { ContainerDraggable } from "./container-draggable";
 
 import { Text } from "../..";
 
-storiesOf("Atoms", module).add("Container Swipeable", () => {
+storiesOf("Atoms", module).add("Container Draggable", () => {
     const ref = React.createRef();
     return (
         <View>
             <Button title="Toggle" onPress={() => ref.current.toggle()} />
-            <ContainerSwipeable ref={ref}>
+            <ContainerDraggable ref={ref}>
                 <Text style={styles.text}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
@@ -20,7 +20,7 @@ storiesOf("Atoms", module).add("Container Swipeable", () => {
                     fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
                     culpa qui officia deserunt mollit anim id est laborum.
                 </Text>
-            </ContainerSwipeable>
+            </ContainerDraggable>
         </View>
     );
 });
