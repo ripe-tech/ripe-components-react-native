@@ -8,10 +8,10 @@ import {
     Animated,
     Easing,
     StatusBar,
-    Platform
+    Platform,
+    Modal
 } from "react-native";
 import PropTypes from "prop-types";
-import Modal from "react-native-modal";
 
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -204,6 +204,7 @@ export class ContainerDraggable extends PureComponent {
                 {this.props.fullscreen ? (
                     <Modal
                         style={styles.modal}
+                        transparent={true}
                         visible={this.state.visible || !this.isLoaded()}
                         onRequestClose={this.onModalRequestClose}
                     >
