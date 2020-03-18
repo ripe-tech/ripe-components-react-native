@@ -9,7 +9,7 @@ import { Text } from "../..";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
-    .add("Container Swipeable", () => {
+    .add("Container Draggable", () => {
         const ref = React.createRef();
         const fullscreen = boolean("Fullscreen", false);
         const customHeader = (
