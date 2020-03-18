@@ -199,9 +199,7 @@ export class ContainerSwipeable extends PureComponent {
         } else if (this.heightValue >= this.maxHeightUsableValue())
             this.heightValue = this.maxHeightUsableValue();
 
-        this.state.overlayOpacity.setValue(
-            (this.heightValue * 0.5) / this.maxHeightUsableValue()
-        );
+        this.state.overlayOpacity.setValue((this.heightValue * 0.5) / this.maxHeightUsableValue());
         this.state.contentHeight.setValue(this.heightValue);
     };
 
