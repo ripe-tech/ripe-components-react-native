@@ -212,14 +212,13 @@ export class ContainerSwipeable extends PureComponent {
         if (this.panMoving) this.panMoving = false;
 
         const snapFullscreenValue = this.maxHeightValue * this.props.snapFullscreenThreshold;
-
         if (this.props.doFullscreenSnap && this.heightValue > snapFullscreenValue) {
             this.fullscreenSnapOpen();
             return;
         }
 
-        if (this.heightValue > 1) this.open();
-        else if (this.heightValue <= this.props.snapHideThreshold) this.close();
+        if (this.heightValue > this.props.snapHideThreshold) this.open();
+        else this.close();
     };
 
     _onContainerLayout = event => {
