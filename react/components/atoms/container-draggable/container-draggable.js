@@ -1,25 +1,41 @@
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, Modal, View, TouchableOpacity } from "react-native";
-import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
+import {
+    ViewPropTypes,
+    StyleSheet,
+    View,
+    Dimensions,
+    TouchableOpacity,
+    Animated,
+    Easing,
+    StatusBar,
+    Platform
+} from "react-native";
 import PropTypes from "prop-types";
+import Modal from "react-native-modal";
+
+import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
+
+let screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
+if (Platform.OS === "android") screenHeight -= StatusBar.currentHeight;
 
 export class ContainerDraggable extends PureComponent {
     static get propTypes() {
         return {
             animationsDuration: PropTypes.number,
-            hitSlop: PropTypes.shape({
-                top: PropTypes.number.isRequired,
-                left: PropTypes.number.isRequired,
-                right: PropTypes.number.isRequired,
-                bottom: PropTypes.number.isRequired
-            })
+            fullscreen: PropTypes.bool,
+            header: PropTypes.element,
+            onVisible: PropTypes.func,
+            style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
             animationsDuration: 300,
-            hitSlop: { top: 20, left: 20, right: 20, bottom: 20 }
+            fullscreen: false,
+            header: undefined,
+            onVisible: visible => {},
+            style: {}
         };
     }
 
@@ -27,147 +43,210 @@ export class ContainerDraggable extends PureComponent {
         super(props);
 
         this.state = {
+            containerHeightLoaded: false,
+            headerHeightLoaded: false,
             visible: false,
-            modalVisible: false,
-            containerChildrenHeight: null,
-            containerBackgroundColorAnimated: new Animated.Value(0),
-            containerInnerHeightAnimated: new Animated.Value(0)
+            overlayOpacity: new Animated.Value(0),
+            contentHeight: new Animated.Value(0)
         };
 
+        this.headerHeight = 0;
+        this.containerHeight = 0;
+        this.containerPosY = 0;
         this.animating = false;
     }
 
-    toggle = () => {
-        if (this.animating) {
-            return;
-        }
-
-        if (this.state.visible) {
-            this.setState(
-                {
-                    visible: false
-                },
-                () => {
-                    this._toggleAnimations();
-                }
-            );
-        } else {
-            this.setState(
-                {
-                    visible: true,
-                    modalVisible: true
-                },
-                () => {
-                    this._toggleAnimations();
-                }
-            );
-        }
+    isLoaded = () => {
+        return this.state.containerHeightLoaded && this.state.headerHeightLoaded;
     };
 
-    onLayout = event => {
-        this.setState({
-            containerChildrenHeight: event.nativeEvent.layout.height
+    open() {
+        if (this.animating) return;
+
+        this.animating = true;
+
+        this.setState({ visible: true }, () => {
+            this.props.onVisible(true);
+
+            Animated.parallel([
+                Animated.timing(this.state.contentHeight, {
+                    toValue: 1,
+                    duration: this.props.animationsDuration,
+                    easing: Easing.inOut(Easing.ease)
+                }),
+                Animated.timing(this.state.overlayOpacity, {
+                    toValue: 0.5,
+                    duration: this.props.animationsDuration,
+                    useNativeDriver: true,
+                    easing: Easing.inOut(Easing.ease)
+                })
+            ]).start(() => {
+                this.animating = false;
+            });
         });
-    };
+    }
 
-    _toggleAnimations = () => {
+    close() {
+        if (this.animating) return;
+
         this.animating = true;
 
         Animated.parallel([
-            Animated.timing(this.state.containerBackgroundColorAnimated, {
-                toValue: this.state.visible ? 1 : 0,
-                duration: this.props.animationsDuration
+            Animated.timing(this.state.contentHeight, {
+                toValue: 0,
+                duration: this.props.animationsDuration,
+                easing: Easing.inOut(Easing.ease)
             }),
-            Animated.timing(this.state.containerInnerHeightAnimated, {
-                toValue: this.state.visible ? 1 : 0,
-                duration: this.props.animationsDuration
+            Animated.timing(this.state.overlayOpacity, {
+                toValue: 0,
+                duration: this.props.animationsDuration,
+                useNativeDriver: true,
+                easing: Easing.inOut(Easing.ease)
             })
         ]).start(() => {
-            this.setState(
-                {
-                    modalVisible: this.state.visible
-                },
-                () => {
-                    this.animating = false;
-                }
-            );
+            this.animating = false;
+            this.setState({ visible: false }, this.props.onVisible(false));
         });
+    }
+
+    toggle() {
+        if (this.state.visible) this.close();
+        else this.open();
+    }
+
+    onOverlayPress = () => {
+        this.close();
     };
 
-    _containerStyle() {
-        return [
-            styles.containerDraggable,
-            {
-                backgroundColor: this.state.containerBackgroundColorAnimated.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: ["rgba(29, 38, 49, 0)", "rgba(29, 38, 49, 0.35)"]
-                })
-            }
-        ];
-    }
+    onModalRequestClose = () => {
+        this.close();
+    };
 
-    _containerInnerStyle() {
+    onHeaderPress = () => {
+        this.toggle();
+    };
+
+    _onContainerLayout = event => {
+        if (this.state.containerHeightLoaded) return;
+
+        this.containerHeight = event.nativeEvent.layout.height;
+        this.containerPosY = event.nativeEvent.layout.y + this.containerHeight;
+
+        this.setState({ containerHeightLoaded: true });
+    };
+
+    _onHeaderLayout = event => {
+        if (this.state.headerHeightLoaded) return;
+
+        this.headerHeight = event.nativeEvent.layout.height;
+        this.setState({ headerHeightLoaded: true });
+    };
+
+    _overlayStyle = () => {
         return [
-            styles.containerInner,
+            styles.overlay,
             {
-                height: this.state.containerInnerHeightAnimated.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [1, this.state.containerChildrenHeight]
-                })
+                position: this.props.fullscreen ? undefined : "absolute",
+                opacity: this.state.overlayOpacity
             }
         ];
-    }
+    };
+
+    _containerStyle = () => {
+        if (!this.isLoaded()) {
+            return [styles.contentContainer, { opacity: 0 }];
+        }
+
+        return [
+            styles.contentContainer,
+            {
+                height: this.state.contentHeight.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [this.headerHeight, this.containerHeight]
+                }),
+                maxHeight: this.props.fullscreen ? screenHeight : this.containerPosY
+            }
+        ];
+    };
+
+    _container = () => {
+        return (
+            <>
+                {this.state.visible && (
+                    <Animated.View
+                        style={this._overlayStyle()}
+                        onStartShouldSetResponder={e => true}
+                        onResponderRelease={this.onOverlayPress}
+                    />
+                )}
+                <Animated.View
+                    style={this._containerStyle()}
+                    onLayout={event => this._onContainerLayout(event)}
+                >
+                    <TouchableOpacity
+                        onLayout={event => this._onHeaderLayout(event)}
+                        activeOpacity={1}
+                        onPress={this.onHeaderPress}
+                    >
+                        <View style={styles.knob} />
+                        {this.props.header}
+                    </TouchableOpacity>
+                    {this.props.children}
+                    {this.props.fullscreen && <View style={styles.safeAreaBottom} />}
+                </Animated.View>
+            </>
+        );
+    };
 
     render() {
         return (
-            <Modal animationType="none" transparent={true} visible={this.state.modalVisible}>
-                <Animated.View
-                    style={this._containerStyle()}
-                    onStartShouldSetResponder={this.toggle}
-                >
-                    <Animated.View
-                        style={this._containerInnerStyle()}
-                        onStartShouldSetResponder={() => true}
+            <>
+                {this.props.fullscreen ? (
+                    <Modal
+                        style={styles.modal}
+                        visible={this.state.visible || !this.isLoaded()}
+                        onRequestClose={this.onModalRequestClose}
                     >
-                        <View onLayout={this.onLayout} pointerEvents="auto">
-                            <TouchableOpacity
-                                style={styles.buttonBar}
-                                onPress={this.toggle}
-                                hitSlop={this.props.hitSlop}
-                            />
-                            {this.props.children}
-                            <View style={styles.safeAreaBottom} />
-                        </View>
-                    </Animated.View>
-                </Animated.View>
-            </Modal>
+                        {this._container()}
+                    </Modal>
+                ) : (
+                    this._container()
+                )}
+            </>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    containerDraggable: {
-        overflow: "hidden",
-        flex: 1,
-        backgroundColor: "transparent",
-        justifyContent: "flex-end"
+    overlay: {
+        backgroundColor: "#000000",
+        height: screenHeight,
+        width: "100%",
+        bottom: 0
     },
-    containerInner: {
+    modal: {
+        position: "absolute",
+        width: "100%",
+        margin: 0,
+        bottom: 0
+    },
+    contentContainer: {
+        position: "absolute",
         overflow: "hidden",
-        borderTopRightRadius: 6,
-        borderTopLeftRadius: 6,
+        width: "100%",
+        bottom: 0,
         backgroundColor: "#ffffff"
     },
-    safeAreaBottom: {
-        paddingBottom: initialWindowSafeAreaInsets.bottom
-    },
-    buttonBar: {
+    knob: {
         alignSelf: "center",
-        marginVertical: 6,
         width: 50,
         height: 5,
-        opacity: 0.15,
+        marginVertical: 6,
         borderRadius: 100,
-        backgroundColor: "#1a2632"
+        backgroundColor: "#1a2632",
+        opacity: 0.15
+    },
+    safeAreaBottom: {
+        height: initialWindowSafeAreaInsets.bottom
     }
 });
