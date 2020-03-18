@@ -3,12 +3,6 @@ import { StyleSheet, ViewPropTypes, Animated, PanResponder, Dimensions, View } f
 import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
-import Modal from "react-native-modal";
-
-import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
-
-let screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
-if (Platform.OS === "android") screenHeight -= StatusBar.currentHeight;
 
 export class ContainerSwipeable extends PureComponent {
     constructor(props) {
@@ -135,19 +129,6 @@ export class ContainerSwipeable extends PureComponent {
         }).start(() => {
             this.animating = false;
         });
-    }
-
-    toggle() {
-        if (this.state.visible) this.close();
-        else this.open();
-    }
-
-    onOverlayPress = () => {
-        this.close();
-    };
-
-    onModalRequestClose = () => {
-        this.close();
     };
 
     _rightOptionsGradientStyle() {
@@ -190,7 +171,7 @@ export class ContainerSwipeable extends PureComponent {
         );
     };
 
-    _container = () => {
+    render() {
         return (
             <View style={this._style()} {...this.panResponder.panHandlers}>
                 <View style={styles.containerOptions}>
