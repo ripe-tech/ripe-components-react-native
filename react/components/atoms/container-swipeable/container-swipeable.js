@@ -83,7 +83,7 @@ export class ContainerSwipeable extends PureComponent {
             : this.containerPosY - initialWindowSafeAreaInsets.top;
     };
 
-    maxHeightAnimationValue = () => {
+    maxHeightUsableValue = () => {
         return this.maxHeightValue < 1 ? this.maxHeightValue : 1;
     };
 
@@ -97,7 +97,7 @@ export class ContainerSwipeable extends PureComponent {
 
             Animated.parallel([
                 Animated.timing(this.state.contentHeight, {
-                    toValue: this.maxHeightAnimationValue(),
+                    toValue: this.maxHeightUsableValue(),
                     duration: this.props.animationsDuration,
                     easing: Easing.inOut(Easing.ease)
                 }),
@@ -151,7 +151,7 @@ export class ContainerSwipeable extends PureComponent {
 
             Animated.parallel([
                 Animated.spring(this.state.contentHeight, {
-                    toValue: this.maxHeightAnimationValue(),
+                    toValue: this.maxHeightUsableValue(),
                     duration: this.props.animationsDuration
                 }),
                 Animated.timing(this.state.overlayOpacity, {
@@ -196,11 +196,11 @@ export class ContainerSwipeable extends PureComponent {
         if (this.heightValue <= 0) {
             this.heightValue = 0;
             if (this.state.visible) this.setState({ visible: false }, this.props.onVisible(false));
-        } else if (this.heightValue >= this.maxHeightAnimationValue())
-            this.heightValue = this.maxHeightAnimationValue();
+        } else if (this.heightValue >= this.maxHeightUsableValue())
+            this.heightValue = this.maxHeightUsableValue();
 
         this.state.overlayOpacity.setValue(
-            (this.heightValue * 0.5) / this.maxHeightAnimationValue()
+            (this.heightValue * 0.5) / this.maxHeightUsableValue()
         );
         this.state.contentHeight.setValue(this.heightValue);
     };
@@ -217,7 +217,7 @@ export class ContainerSwipeable extends PureComponent {
             return;
         }
 
-        if (this.heightValue > this.maxHeightAnimationValue() * this.props.snapHideThreshold)
+        if (this.heightValue > this.maxHeightUsableValue() * this.props.snapHideThreshold)
             this.open();
         else this.close();
     };
