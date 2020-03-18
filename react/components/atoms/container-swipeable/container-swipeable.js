@@ -217,7 +217,8 @@ export class ContainerSwipeable extends PureComponent {
             return;
         }
 
-        if (this.heightValue > this.props.snapHideThreshold) this.open();
+        if (this.heightValue > this.maxHeightAnimationValue() * this.props.snapHideThreshold)
+            this.open();
         else this.close();
     };
 
