@@ -24,9 +24,6 @@ storiesOf("Atoms", module)
                 <Text style={styles.textOption}>Add</Text>
             </View>
         );
-        const snapFullscreenThreshold = number("Snap Fullscreen Threshold", 0.9);
-        const snapHideThreshold = number("Snap Hide Threshold", 0.5);
-
         return (
             <View>
                 <ContainerSwipeable
