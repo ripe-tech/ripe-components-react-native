@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, boolean } from "@storybook/addon-knobs";
+import { withKnobs, boolean, number } from "@storybook/addon-knobs";
 import { Button, View, StyleSheet } from "react-native";
 
 import { ContainerDraggable } from "./container-draggable";
@@ -12,11 +12,15 @@ storiesOf("Atoms", module)
     .add("Container Draggable", () => {
         const ref = React.createRef();
         const fullscreen = boolean("Fullscreen", false);
+        const doFullscreenSnap = boolean("Fullscreen Snap", false);
         const customHeader = (
             <View style={{ height: 30, backgroundColor: "#ffaaaa" }}>
                 <Text>I'm a custom header, press me</Text>
             </View>
         );
+        const snapFullscreenThreshold = number("Snap Fullscreen Threshold", 0.9);
+        const snapHideThreshold = number("Snap Hide Threshold", 0.5);
+
         return (
             <View>
                 <Button
@@ -48,7 +52,14 @@ storiesOf("Atoms", module)
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                     </Text>
                 </View>
-                <ContainerDraggable fullscreen={fullscreen} header={customHeader} ref={ref}>
+                <ContainerDraggable
+                    fullscreen={fullscreen}
+                    doFullscreenSnap={doFullscreenSnap}
+                    header={customHeader}
+                    snapFullscreenThreshold={snapFullscreenThreshold}
+                    snapHideThreshold={snapHideThreshold}
+                    ref={ref}
+                >
                     <Text style={styles.content}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

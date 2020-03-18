@@ -4,18 +4,18 @@ import {
     StyleSheet,
     View,
     Dimensions,
-    TouchableOpacity,
     Animated,
     Easing,
     StatusBar,
-    Platform
+    Platform,
+    PanResponder,
+    Modal
 } from "react-native";
 import PropTypes from "prop-types";
-import Modal from "react-native-modal";
 
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 
-let screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
+let screenHeight = Dimensions.get("window").height - initialWindowSafeAreaInsets.top;
 if (Platform.OS === "android") screenHeight -= StatusBar.currentHeight;
 
 export class ContainerDraggable extends PureComponent {
@@ -23,7 +23,11 @@ export class ContainerDraggable extends PureComponent {
         return {
             animationsDuration: PropTypes.number,
             fullscreen: PropTypes.bool,
+            doFullscreenSnap: PropTypes.bool,
             header: PropTypes.element,
+            snapFullscreenThreshold: PropTypes.number,
+            snapHideThreshold: PropTypes.number,
+            pressThreshold: PropTypes.number,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -33,7 +37,11 @@ export class ContainerDraggable extends PureComponent {
         return {
             animationsDuration: 300,
             fullscreen: false,
+            doFullscreenSnap: false,
             header: undefined,
+            snapFullscreenThreshold: 0.8,
+            snapHideThreshold: 0.5,
+            pressThreshold: 2.5,
             onVisible: visible => {},
             style: {}
         };
@@ -53,11 +61,30 @@ export class ContainerDraggable extends PureComponent {
         this.headerHeight = 0;
         this.containerHeight = 0;
         this.containerPosY = 0;
+        this.initialContentHeight = 0;
         this.animating = false;
+        this.panMoving = false;
+
+        this.panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: (_evt, _gestureState) => true,
+            onPanResponderGrant: this.onPanResponderGrant,
+            onPanResponderMove: this.onPanResponderMove,
+            onPanResponderRelease: this.onPanResponderRelease
+        });
     }
 
     isLoaded = () => {
         return this.state.containerHeightLoaded && this.state.headerHeightLoaded;
+    };
+
+    maxHeight = () => {
+        return this.props.fullscreen
+            ? screenHeight
+            : this.containerPosY - initialWindowSafeAreaInsets.top;
+    };
+
+    maxHeightUsableValue = () => {
+        return this.maxHeightValue < 1 ? this.maxHeightValue : 1;
     };
 
     open() {
@@ -70,7 +97,7 @@ export class ContainerDraggable extends PureComponent {
 
             Animated.parallel([
                 Animated.timing(this.state.contentHeight, {
-                    toValue: 1,
+                    toValue: this.maxHeightUsableValue(),
                     duration: this.props.animationsDuration,
                     easing: Easing.inOut(Easing.ease)
                 }),
@@ -114,6 +141,31 @@ export class ContainerDraggable extends PureComponent {
         else this.open();
     }
 
+    fullscreenSnapOpen() {
+        if (this.animating) return;
+
+        this.animating = true;
+
+        this.setState({ visible: true }, () => {
+            this.props.onVisible(true);
+
+            Animated.parallel([
+                Animated.spring(this.state.contentHeight, {
+                    toValue: this.maxHeightUsableValue(),
+                    duration: this.props.animationsDuration
+                }),
+                Animated.timing(this.state.overlayOpacity, {
+                    toValue: 0.5,
+                    duration: this.props.animationsDuration,
+                    useNativeDriver: true,
+                    easing: Easing.inOut(Easing.ease)
+                })
+            ]).start(() => {
+                this.animating = false;
+            });
+        });
+    }
+
     onOverlayPress = () => {
         this.close();
     };
@@ -124,6 +176,48 @@ export class ContainerDraggable extends PureComponent {
 
     onHeaderPress = () => {
         this.toggle();
+    };
+
+    onPanResponderGrant = (_evt, _gestureState) => {
+        this.initialContentHeight = this.state.contentHeight._value;
+        this.maxHeightValue =
+            (this.maxHeight() - this.headerHeight) / (this.containerHeight - this.headerHeight);
+    };
+
+    onPanResponderMove = (_evt, gestureState) => {
+        if (Math.abs(gestureState.dy) > this.props.pressThreshold) this.panMoving = true;
+
+        const heightMoveValue = -(gestureState.dy / (this.containerHeight - this.headerHeight));
+
+        this.heightValue = this.initialContentHeight + heightMoveValue;
+
+        if (!this.state.visible) this.setState({ visible: true }, this.props.onVisible(true));
+
+        if (this.heightValue <= 0) {
+            this.heightValue = 0;
+            if (this.state.visible) this.setState({ visible: false }, this.props.onVisible(false));
+        } else if (this.heightValue >= this.maxHeightUsableValue())
+            this.heightValue = this.maxHeightUsableValue();
+
+        this.state.overlayOpacity.setValue((this.heightValue * 0.5) / this.maxHeightUsableValue());
+        this.state.contentHeight.setValue(this.heightValue);
+    };
+
+    onPanResponderRelease = (_evt, gestureState) => {
+        if (!this.panMoving && Math.abs(gestureState.dy) <= this.props.pressThreshold)
+            this.onHeaderPress();
+
+        if (this.panMoving) this.panMoving = false;
+
+        const snapFullscreenValue = this.maxHeightValue * this.props.snapFullscreenThreshold;
+        if (this.props.doFullscreenSnap && this.heightValue > snapFullscreenValue) {
+            this.fullscreenSnapOpen();
+            return;
+        }
+
+        if (this.heightValue > this.maxHeightUsableValue() * this.props.snapHideThreshold)
+            this.open();
+        else this.close();
     };
 
     _onContainerLayout = event => {
@@ -164,7 +258,7 @@ export class ContainerDraggable extends PureComponent {
                     inputRange: [0, 1],
                     outputRange: [this.headerHeight, this.containerHeight]
                 }),
-                maxHeight: this.props.fullscreen ? screenHeight : this.containerPosY
+                maxHeight: this.maxHeight()
             }
         ];
     };
@@ -183,14 +277,13 @@ export class ContainerDraggable extends PureComponent {
                     style={this._containerStyle()}
                     onLayout={event => this._onContainerLayout(event)}
                 >
-                    <TouchableOpacity
+                    <View
                         onLayout={event => this._onHeaderLayout(event)}
-                        activeOpacity={1}
-                        onPress={this.onHeaderPress}
+                        {...this.panResponder.panHandlers}
                     >
                         <View style={styles.knob} />
                         {this.props.header}
-                    </TouchableOpacity>
+                    </View>
                     {this.props.children}
                     {this.props.fullscreen && <View style={styles.safeAreaBottom} />}
                 </Animated.View>
@@ -204,6 +297,7 @@ export class ContainerDraggable extends PureComponent {
                 {this.props.fullscreen ? (
                     <Modal
                         style={styles.modal}
+                        transparent={true}
                         visible={this.state.visible || !this.isLoaded()}
                         onRequestClose={this.onModalRequestClose}
                     >
