@@ -85,7 +85,7 @@ export class ContainerSwipeable extends PureComponent {
 
     maxHeightAnimationValue = () => {
         return this.maxHeightValue < 1 ? this.maxHeightValue : 1;
-    }
+    };
 
     open() {
         if (this.animating) return;
@@ -196,10 +196,12 @@ export class ContainerSwipeable extends PureComponent {
         if (this.heightValue <= 0) {
             this.heightValue = 0;
             if (this.state.visible) this.setState({ visible: false }, this.props.onVisible(false));
-        } else if (this.heightValue >= this.maxHeightAnimationValue()) this.heightValue = this.maxHeightAnimationValue();
+        } else if (this.heightValue >= this.maxHeightAnimationValue())
+            this.heightValue = this.maxHeightAnimationValue();
 
-
-        this.state.overlayOpacity.setValue((this.heightValue * 0.5) / this.maxHeightAnimationValue());
+        this.state.overlayOpacity.setValue(
+            (this.heightValue * 0.5) / this.maxHeightAnimationValue()
+        );
         this.state.contentHeight.setValue(this.heightValue);
     };
 
