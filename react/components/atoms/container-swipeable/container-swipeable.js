@@ -83,6 +83,10 @@ export class ContainerSwipeable extends PureComponent {
             : this.containerPosY - initialWindowSafeAreaInsets.top;
     };
 
+    maxHeightAnimationValue = () => {
+        return this.maxHeightValue < 1 ? this.maxHeightValue : 1;
+    }
+
     open() {
         if (this.animating) return;
 
@@ -93,7 +97,7 @@ export class ContainerSwipeable extends PureComponent {
 
             Animated.parallel([
                 Animated.timing(this.state.contentHeight, {
-                    toValue: this.maxHeightValue < 1 ? this.maxHeightValue : 1,
+                    toValue: this.maxHeightAnimationValue(),
                     duration: this.props.animationsDuration,
                     easing: Easing.inOut(Easing.ease)
                 }),
@@ -147,7 +151,7 @@ export class ContainerSwipeable extends PureComponent {
 
             Animated.parallel([
                 Animated.spring(this.state.contentHeight, {
-                    toValue: this.maxHeightValue < 1 ? this.maxHeightValue : 1,
+                    toValue: this.maxHeightAnimationValue(),
                     duration: this.props.animationsDuration
                 }),
                 Animated.timing(this.state.overlayOpacity, {
@@ -192,9 +196,10 @@ export class ContainerSwipeable extends PureComponent {
         if (this.heightValue <= 0) {
             this.heightValue = 0;
             if (this.state.visible) this.setState({ visible: false }, this.props.onVisible(false));
-        } else if (this.heightValue >= this.maxHeightValue) this.heightValue = this.maxHeightValue;
+        } else if (this.heightValue >= this.maxHeightAnimationValue()) this.heightValue = this.maxHeightAnimationValue();
 
-        this.state.overlayOpacity.setValue(this.heightValue);
+
+        this.state.overlayOpacity.setValue((this.heightValue * 0.5) / this.maxHeightAnimationValue());
         this.state.contentHeight.setValue(this.heightValue);
     };
 
