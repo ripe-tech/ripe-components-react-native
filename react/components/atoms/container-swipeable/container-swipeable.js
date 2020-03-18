@@ -8,10 +8,10 @@ import {
     Easing,
     StatusBar,
     Platform,
-    PanResponder
+    PanResponder,
+    Modal
 } from "react-native";
 import PropTypes from "prop-types";
-import Modal from "react-native-modal";
 
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -200,6 +200,7 @@ export class ContainerSwipeable extends PureComponent {
         if (this.panMoving) this.panMoving = false;
 
         const snapFullscreenValue = this.maxHeightValue * this.props.snapFullscreenThreshold;
+
         if (this.props.doFullscreenSnap && this.heightValue > snapFullscreenValue) {
             this.fullscreenSnapOpen();
             return;
@@ -286,6 +287,7 @@ export class ContainerSwipeable extends PureComponent {
                 {this.props.fullscreen ? (
                     <Modal
                         style={styles.modal}
+                        transparent={true}
                         visible={this.state.visible || !this.isLoaded()}
                         onRequestClose={this.onModalRequestClose}
                     >
