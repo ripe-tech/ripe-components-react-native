@@ -1,15 +1,7 @@
 import React, { PureComponent } from "react";
-import {
-    ViewPropTypes,
-    StyleSheet,
-    View,
-    Dimensions,
-    TouchableOpacity,
-    Animated,
-    Easing,
-    StatusBar,
-    Platform
-} from "react-native";
+import { StyleSheet, ViewPropTypes, Animated, PanResponder, Dimensions, View } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+
 import PropTypes from "prop-types";
 import Modal from "react-native-modal";
 
@@ -19,93 +11,129 @@ let screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets
 if (Platform.OS === "android") screenHeight -= StatusBar.currentHeight;
 
 export class ContainerSwipeable extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            swipingDirection: undefined,
+            animationPositionX: new Animated.Value(0)
+        };
+
+        this.screenWidth = Dimensions.get("screen").width;
+        this.slowDownThreshold = this.screenWidth * this.props.swipeThreshold;
+        this.animating = false;
+
+        this.panResponder = PanResponder.create({
+            onMoveShouldSetPanResponderCapture: this.onMoveShouldSetPanResponderCapture,
+            onPanResponderGrant: this.onPanResponderGrant,
+            onPanResponderMove: this.onPanResponderMove,
+            onPanResponderRelease: this.onPanResponderRelease
+        });
+    }
+
     static get propTypes() {
         return {
-            animationsDuration: PropTypes.number,
-            fullscreen: PropTypes.bool,
-            header: PropTypes.element,
-            onVisible: PropTypes.func,
+            swipeThreshold: PropTypes.number,
+            afterThresholdSlowdown: PropTypes.number,
+            swipeLeftEnabled: PropTypes.bool,
+            leftOptionComponent: PropTypes.oneOfType([
+                PropTypes.arrayOf(PropTypes.node),
+                PropTypes.node
+            ]),
+            leftOptionGradientAngle: PropTypes.number,
+            leftOptionGradientColors: PropTypes.array,
+            leftOptionGradientLocations: PropTypes.arrayOf(PropTypes.number),
+            swipeRightEnabled: PropTypes.bool,
+            rightOptionComponent: PropTypes.oneOfType([
+                PropTypes.arrayOf(PropTypes.node),
+                PropTypes.node
+            ]),
+            rightOptionGradientAngle: PropTypes.number,
+            rightOptionGradientColors: PropTypes.array,
+            rightOptionGradientLocations: PropTypes.arrayOf(PropTypes.number),
+            onLeftOptionTrigger: PropTypes.func,
+            onRightOptionTrigger: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
-            animationsDuration: 300,
-            fullscreen: false,
-            header: undefined,
-            onVisible: visible => {},
+            swipeThreshold: 0.25,
+            afterThresholdSlowdown: 8,
+            swipeLeftEnabled: false,
+            leftOptionGradientAngle: 62,
+            leftOptionGradientColors: [],
+            leftOptionGradientLocations: [0.1, 0.64],
+            swipeRightEnabled: false,
+            rightOptionGradientAngle: 62,
+            rightOptionGradientColors: [],
+            rightOptionGradientLocations: [0.84, 0.4],
+            onLeftOptionTrigger: () => null,
+            onRightOptionTrigger: () => null,
             style: {}
         };
     }
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            containerHeightLoaded: false,
-            headerHeightLoaded: false,
-            visible: false,
-            overlayOpacity: new Animated.Value(0),
-            contentHeight: new Animated.Value(0)
-        };
-
-        this.headerHeight = 0;
-        this.containerHeight = 0;
-        this.containerPosY = 0;
-        this.animating = false;
+    isAfterThreshold(offset) {
+        const distance = Math.abs(offset);
+        return distance > 0 && distance > this.slowDownThreshold;
     }
 
-    isLoaded = () => {
-        return this.state.containerHeightLoaded && this.state.headerHeightLoaded;
+    setSwipingDirection(offset) {
+        if (offset > 0 && this.props.swipeLeftEnabled) {
+            this.setState({ swipingDirection: "left" });
+            return true;
+        } else if (offset < 0 && this.props.swipeRightEnabled) {
+            this.setState({ swipingDirection: "right" });
+            return true;
+        }
+
+        this.setState({ swipingDirection: undefined });
+        return false;
+    }
+
+    onMoveShouldSetPanResponderCapture = (event, gestureState) => {
+        if (!this.props.swipeLeftEnabled && !this.props.swipeRightEnabled) {
+            return false;
+        }
+        return !this.animating;
     };
 
-    open() {
+    onPanResponderMove = (event, gestureState) => {
         if (this.animating) return;
 
+        if (!this.setSwipingDirection(gestureState.dx)) {
+            this.state.animationPositionX.setValue(0);
+            return;
+        }
+
+        if (this.isAfterThreshold(gestureState.dx)) {
+            const sign = this.state.swipingDirection === "left" ? 1 : -1;
+            const base = sign * this.slowDownThreshold;
+            const offset = base + (gestureState.dx - base) / this.props.afterThresholdSlowdown;
+
+            this.state.animationPositionX.setValue(offset);
+        } else {
+            this.state.animationPositionX.setValue(gestureState.dx);
+        }
+    };
+
+    onPanResponderRelease = (event, gestureState) => {
         this.animating = true;
 
-        this.setState({ visible: true }, () => {
-            this.props.onVisible(true);
+        if (this.isAfterThreshold(gestureState.dx)) {
+            if (this.state.swipingDirection === "left") {
+                this.props.onLeftOptionTrigger();
+            } else {
+                this.props.onRightOptionTrigger();
+            }
+        }
 
-            Animated.parallel([
-                Animated.timing(this.state.contentHeight, {
-                    toValue: 1,
-                    duration: this.props.animationsDuration,
-                    easing: Easing.inOut(Easing.ease)
-                }),
-                Animated.timing(this.state.overlayOpacity, {
-                    toValue: 0.5,
-                    duration: this.props.animationsDuration,
-                    useNativeDriver: true,
-                    easing: Easing.inOut(Easing.ease)
-                })
-            ]).start(() => {
-                this.animating = false;
-            });
-        });
-    }
-
-    close() {
-        if (this.animating) return;
-
-        this.animating = true;
-
-        Animated.parallel([
-            Animated.timing(this.state.contentHeight, {
-                toValue: 0,
-                duration: this.props.animationsDuration,
-                easing: Easing.inOut(Easing.ease)
-            }),
-            Animated.timing(this.state.overlayOpacity, {
-                toValue: 0,
-                duration: this.props.animationsDuration,
-                useNativeDriver: true,
-                easing: Easing.inOut(Easing.ease)
-            })
-        ]).start(() => {
+        Animated.timing(this.state.animationPositionX, {
+            toValue: 0
+        }).start(() => {
             this.animating = false;
-            this.setState({ visible: false }, this.props.onVisible(false));
         });
     }
 
@@ -122,131 +150,82 @@ export class ContainerSwipeable extends PureComponent {
         this.close();
     };
 
-    onHeaderPress = () => {
-        this.toggle();
+    _rightOptionsGradientStyle() {
+        return [styles.containerGradient, styles.containerGradientOptionRight];
+    }
+
+    _contentStyle = () => {
+        return [{ transform: [{ translateX: this.state.animationPositionX }] }];
     };
 
-    _onContainerLayout = event => {
-        if (this.state.containerHeightLoaded) return;
-
-        this.containerHeight = event.nativeEvent.layout.height;
-        this.containerPosY = event.nativeEvent.layout.y + this.containerHeight;
-
-        this.setState({ containerHeightLoaded: true });
+    _style = () => {
+        return [styles.containerSwipeable, this.props.style];
     };
 
-    _onHeaderLayout = event => {
-        if (this.state.headerHeightLoaded) return;
-
-        this.headerHeight = event.nativeEvent.layout.height;
-        this.setState({ headerHeightLoaded: true });
+    _renderLeftOption = () => {
+        return (
+            <LinearGradient
+                angle={this.props.leftOptionGradientAngle}
+                colors={this.props.leftOptionGradientColors}
+                locations={this.props.leftOptionGradientLocations}
+                useAngle={true}
+                style={styles.containerGradient}
+            >
+                <View style={styles.containerOption}>{this.props.leftOptionComponent}</View>
+            </LinearGradient>
+        );
     };
 
-    _overlayStyle = () => {
-        return [
-            styles.overlay,
-            {
-                position: this.props.fullscreen ? undefined : "absolute",
-                opacity: this.state.overlayOpacity
-            }
-        ];
-    };
-
-    _containerStyle = () => {
-        if (!this.isLoaded()) {
-            return [styles.contentContainer, { opacity: 0 }];
-        }
-
-        return [
-            styles.contentContainer,
-            {
-                height: this.state.contentHeight.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [this.headerHeight, this.containerHeight]
-                }),
-                maxHeight: this.props.fullscreen ? screenHeight : this.containerPosY
-            }
-        ];
+    _renderRightOption = () => {
+        return (
+            <LinearGradient
+                angle={this.props.rightOptionGradientAngle}
+                colors={this.props.rightOptionGradientColors}
+                locations={this.props.rightOptionGradientLocations}
+                useAngle={true}
+                style={this._rightOptionsGradientStyle()}
+            >
+                <View style={styles.containerOption}>{this.props.rightOptionComponent}</View>
+            </LinearGradient>
+        );
     };
 
     _container = () => {
         return (
-            <>
-                {this.state.visible && (
-                    <Animated.View
-                        style={this._overlayStyle()}
-                        onStartShouldSetResponder={e => true}
-                        onResponderRelease={this.onOverlayPress}
-                    />
-                )}
-                <Animated.View
-                    style={this._containerStyle()}
-                    onLayout={event => this._onContainerLayout(event)}
-                >
-                    <TouchableOpacity
-                        onLayout={event => this._onHeaderLayout(event)}
-                        activeOpacity={1}
-                        onPress={this.onHeaderPress}
-                    >
-                        <View style={styles.knob} />
-                        {this.props.header}
-                    </TouchableOpacity>
-                    {this.props.children}
-                    {this.props.fullscreen && <View style={styles.safeAreaBottom} />}
-                </Animated.View>
-            </>
-        );
-    };
-
-    render() {
-        return (
-            <>
-                {this.props.fullscreen ? (
-                    <Modal
-                        style={styles.modal}
-                        visible={this.state.visible || !this.isLoaded()}
-                        onRequestClose={this.onModalRequestClose}
-                    >
-                        {this._container()}
-                    </Modal>
-                ) : (
-                    this._container()
-                )}
-            </>
+            <View style={this._style()} {...this.panResponder.panHandlers}>
+                <View style={styles.containerOptions}>
+                    {this.props.swipeLeftEnabled && this.state.swipingDirection === "left"
+                        ? this._renderLeftOption()
+                        : null}
+                    {this.props.swipeRightEnabled && this.state.swipingDirection === "right"
+                        ? this._renderRightOption()
+                        : null}
+                </View>
+                <Animated.View style={this._contentStyle()}>{this.props.children}</Animated.View>
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    overlay: {
-        backgroundColor: "#000000",
-        height: screenHeight,
-        width: "100%",
-        bottom: 0
-    },
-    modal: {
+    containerSwipeable: {},
+    containerOptions: {
         position: "absolute",
-        width: "100%",
-        margin: 0,
-        bottom: 0
+        height: "100%",
+        width: "100%"
     },
-    contentContainer: {
-        position: "absolute",
-        overflow: "hidden",
-        width: "100%",
-        bottom: 0,
-        backgroundColor: "#ffffff"
+    containerGradient: {
+        flex: 1,
+        flexDirection: "row"
     },
-    knob: {
-        alignSelf: "center",
-        width: 50,
-        height: 5,
-        marginVertical: 6,
-        borderRadius: 100,
-        backgroundColor: "#1a2632",
-        opacity: 0.15
+    containerGradientOptionRight: {
+        justifyContent: "flex-end"
     },
-    safeAreaBottom: {
-        height: initialWindowSafeAreaInsets.bottom
+    containerOption: {
+        paddingHorizontal: 20,
+        paddingVertical: 20,
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center"
     }
 });

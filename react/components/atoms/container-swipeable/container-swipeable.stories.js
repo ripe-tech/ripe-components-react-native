@@ -1,72 +1,62 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, boolean } from "@storybook/addon-knobs";
-import { Button, View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
+import { withKnobs, number, boolean } from "@storybook/addon-knobs";
 
-import { ContainerSwipeable } from "./container-swipeable";
-
-import { Text } from "../..";
+import { ContainerSwipeable, Icon } from "../../";
+import { baseStyles } from "../../../util";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Container Swipeable", () => {
-        const ref = React.createRef();
-        const fullscreen = boolean("Fullscreen", false);
-        const customHeader = (
-            <View style={{ height: 30, backgroundColor: "#ffaaaa" }}>
-                <Text>I'm a custom header, press me</Text>
+        const swipeThreshold = number("Trigger Action Threshold Value", 0.25);
+        const swipeLeftEnabled = boolean("Left Option Enabled", true);
+        const swipeRightEnabled = boolean("Right Option Enabled", true);
+        const leftOptionComponent = (
+            <View style={styles.buttonOptionContainer}>
+                <Icon icon={"add"} color={"#ffffff"} height={32} width={32} />
+                <Text style={styles.textOption}>Add</Text>
+            </View>
+        );
+        const rightOptionComponent = (
+            <View style={styles.buttonOptionContainer}>
+                <Icon icon={"add"} color={"#ffffff"} height={32} width={32} />
+                <Text style={styles.textOption}>Add</Text>
             </View>
         );
         return (
             <View>
-                <Button
-                    title="Toggle Container"
-                    onPress={() => {
-                        ref.current.toggle();
-                    }}
-                />
-                <View style={styles.otherContent}>
-                    <Text>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    </Text>
-                </View>
-                <ContainerSwipeable fullscreen={fullscreen} header={customHeader} ref={ref}>
-                    <Text style={styles.content}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </Text>
+                <ContainerSwipeable
+                    swipeThreshold={swipeThreshold}
+                    swipeLeftEnabled={swipeLeftEnabled}
+                    leftOptionComponent={leftOptionComponent}
+                    leftOptionGradientColors={["#ff0000", "#ffffff"]}
+                    swipeRightEnabled={swipeRightEnabled}
+                    rightOptionComponent={rightOptionComponent}
+                    rightOptionGradientColors={["#ff0000", "#ffffff"]}
+                    onLeftOptionTrigger={() => alert("swiped left to right")}
+                    onRightOptionTrigger={() => alert("swiped right to left")}
+                >
+                    <View style={styles.containerFiller} />
                 </ContainerSwipeable>
             </View>
         );
     });
 
 const styles = StyleSheet.create({
-    otherContent: {
-        backgroundColor: "#ff00ff"
+    containerFiller: {
+        backgroundColor: "blue",
+        height: 130
     },
-    content: {
-        backgroundColor: "#aaffff"
+    buttonOptionContainer: {
+        justifyContent: "space-around",
+        flex: 1
+    },
+    textOption: {
+        textAlign: "center",
+        color: "#ffffff",
+        fontFamily: baseStyles.FONT,
+        fontSize: baseStyles.FONT_SIZE,
+        letterSpacing: 0.5
     }
 });
