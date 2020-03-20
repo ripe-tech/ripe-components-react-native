@@ -25,6 +25,7 @@ export class ContainerOpenable extends PureComponent {
             header: PropTypes.element,
             headerPressable: PropTypes.bool,
             headerProps: PropTypes.object,
+            onContentHeight: PropTypes.func,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -37,6 +38,7 @@ export class ContainerOpenable extends PureComponent {
             header: undefined,
             headerPressable: true,
             headerProps: {},
+            onContentHeight: height => {},
             onVisible: visible => {},
             style: {}
         };
@@ -49,9 +51,12 @@ export class ContainerOpenable extends PureComponent {
             containerHeightLoaded: false,
             headerHeightLoaded: false,
             visible: false,
+            showOverlay: false,
             overlayOpacity: new Animated.Value(0),
             contentHeight: new Animated.Value(0)
         };
+
+        this.state.contentHeight.addListener(h => this.props.onContentHeight(h.value));
 
         this.headerHeight = 0;
         this.containerHeight = 0;
@@ -65,7 +70,10 @@ export class ContainerOpenable extends PureComponent {
 
     setContentHeight = height => this.state.contentHeight.setValue(height);
 
-    setOverlayOpacity = opacity => this.state.overlayOpacity.setValue(opacity);
+    setOverlayOpacity = opacity => {
+        this.state.overlayOpacity.setValue(opacity);
+        this.setState({ showOverlay: opacity > 0 });
+    };
 
     _isLoaded = () => {
         return this.state.containerHeightLoaded && this.state.headerHeightLoaded;
@@ -76,7 +84,7 @@ export class ContainerOpenable extends PureComponent {
 
         this.animating = true;
 
-        this.setState({ visible: true }, () => {
+        this.setState({ visible: true, showOverlay: true }, () => {
             this.props.onVisible(true);
 
             Animated.parallel([
@@ -116,7 +124,7 @@ export class ContainerOpenable extends PureComponent {
             })
         ]).start(() => {
             this.animating = false;
-            this.setState({ visible: false }, this.props.onVisible(false));
+            this.setState({ visible: false, showOverlay: false }, this.props.onVisible(false));
         });
     }
 
@@ -183,11 +191,13 @@ export class ContainerOpenable extends PureComponent {
     _container = () => {
         return (
             <>
-                <Animated.View
-                    style={this._overlayStyle()}
-                    onStartShouldSetResponder={e => true}
-                    onResponderRelease={this.onOverlayPress}
-                />
+                {this.state.showOverlay ? (
+                    <Animated.View
+                        style={this._overlayStyle()}
+                        onStartShouldSetResponder={e => this.state.showOverlay}
+                        onResponderRelease={this.onOverlayPress}
+                    />
+                ) : null}
                 <Animated.View
                     style={this._containerStyle()}
                     onLayout={event => this._onContainerLayout(event)}
