@@ -65,6 +65,7 @@ import celluar from "./celluar.svg";
 import chart from "./chart.svg";
 import chatAdd from "./chat-add.svg";
 import chatAlt from "./chat-alt.svg";
+import chatAlt2 from "./chat-alt2.svg";
 import chatRemove from "./chat-remove.svg";
 import chatWarning from "./chat-warning.svg";
 import chat from "./chat.svg";
@@ -396,6 +397,7 @@ const icons = {
     chart: chart,
     "chat-add": chatAdd,
     "chat-alt": chatAlt,
+    "chat-alt2": chatAlt2,
     "chat-remove": chatRemove,
     "chat-warning": chatWarning,
     chat: chat,
