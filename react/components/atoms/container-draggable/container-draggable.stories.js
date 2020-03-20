@@ -17,7 +17,6 @@ storiesOf("Atoms", module)
         );
         const pressThreshold = number("Press Threshold", 2.5);
         const snapCloseThreshold = number("Snap Close Threshold", 0.4);
-
         return (
             <View>
                 <Button

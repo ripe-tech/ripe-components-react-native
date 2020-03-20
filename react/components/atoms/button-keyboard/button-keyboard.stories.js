@@ -26,6 +26,5 @@ storiesOf("Atoms", module)
             },
             undefined
         );
-
         return <ButtonKeyboard text={_text} icon={icon} value={_value} variant={variant} />;
     });
