@@ -2,8 +2,6 @@ import React, { PureComponent } from "react";
 import { PanResponder } from "react-native";
 import PropTypes from "prop-types";
 
-import { ContainerOpenable } from "../container-openable";
-
 export class ContainerDraggable extends PureComponent {
     static get propTypes() {
         return {
@@ -36,7 +34,7 @@ export class ContainerDraggable extends PureComponent {
     }
 
     onPanResponderGrant = (event, gestureState) => {
-        this.opening = !this.innerE.isVisible();
+        this.opening = !this.child.isVisible();
     };
 
     onPanResponderMove = (event, gestureState) => {
@@ -44,37 +42,34 @@ export class ContainerDraggable extends PureComponent {
 
         this.dragging = true;
 
-        const movePercentage = gestureState.dy / this.innerE.contentHeight();
+        const movePercentage = gestureState.dy / this.child.contentHeight();
         this.contentHeightPercentage = this.opening ? -1 * movePercentage : 1 - movePercentage;
         this.contentHeightPercentage = Math.min(1, Math.max(this.contentHeightPercentage, 0));
 
-        this.innerE.setOverlayOpacity(0.5 * this.contentHeightPercentage);
-        this.innerE.setContentHeight(this.contentHeightPercentage);
+        this.child.setOverlayOpacity(0.5 * this.contentHeightPercentage);
+        this.child.setContentHeight(this.contentHeightPercentage);
     };
 
     onPanResponderRelease = (event, gestureState) => {
         if (!this.dragging) {
-            this.innerE.onHeaderPress();
+            this.child.onHeaderPress();
             return;
         }
 
         this.dragging = false;
 
         if (this.contentHeightPercentage > this.props.snapCloseThreshold) {
-            this.innerE.open();
+            this.child.open();
         } else {
-            this.innerE.close();
+            this.child.close();
         }
     };
 
     render() {
-        return (
-            <ContainerOpenable
-                ref={ref => (this.innerE = ref)}
-                {...this.props}
-                headerPressable={false}
-                headerProps={this.panResponder.panHandlers}
-            />
-        );
+        return React.cloneElement(React.Children.only(this.props.children), {
+            ref: ref => (this.child = ref),
+            headerPressable: false,
+            headerProps: this.panResponder.panHandlers
+        });
     }
 }

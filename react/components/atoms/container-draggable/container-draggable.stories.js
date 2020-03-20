@@ -4,6 +4,7 @@ import { withKnobs, boolean, number } from "@storybook/addon-knobs";
 import { Button, View, StyleSheet, Text } from "react-native";
 
 import { ContainerDraggable } from "./container-draggable";
+import { ContainerOpenable } from "../container-openable";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
@@ -49,20 +50,20 @@ storiesOf("Atoms", module)
                     </Text>
                 </View>
                 <ContainerDraggable
-                    modal={modal}
-                    header={customHeader}
                     pressThreshold={pressThreshold}
                     snapCloseThreshold={snapCloseThreshold}
-                    ref={ref}
                 >
-                    <Text style={styles.content}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </Text>
+                    <ContainerOpenable modal={modal} header={customHeader} ref={ref}>
+                        <Text style={styles.content}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat non non
+                            non proident, sunt in culpa qui officia deserunt mollit anim id est
+                            laborum.
+                        </Text>
+                    </ContainerOpenable>
                 </ContainerDraggable>
             </View>
         );
