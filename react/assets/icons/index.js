@@ -161,7 +161,6 @@ import homeAlt2 from "./home-alt2.svg";
 import home from "./home.svg";
 import horn from "./horn.svg";
 import hourglass from "./hourglass.svg";
-import id from "./id.svg";
 import image from "./image.svg";
 import inboxAlt from "./inbox-alt.svg";
 import inbox from "./inbox.svg";
@@ -327,6 +326,8 @@ import wine from "./wine.svg";
 import zoomIn from "./zoom-in.svg";
 import zoomOut from "./zoom-out.svg";
 
+import id from "./extra/id.svg";
+
 const icons = {
     "accessibility-human": accessibilityHuman,
     accessibility: accessibility,
@@ -491,7 +492,6 @@ const icons = {
     home: home,
     horn: horn,
     hourglass: hourglass,
-    id: id,
     image: image,
     "inbox-alt": inboxAlt,
     inbox: inbox,
@@ -655,7 +655,8 @@ const icons = {
     window: window,
     wine: wine,
     "zoom-in": zoomIn,
-    "zoom-out": zoomOut
+    "zoom-out": zoomOut,
+    id: id
 };
 
 export default icons;
