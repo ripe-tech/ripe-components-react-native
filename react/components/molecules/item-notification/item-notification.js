@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
 import PropTypes from "prop-types";
 
 import { Avatar } from "../../atoms/avatar";
@@ -73,13 +73,15 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         marginLeft: 14,
-        fontFamily: baseStyles.FONT
+        fontFamily: baseStyles.FONT,
+        marginTop: Platform.OS === "ios" ? 2 : 0
     },
     timestamp: {
         color: "#a8b3bb",
         fontSize: 14,
         textAlign: "right",
         maxWidth: 80,
-        fontFamily: baseStyles.FONT
+        fontFamily: baseStyles.FONT,
+        marginTop: Platform.OS === "ios" ? 2 : 0
     }
 });
