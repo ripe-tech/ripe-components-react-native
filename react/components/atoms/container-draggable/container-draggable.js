@@ -1,173 +1,80 @@
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, Modal, View, TouchableOpacity } from "react-native";
-import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
+import { PanResponder } from "react-native";
 import PropTypes from "prop-types";
+
+import { ContainerOpenable } from "../container-openable";
 
 export class ContainerDraggable extends PureComponent {
     static get propTypes() {
         return {
-            animationsDuration: PropTypes.number,
-            hitSlop: PropTypes.shape({
-                top: PropTypes.number.isRequired,
-                left: PropTypes.number.isRequired,
-                right: PropTypes.number.isRequired,
-                bottom: PropTypes.number.isRequired
-            })
+            pressThreshold: PropTypes.number,
+            snapCloseThreshold: PropTypes.number,
+            onVisible: PropTypes.func
         };
     }
 
     static get defaultProps() {
         return {
-            animationsDuration: 300,
-            hitSlop: { top: 20, left: 20, right: 20, bottom: 20 }
+            pressThreshold: 2.5,
+            snapCloseThreshold: 0.4,
+            onVisible: visible => {}
         };
     }
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            visible: false,
-            modalVisible: false,
-            containerChildrenHeight: null,
-            containerBackgroundColorAnimated: new Animated.Value(0),
-            containerInnerHeightAnimated: new Animated.Value(0)
-        };
+        this.initialContentHeight = 0;
+        this.dragging = false;
 
-        this.animating = false;
+        this.panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: (event, gestureState) => true,
+            onPanResponderGrant: this.onPanResponderGrant,
+            onPanResponderMove: this.onPanResponderMove,
+            onPanResponderRelease: this.onPanResponderRelease
+        });
     }
 
-    toggle = () => {
-        if (this.animating) {
+    onPanResponderGrant = (event, gestureState) => {
+        this.opening = !this.innerE.isVisible();
+    };
+
+    onPanResponderMove = (event, gestureState) => {
+        if (Math.abs(gestureState.dy) <= this.props.pressThreshold) return;
+
+        this.dragging = true;
+
+        const movePercentage = gestureState.dy / this.innerE.contentHeight();
+        this.contentHeightPercentage = this.opening ? -1 * movePercentage : 1 - movePercentage;
+        this.contentHeightPercentage = Math.min(1, Math.max(this.contentHeightPercentage, 0));
+
+        this.innerE.setOverlayOpacity(0.5 * this.contentHeightPercentage);
+        this.innerE.setContentHeight(this.contentHeightPercentage);
+    };
+
+    onPanResponderRelease = (event, gestureState) => {
+        if (!this.dragging) {
+            this.innerE.onHeaderPress();
             return;
         }
 
-        if (this.state.visible) {
-            this.setState(
-                {
-                    visible: false
-                },
-                () => {
-                    this._toggleAnimations();
-                }
-            );
+        this.dragging = false;
+
+        if (this.contentHeightPercentage > this.props.snapCloseThreshold) {
+            this.innerE.open();
         } else {
-            this.setState(
-                {
-                    visible: true,
-                    modalVisible: true
-                },
-                () => {
-                    this._toggleAnimations();
-                }
-            );
+            this.innerE.close();
         }
     };
 
-    onLayout = event => {
-        this.setState({
-            containerChildrenHeight: event.nativeEvent.layout.height
-        });
-    };
-
-    _toggleAnimations = () => {
-        this.animating = true;
-
-        Animated.parallel([
-            Animated.timing(this.state.containerBackgroundColorAnimated, {
-                toValue: this.state.visible ? 1 : 0,
-                duration: this.props.animationsDuration
-            }),
-            Animated.timing(this.state.containerInnerHeightAnimated, {
-                toValue: this.state.visible ? 1 : 0,
-                duration: this.props.animationsDuration
-            })
-        ]).start(() => {
-            this.setState(
-                {
-                    modalVisible: this.state.visible
-                },
-                () => {
-                    this.animating = false;
-                }
-            );
-        });
-    };
-
-    _containerStyle() {
-        return [
-            styles.containerDraggable,
-            {
-                backgroundColor: this.state.containerBackgroundColorAnimated.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: ["rgba(29, 38, 49, 0)", "rgba(29, 38, 49, 0.35)"]
-                })
-            }
-        ];
-    }
-
-    _containerInnerStyle() {
-        return [
-            styles.containerInner,
-            {
-                height: this.state.containerInnerHeightAnimated.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [1, this.state.containerChildrenHeight]
-                })
-            }
-        ];
-    }
-
     render() {
         return (
-            <Modal animationType="none" transparent={true} visible={this.state.modalVisible}>
-                <Animated.View
-                    style={this._containerStyle()}
-                    onStartShouldSetResponder={this.toggle}
-                >
-                    <Animated.View
-                        style={this._containerInnerStyle()}
-                        onStartShouldSetResponder={() => true}
-                    >
-                        <View onLayout={this.onLayout} pointerEvents="auto">
-                            <TouchableOpacity
-                                style={styles.buttonBar}
-                                onPress={this.toggle}
-                                hitSlop={this.props.hitSlop}
-                            />
-                            {this.props.children}
-                            <View style={styles.safeAreaBottom} />
-                        </View>
-                    </Animated.View>
-                </Animated.View>
-            </Modal>
+            <ContainerOpenable
+                ref={ref => (this.innerE = ref)}
+                {...this.props}
+                headerPressable={false}
+                headerProps={this.panResponder.panHandlers}
+            />
         );
     }
 }
-
-const styles = StyleSheet.create({
-    containerDraggable: {
-        overflow: "hidden",
-        flex: 1,
-        backgroundColor: "transparent",
-        justifyContent: "flex-end"
-    },
-    containerInner: {
-        overflow: "hidden",
-        borderTopRightRadius: 6,
-        borderTopLeftRadius: 6,
-        backgroundColor: "#ffffff"
-    },
-    safeAreaBottom: {
-        paddingBottom: initialWindowSafeAreaInsets.bottom
-    },
-    buttonBar: {
-        alignSelf: "center",
-        marginVertical: 6,
-        width: 50,
-        height: 5,
-        opacity: 0.15,
-        borderRadius: 100,
-        backgroundColor: "#1a2632"
-    }
-});
