@@ -9,7 +9,7 @@ storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Container Openable", () => {
         const ref = React.createRef();
-        const fullscreen = boolean("Fullscreen", false);
+        const modal = boolean("Modal", false);
         const customHeader = (
             <View style={{ height: 30, backgroundColor: "#ffaaaa" }}>
                 <Text>I'm a custom header, press me</Text>
@@ -46,7 +46,7 @@ storiesOf("Atoms", module)
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                     </Text>
                 </View>
-                <ContainerOpenable fullscreen={fullscreen} header={customHeader} ref={ref}>
+                <ContainerOpenable modal={modal} header={customHeader} ref={ref}>
                     <Text style={styles.content}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

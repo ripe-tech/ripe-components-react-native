@@ -21,7 +21,7 @@ export class ContainerOpenable extends PureComponent {
     static get propTypes() {
         return {
             animationsDuration: PropTypes.number,
-            fullscreen: PropTypes.bool,
+            modal: PropTypes.bool,
             header: PropTypes.element,
             headerPressable: PropTypes.bool,
             headerProps: PropTypes.object,
@@ -33,7 +33,7 @@ export class ContainerOpenable extends PureComponent {
     static get defaultProps() {
         return {
             animationsDuration: 300,
-            fullscreen: false,
+            modal: false,
             header: undefined,
             headerPressable: true,
             headerProps: {},
@@ -157,7 +157,7 @@ export class ContainerOpenable extends PureComponent {
         return [
             styles.overlay,
             {
-                position: this.props.fullscreen ? undefined : "absolute",
+                position: this.props.modal ? undefined : "absolute",
                 opacity: this.state.overlayOpacity
             }
         ];
@@ -175,7 +175,7 @@ export class ContainerOpenable extends PureComponent {
                     inputRange: [0, 1],
                     outputRange: [this.headerHeight, this.containerHeight]
                 }),
-                maxHeight: this.props.fullscreen ? screenHeight : this.containerPosY
+                maxHeight: this.props.modal ? screenHeight : this.containerPosY
             }
         ];
     };
@@ -212,7 +212,7 @@ export class ContainerOpenable extends PureComponent {
                         </View>
                     )}
                     {this.props.children}
-                    {this.props.fullscreen && <View style={styles.safeAreaBottom} />}
+                    {this.props.modal && <View style={styles.safeAreaBottom} />}
                 </Animated.View>
             </>
         );
@@ -221,7 +221,7 @@ export class ContainerOpenable extends PureComponent {
     render() {
         return (
             <>
-                {this.props.fullscreen ? (
+                {this.props.modal ? (
                     <Modal
                         style={styles.modal}
                         transparent={true}
