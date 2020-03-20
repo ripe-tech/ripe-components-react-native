@@ -12,7 +12,7 @@ export class ToastMessage extends PureComponent {
             text: PropTypes.string,
             linkText: PropTypes.string,
             linkUrl: PropTypes.string,
-            toastDuration: PropTypes.number,
+            duration: PropTypes.number,
             animationDuration: PropTypes.number,
             style: ViewPropTypes.style
         };
@@ -23,7 +23,7 @@ export class ToastMessage extends PureComponent {
             text: undefined,
             linkText: undefined,
             linkUrl: undefined,
-            toastDuration: 2000,
+            duration: 5000,
             animationDuration: 300,
             style: {}
         };
@@ -54,7 +54,7 @@ export class ToastMessage extends PureComponent {
             duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
-        this.toastTimeout = setTimeout(() => this.hide(), this.props.toastDuration);
+        this.toastTimeout = setTimeout(() => this.hide(), this.props.duration);
     }
 
     hide() {
@@ -85,6 +85,7 @@ export class ToastMessage extends PureComponent {
                         text={this.props.linkText}
                         url={this.props.linkUrl}
                         color={"blue"}
+                        styleText={styles.linkText}
                         style={styles.link}
                     />
                 ) : null}
@@ -111,14 +112,16 @@ const styles = StyleSheet.create({
     },
     text: {
         flex: 1,
-        fontFamily: baseStyles.FONT,
+        fontFamily: baseStyles.FONT_BOOK,
         fontSize: 16,
         paddingTop: Platform.OS === "ios" ? 4 : 0
     },
     link: {
-        fontFamily: baseStyles.FONT,
+        marginLeft: 20
+    },
+    linkText: {
+        fontFamily: baseStyles.FONT_BOOK,
         fontSize: 16,
-        marginLeft: 20,
         paddingTop: Platform.OS === "ios" ? 4 : 0
     }
 });
