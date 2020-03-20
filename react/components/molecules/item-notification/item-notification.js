@@ -3,7 +3,8 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
 import { Avatar } from "../../atoms/avatar";
-import { dateTimeString } from "../../../util";
+
+import { dateTimeString, baseStyles } from "../../../util";
 
 export class ItemNotification extends PureComponent {
     static get propTypes() {
@@ -71,12 +72,14 @@ const styles = StyleSheet.create({
     text: {
         flex: 1,
         fontSize: 16,
-        marginLeft: 14
+        marginLeft: 14,
+        fontFamily: baseStyles.FONT
     },
     timestamp: {
         color: "#a8b3bb",
         fontSize: 14,
         textAlign: "right",
-        maxWidth: 80
+        maxWidth: 80,
+        fontFamily: baseStyles.FONT
     }
 });

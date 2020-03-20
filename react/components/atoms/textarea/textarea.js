@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, TextInput } from "react-native";
 import PropTypes from "prop-types";
 
-import { capitalize } from "../../../util";
+import { capitalize, baseStyles } from "../../../util";
 
 export class TextArea extends PureComponent {
     static get propTypes() {
@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
         paddingVertical: 4,
         paddingHorizontal: 15,
         color: "#3e566a",
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        fontFamily: baseStyles.FONT
     },
     textAreaMultiline: {
         paddingVertical: 14
