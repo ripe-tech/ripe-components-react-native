@@ -2,8 +2,6 @@ import React, { PureComponent } from "react";
 import { PanResponder } from "react-native";
 import PropTypes from "prop-types";
 
-import { ContainerOpenable } from "../container-openable";
-
 export class ContainerDraggable extends PureComponent {
     static get propTypes() {
         return {
@@ -68,13 +66,10 @@ export class ContainerDraggable extends PureComponent {
     };
 
     render() {
-        return (
-            <ContainerOpenable
-                ref={ref => (this.innerE = ref)}
-                {...this.props}
-                headerPressable={false}
-                headerProps={this.panResponder.panHandlers}
-            />
-        );
+        return React.cloneElement(React.Children.only(this.props.children), {
+            ref: ref => (this.innerE = ref),
+            headerPressable: false,
+            headerProps: this.panResponder.panHandlers
+        });
     }
 }
