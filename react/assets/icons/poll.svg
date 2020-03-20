@@ -1,1 +1,1 @@
-<svg width="48px" height="48px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-labelledby="pollIconTitle" stroke-linecap="square" stroke-linejoin="miter"> <title id="pollIconTitle">Poll</title> <path d="M4 4V20"/> <path d="M4 6H15V10H4"/> <path d="M4 10H19V14H4"/> <path d="M4 14H12V18H4"/> </svg>
+<svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-labelledby="pollIconTitle" stroke-linecap="square"><path d="M4 4v16M4 6h11v4H4M4 10h15v4H4M4 14h8v4H4"/></svg>
