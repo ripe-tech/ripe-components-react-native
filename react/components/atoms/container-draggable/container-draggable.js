@@ -1,253 +1,80 @@
 import React, { PureComponent } from "react";
-import {
-    ViewPropTypes,
-    StyleSheet,
-    View,
-    Dimensions,
-    TouchableOpacity,
-    Animated,
-    Easing,
-    StatusBar,
-    Platform,
-    Modal
-} from "react-native";
+import { PanResponder } from "react-native";
 import PropTypes from "prop-types";
 
-import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
-
-let screenHeight = Dimensions.get("screen").height - initialWindowSafeAreaInsets.top;
-if (Platform.OS === "android") screenHeight -= StatusBar.currentHeight;
+import { ContainerOpenable } from "../container-openable";
 
 export class ContainerDraggable extends PureComponent {
     static get propTypes() {
         return {
-            animationsDuration: PropTypes.number,
-            fullscreen: PropTypes.bool,
-            header: PropTypes.element,
-            onVisible: PropTypes.func,
-            style: ViewPropTypes.style
+            pressThreshold: PropTypes.number,
+            snapCloseThreshold: PropTypes.number,
+            onVisible: PropTypes.func
         };
     }
 
     static get defaultProps() {
         return {
-            animationsDuration: 300,
-            fullscreen: false,
-            header: undefined,
-            onVisible: visible => {},
-            style: {}
+            pressThreshold: 2.5,
+            snapCloseThreshold: 0.4,
+            onVisible: visible => {}
         };
     }
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            containerHeightLoaded: false,
-            headerHeightLoaded: false,
-            visible: false,
-            overlayOpacity: new Animated.Value(0),
-            contentHeight: new Animated.Value(0)
-        };
+        this.initialContentHeight = 0;
+        this.dragging = false;
 
-        this.headerHeight = 0;
-        this.containerHeight = 0;
-        this.containerPosY = 0;
-        this.animating = false;
-    }
-
-    isLoaded = () => {
-        return this.state.containerHeightLoaded && this.state.headerHeightLoaded;
-    };
-
-    open() {
-        if (this.animating) return;
-
-        this.animating = true;
-
-        this.setState({ visible: true }, () => {
-            this.props.onVisible(true);
-
-            Animated.parallel([
-                Animated.timing(this.state.contentHeight, {
-                    toValue: 1,
-                    duration: this.props.animationsDuration,
-                    easing: Easing.inOut(Easing.ease)
-                }),
-                Animated.timing(this.state.overlayOpacity, {
-                    toValue: 0.5,
-                    duration: this.props.animationsDuration,
-                    useNativeDriver: true,
-                    easing: Easing.inOut(Easing.ease)
-                })
-            ]).start(() => {
-                this.animating = false;
-            });
+        this.panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: (event, gestureState) => true,
+            onPanResponderGrant: this.onPanResponderGrant,
+            onPanResponderMove: this.onPanResponderMove,
+            onPanResponderRelease: this.onPanResponderRelease
         });
     }
 
-    close() {
-        if (this.animating) return;
-
-        this.animating = true;
-
-        Animated.parallel([
-            Animated.timing(this.state.contentHeight, {
-                toValue: 0,
-                duration: this.props.animationsDuration,
-                easing: Easing.inOut(Easing.ease)
-            }),
-            Animated.timing(this.state.overlayOpacity, {
-                toValue: 0,
-                duration: this.props.animationsDuration,
-                useNativeDriver: true,
-                easing: Easing.inOut(Easing.ease)
-            })
-        ]).start(() => {
-            this.animating = false;
-            this.setState({ visible: false }, this.props.onVisible(false));
-        });
-    }
-
-    toggle() {
-        if (this.state.visible) this.close();
-        else this.open();
-    }
-
-    onOverlayPress = () => {
-        this.close();
+    onPanResponderGrant = (event, gestureState) => {
+        this.opening = !this.innerE.isVisible();
     };
 
-    onModalRequestClose = () => {
-        this.close();
+    onPanResponderMove = (event, gestureState) => {
+        if (Math.abs(gestureState.dy) <= this.props.pressThreshold) return;
+
+        this.dragging = true;
+
+        const movePercentage = gestureState.dy / this.innerE.contentHeight();
+        this.contentHeightPercentage = this.opening ? -1 * movePercentage : 1 - movePercentage;
+        this.contentHeightPercentage = Math.min(1, Math.max(this.contentHeightPercentage, 0));
+
+        this.innerE.setOverlayOpacity(0.5 * this.contentHeightPercentage);
+        this.innerE.setContentHeight(this.contentHeightPercentage);
     };
 
-    onHeaderPress = () => {
-        this.toggle();
-    };
-
-    _onContainerLayout = event => {
-        if (this.state.containerHeightLoaded) return;
-
-        this.containerHeight = event.nativeEvent.layout.height;
-        this.containerPosY = event.nativeEvent.layout.y + this.containerHeight;
-
-        this.setState({ containerHeightLoaded: true });
-    };
-
-    _onHeaderLayout = event => {
-        if (this.state.headerHeightLoaded) return;
-
-        this.headerHeight = event.nativeEvent.layout.height;
-        this.setState({ headerHeightLoaded: true });
-    };
-
-    _overlayStyle = () => {
-        return [
-            styles.overlay,
-            {
-                position: this.props.fullscreen ? undefined : "absolute",
-                opacity: this.state.overlayOpacity
-            }
-        ];
-    };
-
-    _containerStyle = () => {
-        if (!this.isLoaded()) {
-            return [styles.contentContainer, { opacity: 0 }];
+    onPanResponderRelease = (event, gestureState) => {
+        if (!this.dragging) {
+            this.innerE.onHeaderPress();
+            return;
         }
 
-        return [
-            styles.contentContainer,
-            {
-                height: this.state.contentHeight.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [this.headerHeight, this.containerHeight]
-                }),
-                maxHeight: this.props.fullscreen ? screenHeight : this.containerPosY
-            }
-        ];
-    };
+        this.dragging = false;
 
-    _container = () => {
-        return (
-            <>
-                {this.state.visible && (
-                    <Animated.View
-                        style={this._overlayStyle()}
-                        onStartShouldSetResponder={e => true}
-                        onResponderRelease={this.onOverlayPress}
-                    />
-                )}
-                <Animated.View
-                    style={this._containerStyle()}
-                    onLayout={event => this._onContainerLayout(event)}
-                >
-                    <TouchableOpacity
-                        onLayout={event => this._onHeaderLayout(event)}
-                        activeOpacity={1}
-                        onPress={this.onHeaderPress}
-                    >
-                        <View style={styles.knob} />
-                        {this.props.header}
-                    </TouchableOpacity>
-                    {this.props.children}
-                    {this.props.fullscreen && <View style={styles.safeAreaBottom} />}
-                </Animated.View>
-            </>
-        );
+        if (this.contentHeightPercentage > this.props.snapCloseThreshold) {
+            this.innerE.open();
+        } else {
+            this.innerE.close();
+        }
     };
 
     render() {
         return (
-            <>
-                {this.props.fullscreen ? (
-                    <Modal
-                        style={styles.modal}
-                        transparent={true}
-                        visible={this.state.visible || !this.isLoaded()}
-                        onRequestClose={this.onModalRequestClose}
-                    >
-                        {this._container()}
-                    </Modal>
-                ) : (
-                    this._container()
-                )}
-            </>
+            <ContainerOpenable
+                ref={ref => (this.innerE = ref)}
+                {...this.props}
+                headerPressable={false}
+                headerProps={this.panResponder.panHandlers}
+            />
         );
     }
 }
-
-const styles = StyleSheet.create({
-    overlay: {
-        backgroundColor: "#000000",
-        height: screenHeight,
-        width: "100%",
-        bottom: 0
-    },
-    modal: {
-        position: "absolute",
-        width: "100%",
-        margin: 0,
-        bottom: 0
-    },
-    contentContainer: {
-        position: "absolute",
-        overflow: "hidden",
-        width: "100%",
-        bottom: 0,
-        backgroundColor: "#ffffff"
-    },
-    knob: {
-        alignSelf: "center",
-        width: 50,
-        height: 5,
-        marginVertical: 6,
-        borderRadius: 100,
-        backgroundColor: "#1a2632",
-        opacity: 0.15
-    },
-    safeAreaBottom: {
-        height: initialWindowSafeAreaInsets.bottom
-    }
-});

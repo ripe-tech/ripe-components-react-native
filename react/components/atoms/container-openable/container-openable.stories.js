@@ -1,13 +1,13 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, boolean, number } from "@storybook/addon-knobs";
+import { withKnobs, boolean } from "@storybook/addon-knobs";
 import { Button, View, StyleSheet, Text } from "react-native";
 
-import { ContainerDraggable } from "./container-draggable";
+import { ContainerOpenable } from "./container-openable";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
-    .add("Container Draggable", () => {
+    .add("Container Openable", () => {
         const ref = React.createRef();
         const fullscreen = boolean("Fullscreen", false);
         const customHeader = (
@@ -15,8 +15,6 @@ storiesOf("Atoms", module)
                 <Text>I'm a custom header, press me</Text>
             </View>
         );
-        const pressThreshold = number("Press Threshold", 2.5);
-        const snapCloseThreshold = number("Snap Close Threshold", 0.4);
 
         return (
             <View>
@@ -49,13 +47,7 @@ storiesOf("Atoms", module)
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                     </Text>
                 </View>
-                <ContainerDraggable
-                    fullscreen={fullscreen}
-                    header={customHeader}
-                    pressThreshold={pressThreshold}
-                    snapCloseThreshold={snapCloseThreshold}
-                    ref={ref}
-                >
+                <ContainerOpenable fullscreen={fullscreen} header={customHeader} ref={ref}>
                     <Text style={styles.content}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -64,7 +56,7 @@ storiesOf("Atoms", module)
                         cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                         non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </Text>
-                </ContainerDraggable>
+                </ContainerOpenable>
             </View>
         );
     });
