@@ -10,14 +10,13 @@ storiesOf("Atoms", module)
     .add("Container Draggable", () => {
         const ref = React.createRef();
         const fullscreen = boolean("Fullscreen", false);
-        const doFullscreenSnap = boolean("Fullscreen Snap", false);
         const customHeader = (
             <View style={{ height: 30, backgroundColor: "#ffaaaa" }}>
                 <Text>I'm a custom header, press me</Text>
             </View>
         );
-        const snapFullscreenThreshold = number("Snap Fullscreen Threshold", 0.9);
-        const snapHideThreshold = number("Snap Hide Threshold", 0.5);
+        const pressThreshold = number("Press Threshold", 2.5);
+        const snapCloseThreshold = number("Snap Close Threshold", 0.4);
 
         return (
             <View>
@@ -52,10 +51,9 @@ storiesOf("Atoms", module)
                 </View>
                 <ContainerDraggable
                     fullscreen={fullscreen}
-                    doFullscreenSnap={doFullscreenSnap}
                     header={customHeader}
-                    snapFullscreenThreshold={snapFullscreenThreshold}
-                    snapHideThreshold={snapHideThreshold}
+                    pressThreshold={pressThreshold}
+                    snapCloseThreshold={snapCloseThreshold}
                     ref={ref}
                 >
                     <Text style={styles.content}>
