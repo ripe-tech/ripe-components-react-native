@@ -1,1 +1,1 @@
-<svg width="48px" height="48px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-labelledby="sortUpIconTitle" stroke-linecap="square" stroke-linejoin="miter" fill="none"> <title id="sortUpIconTitle">Sort in ascending order</title> <path d="M11 16H17"/> <path d="M11 20H19"/> <path d="M11 12H15"/> <path d="M4 8L7 5L10 8"/> <path d="M7 20L7 6"/> </svg>
+<svg width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-labelledby="sortUpIconTitle" stroke-linecap="square" fill="none"><path d="M11 16h6M11 20h8M11 12h4M4 8l3-3 3 3M7 20V6"/></svg>
