@@ -9,7 +9,7 @@ storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Container Draggable", () => {
         const ref = React.createRef();
-        const fullscreen = boolean("Fullscreen", false);
+        const modal = boolean("Modal", false);
         const customHeader = (
             <View style={{ height: 30, backgroundColor: "#ffaaaa" }}>
                 <Text>I'm a custom header, press me</Text>
@@ -49,7 +49,7 @@ storiesOf("Atoms", module)
                     </Text>
                 </View>
                 <ContainerDraggable
-                    fullscreen={fullscreen}
+                    modal={modal}
                     header={customHeader}
                     pressThreshold={pressThreshold}
                     snapCloseThreshold={snapCloseThreshold}
