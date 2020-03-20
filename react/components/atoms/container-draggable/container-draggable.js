@@ -46,6 +46,7 @@ export class ContainerDraggable extends PureComponent {
         this.contentHeightPercentage = this.opening ? -1 * movePercentage : 1 - movePercentage;
         this.contentHeightPercentage = Math.min(1, Math.max(this.contentHeightPercentage, 0));
 
+        this.child.setOverlayVisible(this.dragging);
         this.child.setOverlayOpacity(0.5 * this.contentHeightPercentage);
         this.child.setContentHeight(this.contentHeightPercentage);
     };
@@ -57,6 +58,7 @@ export class ContainerDraggable extends PureComponent {
         }
 
         this.dragging = false;
+        this.child.setOverlayVisible(this.dragging);
 
         if (this.contentHeightPercentage > this.props.snapCloseThreshold) {
             this.child.open();
