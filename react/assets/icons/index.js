@@ -65,7 +65,6 @@ import celluar from "./celluar.svg";
 import chart from "./chart.svg";
 import chatAdd from "./chat-add.svg";
 import chatAlt from "./chat-alt.svg";
-import chatAlt2 from "./chat-alt2.svg";
 import chatRemove from "./chat-remove.svg";
 import chatWarning from "./chat-warning.svg";
 import chat from "./chat.svg";
@@ -327,6 +326,7 @@ import wine from "./wine.svg";
 import zoomIn from "./zoom-in.svg";
 import zoomOut from "./zoom-out.svg";
 
+import chatBalloons from "./extra/chat-balloons.svg";
 import id from "./extra/id.svg";
 
 const icons = {
@@ -397,7 +397,6 @@ const icons = {
     chart: chart,
     "chat-add": chatAdd,
     "chat-alt": chatAlt,
-    "chat-alt2": chatAlt2,
     "chat-remove": chatRemove,
     "chat-warning": chatWarning,
     chat: chat,
@@ -658,6 +657,7 @@ const icons = {
     wine: wine,
     "zoom-in": zoomIn,
     "zoom-out": zoomOut,
+    "chat-balloons": chatBalloons,
     id: id
 };
 
