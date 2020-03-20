@@ -49,6 +49,7 @@ export class ContainerOpenable extends PureComponent {
             containerHeightLoaded: false,
             headerHeightLoaded: false,
             visible: false,
+            overlayVisible: false,
             overlayOpacity: new Animated.Value(0),
             contentHeight: new Animated.Value(0)
         };
@@ -61,11 +62,15 @@ export class ContainerOpenable extends PureComponent {
 
     isVisible = () => this.state.visible;
 
+    isOverlayVisible = () => this.state.visible || this.state.overlayVisible;
+
     contentHeight = () => this.containerHeight - this.headerHeight;
 
     setContentHeight = height => this.state.contentHeight.setValue(height);
 
     setOverlayOpacity = opacity => this.state.overlayOpacity.setValue(opacity);
+
+    setOverlayVisible = visible => this.setState({ overlayVisible: visible });
 
     _isLoaded = () => {
         return this.state.containerHeightLoaded && this.state.headerHeightLoaded;
@@ -183,11 +188,13 @@ export class ContainerOpenable extends PureComponent {
     _container = () => {
         return (
             <>
-                <Animated.View
-                    style={this._overlayStyle()}
-                    onStartShouldSetResponder={e => true}
-                    onResponderRelease={this.onOverlayPress}
-                />
+                {this.isOverlayVisible() && (
+                    <Animated.View
+                        style={this._overlayStyle()}
+                        onStartShouldSetResponder={e => true}
+                        onResponderRelease={this.onOverlayPress}
+                    />
+                )}
                 <Animated.View
                     style={this._containerStyle()}
                     onLayout={event => this._onContainerLayout(event)}
