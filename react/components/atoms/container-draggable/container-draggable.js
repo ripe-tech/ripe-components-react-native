@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 export class ContainerDraggable extends PureComponent {
     static get propTypes() {
         return {
+            childRef: PropTypes.func,
             pressThreshold: PropTypes.number,
             snapCloseThreshold: PropTypes.number,
             onVisible: PropTypes.func
@@ -13,6 +14,7 @@ export class ContainerDraggable extends PureComponent {
 
     static get defaultProps() {
         return {
+            childRef: ref => {},
             pressThreshold: 2.5,
             snapCloseThreshold: 0.4,
             onVisible: visible => {}
@@ -67,7 +69,10 @@ export class ContainerDraggable extends PureComponent {
 
     render() {
         return React.cloneElement(React.Children.only(this.props.children), {
-            ref: ref => (this.child = ref),
+            ref: ref => {
+                this.child = ref;
+                this.props.childRef(ref);
+            },
             headerPressable: false,
             headerProps: this.panResponder.panHandlers
         });
