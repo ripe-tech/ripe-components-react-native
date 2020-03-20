@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, ViewPropTypes } from "react-native";
+import { Animated, StyleSheet, ViewPropTypes, Platform } from "react-native";
 import PropTypes from "prop-types";
+
+import { baseStyles } from "../../../util";
 
 import { Link, Text } from "../../atoms";
 
@@ -98,20 +100,26 @@ const styles = StyleSheet.create({
         borderColor: "transparent",
         borderWidth: 1,
         borderRadius: 6,
-        elevation: 5,
+        elevation: 3,
         flexDirection: "row",
-        shadowColor: "#384671",
+        shadowColor: "#8d8d8d",
         shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 0.4,
-        paddingHorizontal: 22,
-        paddingVertical: 18,
-        marginHorizontal: 5
+        paddingHorizontal: 18,
+        paddingVertical: 10,
+        marginHorizontal: 8
     },
     text: {
-        flex: 1
+        flex: 1,
+        fontFamily: baseStyles.FONT,
+        fontSize: 16,
+        paddingTop: Platform.OS === "ios" ? 4 : 0
     },
     link: {
-        marginLeft: 20
+        fontFamily: baseStyles.FONT,
+        fontSize: 16,
+        marginLeft: 20,
+        paddingTop: Platform.OS === "ios" ? 4 : 0
     }
 });
 
