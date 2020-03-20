@@ -15,7 +15,6 @@ storiesOf("Atoms", module)
                 <Text>I'm a custom header, press me</Text>
             </View>
         );
-
         return (
             <View>
                 <Button
