@@ -52,8 +52,9 @@ storiesOf("Atoms", module)
                 <ContainerDraggable
                     pressThreshold={pressThreshold}
                     snapCloseThreshold={snapCloseThreshold}
+                    ref={ref}
                 >
-                    <ContainerOpenable modal={modal} header={customHeader} ref={ref}>
+                    <ContainerOpenable modal={modal} header={customHeader}>
                         <Text style={styles.content}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim

@@ -33,6 +33,12 @@ export class ContainerDraggable extends PureComponent {
         });
     }
 
+    open = () => this.child.open();
+
+    close = () => this.child.close();
+
+    toggle = () => this.child.toggle();
+
     onPanResponderGrant = (event, gestureState) => {
         this.opening = !this.child.isVisible();
     };
@@ -61,9 +67,9 @@ export class ContainerDraggable extends PureComponent {
         this.child.setOverlayVisible(this.dragging);
 
         if (this.contentHeightPercentage > this.props.snapCloseThreshold) {
-            this.child.open();
+            this.open();
         } else {
-            this.child.close();
+            this.close();
         }
     };
 
