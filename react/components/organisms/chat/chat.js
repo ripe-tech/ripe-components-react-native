@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
 
-import { ChatMessage, RichTextInput } from "../..";
+import { ChatMessage, RichTextInput } from "../../molecules";
 
 export class Chat extends PureComponent {
     static get propTypes() {
