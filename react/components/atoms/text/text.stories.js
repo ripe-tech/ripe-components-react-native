@@ -2,7 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text } from "@storybook/addon-knobs";
 
-import { Text } from "../../";
+import { Text } from "./text";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)

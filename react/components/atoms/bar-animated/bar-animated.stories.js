@@ -1,7 +1,8 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, number, text } from "@storybook/addon-knobs";
-import { BarAnimated } from "../../";
+
+import { BarAnimated } from "./bar-animated";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)

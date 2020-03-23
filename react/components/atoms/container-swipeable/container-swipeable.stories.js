@@ -3,8 +3,10 @@ import { storiesOf } from "@storybook/react-native";
 import { View, StyleSheet, Text } from "react-native";
 import { withKnobs, number, boolean } from "@storybook/addon-knobs";
 
-import { ContainerSwipeable, Icon } from "../../";
 import { baseStyles } from "../../../util";
+import { Icon } from "../icon";
+
+import { ContainerSwipeable } from "./container-swipeable";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)

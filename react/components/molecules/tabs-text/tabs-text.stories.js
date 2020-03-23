@@ -2,7 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs } from "@storybook/addon-knobs";
 
-import { TabsText } from "../../";
+import { TabsText } from "./tabs-text";
 
 storiesOf("Molecules", module)
     .addDecorator(withKnobs)
