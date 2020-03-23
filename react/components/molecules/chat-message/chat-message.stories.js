@@ -2,7 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text, number } from "@storybook/addon-knobs";
 
-import { ChatMessage } from "../../";
+import { ChatMessage } from "./chat-message";
 
 storiesOf("Molecules", module)
     .addDecorator(withKnobs)

@@ -2,7 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 
-import { TextArea } from "../../";
+import { TextArea } from "./textarea";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)

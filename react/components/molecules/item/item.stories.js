@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, boolean, text, number, select } from "@storybook/addon-knobs";
 
-import { Item } from "../..";
+import { Item } from "./item";
 
 storiesOf("Molecules", module)
     .addDecorator(withKnobs)

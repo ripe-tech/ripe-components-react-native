@@ -2,7 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 
-import { RichTextInput } from "../..";
+import { RichTextInput } from "./rich-textinput";
 
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
