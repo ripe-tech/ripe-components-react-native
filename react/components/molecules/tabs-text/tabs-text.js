@@ -5,18 +5,6 @@ import PropTypes from "prop-types";
 import { ButtonTabText, BarAnimated } from "../../atoms";
 
 export class TabsText extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            tabs: props.tabs,
-            tabSelected: props.tabSelected,
-            animatedBarWidth: undefined,
-            animatedBarOffset: undefined
-        };
-        this.tabLayouts = {};
-    }
-
     static get propTypes() {
         return {
             onTabChange: PropTypes.func.isRequired,
@@ -39,6 +27,18 @@ export class TabsText extends PureComponent {
             tabSelected: 0,
             style: {}
         };
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            tabs: props.tabs,
+            tabSelected: props.tabSelected,
+            animatedBarWidth: undefined,
+            animatedBarOffset: undefined
+        };
+        this.tabLayouts = {};
     }
 
     onTabPress = tabSelectedIndex => {
