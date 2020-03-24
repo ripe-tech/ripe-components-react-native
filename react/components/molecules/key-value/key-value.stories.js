@@ -9,6 +9,8 @@ storiesOf("Atoms", module)
     .add("Key Value", () => {
         const key = text("Key", "Key");
         const value = text("Value", "Value");
+        const keyColor = text("Key Color", "#4f7af8");
+        const valueColor = text("Value Color", "#223645");
         const icon = select(
             "Icon",
             { Add: "add", Alarm: "alarm", Bell: "bell", Phone: "phone", None: null },
@@ -25,6 +27,8 @@ storiesOf("Atoms", module)
                 _key={key}
                 value={value}
                 icon={icon}
+                keyColor={keyColor}
+                valueColor={valueColor}
                 iconBackgroundColor={iconBackgroundColor}
                 iconColor={iconColor}
                 iconSize={iconSize}
