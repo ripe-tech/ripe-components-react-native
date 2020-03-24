@@ -7,7 +7,6 @@ import { ButtonTabText, BarAnimated } from "../../atoms";
 export class TabsText extends PureComponent {
     static get propTypes() {
         return {
-            onTabChange: PropTypes.func.isRequired,
             hasAnimation: PropTypes.bool,
             tabs: PropTypes.arrayOf(
                 PropTypes.shape({
@@ -17,6 +16,7 @@ export class TabsText extends PureComponent {
             ).isRequired,
             tabSelected: PropTypes.number,
             variant: PropTypes.string,
+            onTabChange: PropTypes.func.isRequired,
             style: ViewPropTypes.style
         };
     }
