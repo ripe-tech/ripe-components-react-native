@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Platform, TouchableOpacity, Text } from "react-native";
+import { ViewPropTypes, StyleSheet, Platform, TouchableOpacity, Text } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, capitalize } from "../../../util";
 
 export class ButtonTabText extends PureComponent {
     static get propTypes() {
@@ -12,7 +12,9 @@ export class ButtonTabText extends PureComponent {
             color: PropTypes.string,
             text: PropTypes.string,
             disabled: PropTypes.bool,
-            onPress: PropTypes.func
+            variant: PropTypes.string,
+            onPress: PropTypes.func,
+            style: ViewPropTypes.style
         };
     }
 
@@ -23,13 +25,16 @@ export class ButtonTabText extends PureComponent {
             color: "#162633",
             text: undefined,
             disabled: false,
-            onPress: undefined
+            variant: undefined,
+            onPress: undefined,
+            style: {}
         };
     }
 
     _style() {
         return [
             styles.buttonTabText,
+            styles[`buttonTabText${capitalize(this.props.variant)}`],
             { backgroundColor: this.props.backgroundColor },
             this.props.style
         ];
@@ -38,6 +43,7 @@ export class ButtonTabText extends PureComponent {
     _styleText() {
         return [
             styles.text,
+            styles[`text${capitalize(this.props.variant)}`],
             {
                 color: this.props.color
             },
@@ -65,12 +71,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: 4,
         alignItems: "center"
     },
+    buttonTabTextCompact: {
+        paddingVertical: 9,
+        paddingHorizontal: 16
+    },
     text: {
         marginTop: Platform.OS === "ios" ? 4 : 0,
         fontFamily: baseStyles.FONT,
         fontSize: 16,
-        letterSpacing: 0.25,
-        textAlign: "center"
+        letterSpacing: 0.25
+    },
+    textCompact: {
+        marginTop: 0,
+        fontFamily: baseStyles.FONT_BOOK,
+        fontSize: 14
     },
     textDisabled: {
         opacity: 0.4

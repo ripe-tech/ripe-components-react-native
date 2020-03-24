@@ -2,9 +2,37 @@ import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, View } from "react-native";
 import PropTypes from "prop-types";
 
+import { capitalize } from "../../../util";
+
 import { ButtonTabText, BarAnimated } from "../../atoms";
 
 export class TabsText extends PureComponent {
+    static get propTypes() {
+        return {
+            hasAnimation: PropTypes.bool,
+            tabs: PropTypes.arrayOf(
+                PropTypes.shape({
+                    text: PropTypes.string,
+                    disabled: PropTypes.bool
+                }).isRequired
+            ).isRequired,
+            tabSelected: PropTypes.number,
+            variant: PropTypes.string,
+            onTabChange: PropTypes.func.isRequired,
+            style: ViewPropTypes.style
+        };
+    }
+
+    static get defaultProps() {
+        return {
+            hasAnimation: true,
+            tabs: [],
+            tabSelected: 0,
+            variant: undefined,
+            style: {}
+        };
+    }
+
     constructor(props) {
         super(props);
 
@@ -15,30 +43,6 @@ export class TabsText extends PureComponent {
             animatedBarOffset: undefined
         };
         this.tabLayouts = {};
-    }
-
-    static get propTypes() {
-        return {
-            onTabChange: PropTypes.func.isRequired,
-            hasAnimation: PropTypes.bool,
-            tabs: PropTypes.arrayOf(
-                PropTypes.shape({
-                    text: PropTypes.string,
-                    disabled: PropTypes.bool
-                }).isRequired
-            ).isRequired,
-            tabSelected: PropTypes.number,
-            style: ViewPropTypes.style
-        };
-    }
-
-    static get defaultProps() {
-        return {
-            hasAnimation: true,
-            tabs: [],
-            tabSelected: 0,
-            style: {}
-        };
     }
 
     onTabPress = tabSelectedIndex => {
@@ -63,7 +67,8 @@ export class TabsText extends PureComponent {
         Boolean(
             this.props.hasAnimation &&
                 this.state.animatedBarWidth !== undefined &&
-                this.state.animatedBarOffset !== undefined
+                this.state.animatedBarOffset !== undefined &&
+                this.props.variant === undefined
         );
 
     _onTabLayout = (event, index) => {
@@ -75,21 +80,31 @@ export class TabsText extends PureComponent {
     };
 
     _style() {
-        return [styles.tabsText, this.props.style];
+        return [
+            styles.tabsText,
+            styles[`tabsText${capitalize(this.props.variant)}`],
+            this.props.style
+        ];
     }
+
+    _buttonStyle = () => {
+        return [styles.button, styles[`button${capitalize(this.props.variant)}`]];
+    };
 
     _renderTabs() {
         return this.props.tabs.map((tab, index) => (
             <View
+                style={this._buttonStyle()}
                 key={tab.text}
                 onLayout={event => this._onTabLayout(event, index)}
-                style={styles.button}
             >
                 <ButtonTabText
                     text={tab.text}
+                    color={"#24425a"}
                     onPress={() => this.onTabPress(index)}
                     active={this.state.tabSelected === index}
                     disabled={tab.disabled}
+                    variant={this.props.variant}
                 />
             </View>
         ));
@@ -115,11 +130,17 @@ const styles = StyleSheet.create({
     tabsText: {
         borderBottomWidth: 1,
         borderBottomColor: "#e4e8f0",
-        flexDirection: "row",
-        position: "relative"
+        flexDirection: "row"
+    },
+    tabsTextCompact: {
+        borderBottomWidth: 0,
+        backgroundColor: "#f6f7f9"
     },
     button: {
         flex: 1
+    },
+    buttonCompact: {
+        flex: 0
     },
     barAnimated: {
         position: "absolute",
