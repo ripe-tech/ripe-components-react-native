@@ -82,8 +82,9 @@ const styles = StyleSheet.create({
         letterSpacing: 0.25
     },
     textCompact: {
-        fontSize: 14,
-        marginTop: 0
+        marginTop: 0,
+        fontFamily: baseStyles.FONT_BOLD,
+        fontSize: 14
     },
     textDisabled: {
         opacity: 0.4

@@ -89,7 +89,7 @@ export class TabsText extends PureComponent {
 
     _buttonStyle = () => {
         return this.props.variant === undefined && styles.button;
-    }
+    };
 
     _renderTabs() {
         return this.props.tabs.map((tab, index) => (
@@ -100,6 +100,7 @@ export class TabsText extends PureComponent {
             >
                 <ButtonTabText
                     text={tab.text}
+                    color={"#24425a"}
                     onPress={() => this.onTabPress(index)}
                     active={this.state.tabSelected === index}
                     disabled={tab.disabled}
