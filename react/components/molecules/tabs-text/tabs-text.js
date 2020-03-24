@@ -88,7 +88,7 @@ export class TabsText extends PureComponent {
     }
 
     _buttonStyle = () => {
-        return this.props.variant === undefined && styles.button;
+        return [styles.button, styles[`button${capitalize(this.props.variant)}`]];
     };
 
     _renderTabs() {
@@ -138,6 +138,9 @@ const styles = StyleSheet.create({
     },
     button: {
         flex: 1
+    },
+    buttonCompact: {
+        flex: 0
     },
     barAnimated: {
         position: "absolute",
