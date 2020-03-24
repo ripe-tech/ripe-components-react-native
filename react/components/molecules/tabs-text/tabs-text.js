@@ -16,6 +16,7 @@ export class TabsText extends PureComponent {
                 }).isRequired
             ).isRequired,
             tabSelected: PropTypes.number,
+            variant: PropTypes.string,
             style: ViewPropTypes.style
         };
     }
@@ -25,6 +26,7 @@ export class TabsText extends PureComponent {
             hasAnimation: true,
             tabs: [],
             tabSelected: 0,
+            variant: undefined,
             style: {}
         };
     }
