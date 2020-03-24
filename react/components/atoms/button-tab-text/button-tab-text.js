@@ -72,14 +72,14 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     buttonTabTextCompact: {
-        paddingVertical: 9
+        paddingVertical: 9,
+        paddingHorizontal: 16
     },
     text: {
         marginTop: Platform.OS === "ios" ? 4 : 0,
         fontFamily: baseStyles.FONT,
         fontSize: 16,
-        letterSpacing: 0.25,
-        textAlign: "center"
+        letterSpacing: 0.25
     },
     textCompact: {
         fontSize: 14,

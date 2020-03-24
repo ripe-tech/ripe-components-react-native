@@ -87,12 +87,16 @@ export class TabsText extends PureComponent {
         ];
     }
 
+    _buttonStyle = () => {
+        return this.props.variant === undefined && styles.button;
+    }
+
     _renderTabs() {
         return this.props.tabs.map((tab, index) => (
             <View
+                style={this._buttonStyle()}
                 key={tab.text}
                 onLayout={event => this._onTabLayout(event, index)}
-                style={styles.button}
             >
                 <ButtonTabText
                     text={tab.text}
@@ -125,11 +129,11 @@ const styles = StyleSheet.create({
     tabsText: {
         borderBottomWidth: 1,
         borderBottomColor: "#e4e8f0",
-        flexDirection: "row",
-        position: "relative"
+        flexDirection: "row"
     },
     tabsTextCompact: {
-        borderBottomWidth: 0
+        borderBottomWidth: 0,
+        backgroundColor: "#f6f7f9"
     },
     button: {
         flex: 1
