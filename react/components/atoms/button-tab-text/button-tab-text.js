@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     },
     textCompact: {
         marginTop: 0,
-        fontFamily: baseStyles.FONT_BOLD,
+        fontFamily: baseStyles.FONT_BOOK,
         fontSize: 14
     },
     textDisabled: {
