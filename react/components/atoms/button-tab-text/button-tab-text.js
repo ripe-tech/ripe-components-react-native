@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Platform, TouchableOpacity, Text } from "react-native";
+import { ViewPropTypes, StyleSheet, Platform, TouchableOpacity, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles, capitalize } from "../../../util";
@@ -13,7 +13,8 @@ export class ButtonTabText extends PureComponent {
             text: PropTypes.string,
             disabled: PropTypes.bool,
             variant: PropTypes.string,
-            onPress: PropTypes.func
+            onPress: PropTypes.func,
+            style: ViewPropTypes.style
         };
     }
 
@@ -25,7 +26,8 @@ export class ButtonTabText extends PureComponent {
             text: undefined,
             disabled: false,
             variant: undefined,
-            onPress: undefined
+            onPress: undefined,
+            style: {}
         };
     }
 
