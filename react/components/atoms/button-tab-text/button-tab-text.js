@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Platform, TouchableOpacity, Text } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, capitalize } from "../../../util";
 
 export class ButtonTabText extends PureComponent {
     static get propTypes() {
@@ -12,6 +12,7 @@ export class ButtonTabText extends PureComponent {
             color: PropTypes.string,
             text: PropTypes.string,
             disabled: PropTypes.bool,
+            variant: PropTypes.string,
             onPress: PropTypes.func
         };
     }
@@ -23,6 +24,7 @@ export class ButtonTabText extends PureComponent {
             color: "#162633",
             text: undefined,
             disabled: false,
+            variant: undefined,
             onPress: undefined
         };
     }
@@ -30,6 +32,7 @@ export class ButtonTabText extends PureComponent {
     _style() {
         return [
             styles.buttonTabText,
+            styles[`buttonTabText${capitalize(this.props.variant)}`],
             { backgroundColor: this.props.backgroundColor },
             this.props.style
         ];
@@ -38,6 +41,7 @@ export class ButtonTabText extends PureComponent {
     _styleText() {
         return [
             styles.text,
+            styles[`text${capitalize(this.props.variant)}`],
             {
                 color: this.props.color
             },
@@ -65,12 +69,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 4,
         alignItems: "center"
     },
+    buttonTabTextCompact: {
+        paddingVertical: 9
+    },
     text: {
         marginTop: Platform.OS === "ios" ? 4 : 0,
         fontFamily: baseStyles.FONT,
         fontSize: 16,
         letterSpacing: 0.25,
         textAlign: "center"
+    },
+    textCompact: {
+        fontSize: 14,
+        marginTop: 0
     },
     textDisabled: {
         opacity: 0.4
