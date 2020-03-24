@@ -2,6 +2,8 @@ import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, View } from "react-native";
 import PropTypes from "prop-types";
 
+import { capitalize } from "../../../util";
+
 import { ButtonTabText, BarAnimated } from "../../atoms";
 
 export class TabsText extends PureComponent {
@@ -65,7 +67,8 @@ export class TabsText extends PureComponent {
         Boolean(
             this.props.hasAnimation &&
                 this.state.animatedBarWidth !== undefined &&
-                this.state.animatedBarOffset !== undefined
+                this.state.animatedBarOffset !== undefined &&
+                this.props.variant === undefined
         );
 
     _onTabLayout = (event, index) => {
@@ -77,7 +80,11 @@ export class TabsText extends PureComponent {
     };
 
     _style() {
-        return [styles.tabsText, this.props.style];
+        return [
+            styles.tabsText,
+            styles[`tabsText${capitalize(this.props.variant)}`],
+            this.props.style
+        ];
     }
 
     _renderTabs() {
@@ -92,6 +99,7 @@ export class TabsText extends PureComponent {
                     onPress={() => this.onTabPress(index)}
                     active={this.state.tabSelected === index}
                     disabled={tab.disabled}
+                    variant={this.props.variant}
                 />
             </View>
         ));
@@ -119,6 +127,9 @@ const styles = StyleSheet.create({
         borderBottomColor: "#e4e8f0",
         flexDirection: "row",
         position: "relative"
+    },
+    tabsTextCompact: {
+        borderBottomWidth: 0
     },
     button: {
         flex: 1
