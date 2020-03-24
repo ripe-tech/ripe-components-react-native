@@ -11,6 +11,8 @@ export class KeyValue extends PureComponent {
         return {
             _key: PropTypes.string.isRequired,
             value: PropTypes.string.isRequired,
+            keyColor: PropTypes.string,
+            valueColor: PropTypes.string,
             icon: PropTypes.string,
             iconBackgroundColor: PropTypes.string,
             iconColor: PropTypes.string,
@@ -27,6 +29,8 @@ export class KeyValue extends PureComponent {
 
     static get defaultProps() {
         return {
+            keyColor: "#4f7af8",
+            valueColor: "#223645",
             icon: undefined,
             iconBackgroundColor: undefined,
             iconColor: undefined,
@@ -41,6 +45,14 @@ export class KeyValue extends PureComponent {
         };
     }
 
+    _keyStyle = () => {
+        return [styles.key, { color: this.props.keyColor }];
+    };
+
+    _valueStyle = () => {
+        return [styles.value, { color: this.props.valueColor }];
+    };
+
     render() {
         return (
             <TouchableOpacity
@@ -50,8 +62,8 @@ export class KeyValue extends PureComponent {
                 onLongPress={this.props.onLongPress}
             >
                 <View style={styles.textContainer}>
-                    <Text style={styles.key}>{this.props._key}</Text>
-                    <Text style={styles.value}>{this.props.value}</Text>
+                    <Text style={this._keyStyle()}>{this.props._key}</Text>
+                    <Text style={this._valueStyle()}>{this.props.value}</Text>
                 </View>
                 {this.props.icon ? (
                     <View style={styles.iconContainer}>
@@ -91,16 +103,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 18,
         marginBottom: Platform.OS === "ios" ? 2 : 6,
-        letterSpacing: 0.25,
-        color: "#4f7af8"
+        letterSpacing: 0.25
     },
     value: {
         marginTop: Platform.OS === "ios" ? 4 : 0,
         fontFamily: baseStyles.FONT,
         fontSize: 16,
         lineHeight: 18,
-        letterSpacing: 0.25,
-        color: "#223645"
+        letterSpacing: 0.25
     },
     iconContainer: {
         justifyContent: "center"
