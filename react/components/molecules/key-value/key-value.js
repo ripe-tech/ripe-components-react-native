@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Platform } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Platform, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -23,7 +23,8 @@ export class KeyValue extends PureComponent {
             pressable: PropTypes.bool,
             onPress: PropTypes.func,
             onButtonIconPress: PropTypes.func,
-            onLongPress: PropTypes.func
+            onLongPress: PropTypes.func,
+            style: ViewPropTypes
         };
     }
 
@@ -41,7 +42,8 @@ export class KeyValue extends PureComponent {
             pressable: false,
             onPress: () => {},
             onButtonIconPress: () => {},
-            onLongPress: () => {}
+            onLongPress: () => {},
+            style: {}
         };
     }
 
@@ -53,10 +55,14 @@ export class KeyValue extends PureComponent {
         return [styles.value, { color: this.props.valueColor }];
     };
 
+    _style = () => {
+        return [styles.keyValue, this.props.style];
+    };
+
     render() {
         return (
             <TouchableOpacity
-                style={styles.keyValue}
+                style={this._style()}
                 disabled={!this.props.pressable}
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
