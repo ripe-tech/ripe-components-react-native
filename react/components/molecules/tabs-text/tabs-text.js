@@ -129,11 +129,11 @@ export class TabsText extends PureComponent {
 const styles = StyleSheet.create({
     tabsText: {
         borderBottomWidth: 1,
-        borderBottomColor: "#e4e8f0",
+        borderColor: "#e4e8f0",
         flexDirection: "row"
     },
     tabsTextCompact: {
-        borderBottomWidth: 0,
+        borderTopWidth: 1,
         backgroundColor: "#f6f7f9"
     },
     button: {
