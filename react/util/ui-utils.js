@@ -1,4 +1,4 @@
-import { Alert, Linking, Platform } from "react-native";
+import { Alert, Linking, Platform, ToastAndroid } from "react-native";
 import DocumentPicker from "react-native-document-picker";
 import ImagePicker from "react-native-image-picker";
 
@@ -81,4 +81,10 @@ export const pickImage = async function(options) {
 
     const result = await promise;
     return result;
+};
+
+export const notify = function(message) {
+    Platform.OS === "android"
+        ? ToastAndroid.show(message, ToastAndroid.SHORT)
+        : Alert.alert(message);
 };
