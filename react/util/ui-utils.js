@@ -83,7 +83,7 @@ export const pickImage = async function(options) {
     return result;
 };
 
-export const toast = function(message) {
+export const notify = function(message) {
     Platform.OS === "android"
         ? ToastAndroid.show(message, ToastAndroid.SHORT)
         : Alert.alert(message);
