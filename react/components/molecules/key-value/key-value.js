@@ -24,7 +24,7 @@ export class KeyValue extends PureComponent {
             onPress: PropTypes.func,
             onButtonIconPress: PropTypes.func,
             onLongPress: PropTypes.func,
-            style: ViewPropTypes
+            style: ViewPropTypes.style
         };
     }
 
