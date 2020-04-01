@@ -13,7 +13,7 @@ export class KeyValues extends PureComponent {
                     value: PropTypes.string.isRequired
                 })
             ).isRequired,
-            style: ViewPropTypes
+            style: ViewPropTypes.style
         };
     }
 
