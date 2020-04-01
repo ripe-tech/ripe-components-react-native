@@ -2,7 +2,7 @@ import { Alert, Linking, Platform, ToastAndroid } from "react-native";
 import DocumentPicker from "react-native-document-picker";
 import ImagePicker from "react-native-image-picker";
 
-const normalizeAttachment = function(attachment) {
+const normalizeAttachment = function (attachment) {
     return {
         uri: attachment.uri,
         name: attachment.name,
@@ -11,7 +11,7 @@ const normalizeAttachment = function(attachment) {
     };
 };
 
-export const pickDocuments = async function(options = {}) {
+export const pickDocuments = async function (options = {}) {
     try {
         const attachments = await DocumentPicker.pickMultiple(options);
         return attachments.map(attachment => normalizeAttachment(attachment));
@@ -24,7 +24,7 @@ export const pickDocuments = async function(options = {}) {
     }
 };
 
-const normalizeImage = function(image) {
+const normalizeImage = function (image) {
     return {
         uri: image.uri,
         name: image.fileName,
@@ -35,7 +35,7 @@ const normalizeImage = function(image) {
     };
 };
 
-export const pickImage = async function(options) {
+export const pickImage = async function (options) {
     options =
         options !== undefined
             ? options
@@ -83,7 +83,7 @@ export const pickImage = async function(options) {
     return result;
 };
 
-export const notify = function(message) {
+export const notify = function (message) {
     Platform.OS === "android"
         ? ToastAndroid.show(message, ToastAndroid.SHORT)
         : Alert.alert(message);

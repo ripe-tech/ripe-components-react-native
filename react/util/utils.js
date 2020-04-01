@@ -1,4 +1,4 @@
-export const dateString = function(timestamp, separator = "/") {
+export const dateString = function (timestamp, separator = "/") {
     const date = new Date(timestamp * 1000);
     const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
     let month = date.getMonth() + 1;
@@ -6,7 +6,7 @@ export const dateString = function(timestamp, separator = "/") {
     return day + separator + month + separator + date.getFullYear();
 };
 
-export const dateStringUTC = function(timestamp, separator = "/") {
+export const dateStringUTC = function (timestamp, separator = "/") {
     const date = new Date(timestamp * 1000);
     const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate();
     let month = date.getUTCMonth() + 1;
@@ -14,7 +14,7 @@ export const dateStringUTC = function(timestamp, separator = "/") {
     return day + separator + month + separator + date.getUTCFullYear();
 };
 
-export const timeString = function(timestamp, separator = ":") {
+export const timeString = function (timestamp, separator = ":") {
     const date = new Date(timestamp * 1000);
     const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
     const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
@@ -22,7 +22,7 @@ export const timeString = function(timestamp, separator = ":") {
     return hours + separator + minutes + separator + seconds;
 };
 
-export const timeStringUTC = function(timestamp, separator = ":") {
+export const timeStringUTC = function (timestamp, separator = ":") {
     const date = new Date(timestamp * 1000);
     const hours = date.getUTCHours() < 10 ? `0${date.getUTCHours()}` : date.getUTCHours();
     const minutes = date.getUTCMinutes() < 10 ? `0${date.getUTCMinutes()}` : date.getUTCMinutes();
@@ -30,7 +30,7 @@ export const timeStringUTC = function(timestamp, separator = ":") {
     return hours + separator + minutes + separator + seconds;
 };
 
-export const sameDay = function(first, second) {
+export const sameDay = function (first, second) {
     return (
         first.getFullYear() === second.getFullYear() &&
         first.getMonth() === second.getMonth() &&
@@ -38,22 +38,22 @@ export const sameDay = function(first, second) {
     );
 };
 
-export const dateTimeString = function(timestamp) {
+export const dateTimeString = function (timestamp) {
     return sameDay(new Date(), new Date(timestamp))
         ? timeString(timestamp)
         : `${dateString(timestamp)} ${timeString(timestamp)}`;
 };
 
-export const normalize = function(value) {
+export const normalize = function (value) {
     return value.split("_").join(" ");
 };
 
-export const capitalize = function(value) {
+export const capitalize = function (value) {
     if (!value) return value;
     return value[0].toUpperCase() + value.slice(1);
 };
 
-export const isImage = function(fileName) {
+export const isImage = function (fileName) {
     const regex = /\.(jpg|jpeg|png|gif)$/i;
     return regex.test(fileName);
 };
