@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        letterSpacing: 0.5,
+        letterSpacing: 0.25,
         color: "#ffffff",
         marginTop: Platform.OS === "ios" ? 4 : 0,
         fontFamily: baseStyles.FONT_BOOK
