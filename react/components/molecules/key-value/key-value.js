@@ -109,14 +109,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 18,
         marginBottom: Platform.OS === "ios" ? 2 : 6,
-        letterSpacing: 0.25
     },
     value: {
         marginTop: Platform.OS === "ios" ? 4 : 0,
         fontFamily: baseStyles.FONT,
         fontSize: 16,
-        lineHeight: 18,
-        letterSpacing: 0.25
+        lineHeight: 18
     },
     iconContainer: {
         justifyContent: "center"
