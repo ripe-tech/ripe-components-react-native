@@ -19,6 +19,11 @@ export class Icon extends PureComponent {
                 PropTypes.number,
                 PropTypes.arrayOf(PropTypes.number)
             ]),
+            fill: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.number,
+                PropTypes.arrayOf(PropTypes.number)
+            ]),
             height: PropTypes.number,
             width: PropTypes.number,
             style: ViewPropTypes.style
@@ -29,6 +34,7 @@ export class Icon extends PureComponent {
         return {
             fill: undefined,
             color: "#000000",
+            fill: "none",
             height: 20,
             width: 20,
             strokeWidth: 1.5,
@@ -49,6 +55,7 @@ export class Icon extends PureComponent {
                 width={this.props.width}
                 fill={this.props.fill}
                 stroke={this.props.color}
+                fill={this.props.fill}
                 strokeWidth={this.props.strokeWidth}
                 style={this.props.style}
             />
