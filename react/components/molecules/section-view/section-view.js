@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
         marginTop: Platform.OS === "ios" ? 4 : 0,
         fontFamily: baseStyles.FONT_BOOK,
         fontSize: 14,
-        letterSpacing: 0.5,
         color: "#24425a"
     }
 });
