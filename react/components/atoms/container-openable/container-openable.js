@@ -124,7 +124,9 @@ export class ContainerOpenable extends PureComponent {
             })
         ]).start(() => {
             this.animating = false;
-            this.setState({ visible: false, showOverlay: false }, this.props.onVisible(false));
+            this.setState({ visible: false, showOverlay: false }, () =>
+                this.props.onVisible(false)
+            );
         });
     }
 
