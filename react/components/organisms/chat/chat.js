@@ -47,8 +47,14 @@ export class Chat extends PureComponent {
         };
     }
 
+    blur = () => this.input.blur();
+
     scrollToEnd = () => {
         this.scrollViewComponent.scrollToEnd({ animated: true });
+    };
+
+    onRichTextInputFocus = () => {
+        this.scrollToEnd();
     };
 
     onRichTextInputPhotoAdded = source => {
@@ -84,7 +90,6 @@ export class Chat extends PureComponent {
             attachments: []
         };
 
-        this.scrollToEnd();
         this.props.onNewMessage(message);
     };
 
@@ -114,15 +119,18 @@ export class Chat extends PureComponent {
                     })}
                 </ScrollView>
                 <RichTextInput
+                    ref={el => (this.input = el)}
                     style={styles.richTextInput}
                     placeholder={"Say something..."}
                     multiline={true}
                     textareaMaxHeight={baseStyles.FONT_SIZE * 5}
+                    onFocus={this.onRichTextInputFocus}
                     onPhotoAdded={image => this.onRichTextInputPhotoAdded(image)}
                     onAttachmentsAdded={attachments =>
                         this.onRichTextInputAttachmentsAdded(attachments)
                     }
                     onSendMessage={text => this.onRichTextInputSendMessage(text)}
+                    onBlur={() => this.blur()}
                 />
             </KeyboardAvoidingView>
         );
