@@ -12,6 +12,7 @@ export class ButtonTabText extends PureComponent {
             color: PropTypes.string,
             text: PropTypes.string,
             disabled: PropTypes.bool,
+            activeOpacity: PropTypes.number,
             variant: PropTypes.string,
             onPress: PropTypes.func,
             style: ViewPropTypes.style
@@ -25,6 +26,7 @@ export class ButtonTabText extends PureComponent {
             color: "#162633",
             text: undefined,
             disabled: false,
+            activeOpacity: 0.5,
             variant: undefined,
             onPress: undefined,
             style: {}
@@ -57,6 +59,7 @@ export class ButtonTabText extends PureComponent {
             <TouchableOpacity
                 style={this._style()}
                 disabled={this.props.disabled}
+                activeOpacity={this.props.activeOpacity}
                 onPress={this.props.onPress}
             >
                 <Text style={this._styleText()}>{this.props.text}</Text>
@@ -82,14 +85,16 @@ const styles = StyleSheet.create({
         letterSpacing: 0.25
     },
     textCompact: {
-        marginTop: 0,
         fontFamily: baseStyles.FONT_BOOK,
-        fontSize: 14
+        fontSize: 14,
+        lineHeight: 18,
+        textDecorationLine: "underline"
     },
     textDisabled: {
         opacity: 0.4
     },
     textUnselected: {
-        color: "#a4adb5"
+        color: "#a4adb5",
+        textDecorationLine: "none"
     }
 });

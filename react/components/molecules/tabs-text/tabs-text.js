@@ -16,6 +16,7 @@ export class TabsText extends PureComponent {
                     disabled: PropTypes.bool
                 }).isRequired
             ).isRequired,
+            tabsColor: PropTypes.string,
             tabSelected: PropTypes.number,
             variant: PropTypes.string,
             onTabChange: PropTypes.func.isRequired,
@@ -27,6 +28,7 @@ export class TabsText extends PureComponent {
         return {
             hasAnimation: true,
             tabs: [],
+            tabsColor: "#24425a",
             tabSelected: 0,
             variant: undefined,
             style: {}
@@ -100,7 +102,7 @@ export class TabsText extends PureComponent {
             >
                 <ButtonTabText
                     text={tab.text}
-                    color={"#24425a"}
+                    color={this.props.tabsColor}
                     onPress={() => this.onTabPress(index)}
                     active={this.state.tabSelected === index}
                     disabled={tab.disabled}
@@ -134,7 +136,8 @@ const styles = StyleSheet.create({
     },
     tabsTextCompact: {
         borderTopWidth: 1,
-        backgroundColor: "#f6f7f9"
+        backgroundColor: "#f6f7f9",
+        textDecorationLine: "underline"
     },
     button: {
         flex: 1
