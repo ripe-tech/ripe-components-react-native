@@ -67,6 +67,10 @@ export class RichTextInput extends PureComponent {
         }
     };
 
+    blur = () => {
+        this.textAreaComponent.blur();
+    };
+
     startShowButtonsAnimation = () => {
         Animated.parallel([
             Animated.timing(this.state.buttonsOpacityValue, {

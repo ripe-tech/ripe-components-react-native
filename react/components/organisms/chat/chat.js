@@ -55,6 +55,8 @@ export class Chat extends PureComponent {
         this.scrollToEnd();
     };
 
+    richTextInputBlur = () => this.richTextInputComponent.blur();
+
     onRichTextInputPhotoAdded = source => {
         const message = {
             avatarUrl: this.props.avatarUrl,
