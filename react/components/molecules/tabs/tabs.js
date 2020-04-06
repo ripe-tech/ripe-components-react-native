@@ -49,6 +49,8 @@ export class Tabs extends PureComponent {
                         <ButtonTab
                             key={tab.text}
                             text={tab.text}
+                            color={tab.color}
+                            colorSelected={tab.colorSelected}
                             disabled={tab.disabled}
                             badgeAnimationDuration={tab.badgeAnimationDuration}
                             badgeBackgroundColor={tab.badgeBackgroundColor}

@@ -23,6 +23,8 @@ export class ButtonTab extends PureComponent {
             badgeText: PropTypes.string,
             text: PropTypes.string,
             icon: PropTypes.string,
+            color: PropTypes.string,
+            colorSelected: PropTypes.string,
             selected: PropTypes.bool,
             disabled: PropTypes.bool,
             style: ViewPropTypes.style,
@@ -40,6 +42,8 @@ export class ButtonTab extends PureComponent {
             badgeHasAnimation: true,
             badgeText: undefined,
             text: undefined,
+            color: "#a6adb4",
+            colorSelected: "#1d2631",
             selected: false,
             disabled: false,
             style: {},
@@ -48,12 +52,20 @@ export class ButtonTab extends PureComponent {
     }
 
     _iconColor = () => {
-        return this.props.selected || this.state.pressed ? "#1d2631" : "#a6adb4";
+        return this.props.selected || this.state.pressed
+            ? this.props.colorSelected
+            : this.props.color;
     };
 
     _labelStyle = () => {
         return [
             styles.label,
+            {
+                color:
+                    this.props.selected || this.state.pressed
+                        ? this.props.colorSelected
+                        : this.props.color
+            },
             this.props.selected || this.state.pressed ? styles.labelSelected : {}
         ];
     };
@@ -109,16 +121,13 @@ const styles = StyleSheet.create({
         paddingBottom: 6
     },
     label: {
-        color: "#a6adb4",
         fontSize: 10,
         fontFamily: baseStyles.FONT_BOOK,
         lineHeight: 10,
         marginTop: 6,
         textAlign: "center"
     },
-    labelSelected: {
-        color: "#1d2631"
-    },
+    labelSelected: {},
     badge: {
         position: "absolute",
         top: 0,
