@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 4,
         paddingTop: 10,
-        paddingBottom: 6
+        paddingBottom: 8
     },
     label: {
         fontSize: 12,
