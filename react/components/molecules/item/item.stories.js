@@ -12,14 +12,18 @@ storiesOf("Molecules", module)
         const headerIcon = text("Header Icon", "happy-face");
         const headerText = text("Header Text", "New message");
         const headerDate = number("Header Date", 1337);
+        const disabled = boolean("Disabled", true);
         const variant = select("Variant", { Unset: undefined, Full: "full" }, undefined);
+        const activeOpacity = number("Active Opacity", 0.75);
         return (
             <Item
                 header={header}
                 headerIcon={headerIcon}
                 headerText={headerText}
                 headerDate={headerDate}
+                disabled={disabled}
                 variant={variant}
+                activeOpacity={activeOpacity}
             >
                 <Text>Custom content text line</Text>
                 <Text>Another custom content text line</Text>
