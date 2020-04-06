@@ -2,10 +2,10 @@ sudo: false
 dist: trusty
 language: node_js
 node_js:
-  - "8"
-  - "9"
   - "10"
   - "11"
+  - "12"
+  - "13"
 install:
   - npm install
 script: npm run lint-all && npm test
@@ -17,4 +17,4 @@ deploy:
     secure: wFttuZnpy2gNKFmuBFv8vnXPgC6QTwQjY9MXmgB0ap3n3m+9eeD1dG81zrs+iOco68QABZdVjS3of04F5gRPSHFXAVT8wb55Hf9c7AMxk7eDWTtXXaIw5cmA4NqJGpZ/A6C5CF7PZ0pbWZkbb2yrav2YuqANwAdZuFDeZlv0vD9liReJMUnyBfO/Vpfb7U2ZSuGYIonyFnUKfxYoCSLkrZUt/4XdS+ehdB41xzQcDWwvbNvDyZavNh9oXxFkGsVSo3kOPhQWSSSeotK34FxJ1dTPcD0oz2jzoHjZyGR5QC/K58tQe/HnVDgtFxBslT/XRY9Mw6K1QQCAlvbdcm82kKZ7ot1C7M2qh1ZqLtogKs+vbJe5du6SZwgewl9Da1jUCfzlu9JLyZ5U/6ULa+QrPCDey0ALrifiwXAbHiFd9eskEgjQ0NoD3yxlOCslAHaDB/dacas9lZm2r2l4XSCy+IdMwSDu2Xth5bXS+YVIz5ZWSYXLmaCBr4oHPnvhGyPHWc7XFkl7RBplWQjIoSg6xeJbgnE0HyIHLXrPbN7HZRNcppgHcvobKZ5RW1Pk1R5TqNJNajUfw2xt1u8JeiksnUciOIiDjDfuOPrY7vwEoPT7LBDEyj2qygW77NuqKLFiQHQJZSIvcmRqHIBIsnZF6wOT1kmHpj5JtqD+l8WKVJE=
   on:
     tags: true
-    node_js: "8"
+    node_js: "10"
