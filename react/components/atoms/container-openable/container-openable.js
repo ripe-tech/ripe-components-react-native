@@ -55,6 +55,7 @@ export class ContainerOpenable extends PureComponent {
             overlayOpacity: new Animated.Value(0),
             contentHeight: new Animated.Value(0)
         };
+
         this.state.contentHeight.addListener(h => this.props.onContentHeight(h.value));
 
         this.headerHeight = 0;
