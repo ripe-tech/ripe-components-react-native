@@ -15,6 +15,7 @@ export class ButtonKeyboard extends PureComponent {
             value: PropTypes.any,
             variant: PropTypes.string,
             onPress: PropTypes.func,
+            onLongPress: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -26,13 +27,18 @@ export class ButtonKeyboard extends PureComponent {
             text: undefined,
             value: undefined,
             variant: undefined,
-            style: {},
-            onPress: () => {}
+            onPress: () => {},
+            onLongPress: () => {},
+            style: {}
         };
     }
 
     _onPress = () => {
         this.props.onPress(this.props.value);
+    };
+
+    _onLongPress = () => {
+        this.props.onLongPress(this.props.value);
     };
 
     _style = () => {
@@ -45,7 +51,11 @@ export class ButtonKeyboard extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity style={this._style()} onPress={this._onPress}>
+            <TouchableOpacity
+                style={this._style()}
+                onPress={this._onPress}
+                onLongPress={this._onLongPress}
+            >
                 {this.props.text ? <Text style={styles.text}>{this.props.text}</Text> : null}
                 {this.props.icon ? (
                     <Icon
