@@ -112,7 +112,7 @@ export class ContainerOpenable extends PureComponent {
 
     close() {
         if (this.animating) return;
-        if (this.keyboard) Keyboard.dismiss;
+        if (this.state.keyboard) Keyboard.dismiss;
 
         this.animating = true;
 
