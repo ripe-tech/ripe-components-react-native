@@ -84,8 +84,8 @@ export class Chat extends PureComponent {
             attachments: []
         };
 
-        this.props.onNewMessage(message);
         this.scrollToEnd();
+        this.props.onNewMessage(message);
     };
 
     render() {
