@@ -9,7 +9,8 @@ import {
     StatusBar,
     Platform,
     Modal,
-    TouchableOpacity
+    TouchableOpacity,
+    Keyboard
 } from "react-native";
 import PropTypes from "prop-types";
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
@@ -53,8 +54,12 @@ export class ContainerOpenable extends PureComponent {
             visible: false,
             showOverlay: false,
             overlayOpacity: new Animated.Value(0),
-            contentHeight: new Animated.Value(0)
+            contentHeight: new Animated.Value(0),
+            keyboard: false
         };
+
+        Keyboard.addListener("keyboardDidShow", () => this.setState({ keyboard: true }));
+        Keyboard.addListener("keyboardDidHide", () => this.setState({ keyboard: false }));
 
         this.state.contentHeight.addListener(h => this.props.onContentHeight(h.value));
 
@@ -107,6 +112,7 @@ export class ContainerOpenable extends PureComponent {
 
     close() {
         if (this.animating) return;
+        if (this.keyboard) Keyboard.dismiss;
 
         this.animating = true;
 
