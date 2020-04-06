@@ -7,13 +7,15 @@ import { ButtonKeyboard } from "../../atoms/button-keyboard";
 export class KeyboardNumeric extends PureComponent {
     static get propTypes() {
         return {
-            onKeyPress: PropTypes.func
+            onKeyPress: PropTypes.func,
+            onKeyLongPress: PropTypes.func
         };
     }
 
     static get defaultProps() {
         return {
-            onKeyPress: value => {}
+            onKeyPress: value => {},
+            onKeyLongPress: value => {}
         };
     }
 
@@ -26,18 +28,21 @@ export class KeyboardNumeric extends PureComponent {
                         text={"1"}
                         value={1}
                         onPress={this.props.onKeyPress}
+                        onLongPress={this.props.onKeyLongPress}
                     />
                     <ButtonKeyboard
                         style={styles.buttonKeyboard}
                         text={"2"}
                         value={2}
                         onPress={this.props.onKeyPress}
+                        onLongPress={this.props.onKeyLongPress}
                     />
                     <ButtonKeyboard
                         style={styles.buttonKeyboard}
                         text={"3"}
                         value={3}
                         onPress={this.props.onKeyPress}
+                        onLongPress={this.props.onKeyLongPress}
                     />
                 </View>
                 <View style={styles.row}>
@@ -46,18 +51,21 @@ export class KeyboardNumeric extends PureComponent {
                         text={"4"}
                         value={4}
                         onPress={this.props.onKeyPress}
+                        onLongPress={this.props.onKeyLongPress}
                     />
                     <ButtonKeyboard
                         style={styles.buttonKeyboard}
                         text={"5"}
                         value={5}
                         onPress={this.props.onKeyPress}
+                        onLongPress={this.props.onKeyLongPress}
                     />
                     <ButtonKeyboard
                         style={styles.buttonKeyboard}
                         text={"6"}
                         value={6}
                         onPress={this.props.onKeyPress}
+                        onLongPress={this.props.onKeyLongPress}
                     />
                 </View>
                 <View style={styles.row}>
@@ -66,18 +74,21 @@ export class KeyboardNumeric extends PureComponent {
                         text={"7"}
                         value={7}
                         onPress={this.props.onKeyPress}
+                        onLongPress={this.props.onKeyLongPress}
                     />
                     <ButtonKeyboard
                         style={styles.buttonKeyboard}
                         text={"8"}
                         value={8}
                         onPress={this.props.onKeyPress}
+                        onLongPress={this.props.onKeyLongPress}
                     />
                     <ButtonKeyboard
                         style={styles.buttonKeyboard}
                         text={"9"}
                         value={9}
                         onPress={this.props.onKeyPress}
+                        onLongPress={this.props.onKeyLongPress}
                     />
                 </View>
                 <View style={styles.row}>
@@ -87,6 +98,7 @@ export class KeyboardNumeric extends PureComponent {
                         text={"0"}
                         value={0}
                         onPress={this.props.onKeyPress}
+                        onLongPress={this.props.onKeyLongPress}
                     />
                     <ButtonKeyboard
                         style={styles.buttonKeyboard}
@@ -94,6 +106,7 @@ export class KeyboardNumeric extends PureComponent {
                         variant={"clean"}
                         value={"delete"}
                         onPress={this.props.onKeyPress}
+                        onLongPress={this.props.onKeyLongPress}
                         strokeWidth={3}
                     />
                 </View>

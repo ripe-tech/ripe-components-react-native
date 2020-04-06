@@ -51,12 +51,6 @@ export class Chat extends PureComponent {
         this.scrollViewComponent.scrollToEnd({ animated: true });
     };
 
-    onRichTextInputFocus = () => {
-        this.scrollToEnd();
-    };
-
-    richTextInputBlur = () => this.richTextInputComponent.blur();
-
     onRichTextInputPhotoAdded = source => {
         const message = {
             avatarUrl: this.props.avatarUrl,
@@ -90,6 +84,7 @@ export class Chat extends PureComponent {
             attachments: []
         };
 
+        this.scrollToEnd();
         this.props.onNewMessage(message);
     };
 
@@ -123,7 +118,6 @@ export class Chat extends PureComponent {
                     placeholder={"Say something..."}
                     multiline={true}
                     textareaMaxHeight={baseStyles.FONT_SIZE * 5}
-                    onFocus={this.onRichTextInputFocus}
                     onPhotoAdded={image => this.onRichTextInputPhotoAdded(image)}
                     onAttachmentsAdded={attachments =>
                         this.onRichTextInputAttachmentsAdded(attachments)
