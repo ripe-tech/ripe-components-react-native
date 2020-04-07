@@ -1,7 +1,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text } from "@storybook/addon-knobs";
-import { KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
+import { KeyboardAvoidingView } from "react-native";
 
 import { Chat } from "./chat";
 
@@ -116,17 +116,8 @@ storiesOf("Organisms", module)
             }
         ];
         return (
-            <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "height" : undefined}
-                style={[styles.chat, this.props.style]}
-            >
+            <KeyboardAvoidingView style={{ flex: 1 }}>
                 <Chat avatarUrl={avatarUrl} username={username} messages={messages} />
             </KeyboardAvoidingView>
         );
     });
-
-const styles = StyleSheet.create({
-    chat: {
-        flex: 1
-    }
-});
