@@ -17,8 +17,8 @@ export class Tag extends PureComponent {
             iconWidth: PropTypes.number,
             iconHeight: PropTypes.number,
             size: PropTypes.string,
-            style: ViewPropTypes.style,
-            onPress: PropTypes.func
+            onPress: PropTypes.func,
+            style: ViewPropTypes.style
         };
     }
 
@@ -32,8 +32,8 @@ export class Tag extends PureComponent {
             iconWidth: undefined,
             iconHeight: undefined,
             size: "normal",
-            style: {},
-            onPress: undefined
+            onPress: undefined,
+            style: {}
         };
     }
 
