@@ -38,14 +38,15 @@ export class Tag extends PureComponent {
     }
 
     _style = () => {
+        const hasBorder = this.props.borderColor && this.props.borderColor !== "transparent";
         return [
             styles.tag,
             styles[`tag${capitalize(this.props.size)}`],
             {
                 backgroundColor: this.props.backgroundColor,
                 borderColor: this.props.borderColor,
-                borderWidth: this.props.borderColor ? 1 : 0,
-                borderRadius: this.props.borderColor ? 6 : 0
+                borderWidth: hasBorder ? 1 : 0,
+                borderRadius: 6
             },
             this.props.style
         ];
