@@ -175,17 +175,17 @@ export class ContainerOpenable extends PureComponent {
 
     _containerStyle = () => {
         if (!this._isLoaded()) {
-            return [styles.contentContainer, { opacity: 0 }];
+            return [styles.contentContainer, this.props.style, { opacity: 0 }];
         }
 
         return [
             styles.contentContainer,
+            this.props.style,
             {
                 height: this.state.contentHeight.interpolate({
                     inputRange: [0, 1],
                     outputRange: [this.headerHeight, this.containerHeight]
-                }),
-                maxHeight: this.props.modal ? screenHeight : this.containerPosY
+                })
             }
         ];
     };
@@ -257,18 +257,11 @@ const styles = StyleSheet.create({
         width: "100%",
         bottom: 0
     },
-    modal: {
-        position: "absolute",
-        width: "100%",
-        margin: 0,
-        bottom: 0
-    },
     contentContainer: {
+        backgroundColor: "#ffffff",
         position: "absolute",
-        overflow: "hidden",
         width: "100%",
-        bottom: 0,
-        backgroundColor: "#ffffff"
+        bottom: 0
     },
     knob: {
         alignSelf: "center",
