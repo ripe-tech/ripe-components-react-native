@@ -25,7 +25,9 @@ export class KeyValues extends PureComponent {
         return (
             <View style={this.props.style}>
                 {this.props.items.map(item => (
-                    <KeyValue key={item.key} _key={item.key} value={item.value} />
+                    <KeyValue key={item.key} _key={item.key} value={item.value}>
+                        {item.valueComponent}
+                    </KeyValue>
                 ))}
             </View>
         );
