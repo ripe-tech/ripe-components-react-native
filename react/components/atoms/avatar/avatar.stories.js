@@ -8,6 +8,7 @@ storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Avatar", () => {
         const size = number("Size", undefined);
+        const activeOpacity = number("Active Opacity", undefined);
         const borderRadius = number("Border Radius", undefined);
         return (
             <Avatar
@@ -16,6 +17,7 @@ storiesOf("Atoms", module)
                 }}
                 size={size}
                 borderRadius={borderRadius}
+                activeOpacity={activeOpacity}
                 onPress={() => {
                     alert("Nice touch!");
                 }}

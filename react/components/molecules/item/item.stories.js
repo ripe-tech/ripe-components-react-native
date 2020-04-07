@@ -14,7 +14,7 @@ storiesOf("Molecules", module)
         const headerDate = number("Header Date", 1337);
         const disabled = boolean("Disabled", true);
         const variant = select("Variant", { Unset: undefined, Full: "full" }, undefined);
-        const activeOpacity = number("Active Opacity", 0.75);
+        const activeOpacity = number("Active Opacity", undefined);
         return (
             <Item
                 header={header}

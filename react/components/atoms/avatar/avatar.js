@@ -8,6 +8,7 @@ export class Avatar extends PureComponent {
         return {
             image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
             size: PropTypes.number,
+            activeOpacity: PropTypes.number,
             borderRadius: PropTypes.number,
             resizeMode: PropTypes.string,
             hitSlop: PropTypes.shape({
@@ -24,6 +25,7 @@ export class Avatar extends PureComponent {
     static get defaultProps() {
         return {
             size: 40,
+            activeOpacity: 0.7,
             borderRadius: 100,
             resizeMode: "contain",
             hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
@@ -49,6 +51,7 @@ export class Avatar extends PureComponent {
             <TouchableOpacity
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
+                activeOpacity={this.props.activeOpacity}
                 hitSlop={this.props.hitSlop}
             >
                 <Image
