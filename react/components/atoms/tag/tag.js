@@ -45,8 +45,7 @@ export class Tag extends PureComponent {
             {
                 backgroundColor: this.props.backgroundColor,
                 borderColor: this.props.borderColor,
-                borderWidth: hasBorder ? 1 : 0,
-                borderRadius: 6
+                borderWidth: hasBorder ? 1 : 0
             },
             this.props.style
         ];
@@ -92,7 +91,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingVertical: 6,
         paddingHorizontal: 12,
-        letterSpacing: 0.25
+        letterSpacing: 0.25,
+        borderRadius: 6
     },
     tagTiny: {
         paddingVertical: 3,
