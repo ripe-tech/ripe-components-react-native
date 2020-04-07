@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import {
     ViewPropTypes,
     StyleSheet,
+    View,
     KeyboardAvoidingView,
     ScrollView,
     Platform
@@ -105,19 +106,21 @@ export class Chat extends PureComponent {
                     ref={ref => (this.scrollViewComponent = ref)}
                     onContentSizeChange={this.scrollToEnd}
                 >
-                    {this.props.messages.map((message, index) => {
-                        return (
-                            <ChatMessage
-                                style={index !== 0 && styles.chatMessage}
-                                avatarUrl={message.avatarUrl}
-                                username={message.username}
-                                message={message.message}
-                                date={message.date}
-                                attachments={message.attachments}
-                                key={index}
-                            />
-                        );
-                    })}
+                    <View style={styles.chatMessagesContent}>
+                        {this.props.messages.map((message, index) => {
+                            return (
+                                <ChatMessage
+                                    style={index !== 0 && styles.chatMessage}
+                                    avatarUrl={message.avatarUrl}
+                                    username={message.username}
+                                    message={message.message}
+                                    date={message.date}
+                                    attachments={message.attachments}
+                                    key={index}
+                                />
+                            );
+                        })}
+                    </View>
                 </ScrollView>
                 <RichTextInput
                     ref={el => (this.input = el)}
@@ -146,8 +149,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#f6f7f9"
     },
+    chatMessagesContent: {
+        paddingVertical: 12
+    },
     chatMessage: {
-        marginTop: 32
+        marginTop: 16
     }
 });
 

@@ -20,6 +20,7 @@ export class Item extends PureComponent {
             gradientLocations: PropTypes.arrayOf(PropTypes.number),
             disabled: PropTypes.bool,
             variant: PropTypes.string,
+            activeOpacity: PropTypes.number,
             onPress: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -36,6 +37,7 @@ export class Item extends PureComponent {
             gradientColors: ["#4a6fe9", "#6687f6"],
             disabled: true,
             variant: undefined,
+            activeOpacity: 0.75,
             onPress: () => {},
             style: {}
         };
@@ -54,7 +56,7 @@ export class Item extends PureComponent {
             <View style={this._style()}>
                 <TouchableOpacity
                     style={this._contentStyle()}
-                    activeOpacity={0.4}
+                    activeOpacity={this.props.activeOpacity}
                     disabled={this.props.disabled}
                     onPress={this.props.onPress}
                 >

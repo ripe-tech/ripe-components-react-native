@@ -85,16 +85,15 @@ const styles = StyleSheet.create({
         letterSpacing: 0.25
     },
     textCompact: {
-        fontFamily: baseStyles.FONT_BOOK,
+        fontFamily: baseStyles.FONT_BOLD,
         fontSize: 14,
-        lineHeight: 18,
-        textDecorationLine: "underline"
+        lineHeight: 18
     },
     textDisabled: {
         opacity: 0.4
     },
     textUnselected: {
         color: "#a4adb5",
-        textDecorationLine: "none"
+        fontFamily: baseStyles.FONT_BOOK
     }
 });

@@ -118,13 +118,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 4,
         paddingTop: 10,
-        paddingBottom: 6
+        paddingBottom: 8
     },
     label: {
-        fontSize: 10,
+        fontSize: 12,
         fontFamily: baseStyles.FONT_BOOK,
-        lineHeight: 10,
-        marginTop: 6,
+        lineHeight: 12,
+        marginTop: 8,
         textAlign: "center"
     },
     labelSelected: {},
