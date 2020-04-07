@@ -1,17 +1,19 @@
-export const dateString = function (timestamp, separator = "/") {
+export const dateString = function (timestamp, { separator = "/", includeYear = true } = {}) {
     const date = new Date(timestamp * 1000);
     const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
     let month = date.getMonth() + 1;
     month = month < 10 ? `0${month}` : month;
-    return day + separator + month + separator + date.getFullYear();
+    const yearText = includeYear ? `${separator}${date.getFullYear()}` : "";
+    return day + separator + month + yearText;
 };
 
-export const dateStringUTC = function (timestamp, separator = "/") {
+export const dateStringUTC = function (timestamp, { separator = "/", includeYear = true } = {}) {
     const date = new Date(timestamp * 1000);
     const day = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate();
     let month = date.getUTCMonth() + 1;
     month = month < 10 ? `0${month}` : month;
-    return day + separator + month + separator + date.getUTCFullYear();
+    const yearText = includeYear ? `${separator}${date.getFullYear()}` : "";
+    return day + separator + month + yearText;
 };
 
 export const timeString = function (timestamp, separator = ":") {
