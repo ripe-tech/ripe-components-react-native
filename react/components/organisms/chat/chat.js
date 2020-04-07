@@ -1,12 +1,5 @@
 import React, { PureComponent } from "react";
-import {
-    ViewPropTypes,
-    StyleSheet,
-    View,
-    KeyboardAvoidingView,
-    ScrollView,
-    Platform
-} from "react-native";
+import { ViewPropTypes, StyleSheet, View, ScrollView } from "react-native";
 
 import PropTypes from "prop-types";
 
@@ -99,10 +92,7 @@ export class Chat extends PureComponent {
 
     render() {
         return (
-            <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "height" : undefined}
-                style={[styles.chat, this.props.style]}
-            >
+            <View style={[styles.chat, this.props.style]}>
                 <ScrollView
                     style={styles.chatMessagesContainer}
                     ref={ref => (this.scrollViewComponent = ref)}
@@ -136,7 +126,7 @@ export class Chat extends PureComponent {
                     }
                     onSendMessage={text => this.onRichTextInputSendMessage(text)}
                 />
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 }

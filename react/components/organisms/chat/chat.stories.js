@@ -1,6 +1,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text } from "@storybook/addon-knobs";
+import { KeyboardAvoidingView } from "react-native";
 
 import { Chat } from "./chat";
 
@@ -114,5 +115,9 @@ storiesOf("Organisms", module)
                 attachments: []
             }
         ];
-        return <Chat avatarUrl={avatarUrl} username={username} messages={messages} />;
+        return (
+            <KeyboardAvoidingView style={{ flex: 1 }}>
+                <Chat avatarUrl={avatarUrl} username={username} messages={messages} />
+            </KeyboardAvoidingView>
+        );
     });
