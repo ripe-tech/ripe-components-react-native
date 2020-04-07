@@ -69,7 +69,11 @@ export class KeyValue extends PureComponent {
             >
                 <View style={styles.textContainer}>
                     <Text style={this._keyStyle()}>{this.props._key}</Text>
-                    <Text style={this._valueStyle()}>{this.props.value}</Text>
+                    {this.props.children ? (
+                        this.props.children
+                    ) : (
+                        <Text style={this._valueStyle()}>{this.props.value}</Text>
+                    )}
                 </View>
                 {this.props.icon ? (
                     <View style={styles.iconContainer}>
