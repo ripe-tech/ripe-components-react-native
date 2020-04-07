@@ -51,6 +51,14 @@ export class RichTextInput extends PureComponent {
         };
     }
 
+    focus = () => {
+        this.textAreaComponent.focus();
+    };
+
+    blur = () => {
+        this.textAreaComponent.blur();
+    };
+
     startAnimations = () => {
         LayoutAnimation.configureNext(
             LayoutAnimation.create(
@@ -65,10 +73,6 @@ export class RichTextInput extends PureComponent {
         } else {
             this.startHideButtonsAnimation();
         }
-    };
-
-    blur = () => {
-        this.textAreaComponent.blur();
     };
 
     startShowButtonsAnimation = () => {
