@@ -48,6 +48,14 @@ export class Chat extends PureComponent {
         };
     }
 
+    focus = () => {
+        this.input.focus();
+    };
+
+    blur = () => {
+        this.input.blur();
+    };
+
     scrollToEnd = () => {
         this.scrollViewComponent.scrollToEnd({ animated: true });
     };
@@ -117,6 +125,7 @@ export class Chat extends PureComponent {
                     </View>
                 </ScrollView>
                 <RichTextInput
+                    ref={el => (this.input = el)}
                     style={styles.richTextInput}
                     placeholder={"Say something..."}
                     multiline={true}
