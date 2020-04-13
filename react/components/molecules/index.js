@@ -3,6 +3,7 @@ export * from "./header";
 export * from "./item";
 export * from "./item-notification";
 export * from "./key-value";
+export * from "./key-value-placeholder";
 export * from "./key-values";
 export * from "./keyboard-numeric";
 export * from "./rich-textinput";
