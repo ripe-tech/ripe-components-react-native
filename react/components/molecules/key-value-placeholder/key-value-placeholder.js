@@ -6,25 +6,17 @@ import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
 export class KeyValuePlaceholder extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            gradientPosition: [0, 0, 0]
-        };
-    }
-
     static get propTypes() {
         return {
             numberOfLines: PropTypes.number,
-            gradientColors: PropTypes.arrayOf(PropTypes.string)
+            colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+            locations: PropTypes.arrayOf(PropTypes.number).isRequired
         };
     }
 
     static get defaultProps() {
         return {
-            numberOfLines: 1,
-            gradientColors: ["#DBDEE5", "#E3E6ED", "#DBDEE5"]
+            numberOfLines: 1
         };
     }
 
@@ -38,8 +30,8 @@ export class KeyValuePlaceholder extends PureComponent {
                     style={styles.value}
                     angle={90}
                     useAngle={true}
-                    colors={this.props.gradientColors}
-                    locations={this.state.gradientPosition}
+                    colors={this.props.colors}
+                    locations={this.props.locations}
                 />
             );
         }
@@ -54,8 +46,8 @@ export class KeyValuePlaceholder extends PureComponent {
                         style={styles.key}
                         angle={90}
                         useAngle={true}
-                        colors={this.props.gradientColors}
-                        locations={this.state.gradientPosition}
+                        colors={this.props.colors}
+                        locations={this.props.locations}
                     />
                     {this._renderLines()}
                 </View>
