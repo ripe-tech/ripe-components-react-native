@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     },
     key: {
         borderRadius: 4,
-        height: 18.5,
+        height: 18,
         width: 60,
         marginBottom: 4
     },
