@@ -168,11 +168,20 @@ export class ContainerOpenable extends PureComponent {
             if (this.remountingContainer && previousHeight > 0) {
                 this.animating = true;
                 this.setContentHeight(previousHeight / this.containerHeight);
-                Animated.timing(this.state.contentHeight, {
-                    toValue: 1,
-                    duration: this.props.animationsDuration,
-                    easing: Easing.inOut(Easing.ease)
-                }).start(() => {
+
+                Animated.parallel([
+                    Animated.timing(this.state.contentHeight, {
+                        toValue: 1,
+                        duration: this.props.animationsDuration,
+                        easing: Easing.inOut(Easing.ease)
+                    }),
+                    Animated.timing(this.state.overlayOpacity, {
+                        toValue: 0.5,
+                        duration: this.props.animationsDuration,
+                        useNativeDriver: true,
+                        easing: Easing.inOut(Easing.ease)
+                    })
+                ]).start(() => {
                     this.animating = false;
                     this.remountingContainer = false;
                 });
