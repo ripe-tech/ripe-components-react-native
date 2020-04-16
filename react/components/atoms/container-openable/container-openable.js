@@ -159,21 +159,25 @@ export class ContainerOpenable extends PureComponent {
     _onContainerLayout = event => {
         if (this.state.containerHeightLoaded) return;
 
-        if (this.remountingContainer && this.containerHeight > 0) {
-            this.setContentHeight(this.containerHeight / event.nativeEvent.layout.height);
-            Animated.timing(this.state.contentHeight, {
-                toValue: 1,
-                duration: this.props.animationsDuration,
-                easing: Easing.inOut(Easing.ease)
-            }).start(() => {
-                this.remountingContainer = false;
-            });
-        }
+        const previousHeight = this.containerHeight;
 
         this.containerHeight = event.nativeEvent.layout.height;
         this.containerPosY = event.nativeEvent.layout.y + this.containerHeight;
 
-        this.setState({ containerHeightLoaded: true });
+        this.setState({ containerHeightLoaded: true }, () => {
+            if (this.remountingContainer && previousHeight > 0) {
+                this.animating = true;
+                this.setContentHeight(previousHeight / this.containerHeight);
+                Animated.timing(this.state.contentHeight, {
+                    toValue: 1,
+                    duration: this.props.animationsDuration,
+                    easing: Easing.inOut(Easing.ease)
+                }).start(() => {
+                    this.animating = false;
+                    this.remountingContainer = false;
+                });
+            }
+        });
     };
 
     _onHeaderLayout = event => {
