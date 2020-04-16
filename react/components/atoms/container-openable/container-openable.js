@@ -53,7 +53,8 @@ export class ContainerOpenable extends PureComponent {
             visible: false,
             showOverlay: false,
             overlayOpacity: new Animated.Value(0),
-            contentHeight: new Animated.Value(0)
+            contentHeight: new Animated.Value(0),
+            containerKey: 0 //Used to force remount
         };
 
         this.state.contentHeight.addListener(h => this.props.onContentHeight(h.value));
@@ -62,6 +63,7 @@ export class ContainerOpenable extends PureComponent {
         this.containerHeight = 0;
         this.containerPosY = 0;
         this.animating = false;
+        this.remountingContainer = false;
     }
 
     isVisible = () => this.state.visible;
@@ -77,6 +79,13 @@ export class ContainerOpenable extends PureComponent {
 
     _isLoaded = () => {
         return this.state.containerHeightLoaded && this.state.headerHeightLoaded;
+    };
+
+    remountContainer = () => {
+        requestAnimationFrame(() => {
+            this.remountingContainer = true;
+            this.setState({ containerKey: Date.now(), containerHeightLoaded: false }, () => {});
+        });
     };
 
     open() {
@@ -150,6 +159,17 @@ export class ContainerOpenable extends PureComponent {
     _onContainerLayout = event => {
         if (this.state.containerHeightLoaded) return;
 
+        if (this.remountingContainer && this.containerHeight > 0) {
+            this.setContentHeight(this.containerHeight / event.nativeEvent.layout.height);
+            Animated.timing(this.state.contentHeight, {
+                toValue: 1,
+                duration: this.props.animationsDuration,
+                easing: Easing.inOut(Easing.ease)
+            }).start(() => {
+                this.remountingContainer = false;
+            });
+        }
+
         this.containerHeight = event.nativeEvent.layout.height;
         this.containerPosY = event.nativeEvent.layout.y + this.containerHeight;
 
@@ -202,6 +222,7 @@ export class ContainerOpenable extends PureComponent {
                 ) : null}
                 <Animated.View
                     style={this._containerStyle()}
+                    key={this.state.containerKey}
                     onLayout={event => this._onContainerLayout(event)}
                 >
                     {this.props.headerPressable ? (
