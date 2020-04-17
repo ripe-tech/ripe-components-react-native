@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, Image, View } from "react-native";
+import { ViewPropTypes, StyleSheet, Image } from "react-native";
 import { Touchable } from "../touchable";
 
 import PropTypes from "prop-types";

@@ -51,7 +51,7 @@ export class ButtonIcon extends PureComponent {
         return [
             {
                 width: this.props.size,
-                height: this.props.size,
+                height: this.props.size
             },
             this.props.style
         ];
@@ -61,10 +61,10 @@ export class ButtonIcon extends PureComponent {
         return [
             styles.buttonIcon,
             {
-                backgroundColor: this.props.backgroundColor,
+                backgroundColor: this.props.backgroundColor
             }
         ];
-    }
+    };
 
     render() {
         return (
@@ -84,7 +84,7 @@ export class ButtonIcon extends PureComponent {
                         strokeWidth={this.props.iconStrokeWidth}
                     />
                 </Touchable>
-                </View>
+            </View>
         );
     }
 }
