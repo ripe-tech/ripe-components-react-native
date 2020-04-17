@@ -1,8 +1,9 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, TouchableOpacity } from "react-native";
+import { StyleSheet, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { Icon } from "../icon";
+import { Touchable } from "../touchable";
 
 export class ButtonIcon extends PureComponent {
     static get propTypes() {
@@ -61,7 +62,7 @@ export class ButtonIcon extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
+            <Touchable
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
                 style={this._style()}
@@ -74,7 +75,7 @@ export class ButtonIcon extends PureComponent {
                     height={this.props.iconHeight}
                     strokeWidth={this.props.iconStrokeWidth}
                 />
-            </TouchableOpacity>
+            </Touchable>
         );
     }
 }

@@ -1,16 +1,9 @@
 import React, { PureComponent } from "react";
-import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    ActivityIndicator,
-    ViewPropTypes,
-    Platform,
-    View
-} from "react-native";
+import { StyleSheet, Text, ActivityIndicator, ViewPropTypes, Platform, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
+import { Touchable } from "../touchable";
 import { baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
@@ -81,7 +74,7 @@ export class Button extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
+            <Touchable
                 activeOpacity={0.8}
                 useForeground={true}
                 disabled={this.props.disabled}
@@ -96,7 +89,7 @@ export class Button extends PureComponent {
                 >
                     {this.props.loading ? this._renderLoading() : this._renderNormal()}
                 </LinearGradient>
-            </TouchableOpacity>
+            </Touchable>
         );
     }
 }

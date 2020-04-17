@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { Platform, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import SafeAreaView from "react-native-safe-area-view";
 
 import { baseStyles } from "../../../util";
 
-import { Icon } from "../../atoms";
+import { Icon, Touchable } from "../../atoms";
 
 export class Header extends PureComponent {
     static get propTypes() {
@@ -48,7 +48,7 @@ export class Header extends PureComponent {
         return (
             <SafeAreaView style={styles.header}>
                 {this.props.buttonLeftVisible && this.props.buttonLeftIcon ? (
-                    <TouchableOpacity
+                    <Touchable
                         hitSlop={this.props.hitSlop}
                         onPress={
                             this.props.onButtonLeftPress
@@ -64,11 +64,11 @@ export class Header extends PureComponent {
                             strokeWidth={2}
                             color={"#1d2631"}
                         />
-                    </TouchableOpacity>
+                    </Touchable>
                 ) : null}
                 {this.props.title ? <Text style={styles.title}>{this.props.title}</Text> : null}
                 {this.props.buttonRightVisible && this.props.buttonRightIcon ? (
-                    <TouchableOpacity
+                    <Touchable
                         hitSlop={this.props.hitSlop}
                         onPress={
                             this.props.onButtonRightPress ? this.props.onButtonRightPress : () => {}
@@ -82,7 +82,7 @@ export class Header extends PureComponent {
                             height={30}
                             strokeWidth={2}
                         />
-                    </TouchableOpacity>
+                    </Touchable>
                 ) : null}
             </SafeAreaView>
         );

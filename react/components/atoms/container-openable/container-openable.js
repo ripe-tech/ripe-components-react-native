@@ -8,11 +8,11 @@ import {
     Easing,
     StatusBar,
     Platform,
-    Modal,
-    TouchableOpacity
+    Modal
 } from "react-native";
 import PropTypes from "prop-types";
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";
+import { Touchable } from "../touchable";
 
 let screenHeight = Dimensions.get("window").height - initialWindowSafeAreaInsets.top;
 if (Platform.OS === "android") screenHeight -= StatusBar.currentHeight;
@@ -205,7 +205,7 @@ export class ContainerOpenable extends PureComponent {
                     onLayout={event => this._onContainerLayout(event)}
                 >
                     {this.props.headerPressable ? (
-                        <TouchableOpacity
+                        <Touchable
                             onLayout={event => this._onHeaderLayout(event)}
                             activeOpacity={1}
                             onPress={this.onHeaderPress}
@@ -213,7 +213,7 @@ export class ContainerOpenable extends PureComponent {
                         >
                             <View style={styles.knob} />
                             {this.props.header}
-                        </TouchableOpacity>
+                        </Touchable>
                     ) : (
                         <View
                             onLayout={event => this._onHeaderLayout(event)}

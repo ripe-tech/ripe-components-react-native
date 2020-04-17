@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { ViewPropTypes, StyleSheet, Image } from "react-native";
+import { Touchable } from "../touchable";
 
 import PropTypes from "prop-types";
 
@@ -48,7 +49,7 @@ export class Avatar extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
+            <Touchable
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
                 activeOpacity={this.props.activeOpacity}
@@ -59,7 +60,7 @@ export class Avatar extends PureComponent {
                     style={this._imageStyle()}
                     resizeMode={this.props.resizeMode}
                 />
-            </TouchableOpacity>
+            </Touchable>
         );
     }
 }

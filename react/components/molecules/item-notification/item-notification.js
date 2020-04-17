@@ -1,10 +1,11 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
+import { StyleSheet, Text, Platform } from "react-native";
 import PropTypes from "prop-types";
 
 import { Avatar } from "../../atoms/avatar";
 
 import { dateTimeString, baseStyles } from "../../../util";
+import { Touchable } from "../../atoms";
 
 export class ItemNotification extends PureComponent {
     static get propTypes() {
@@ -36,11 +37,7 @@ export class ItemNotification extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
-                style={this._style()}
-                onPress={this.props.onPress}
-                activeOpacity={0.6}
-            >
+            <Touchable style={this._style()} onPress={this.props.onPress} activeOpacity={0.6}>
                 <Avatar
                     image={{
                         uri: this.props.avatarURL
@@ -52,7 +49,7 @@ export class ItemNotification extends PureComponent {
                 {this.props.timestamp ? (
                     <Text style={styles.timestamp}>{dateTimeString(this.props.timestamp)} </Text>
                 ) : null}
-            </TouchableOpacity>
+            </Touchable>
         );
     }
 }

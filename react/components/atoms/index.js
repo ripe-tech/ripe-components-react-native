@@ -14,5 +14,6 @@ export * from "./link";
 export * from "./tag";
 export * from "./text";
 export * from "./textarea";
+export * from "./touchable";
 export * from "./bar-animated";
 export * from "./container-swipeable";

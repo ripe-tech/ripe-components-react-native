@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet, ViewPropTypes, View, Text } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
 
 import { capitalize, dateTimeString, baseStyles } from "../../../util";
 
-import { Icon } from "../../atoms";
+import { Icon, Touchable } from "../../atoms";
 
 export class Item extends PureComponent {
     static get propTypes() {
@@ -54,7 +54,7 @@ export class Item extends PureComponent {
     render() {
         return (
             <View style={this._style()}>
-                <TouchableOpacity
+                <Touchable
                     style={this._contentStyle()}
                     activeOpacity={this.props.activeOpacity}
                     disabled={this.props.disabled}
@@ -85,7 +85,7 @@ export class Item extends PureComponent {
                         </LinearGradient>
                     )}
                     {this.props.children}
-                </TouchableOpacity>
+                </Touchable>
             </View>
         );
     }
