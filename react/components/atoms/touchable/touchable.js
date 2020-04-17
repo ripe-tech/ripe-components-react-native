@@ -54,6 +54,7 @@ export class Touchable extends PureComponent {
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
                 hitSlop={this.props.hitSlop}
+                useForeground={this.props.useForeground}
             >
                 {Platform.OS === "ios" ? (
                     this.props.children
