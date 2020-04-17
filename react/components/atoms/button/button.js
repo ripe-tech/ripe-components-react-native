@@ -73,33 +73,27 @@ export class Button extends PureComponent {
 
     render() {
         return (
-            <View style={styles.button}>
-                <Touchable
-                    activeOpacity={0.8}
-                    useForeground={true}
-                    disabled={this.props.disabled}
-                    onPress={this.props.onPress}
+            <Touchable
+                activeOpacity={0.8}
+                disabled={this.props.disabled}
+                onPress={this.props.onPress}
+                borderRadius={6}
+            >
+                <LinearGradient
+                    angle={this.props.gradientAngle}
+                    colors={this.props.gradientColors}
+                    locations={this.props.gradientLocations}
+                    useAngle={true}
+                    style={this._style()}
                 >
-                    <LinearGradient
-                        angle={this.props.gradientAngle}
-                        colors={this.props.gradientColors}
-                        locations={this.props.gradientLocations}
-                        useAngle={true}
-                        style={this._style()}
-                    >
-                        {this.props.loading ? this._renderLoading() : this._renderNormal()}
-                    </LinearGradient>
-                </Touchable>
-            </View>
+                    {this.props.loading ? this._renderLoading() : this._renderNormal()}
+                </LinearGradient>
+            </Touchable>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    button: {
-        borderRadius: 6,
-        overflow: "hidden"
-    },
     buttonDisabled: {
         opacity: 0.5,
         fontSize: 120

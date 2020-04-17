@@ -2,10 +2,11 @@ import React, { PureComponent } from "react";
 
 import {
     ViewPropTypes,
+    Platform,
+    StyleSheet,
     TouchableOpacity,
     View,
-    TouchableNativeFeedback,
-    Platform
+    TouchableNativeFeedback
 } from "react-native";
 import PropTypes from "prop-types";
 
@@ -15,6 +16,7 @@ export class Touchable extends PureComponent {
     static get propTypes() {
         return {
             activeOpacity: PropTypes.number,
+            borderRadius: PropTypes.number,
             disabled: PropTypes.bool,
             onLongPress: PropTypes.func,
             onPress: PropTypes.func,
@@ -32,6 +34,7 @@ export class Touchable extends PureComponent {
     static get defaultProps() {
         return {
             activeOpacity: undefined,
+            borderRadius: undefined,
             disabled: undefined,
             onLongPress: undefined,
             onPress: undefined,
@@ -45,25 +48,37 @@ export class Touchable extends PureComponent {
         return [Platform.OS === "ios" ? this.props.style : null];
     };
 
+    _styleRoot = () => {
+        return [styles.touchable, { borderRadius: this.props.borderRadius }];
+    };
+
     render() {
         return (
-            <TouchableComponent
-                style={this._style()}
-                activeOpacity={this.props.activeOpacity}
-                disabled={this.props.disabled}
-                onPress={this.props.onPress}
-                onLongPress={this.props.onLongPress}
-                hitSlop={this.props.hitSlop}
-                useForeground={this.props.useForeground}
-            >
-                {Platform.OS === "ios" ? (
-                    this.props.children
-                ) : (
-                    <View style={this.props.style}>{this.props.children}</View>
-                )}
-            </TouchableComponent>
+            <View style={this._styleRoot()}>
+                <TouchableComponent
+                    style={this._style()}
+                    activeOpacity={this.props.activeOpacity}
+                    disabled={this.props.disabled}
+                    onPress={this.props.onPress}
+                    onLongPress={this.props.onLongPress}
+                    hitSlop={this.props.hitSlop}
+                    useForeground={this.props.useForeground}
+                >
+                    {Platform.OS === "ios" ? (
+                        this.props.children
+                    ) : (
+                        <View style={this.props.style}>{this.props.children}</View>
+                    )}
+                </TouchableComponent>
+            </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    touchable: {
+        overflow: "hidden"
+    }
+});
 
 export default Touchable;
