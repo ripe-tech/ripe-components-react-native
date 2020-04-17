@@ -41,10 +41,6 @@ export class Touchable extends PureComponent {
         };
     }
 
-    _contentStyle = () => {
-        return [Platform.OS === "android" ? this.props.style : null];
-    };
-
     _style = () => {
         return [Platform.OS === "ios" ? this.props.style : null];
     };
@@ -59,7 +55,11 @@ export class Touchable extends PureComponent {
                 onLongPress={this.props.onLongPress}
                 hitSlop={this.props.hitSlop}
             >
-                <View style={this._contentStyle()}>{this.props.children}</View>
+                {Platform.OS === "ios" ? (
+                    this.props.children
+                ) : (
+                    <View style={this.props.style}>{this.props.children}</View>
+                )}
             </TouchableComponent>
         );
     }
