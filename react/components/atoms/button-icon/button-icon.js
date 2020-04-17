@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes } from "react-native";
+import { StyleSheet, ViewPropTypes, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { Icon } from "../icon";
@@ -49,33 +49,42 @@ export class ButtonIcon extends PureComponent {
 
     _style() {
         return [
-            styles.buttonIcon,
             {
-                borderRadius: this.props.size / 2,
-                backgroundColor: this.props.backgroundColor,
                 width: this.props.size,
-                height: this.props.size
+                height: this.props.size,
             },
             this.props.style
         ];
     }
 
+    _touchableStyle = () => {
+        return [
+            styles.buttonIcon,
+            {
+                backgroundColor: this.props.backgroundColor,
+            }
+        ];
+    }
+
     render() {
         return (
-            <Touchable
-                onPress={this.props.onPress}
-                disabled={!this.props.onPress}
-                style={this._style()}
-            >
-                <Icon
-                    icon={this.props.icon}
-                    color={this.props.iconStrokeColor}
-                    fill={this.props.iconFill}
-                    width={this.props.iconWidth}
-                    height={this.props.iconHeight}
-                    strokeWidth={this.props.iconStrokeWidth}
-                />
-            </Touchable>
+            <View style={this._style()}>
+                <Touchable
+                    onPress={this.props.onPress}
+                    borderRadius={this.props.size / 2}
+                    disabled={!this.props.onPress}
+                    style={this._touchableStyle()}
+                >
+                    <Icon
+                        icon={this.props.icon}
+                        color={this.props.iconStrokeColor}
+                        fill={this.props.iconFill}
+                        width={this.props.iconWidth}
+                        height={this.props.iconHeight}
+                        strokeWidth={this.props.iconStrokeWidth}
+                    />
+                </Touchable>
+                </View>
         );
     }
 }
@@ -83,7 +92,9 @@ export class ButtonIcon extends PureComponent {
 const styles = StyleSheet.create({
     buttonIcon: {
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        width: "100%",
+        height: "100%"
     }
 });
 
