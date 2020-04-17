@@ -35,13 +35,6 @@ export class Avatar extends PureComponent {
         };
     }
 
-    _borderlessTouchableStyle = () => {
-        return {
-            borderRadius: this.props.borderRadius,
-            overflow: "hidden"
-        };
-    };
-
     _imageStyle = () => {
         return [
             styles.image,
