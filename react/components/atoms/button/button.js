@@ -44,7 +44,6 @@ export class Button extends PureComponent {
 
     _style = () => {
         return [
-            styles.button,
             styles.container,
             { width: this.props.width },
             this.props.disabled ? styles.buttonDisabled : {},
@@ -74,34 +73,38 @@ export class Button extends PureComponent {
 
     render() {
         return (
-            <Touchable
-                activeOpacity={0.8}
-                useForeground={true}
-                disabled={this.props.disabled}
-                onPress={this.props.onPress}
-            >
-                <LinearGradient
-                    angle={this.props.gradientAngle}
-                    colors={this.props.gradientColors}
-                    locations={this.props.gradientLocations}
-                    useAngle={true}
-                    style={this._style()}
+            <View style={styles.button}>
+                <Touchable
+                    activeOpacity={0.8}
+                    useForeground={true}
+                    disabled={this.props.disabled}
+                    onPress={this.props.onPress}
                 >
-                    {this.props.loading ? this._renderLoading() : this._renderNormal()}
-                </LinearGradient>
-            </Touchable>
+                    <LinearGradient
+                        angle={this.props.gradientAngle}
+                        colors={this.props.gradientColors}
+                        locations={this.props.gradientLocations}
+                        useAngle={true}
+                        style={this._style()}
+                    >
+                        {this.props.loading ? this._renderLoading() : this._renderNormal()}
+                    </LinearGradient>
+                </Touchable>
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    button: {},
+    button: {
+        borderRadius: 6,
+        overflow: "hidden"
+    },
     buttonDisabled: {
         opacity: 0.5,
         fontSize: 120
     },
     container: {
-        borderRadius: 6,
         height: 48,
         flexDirection: "row",
         justifyContent: "center",
