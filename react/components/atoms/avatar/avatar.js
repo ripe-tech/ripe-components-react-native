@@ -47,8 +47,7 @@ export class Avatar extends PureComponent {
             styles.image,
             {
                 width: this.props.size,
-                height: this.props.size,
-                borderRadius: this.props.borderRadius
+                height: this.props.size
             },
             this.props.style
         ];
@@ -56,20 +55,19 @@ export class Avatar extends PureComponent {
 
     render() {
         return (
-            <View style={this._borderlessTouchableStyle()}>
-                <Touchable
-                    onPress={this.props.onPress}
-                    disabled={!this.props.onPress}
-                    activeOpacity={this.props.activeOpacity}
-                    hitSlop={this.props.hitSlop}
-                >
-                    <Image
-                        source={this.props.image}
-                        style={this._imageStyle()}
-                        resizeMode={this.props.resizeMode}
-                    />
-                </Touchable>
-            </View>
+            <Touchable
+                onPress={this.props.onPress}
+                borderRadius={this.props.borderRadius}
+                disabled={!this.props.onPress}
+                activeOpacity={this.props.activeOpacity}
+                hitSlop={this.props.hitSlop}
+            >
+                <Image
+                    source={this.props.image}
+                    style={this._imageStyle()}
+                    resizeMode={this.props.resizeMode}
+                />
+            </Touchable>
         );
     }
 }
