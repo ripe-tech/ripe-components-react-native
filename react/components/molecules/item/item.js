@@ -59,6 +59,7 @@ export class Item extends PureComponent {
                     activeOpacity={this.props.activeOpacity}
                     disabled={this.props.disabled}
                     onPress={this.props.onPress}
+                    borderRadius={6}
                 >
                     {this.props.header && (
                         <LinearGradient
@@ -101,7 +102,6 @@ const styles = StyleSheet.create({
     },
     itemContent: {
         backgroundColor: "#ffffff",
-        borderRadius: 6,
         shadowOffset: {
             width: 0,
             height: 2
