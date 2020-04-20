@@ -56,6 +56,15 @@ export class Touchable extends PureComponent {
                 borderRadius,
                 width,
                 height,
+                marginRight,
+                marginLeft,
+                marginTop,
+                marginBottom,
+                marginHorizontal,
+                marginVertical,
+                marginEnd,
+                marginStart,
+                margin,
                 ...rest
             } = args;
 
@@ -69,7 +78,16 @@ export class Touchable extends PureComponent {
                     ...(right ? { right } : {}),
                     ...(borderRadius ? { borderRadius } : {}),
                     ...(width ? { width } : {}),
-                    ...(height ? { height } : {})
+                    ...(height ? { height } : {}),
+                    ...(marginRight ? { marginRight } : {}),
+                    ...(marginLeft ? { marginLeft } : {}),
+                    ...(marginTop ? { marginTop } : {}),
+                    ...(marginBottom ? { marginBottom } : {}),
+                    ...(marginHorizontal ? { marginHorizontal } : {}),
+                    ...(marginVertical ? { marginVertical } : {}),
+                    ...(marginStart ? { marginStart } : {}),
+                    ...(marginEnd ? { marginEnd } : {}),
+                    ...(margin ? { margin } : {})
                 }
             };
 
