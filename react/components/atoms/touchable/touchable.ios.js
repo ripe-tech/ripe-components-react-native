@@ -40,7 +40,7 @@ export class Touchable extends PureComponent {
     render() {
         return (
             <TouchableOpacity
-                style={[this.props.style, { overflow: "hidden" }]}
+                style={[this.props.style]}
                 activeOpacity={this.props.activeOpacity}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}

@@ -35,6 +35,10 @@ export class Touchable extends PureComponent {
         };
     }
 
+    _validateField(field) {
+        return field !== null && field !== undefined;
+    }
+
     _stylesComputed() {
         const objectToReturn = { styles: { ...styles.touchable }, containerStyles: {} };
         let style = this.props.style;
@@ -60,7 +64,9 @@ export class Touchable extends PureComponent {
                 right,
                 borderRadius,
                 width,
+                maxWidth,
                 height,
+                maxHeight,
                 marginRight,
                 marginLeft,
                 marginTop,
@@ -70,6 +76,10 @@ export class Touchable extends PureComponent {
                 marginEnd,
                 marginStart,
                 margin,
+                flex,
+                elevation,
+                alignSelf,
+                zIndex,
                 ...rest
             } = args;
 
@@ -77,26 +87,38 @@ export class Touchable extends PureComponent {
                 ...objectToReturn.styles,
                 ...{
                     ...(position ? { position } : {}),
-                    ...(top ? { top } : {}),
-                    ...(bottom ? { bottom } : {}),
-                    ...(left ? { left } : {}),
-                    ...(right ? { right } : {}),
-                    ...(borderRadius ? { borderRadius } : {}),
-                    ...(width ? { width } : {}),
-                    ...(height ? { height } : {}),
-                    ...(marginRight ? { marginRight } : {}),
-                    ...(marginLeft ? { marginLeft } : {}),
-                    ...(marginTop ? { marginTop } : {}),
-                    ...(marginBottom ? { marginBottom } : {}),
-                    ...(marginHorizontal ? { marginHorizontal } : {}),
-                    ...(marginVertical ? { marginVertical } : {}),
-                    ...(marginStart ? { marginStart } : {}),
-                    ...(marginEnd ? { marginEnd } : {}),
-                    ...(margin ? { margin } : {})
+                    ...(this._validateField(top) ? { top } : {}),
+                    ...(this._validateField(bottom) ? { bottom } : {}),
+                    ...(this._validateField(left) ? { left } : {}),
+                    ...(this._validateField(right) ? { right } : {}),
+                    ...(this._validateField(borderRadius) ? { borderRadius } : {}),
+                    ...(this._validateField(width) ? { width } : {}),
+                    ...(this._validateField(height) ? { height } : {}),
+                    ...(this._validateField(marginRight) ? { marginRight } : {}),
+                    ...(this._validateField(marginLeft) ? { marginLeft } : {}),
+                    ...(this._validateField(marginTop) ? { marginTop } : {}),
+                    ...(this._validateField(marginBottom) ? { marginBottom } : {}),
+                    ...(this._validateField(marginHorizontal) ? { marginHorizontal } : {}),
+                    ...(this._validateField(marginVertical) ? { marginVertical } : {}),
+                    ...(this._validateField(marginStart) ? { marginStart } : {}),
+                    ...(this._validateField(marginEnd) ? { marginEnd } : {}),
+                    ...(this._validateField(margin) ? { margin } : {}),
+                    ...(this._validateField(flex) ? { flex } : {}),
+                    ...(this._validateField(maxWidth) ? { maxWidth } : {}),
+                    ...(this._validateField(maxHeight) ? { maxHeight } : {}),
+                    ...(this._validateField(elevation) ? { elevation } : {}),
+                    ...(alignSelf ? { alignSelf } : {}),
+                    ...(this._validateField(zIndex) ? { zIndex } : {})
                 }
             };
 
-            return { ...rest, ...(width ? { width } : {}), ...(height ? { height } : {}) };
+            return {
+                ...rest,
+                ...(this._validateField(width) ? { width } : {}),
+                ...(this._validateField(height) ? { height } : {}),
+                ...(this._validateField(maxHeight) ? { maxHeight } : {}),
+                ...(this._validateField(maxWidth) ? { maxWidth } : {})
+            };
         });
 
         return objectToReturn;

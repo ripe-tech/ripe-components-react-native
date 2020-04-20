@@ -43,11 +43,8 @@ export class Button extends PureComponent {
     }
 
     _style = () => {
-        return [
-            styles.button,
-            this.props.style
-        ]
-    }
+        return [styles.button, this.props.style];
+    };
 
     _linearGradientStyle = () => {
         return [

@@ -37,6 +37,7 @@ export class Avatar extends PureComponent {
 
     _style = () => {
         return [
+            styles.avatar,
             {
                 width: this.props.size,
                 height: this.props.size,
@@ -75,10 +76,12 @@ export class Avatar extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+    avatar: {
+        overflow: "hidden"
+    },
     image: {
         width: "100%",
-        height: "100%",
-        overflow: "hidden"
+        height: "100%"
     }
 });
 
