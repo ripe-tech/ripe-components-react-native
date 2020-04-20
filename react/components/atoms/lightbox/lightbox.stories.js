@@ -14,6 +14,7 @@ storiesOf("Atoms", module)
         );
         const width = number("Width", 200);
         const height = number("Height", 150);
+        const borderRadius = number("Border Radius", undefined);
         const resizeMode = select(
             "Resize Mode",
             {
@@ -27,7 +28,13 @@ storiesOf("Atoms", module)
         );
         return (
             <View style={styles.container}>
-                <Lightbox uri={uri} width={width} height={height} resizeMode={resizeMode} />
+                <Lightbox
+                    uri={uri}
+                    width={width}
+                    height={height}
+                    borderRadius={borderRadius}
+                    resizeMode={resizeMode}
+                />
             </View>
         );
     });
