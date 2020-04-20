@@ -42,25 +42,39 @@ export class Touchable extends PureComponent {
             return objectToReturn;
         }
 
-        objectToReturn.containerStyles = this.props.style
-            .flat(4)
-            .map(({ position, top, bottom, left, right, borderRadius, width, height, ...rest }) => {
-                objectToReturn.styles = {
-                    ...objectToReturn.styles,
-                    ...{
-                        ...(position ? { position } : {}),
-                        ...(top ? { top } : {}),
-                        ...(bottom ? { bottom } : {}),
-                        ...(left ? { left } : {}),
-                        ...(right ? { right } : {}),
-                        ...(borderRadius ? { borderRadius } : {}),
-                        ...(width ? { width } : {}),
-                        ...(height ? { height } : {})
-                    }
-                };
+        objectToReturn.containerStyles = this.props.style.flat(4).map(args => {
+            if (!args) {
+                return;
+            }
 
-                return { ...rest, ...(width ? { width } : {}), ...(height ? { height } : {}) };
-            });
+            const {
+                position,
+                top,
+                bottom,
+                left,
+                right,
+                borderRadius,
+                width,
+                height,
+                ...rest
+            } = args;
+
+            objectToReturn.styles = {
+                ...objectToReturn.styles,
+                ...{
+                    ...(position ? { position } : {}),
+                    ...(top ? { top } : {}),
+                    ...(bottom ? { bottom } : {}),
+                    ...(left ? { left } : {}),
+                    ...(right ? { right } : {}),
+                    ...(borderRadius ? { borderRadius } : {}),
+                    ...(width ? { width } : {}),
+                    ...(height ? { height } : {})
+                }
+            };
+
+            return { ...rest, ...(width ? { width } : {}), ...(height ? { height } : {}) };
+        });
 
         return objectToReturn;
     }
