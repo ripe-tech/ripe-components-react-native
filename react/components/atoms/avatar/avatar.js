@@ -35,22 +35,31 @@ export class Avatar extends PureComponent {
         };
     }
 
+    _style = () => {
+        return [
+            {
+                width: this.props.size,
+                height: this.props.size,
+                borderRadius: this.props.borderRadius
+            },
+            this.props.style
+        ];
+    };
     _imageStyle = () => {
         return [
             styles.image,
             {
                 width: this.props.size,
                 height: this.props.size
-            },
-            this.props.style
+            }
         ];
     };
 
     render() {
         return (
             <Touchable
+                style={this._style()}
                 onPress={this.props.onPress}
-                borderRadius={this.props.borderRadius}
                 disabled={!this.props.onPress}
                 activeOpacity={this.props.activeOpacity}
                 hitSlop={this.props.hitSlop}
