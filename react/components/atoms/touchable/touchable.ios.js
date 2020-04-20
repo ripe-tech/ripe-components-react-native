@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 
-import { ViewPropTypes, TouchableOpacity } from "react-native";
+import { StyleSheet, ViewPropTypes, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
 export class Touchable extends PureComponent {
@@ -34,11 +34,13 @@ export class Touchable extends PureComponent {
             style: undefined
         };
     }
-
+    _style() {
+        return [styles.touchable, this.props.style];
+    }
     render() {
         return (
             <TouchableOpacity
-                style={this.props.style}
+                style={[this.props.style, { overflow: "hidden" }]}
                 activeOpacity={this.props.activeOpacity}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
@@ -51,5 +53,11 @@ export class Touchable extends PureComponent {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    touchable: {
+        overflow: "hidden"
+    }
+});
 
 export default Touchable;
