@@ -44,10 +44,16 @@ export class Button extends PureComponent {
 
     _style = () => {
         return [
+            styles.button,
+            this.props.style
+        ]
+    }
+
+    _linearGradientStyle = () => {
+        return [
             styles.container,
             { width: this.props.width },
-            this.props.disabled ? styles.buttonDisabled : {},
-            this.props.style
+            this.props.disabled ? styles.buttonDisabled : {}
         ];
     };
 
@@ -74,13 +80,13 @@ export class Button extends PureComponent {
     render() {
         return (
             <Touchable
-                style={styles.button}
+                style={this._style()}
                 activeOpacity={0.8}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
             >
                 <LinearGradient
-                    style={this._style()}
+                    style={this._linearGradientStyle()}
                     angle={this.props.gradientAngle}
                     colors={this.props.gradientColors}
                     locations={this.props.gradientLocations}
