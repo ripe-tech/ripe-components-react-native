@@ -1,16 +1,7 @@
 import React, { PureComponent } from "react";
 
-import {
-    ViewPropTypes,
-    Platform,
-    StyleSheet,
-    TouchableOpacity,
-    View,
-    TouchableNativeFeedback
-} from "react-native";
+import { ViewPropTypes, StyleSheet, View, TouchableNativeFeedback } from "react-native";
 import PropTypes from "prop-types";
-
-const TouchableComponent = Platform.OS === "ios" ? TouchableOpacity : TouchableNativeFeedback;
 
 export class Touchable extends PureComponent {
     static get propTypes() {
@@ -44,19 +35,42 @@ export class Touchable extends PureComponent {
         };
     }
 
-    _style = () => {
-        return [Platform.OS === "ios" ? this.props.style : null];
-    };
+    _stylesComputed() {
+        const objectToReturn = { styles: { ...styles.touchable }, containerStyles: {} };
 
-    _styleRoot = () => {
-        return [styles.touchable, { borderRadius: this.props.borderRadius }];
-    };
+        if (!this.props.style) {
+            return objectToReturn;
+        }
+
+        objectToReturn.containerStyles = this.props.style
+            .flat(4)
+            .map(({ position, top, bottom, left, right, borderRadius, width, height, ...rest }) => {
+                objectToReturn.styles = {
+                    ...objectToReturn.styles,
+                    ...{
+                        ...(position ? { position } : {}),
+                        ...(top ? { top } : {}),
+                        ...(bottom ? { bottom } : {}),
+                        ...(left ? { left } : {}),
+                        ...(right ? { right } : {}),
+                        ...(borderRadius ? { borderRadius } : {}),
+                        ...(width ? { width } : {}),
+                        ...(height ? { height } : {})
+                    }
+                };
+
+                return { ...rest, ...(width ? { width } : {}), ...(height ? { height } : {}) };
+            });
+
+        return objectToReturn;
+    }
 
     render() {
+        const _styles = this._stylesComputed();
+
         return (
-            <View style={this._styleRoot()}>
-                <TouchableComponent
-                    style={this._style()}
+            <View style={_styles.styles}>
+                <TouchableNativeFeedback
                     activeOpacity={this.props.activeOpacity}
                     disabled={this.props.disabled}
                     onPress={this.props.onPress}
@@ -64,12 +78,8 @@ export class Touchable extends PureComponent {
                     hitSlop={this.props.hitSlop}
                     useForeground={this.props.useForeground}
                 >
-                    {Platform.OS === "ios" ? (
-                        this.props.children
-                    ) : (
-                        <View style={this.props.style}>{this.props.children}</View>
-                    )}
-                </TouchableComponent>
+                    <View style={_styles.containerStyles}>{this.props.children}</View>
+                </TouchableNativeFeedback>
             </View>
         );
     }

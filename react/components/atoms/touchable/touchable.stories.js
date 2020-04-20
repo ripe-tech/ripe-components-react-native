@@ -30,6 +30,8 @@ storiesOf("Atoms", module)
                 style={styles.touchable}
             >
                 <Text style={styles.text}>Psst! You! Press me!!</Text>
+                <Text style={styles.text}>Psst! You! Press me!!</Text>
+                <Text style={styles.text}>Psst! You! Press me!!</Text>
             </Touchable>
         );
     });
