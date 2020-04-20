@@ -37,12 +37,17 @@ export class Touchable extends PureComponent {
 
     _stylesComputed() {
         const objectToReturn = { styles: { ...styles.touchable }, containerStyles: {} };
+        let style = this.props.style;
 
-        if (!this.props.style) {
+        if (!style) {
             return objectToReturn;
         }
 
-        objectToReturn.containerStyles = this.props.style.flat(4).map(args => {
+        if (typeof style === "object") {
+            style = [style];
+        }
+
+        objectToReturn.containerStyles = style.flat(Infinity).map(args => {
             if (!args) {
                 return;
             }
