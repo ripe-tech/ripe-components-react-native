@@ -46,15 +46,6 @@ export class Avatar extends PureComponent {
             this.props.style
         ];
     };
-    _imageStyle = () => {
-        return [
-            styles.image,
-            {
-                width: this.props.size,
-                height: this.props.size
-            }
-        ];
-    };
 
     render() {
         return (
@@ -67,7 +58,7 @@ export class Avatar extends PureComponent {
             >
                 <Image
                     source={this.props.image}
-                    style={this._imageStyle()}
+                    style={styles.image}
                     resizeMode={this.props.resizeMode}
                 />
             </Touchable>
