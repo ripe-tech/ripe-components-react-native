@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 0
     },
     itemContent: {
+        overflow: "hidden",
         borderRadius: 6,
         backgroundColor: "#ffffff",
         shadowOffset: {

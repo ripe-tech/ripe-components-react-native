@@ -1,15 +1,21 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, View, TouchableNativeFeedback } from "react-native";
+import {
+    ViewPropTypes,
+    Platform,
+    View,
+    TouchableNativeFeedback,
+    TouchableOpacity
+} from "react-native";
 import PropTypes from "prop-types";
+
+const platform = Platform.OS;
+const CustomTouchableComponent = platform === "ios" ? TouchableOpacity : TouchableNativeFeedback;
 
 export class Touchable extends PureComponent {
     static get propTypes() {
         return {
             activeOpacity: PropTypes.number,
-            borderRadius: PropTypes.number,
             disabled: PropTypes.bool,
-            onLongPress: PropTypes.func,
-            onPress: PropTypes.func,
             hitSlop: PropTypes.shape({
                 top: PropTypes.number,
                 left: PropTypes.number,
@@ -17,6 +23,8 @@ export class Touchable extends PureComponent {
                 bottom: PropTypes.number
             }),
             useForeground: PropTypes.bool,
+            onLongPress: PropTypes.func,
+            onPress: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -24,19 +32,35 @@ export class Touchable extends PureComponent {
     static get defaultProps() {
         return {
             activeOpacity: undefined,
-            borderRadius: undefined,
             disabled: undefined,
-            onLongPress: undefined,
-            onPress: undefined,
             hitSlop: undefined,
             useForeground: true,
+            onLongPress: undefined,
+            onPress: undefined,
             style: undefined
         };
     }
 
+    _style() {
+        if (platform === "ios") {
+            return this.props.style;
+        }
+
+        return null;
+    }
+
+    _renderChildren() {
+        return platform === "ios" ? (
+            this.props.children
+        ) : (
+            <View style={this.props.style}>{this.props.children}</View>
+        );
+    }
+
     render() {
         return (
-            <TouchableNativeFeedback
+            <CustomTouchableComponent
+                style={this._style()}
                 activeOpacity={this.props.activeOpacity}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
@@ -44,8 +68,8 @@ export class Touchable extends PureComponent {
                 hitSlop={this.props.hitSlop}
                 useForeground={this.props.useForeground}
             >
-                <View style={this.props.style}>{this.props.children}</View>
-            </TouchableNativeFeedback>
+                {this._renderChildren()}
+            </CustomTouchableComponent>
         );
     }
 }
