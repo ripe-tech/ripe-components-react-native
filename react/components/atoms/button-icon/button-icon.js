@@ -51,10 +51,10 @@ export class ButtonIcon extends PureComponent {
         return [
             styles.buttonIcon,
             {
-                width: this.props.size,
-                height: this.props.size,
                 borderRadius: this.props.size / 2,
-                backgroundColor: this.props.backgroundColor
+                backgroundColor: this.props.backgroundColor,
+                width: this.props.size,
+                height: this.props.size
             },
             this.props.style
         ];
@@ -83,7 +83,8 @@ export class ButtonIcon extends PureComponent {
 const styles = StyleSheet.create({
     buttonIcon: {
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        overflow: "hidden"
     }
 });
 
