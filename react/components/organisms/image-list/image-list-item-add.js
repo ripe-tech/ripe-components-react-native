@@ -89,6 +89,7 @@ export class ImageListItemAdd extends PureComponent {
 
 const styles = StyleSheet.create({
     buttonIcon: {
+        overflow: "hidden",
         paddingHorizontal: 6,
         paddingVertical: 10
     },

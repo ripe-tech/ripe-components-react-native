@@ -72,6 +72,7 @@ export class ButtonKeyboard extends PureComponent {
 
 const styles = StyleSheet.create({
     buttonKeyboard: {
+        overflow: "hidden",
         flex: 1,
         maxHeight: 54,
         alignItems: "center",
