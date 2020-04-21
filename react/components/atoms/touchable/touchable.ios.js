@@ -34,13 +34,15 @@ export class Touchable extends PureComponent {
             style: undefined
         };
     }
+
     _style() {
         return [styles.touchable, this.props.style];
     }
+
     render() {
         return (
             <TouchableOpacity
-                style={[this.props.style]}
+                style={this.props.style}
                 activeOpacity={this.props.activeOpacity}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}

@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { ViewPropTypes, View, TouchableNativeFeedback } from "react-native";
 import PropTypes from "prop-types";
+
 export class Touchable extends PureComponent {
     static get propTypes() {
         return {
@@ -48,4 +49,5 @@ export class Touchable extends PureComponent {
         );
     }
 }
+
 export default Touchable;

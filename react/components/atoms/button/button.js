@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
         fontSize: 120
     },
     button: {
+        overflow: "hidden",
         borderRadius: 6
     },
     container: {
