@@ -1,8 +1,9 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, Platform, TouchableOpacity, Text } from "react-native";
+import { ViewPropTypes, StyleSheet, Platform, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles, capitalize } from "../../../util";
+import { Touchable } from "../touchable";
 
 export class ButtonTabText extends PureComponent {
     static get propTypes() {
@@ -56,14 +57,14 @@ export class ButtonTabText extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
+            <Touchable
                 style={this._style()}
                 disabled={this.props.disabled}
                 activeOpacity={this.props.activeOpacity}
                 onPress={this.props.onPress}
             >
                 <Text style={this._styleText()}>{this.props.text}</Text>
-            </TouchableOpacity>
+            </Touchable>
         );
     }
 }

@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, View, TouchableOpacity, Image, Modal } from "react-native";
-
+import { ViewPropTypes, StyleSheet, View, Image, Modal } from "react-native";
 import PropTypes from "prop-types";
+
+import { Touchable } from "../touchable";
 
 export class Lightbox extends PureComponent {
     static get propTypes() {
@@ -84,9 +85,9 @@ export class Lightbox extends PureComponent {
     render() {
         return (
             <View>
-                <TouchableOpacity onPress={this.onLightboxPress} activeOpacity={0.7}>
+                <Touchable onPress={this.onLightboxPress} activeOpacity={0.7}>
                     <Image style={this._imageStyle()} source={this._imageSource()} />
-                </TouchableOpacity>
+                </Touchable>
                 <Modal
                     animationType="fade"
                     transparent={false}

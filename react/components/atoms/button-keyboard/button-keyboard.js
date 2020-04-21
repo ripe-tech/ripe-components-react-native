@@ -1,10 +1,11 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity, Platform, ViewPropTypes } from "react-native";
+import { StyleSheet, Text, Platform, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles, capitalize } from "../../../util";
 
 import { Icon } from "../icon";
+import { Touchable } from "../touchable";
 
 export class ButtonKeyboard extends PureComponent {
     static get propTypes() {
@@ -51,7 +52,7 @@ export class ButtonKeyboard extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
+            <Touchable
                 style={this._style()}
                 onPress={this._onPress}
                 onLongPress={this._onLongPress}
@@ -64,13 +65,14 @@ export class ButtonKeyboard extends PureComponent {
                         color="#17425c"
                     />
                 ) : null}
-            </TouchableOpacity>
+            </Touchable>
         );
     }
 }
 
 const styles = StyleSheet.create({
     buttonKeyboard: {
+        overflow: "hidden",
         flex: 1,
         maxHeight: 54,
         alignItems: "center",

@@ -1,16 +1,9 @@
 import React, { PureComponent } from "react";
-import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    ActivityIndicator,
-    ViewPropTypes,
-    Platform,
-    View
-} from "react-native";
+import { StyleSheet, Text, ActivityIndicator, ViewPropTypes, Platform, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
+import { Touchable } from "../touchable";
 import { baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
@@ -50,12 +43,14 @@ export class Button extends PureComponent {
     }
 
     _style = () => {
+        return [styles.button, this.props.style];
+    };
+
+    _linearGradientStyle = () => {
         return [
-            styles.button,
             styles.container,
             { width: this.props.width },
-            this.props.disabled ? styles.buttonDisabled : {},
-            this.props.style
+            this.props.disabled ? styles.buttonDisabled : {}
         ];
     };
 
@@ -81,34 +76,36 @@ export class Button extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
+            <Touchable
+                style={this._style()}
                 activeOpacity={0.8}
-                useForeground={true}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
             >
                 <LinearGradient
+                    style={this._linearGradientStyle()}
                     angle={this.props.gradientAngle}
                     colors={this.props.gradientColors}
                     locations={this.props.gradientLocations}
                     useAngle={true}
-                    style={this._style()}
                 >
                     {this.props.loading ? this._renderLoading() : this._renderNormal()}
                 </LinearGradient>
-            </TouchableOpacity>
+            </Touchable>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    button: {},
     buttonDisabled: {
         opacity: 0.5,
         fontSize: 120
     },
+    button: {
+        overflow: "hidden",
+        borderRadius: 6
+    },
     container: {
-        borderRadius: 6,
         height: 48,
         flexDirection: "row",
         justifyContent: "center",

@@ -1,10 +1,10 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Platform, ViewPropTypes } from "react-native";
+import { StyleSheet, View, Text, Platform, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
 
-import { ButtonIcon } from "../../atoms";
+import { ButtonIcon, Touchable } from "../../atoms";
 
 export class KeyValue extends PureComponent {
     static get propTypes() {
@@ -61,7 +61,7 @@ export class KeyValue extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
+            <Touchable
                 style={this._style()}
                 disabled={!this.props.pressable}
                 onPress={this.props.onPress}
@@ -90,7 +90,7 @@ export class KeyValue extends PureComponent {
                         />
                     </View>
                 ) : null}
-            </TouchableOpacity>
+            </Touchable>
         );
     }
 }

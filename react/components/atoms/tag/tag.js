@@ -1,10 +1,11 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, Platform, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, ViewPropTypes, Platform, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles, capitalize } from "../../../util";
 
 import { Icon } from "../icon";
+import { Touchable } from "../touchable";
 
 export class Tag extends PureComponent {
     static get propTypes() {
@@ -67,7 +68,7 @@ export class Tag extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
+            <Touchable
                 style={this._style()}
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
@@ -81,7 +82,7 @@ export class Tag extends PureComponent {
                     />
                 ) : null}
                 {this.props.text ? <Text style={this._textStyle()}>{this.props.text}</Text> : null}
-            </TouchableOpacity>
+            </Touchable>
         );
     }
 }
