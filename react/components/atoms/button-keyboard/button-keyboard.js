@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, Platform, ViewPropTypes } from "react-native";
+import { StyleSheet, Platform, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles, capitalize } from "../../../util";
@@ -72,7 +72,7 @@ export class ButtonKeyboard extends PureComponent {
 
 const styles = StyleSheet.create({
     buttonKeyboard: {
-        overflow: "hidden",
+        overflow: Platform.OS === "ios" ? "visible" : "hidden",
         flex: 1,
         maxHeight: 54,
         alignItems: "center",

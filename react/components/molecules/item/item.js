@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, View, Text } from "react-native";
+import { Platform, StyleSheet, ViewPropTypes, View, Text } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 import PropTypes from "prop-types";
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 0
     },
     itemContent: {
-        overflow: "hidden",
+        overflow: Platform.OS === "ios" ? "visible" : "hidden",
         borderRadius: 6,
         backgroundColor: "#ffffff",
         shadowOffset: {
