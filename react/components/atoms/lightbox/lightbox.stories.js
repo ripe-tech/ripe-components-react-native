@@ -1,7 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text, number, select } from "@storybook/addon-knobs";
-import { StyleSheet, View } from "react-native";
 
 import { Lightbox } from "./lightbox";
 
@@ -27,20 +26,12 @@ storiesOf("Atoms", module)
             undefined
         );
         return (
-            <View style={styles.container}>
-                <Lightbox
-                    uri={uri}
-                    width={width}
-                    height={height}
-                    borderRadius={borderRadius}
-                    resizeMode={resizeMode}
-                />
-            </View>
+            <Lightbox
+                uri={uri}
+                width={width}
+                height={height}
+                borderRadius={borderRadius}
+                resizeMode={resizeMode}
+            />
         );
     });
-
-const styles = StyleSheet.create({
-    container: {
-        alignSelf: "center"
-    }
-});

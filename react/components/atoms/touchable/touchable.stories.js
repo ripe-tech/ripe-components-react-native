@@ -39,10 +39,7 @@ storiesOf("Atoms", module)
 const styles = StyleSheet.create({
     touchable: {
         borderRadius: 4,
-        backgroundColor: "#4a6fe9",
-        marginVertical: 20,
-        marginHorizontal: 10,
-        padding: 10
+        backgroundColor: "#4a6fe9"
     },
     text: {
         color: "white"
