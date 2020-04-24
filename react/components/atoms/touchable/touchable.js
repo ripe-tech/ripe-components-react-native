@@ -8,9 +8,6 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 
-const platform = Platform.OS;
-const CustomTouchableComponent = platform === "ios" ? TouchableOpacity : TouchableNativeFeedback;
-
 export class Touchable extends PureComponent {
     static get propTypes() {
         return {
@@ -31,45 +28,41 @@ export class Touchable extends PureComponent {
 
     static get defaultProps() {
         return {
-            activeOpacity: undefined,
             disabled: undefined,
             hitSlop: undefined,
-            useForeground: true,
             onLongPress: undefined,
             onPress: undefined,
-            style: undefined
+            style: undefined,
+            activeOpacity: undefined,
+            useForeground: true
         };
     }
 
-    _style() {
-        if (platform === "ios") {
-            return this.props.style;
-        }
-
-        return null;
-    }
-
-    _renderChildren() {
-        return platform === "ios" ? (
-            this.props.children
-        ) : (
-            <View style={this.props.style}>{this.props.children}</View>
-        );
-    }
-
     render() {
+        if (Platform.OS === "ios") {
+            return (
+                <TouchableOpacity
+                    style={this.props.style}
+                    activeOpacity={this.props.activeOpacity}
+                    disabled={this.props.disabled}
+                    onPress={this.props.onPress}
+                    onLongPress={this.props.onLongPress}
+                    hitSlop={this.props.hitSlop}
+                >
+                    {this.props.children}
+                </TouchableOpacity>
+            );
+        }
         return (
-            <CustomTouchableComponent
-                style={this._style()}
-                activeOpacity={this.props.activeOpacity}
+            <TouchableNativeFeedback
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
                 hitSlop={this.props.hitSlop}
                 useForeground={this.props.useForeground}
             >
-                {this._renderChildren()}
-            </CustomTouchableComponent>
+                <View style={this.props.style}>{this.props.children}</View>
+            </TouchableNativeFeedback>
         );
     }
 }
