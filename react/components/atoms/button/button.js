@@ -97,13 +97,13 @@ export class Button extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    buttonDisabled: {
-        opacity: 0.5,
-        fontSize: 120
-    },
     button: {
         overflow: "hidden",
         borderRadius: 6
+    },
+    buttonDisabled: {
+        opacity: 0.5,
+        fontSize: 120
     },
     container: {
         height: 48,
