@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingVertical: 6,
         paddingHorizontal: 12,
-        letterSpacing: 0.25,
         borderRadius: 6
     },
     tagTiny: {
@@ -106,7 +105,8 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.FONT_BOLD,
         fontSize: 11,
         lineHeight: 11,
-        marginTop: Platform.OS === "ios" ? 2 : 0
+        marginTop: Platform.OS === "ios" ? 2 : 0,
+        letterSpacing: 0.25
     },
     textLarge: {
         fontSize: 13,
