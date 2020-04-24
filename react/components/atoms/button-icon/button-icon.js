@@ -3,14 +3,12 @@ import { StyleSheet, ViewPropTypes, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
 import { Icon } from "../icon";
-import { Touchable } from "../touchable";
 
 export class ButtonIcon extends PureComponent {
     static get propTypes() {
         return {
             icon: PropTypes.string.isRequired,
             size: PropTypes.number.isRequired,
-            nativeFeedback: PropTypes.bool,
             backgroundColor: PropTypes.string,
             iconFill: PropTypes.string,
             iconHeight: PropTypes.number,
@@ -32,7 +30,6 @@ export class ButtonIcon extends PureComponent {
         return {
             size: 30,
             backgroundColor: "#ffffff",
-            nativeFeedback: false,
             iconFill: undefined,
             iconHeight: 20,
             iconWidth: 20,
@@ -56,8 +53,7 @@ export class ButtonIcon extends PureComponent {
                 borderRadius: this.props.size / 2,
                 backgroundColor: this.props.backgroundColor,
                 width: this.props.size,
-                height: this.props.size,
-                overflow: this.props.nativeFeedback ? "hidden" : undefined
+                height: this.props.size
             },
             this.props.style
         ];
@@ -65,39 +61,20 @@ export class ButtonIcon extends PureComponent {
 
     render() {
         return (
-            <>
-                {this.props.nativeFeedback ? (
-                    <Touchable
-                        onPress={this.props.onPress}
-                        disabled={!this.props.onPress}
-                        style={this._style()}
-                    >
-                        <Icon
-                            icon={this.props.icon}
-                            color={this.props.iconStrokeColor}
-                            fill={this.props.iconFill}
-                            width={this.props.iconWidth}
-                            height={this.props.iconHeight}
-                            strokeWidth={this.props.iconStrokeWidth}
-                        />
-                    </Touchable>
-                ) : (
-                    <TouchableOpacity
-                        onPress={this.props.onPress}
-                        disabled={!this.props.onPress}
-                        style={this._style()}
-                    >
-                        <Icon
-                            icon={this.props.icon}
-                            color={this.props.iconStrokeColor}
-                            fill={this.props.iconFill}
-                            width={this.props.iconWidth}
-                            height={this.props.iconHeight}
-                            strokeWidth={this.props.iconStrokeWidth}
-                        />
-                    </TouchableOpacity>
-                )}
-            </>
+            <TouchableOpacity
+                onPress={this.props.onPress}
+                disabled={!this.props.onPress}
+                style={this._style()}
+            >
+                <Icon
+                    icon={this.props.icon}
+                    color={this.props.iconStrokeColor}
+                    fill={this.props.iconFill}
+                    width={this.props.iconWidth}
+                    height={this.props.iconHeight}
+                    strokeWidth={this.props.iconStrokeWidth}
+                />
+            </TouchableOpacity>
         );
     }
 }
