@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, number, text, select } from "@storybook/addon-knobs";
+import { withKnobs, select, number, boolean, text } from "@storybook/addon-knobs";
 
 import { ButtonIcon } from "./button-icon";
 
@@ -17,8 +17,9 @@ storiesOf("Atoms", module)
             "add"
         );
         const size = number("Size", 30);
-        const iconStrokeColor = text("Icon Stroke Color", "#ffffff");
-        const backgroundColor = text("Background Color", "#000000");
+        const useNativeFeedback = boolean("Native Feedback", false);
+        const iconStrokeColor = text("Icon Stroke Color", "#000000");
+        const backgroundColor = text("Background Color", "#e8e8e8");
         const height = number("Icon Height", 20);
         const width = number("Icon Width", 20);
         const strokeWidth = number("Icon Stroke Width", 1);
@@ -26,6 +27,7 @@ storiesOf("Atoms", module)
             <ButtonIcon
                 icon={icon}
                 size={size}
+                nativeFeedback={useNativeFeedback}
                 iconStrokeColor={iconStrokeColor}
                 backgroundColor={backgroundColor}
                 iconStrokeWidth={strokeWidth}
