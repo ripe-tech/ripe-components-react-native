@@ -2,10 +2,9 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Text, Platform } from "react-native";
 import PropTypes from "prop-types";
 
-import { Avatar } from "../../atoms/avatar";
+import { Avatar, Touchable } from "../../atoms";
 
 import { dateTimeString, baseStyles } from "../../../util";
-import { Touchable } from "../../atoms";
 
 export class ItemNotification extends PureComponent {
     static get propTypes() {
