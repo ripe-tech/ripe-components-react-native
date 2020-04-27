@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8
     },
     text: {
-        fontFamily: baseStyles.FONT_BOLD,
+        fontFamily: baseStyles.FONT_BOOK,
         fontSize: 11,
         lineHeight: 11,
         marginTop: Platform.OS === "ios" ? 2 : 0,

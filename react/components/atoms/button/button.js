@@ -3,10 +3,10 @@ import { StyleSheet, Text, ActivityIndicator, ViewPropTypes, Platform, View } fr
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
-import { Touchable } from "../touchable";
 import { baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
+import { Touchable } from "../touchable";
 
 export class Button extends PureComponent {
     static get propTypes() {

@@ -3,6 +3,7 @@ import { ViewPropTypes, StyleSheet, Platform, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles, capitalize } from "../../../util";
+
 import { Touchable } from "../touchable";
 
 export class ButtonTabText extends PureComponent {

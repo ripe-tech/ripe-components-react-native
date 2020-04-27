@@ -29,9 +29,9 @@ storiesOf("Atoms", module)
                 useForeground={useForeground}
                 style={styles.touchable}
             >
-                <Text style={styles.text}>Psst! You! Press me!!</Text>
-                <Text style={styles.text}>Psst! You! Press me!!</Text>
-                <Text style={styles.text}>Psst! You! Press me!!</Text>
+                <Text style={styles.text}>Button Text 1</Text>
+                <Text style={styles.text}>Button Text 2</Text>
+                <Text style={styles.text}>Button Text 3</Text>
             </Touchable>
         );
     });

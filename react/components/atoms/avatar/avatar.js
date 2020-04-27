@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import { ViewPropTypes, StyleSheet, Image } from "react-native";
-import { Touchable } from "../touchable";
-
 import PropTypes from "prop-types";
+
+import { Touchable } from "../touchable";
 
 export class Avatar extends PureComponent {
     static get propTypes() {
