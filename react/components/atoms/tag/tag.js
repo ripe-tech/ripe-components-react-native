@@ -1,10 +1,11 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, Platform, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, ViewPropTypes, Platform, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles, capitalize } from "../../../util";
 
 import { Icon } from "../icon";
+import { Touchable } from "../touchable";
 
 export class Tag extends PureComponent {
     static get propTypes() {
@@ -67,7 +68,7 @@ export class Tag extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
+            <Touchable
                 style={this._style()}
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
@@ -81,7 +82,7 @@ export class Tag extends PureComponent {
                     />
                 ) : null}
                 {this.props.text ? <Text style={this._textStyle()}>{this.props.text}</Text> : null}
-            </TouchableOpacity>
+            </Touchable>
         );
     }
 }
@@ -94,7 +95,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingVertical: 6,
         paddingHorizontal: 12,
-        letterSpacing: 0.25,
         borderRadius: 6
     },
     tagTiny: {
@@ -102,10 +102,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8
     },
     text: {
-        fontFamily: baseStyles.FONT_BOLD,
+        fontFamily: baseStyles.FONT_BOOK,
         fontSize: 11,
         lineHeight: 11,
-        marginTop: Platform.OS === "ios" ? 2 : 0
+        marginTop: Platform.OS === "ios" ? 2 : 0,
+        letterSpacing: 0.25
     },
     textLarge: {
         fontSize: 13,

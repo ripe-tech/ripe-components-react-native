@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, Platform, TouchableOpacity, Text, View } from "react-native";
+import { StyleSheet, ViewPropTypes, Platform, Text, View } from "react-native";
 import PropTypes from "prop-types";
 
-import { Icon } from "../../atoms";
+import { Icon, Touchable } from "../../atoms";
 
 import { baseStyles } from "../../../util";
 
@@ -65,7 +65,7 @@ export class ImageListItemAdd extends PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
+            <Touchable
                 onPress={this.props.onPress}
                 disabled={!this.props.onPress}
                 style={this._style()}
@@ -82,13 +82,14 @@ export class ImageListItemAdd extends PureComponent {
                     </View>
                 ) : null}
                 {this.props.text ? <Text style={this._textStyle()}>{this.props.text}</Text> : null}
-            </TouchableOpacity>
+            </Touchable>
         );
     }
 }
 
 const styles = StyleSheet.create({
     buttonIcon: {
+        overflow: "hidden",
         paddingHorizontal: 6,
         paddingVertical: 10
     },

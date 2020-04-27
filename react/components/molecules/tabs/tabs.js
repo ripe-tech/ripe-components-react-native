@@ -3,7 +3,7 @@ import { StyleSheet, ViewPropTypes } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import PropTypes from "prop-types";
 
-import { ButtonTab } from "../../atoms/button-tab";
+import { ButtonTab } from "../../atoms";
 
 export class Tabs extends PureComponent {
     static get propTypes() {
