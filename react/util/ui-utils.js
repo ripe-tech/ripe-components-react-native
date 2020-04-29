@@ -1,6 +1,9 @@
-import { Alert, Linking, Platform, ToastAndroid } from "react-native";
+import { Alert, Dimensions, Linking, Platform, ToastAndroid } from "react-native";
 import DocumentPicker from "react-native-document-picker";
 import ImagePicker from "react-native-image-picker";
+
+const TABLET_WIDTH = 768;
+const MOBILE_WIDTH = 420;
 
 const normalizeAttachment = function (attachment) {
     return {
@@ -81,6 +84,48 @@ export const pickImage = async function (options) {
 
     const result = await promise;
     return result;
+};
+
+export const isTablet = function() {
+    const windowWidth = Dimensions.get("window").width;
+    return windowWidth > MOBILE_WIDTH && windowWidth <= TABLET_WIDTH;
+};
+
+export const isMobile = function() {
+    const windowWidth = Dimensions.get("window").width;
+    return windowWidth <= MOBILE_WIDTH;
+};
+
+export const isLandscape = function () {
+    const { height, width } = Dimensions.get("window");
+    return width >= height;
+};
+
+export const isPortrait = function() {
+    const { height, width } = Dimensions.get("window");
+    return width < height;
+};
+
+export const addWidthBreakpoint = function (name, range = []) {
+    this.widthBreakpoints = this.widthBreakpoints || [];
+    this.widthBreakpoints.push([name, range]);
+};
+
+export const removeWidthBreakpoint = function (name) {
+    this.widthBreakpoints = this.widthBreakpoints || [];
+    this.widthBreakpoints = this.widthBreakpoints.filter(v => v[0] !== name);
+    document.body.classList.remove(name);
+};
+
+export const addHeightBreakpoint = function (name, range = []) {
+    this.heightBreakpoints = this.heightBreakpoints || [];
+    this.heightBreakpoints.push([name, range]);
+};
+
+export const removeHeightBreakpoint = function (name) {
+    this.heightBreakpoints = this.heightBreakpoints || [];
+    this.heightBreakpoints = this.heightBreakpoints.filter(v => v[0] !== name);
+    document.body.classList.remove(name);
 };
 
 export const notify = function (message) {
