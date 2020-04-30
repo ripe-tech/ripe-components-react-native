@@ -2,7 +2,11 @@ import { Alert, Dimensions, Linking, Platform, ToastAndroid } from "react-native
 import DocumentPicker from "react-native-document-picker";
 import ImagePicker from "react-native-image-picker";
 
-const TABLET_WIDTH = 1024;
+/**
+ * The width in pixels to be used as a comparison and
+ * determine if the current device represents a mobile
+ * phone "like" device.
+ */
 const MOBILE_WIDTH = 420;
 
 const normalizeAttachment = function (attachment) {
@@ -86,16 +90,20 @@ export const pickImage = async function (options) {
     return result;
 };
 
+export const notify = function (message) {
+    Platform.OS === "android"
+        ? ToastAndroid.show(message, ToastAndroid.SHORT)
+        : Alert.alert(message);
+};
+
 export const isTabletSize = function () {
-    const { height, width } = Dimensions.get("window");
-    if (isLandscape()) {
-        return height > MOBILE_WIDTH && height <= TABLET_WIDTH;
-    }
-    return width > MOBILE_WIDTH && width <= TABLET_WIDTH;
+    return !isMobileSize();
 };
 
 export const isMobileSize = function () {
-    return !isTabletSize();
+    const { height, width } = Dimensions.get("window");
+    if (isLandscape()) return height <= MOBILE_WIDTH;
+    return width <= MOBILE_WIDTH;
 };
 
 export const isLandscape = function () {
@@ -106,10 +114,4 @@ export const isLandscape = function () {
 export const isPortrait = function () {
     const { height, width } = Dimensions.get("window");
     return width < height;
-};
-
-export const notify = function (message) {
-    Platform.OS === "android"
-        ? ToastAndroid.show(message, ToastAndroid.SHORT)
-        : Alert.alert(message);
 };
