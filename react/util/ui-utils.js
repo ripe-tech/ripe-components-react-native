@@ -88,7 +88,9 @@ export const pickImage = async function (options) {
 
 export const isTabletSize = function () {
     const { height, width } = Dimensions.get("window");
-    if (isLandscape()) return height > MOBILE_WIDTH && height <= TABLET_WIDTH;
+    if (isLandscape()) {
+        return height > MOBILE_WIDTH && height <= TABLET_WIDTH;
+    }
     return width > MOBILE_WIDTH && width <= TABLET_WIDTH;
 };
 
