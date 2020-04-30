@@ -10,7 +10,20 @@ export class KeyValues extends PureComponent {
             items: PropTypes.arrayOf(
                 PropTypes.shape({
                     key: PropTypes.string.isRequired,
-                    value: PropTypes.string.isRequired
+                    value: PropTypes.string.isRequired,
+                    keyColor: PropTypes.string,
+                    valueColor: PropTypes.string,
+                    icon: PropTypes.string,
+                    iconBackgroundColor: PropTypes.string,
+                    iconColor: PropTypes.string,
+                    iconSize: PropTypes.number,
+                    iconHeight: PropTypes.number,
+                    iconWidth: PropTypes.number,
+                    iconStrokeWidth: PropTypes.number,
+                    pressable: PropTypes.bool,
+                    onPress: PropTypes.func,
+                    onButtonIconPress: PropTypes.func,
+                    onLongPress: PropTypes.func
                 })
             ).isRequired,
             columnsNr: PropTypes.number,
@@ -83,6 +96,19 @@ export class KeyValues extends PureComponent {
                         key={item.key}
                         _key={item.key}
                         value={item.value}
+                        keyColor={item.keyColor}
+                        valueColor={item.valueColor}
+                        icon={item.icon}
+                        iconBackgroundColor={item.iconBackgroundColor}
+                        iconColor={item.iconColor}
+                        iconSize={item.iconSize}
+                        iconHeight={item.iconHeight}
+                        iconWidth={item.iconWidth}
+                        iconStrokeWidth={item.iconStrokeWidth}
+                        pressable={item.pressable}
+                        onPress={item.onPress}
+                        onButtonIconPress={item.onButtonIconPress}
+                        onLongPress={item.onLongPress}
                     >
                         {item.valueComponent}
                     </KeyValue>
