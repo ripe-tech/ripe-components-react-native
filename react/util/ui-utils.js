@@ -1,6 +1,9 @@
-import { Alert, Linking, Platform, ToastAndroid } from "react-native";
+import { Alert, Dimensions, Linking, Platform, ToastAndroid } from "react-native";
 import DocumentPicker from "react-native-document-picker";
 import ImagePicker from "react-native-image-picker";
+
+const TABLET_WIDTH = 1024;
+const MOBILE_WIDTH = 420;
 
 const normalizeAttachment = function (attachment) {
     return {
@@ -81,6 +84,28 @@ export const pickImage = async function (options) {
 
     const result = await promise;
     return result;
+};
+
+export const isTabletSize = function () {
+    const { height, width } = Dimensions.get("window");
+    if (isLandscape()) {
+        return height > MOBILE_WIDTH && height <= TABLET_WIDTH;
+    }
+    return width > MOBILE_WIDTH && width <= TABLET_WIDTH;
+};
+
+export const isMobileSize = function () {
+    return !isTabletSize();
+};
+
+export const isLandscape = function () {
+    const { height, width } = Dimensions.get("window");
+    return width >= height;
+};
+
+export const isPortrait = function () {
+    const { height, width } = Dimensions.get("window");
+    return width < height;
 };
 
 export const notify = function (message) {
