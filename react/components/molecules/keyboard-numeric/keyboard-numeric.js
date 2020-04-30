@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { ButtonKeyboard } from "../../atoms";
+import { isTabletSize } from "../../../util";
 
 export class KeyboardNumeric extends PureComponent {
     static get propTypes() {
@@ -118,9 +119,9 @@ export class KeyboardNumeric extends PureComponent {
 const styles = StyleSheet.create({
     keyboardNumeric: {
         width: "100%",
-        minHeight: 124,
-        maxHeight: 236,
-        maxWidth: 380,
+        minHeight: isTabletSize() ? 200 : 124,
+        maxHeight: isTabletSize() ? 350 : 236,
+        maxWidth: isTabletSize() ? "90%" : 380,
         flex: 1
     },
     row: {
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     buttonKeyboard: {
-        marginHorizontal: 2
+        marginHorizontal: isTabletSize() ? 4 : 2
     },
     filler: {
         flex: 1
