@@ -86,13 +86,13 @@ export const pickImage = async function (options) {
     return result;
 };
 
-export const isTablet = function () {
+export const isTabletSize = function () {
     const { height, width } = Dimensions.get("window");
     if (isLandscape()) return height > MOBILE_WIDTH && height <= TABLET_WIDTH;
     return width > MOBILE_WIDTH && width <= TABLET_WIDTH;
 };
 
-export const isMobile = function () {
+export const isMobileSize = function () {
     const windowWidth = Dimensions.get("window").width;
     return windowWidth <= MOBILE_WIDTH;
 };
@@ -105,28 +105,6 @@ export const isLandscape = function () {
 export const isPortrait = function () {
     const { height, width } = Dimensions.get("window");
     return width < height;
-};
-
-export const addWidthBreakpoint = function (name, range = []) {
-    this.widthBreakpoints = this.widthBreakpoints || [];
-    this.widthBreakpoints.push([name, range]);
-};
-
-export const removeWidthBreakpoint = function (name) {
-    this.widthBreakpoints = this.widthBreakpoints || [];
-    this.widthBreakpoints = this.widthBreakpoints.filter(v => v[0] !== name);
-    document.body.classList.remove(name);
-};
-
-export const addHeightBreakpoint = function (name, range = []) {
-    this.heightBreakpoints = this.heightBreakpoints || [];
-    this.heightBreakpoints.push([name, range]);
-};
-
-export const removeHeightBreakpoint = function (name) {
-    this.heightBreakpoints = this.heightBreakpoints || [];
-    this.heightBreakpoints = this.heightBreakpoints.filter(v => v[0] !== name);
-    document.body.classList.remove(name);
 };
 
 export const notify = function (message) {
