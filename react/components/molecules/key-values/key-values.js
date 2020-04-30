@@ -20,7 +20,7 @@ export class KeyValues extends PureComponent {
 
     static get defaultProps() {
         return {
-            columnsNr: 1,
+            columnsNr: undefined,
             style: {}
         };
     }
@@ -29,17 +29,17 @@ export class KeyValues extends PureComponent {
         super(props);
 
         this.keyValuesFiller =
-            this.props.columnsNr > 1 ? this.props.items.length % this.props.columnsNr : 0;
+            this.props.columnsNr ? this.props.items.length % this.props.columnsNr : 0;
     }
 
     width = () => `${(100 / this.props.columnsNr) * 0.96}%`;
 
     _style = () => {
-        return [this.props.columnsNr > 1 ? styles.keyValuesColumns : {}, this.props.style];
+        return [this.props.columnsNr ? styles.keyValuesColumns : {}, this.props.style];
     };
 
     _keyValueStyle = (isFiller = false) => {
-        return this.props.columnsNr > 1
+        return this.props.columnsNr
             ? {
                   width: this.width(),
                   opacity: isFiller ? 0 : 1
