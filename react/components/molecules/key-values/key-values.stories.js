@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs } from "@storybook/addon-knobs";
+import { withKnobs, number } from "@storybook/addon-knobs";
 
 import { KeyValues } from "./key-values";
 
@@ -14,5 +14,7 @@ storiesOf("Molecules", module)
             { key: "Birth date", value: "14/03/1993" },
             { key: "Nationality", value: "Portuguese" }
         ];
-        return <KeyValues items={items} />;
+        const columnsNr = number("Number of Columns", 1);
+
+        return <KeyValues items={items} columnsNr={columnsNr} />;
     });
