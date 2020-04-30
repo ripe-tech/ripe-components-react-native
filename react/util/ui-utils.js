@@ -95,8 +95,7 @@ export const isTabletSize = function () {
 };
 
 export const isMobileSize = function () {
-    const windowWidth = Dimensions.get("window").width;
-    return windowWidth <= MOBILE_WIDTH;
+    return !isTabletSize();
 };
 
 export const isLandscape = function () {
