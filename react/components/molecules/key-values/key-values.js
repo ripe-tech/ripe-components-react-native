@@ -43,35 +43,41 @@ export class KeyValues extends PureComponent {
         return [this.props.twoColumns ? styles.keyValuesColumns : {}, this.props.style];
     };
 
-    _keyValueStyle = () => {
-        return this.props.twoColumns ? styles.keyValueTwoColumns : {};
+    _keyValueWrapperStyle = () => {
+        return this.props.twoColumns ? styles.twoColumns : {};
+    };
+
+    _keyValueStyle = index => {
+        return this.props.twoColumns && index % 2 > 0 ? styles.keyValueTwoColumns : {};
     };
 
     render() {
         return (
             <View style={this._style()}>
-                {this.props.items.map(item => (
-                    <KeyValue
-                        style={this._keyValueStyle()}
-                        key={item.key}
-                        _key={item.key}
-                        value={item.value}
-                        keyColor={item.keyColor}
-                        valueColor={item.valueColor}
-                        icon={item.icon}
-                        iconBackgroundColor={item.iconBackgroundColor}
-                        iconColor={item.iconColor}
-                        iconSize={item.iconSize}
-                        iconHeight={item.iconHeight}
-                        iconWidth={item.iconWidth}
-                        iconStrokeWidth={item.iconStrokeWidth}
-                        pressable={item.pressable}
-                        onPress={item.onPress}
-                        onButtonIconPress={item.onButtonIconPress}
-                        onLongPress={item.onLongPress}
-                    >
-                        {item.valueComponent}
-                    </KeyValue>
+                {this.props.items.map((item, index) => (
+                    <View style={this._keyValueWrapperStyle()}>
+                        <KeyValue
+                            style={this._keyValueStyle(index)}
+                            key={item.key}
+                            _key={item.key}
+                            value={item.value}
+                            keyColor={item.keyColor}
+                            valueColor={item.valueColor}
+                            icon={item.icon}
+                            iconBackgroundColor={item.iconBackgroundColor}
+                            iconColor={item.iconColor}
+                            iconSize={item.iconSize}
+                            iconHeight={item.iconHeight}
+                            iconWidth={item.iconWidth}
+                            iconStrokeWidth={item.iconStrokeWidth}
+                            pressable={item.pressable}
+                            onPress={item.onPress}
+                            onButtonIconPress={item.onButtonIconPress}
+                            onLongPress={item.onLongPress}
+                        >
+                            {item.valueComponent}
+                        </KeyValue>
+                    </View>
                 ))}
             </View>
         );
@@ -84,8 +90,11 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "space-between"
     },
+    twoColumns: {
+        width: "50%"
+    },
     keyValueTwoColumns: {
-        width: "48%"
+        marginLeft: 40
     }
 });
 
