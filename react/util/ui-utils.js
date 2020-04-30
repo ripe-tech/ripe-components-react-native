@@ -1,4 +1,5 @@
 import { Alert, Dimensions, Linking, Platform, ToastAndroid } from "react-native";
+import DeviceInfo from "react-native-device-info";
 import DocumentPicker from "react-native-document-picker";
 import ImagePicker from "react-native-image-picker";
 
@@ -88,6 +89,14 @@ export const pickImage = async function (options) {
 
     const result = await promise;
     return result;
+};
+
+export const isTablet = function () {
+    return DeviceInfo.isTablet();
+};
+
+export const isMobile = function () {
+    return !isTablet();
 };
 
 export const notify = function (message) {
