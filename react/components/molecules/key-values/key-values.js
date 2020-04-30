@@ -28,8 +28,19 @@ export class KeyValues extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.keyValuesFiller =
-            this.props.columnsNr ? this.props.items.length % this.props.columnsNr : 0;
+        this.state = {
+            keyValuesFiller: this.props.columnsNr
+                ? this.props.items.length % this.props.columnsNr
+                : 0
+        };
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.columnsNr !== this.props.columnsNr) {
+            this.setState({
+                keyValuesFiller: this.props.columnsNr
+            });
+        }
     }
 
     width = () => `${(100 / this.props.columnsNr) * 0.96}%`;
@@ -50,7 +61,7 @@ export class KeyValues extends PureComponent {
     _keyValuesFiller = () => {
         const filler = [];
 
-        for (let i = 0; i < this.keyValuesFiller; i++)
+        for (let i = 0; i < this.state.keyValuesFiller; i++)
             filler.push(
                 <KeyValue
                     style={this._keyValueStyle(true)}
