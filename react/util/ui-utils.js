@@ -91,14 +91,6 @@ export const pickImage = async function (options) {
     return result;
 };
 
-export const isTablet = function () {
-    return DeviceInfo.isTablet();
-};
-
-export const isMobile = function () {
-    return !isTablet();
-};
-
 export const notify = function (message) {
     Platform.OS === "android"
         ? ToastAndroid.show(message, ToastAndroid.SHORT)
@@ -123,4 +115,12 @@ export const isLandscape = function () {
 export const isPortrait = function () {
     const { height, width } = Dimensions.get("window");
     return width < height;
+};
+
+export const isTablet = function () {
+    return DeviceInfo.isTablet();
+};
+
+export const isMobile = function () {
+    return !isTablet();
 };
