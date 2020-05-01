@@ -3,7 +3,7 @@ import { StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { KeyValue } from "../key-value";
-import { isTabletSize } from "../../../util/ui-utils";
+import { isTabletSize } from "../../../util";
 
 export class KeyValues extends PureComponent {
     static get propTypes() {
