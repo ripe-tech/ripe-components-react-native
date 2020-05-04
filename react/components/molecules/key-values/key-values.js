@@ -27,28 +27,28 @@ export class KeyValues extends PureComponent {
                     onLongPress: PropTypes.func
                 })
             ).isRequired,
-            twoColumns: PropTypes.bool,
+            keyValueTwoColumns: PropTypes.bool,
             style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
-            twoColumns: isTabletSize(),
+            keyValueTwoColumns: isTabletSize(),
             style: {}
         };
     }
 
     _style = () => {
-        return [this.props.twoColumns ? styles.keyValuesColumns : {}, this.props.style];
+        return [this.props.keyValueTwoColumns ? styles.keyValuesColumns : {}, this.props.style];
     };
 
     _keyValueWrapperStyle = () => {
-        return this.props.twoColumns ? styles.twoColumns : {};
+        return this.props.keyValueTwoColumns ? styles.twoColumns : {};
     };
 
     _keyValueStyle = index => {
-        return this.props.twoColumns && index % 2 > 0 ? styles.keyValueColumnRight : {};
+        return this.props.keyValueTwoColumns && index % 2 > 0 ? styles.keyValueColumnRight : {};
     };
 
     render() {
