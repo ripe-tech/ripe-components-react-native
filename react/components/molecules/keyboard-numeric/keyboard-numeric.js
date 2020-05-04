@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         width: "100%",
         minHeight: isTabletSize() ? 200 : 124,
         maxHeight: isTabletSize() ? 350 : 236,
-        maxWidth: isTabletSize() ? "90%" : 380,
+        maxWidth: isTabletSize() ? 800 : 380,
         flex: 1
     },
     row: {
