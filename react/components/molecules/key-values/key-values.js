@@ -44,7 +44,7 @@ export class KeyValues extends PureComponent {
     };
 
     _keyValueWrapperStyle = () => {
-        return this.props.keyValueTwoColumns ? styles.twoColumns : {};
+        return this.props.keyValueTwoColumns ? styles.keyValueWrapperColumns : {};
     };
 
     _keyValueStyle = index => {
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "space-between"
     },
-    twoColumns: {
+    keyValueWrapperColumns: {
         width: "50%"
     },
     keyValueColumnRight: {
