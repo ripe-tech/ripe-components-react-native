@@ -48,7 +48,7 @@ export class KeyValues extends PureComponent {
     };
 
     _keyValueStyle = index => {
-        return this.props.twoColumns && index % 2 > 0 ? styles.keyValueTwoColumns : {};
+        return this.props.twoColumns && index % 2 > 0 ? styles.keyValueColumnRight : {};
     };
 
     render() {
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     twoColumns: {
         width: "50%"
     },
-    keyValueTwoColumns: {
+    keyValueColumnRight: {
         marginLeft: 40
     }
 });
