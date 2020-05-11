@@ -105,17 +105,14 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.FONT_BOOK,
         fontSize: 11,
         letterSpacing: 0.25,
-        lineHeight: 11,
         marginTop: Platform.OS === "ios" ? 3 : 0
     },
     textLarge: {
         fontSize: 13,
-        lineHeight: 13,
         marginTop: Platform.OS === "ios" ? 4 : 0
     },
     textTiny: {
         fontSize: 9,
-        lineHeight: 9,
         marginTop: Platform.OS === "ios" ? 2 : 0
     }
 });

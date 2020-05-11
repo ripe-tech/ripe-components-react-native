@@ -55,7 +55,7 @@ export class KeyValues extends PureComponent {
         return (
             <View style={this._style()}>
                 {this.props.items.map((item, index) => (
-                    <View style={this._keyValueWrapperStyle()}>
+                    <View style={this._keyValueWrapperStyle()} key={item.key}>
                         <KeyValue
                             style={this._keyValueStyle(index)}
                             key={item.key}
