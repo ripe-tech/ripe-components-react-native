@@ -93,9 +93,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        paddingVertical: 6,
-        paddingHorizontal: 12,
+        paddingVertical: 4,
+        paddingHorizontal: 10,
         borderRadius: 6
+    },
+    tagSmall: {
+        paddingVertical: 4,
+        paddingHorizontal: 10
     },
     tagTiny: {
         paddingVertical: 3,
@@ -109,7 +113,11 @@ const styles = StyleSheet.create({
     },
     textLarge: {
         fontSize: 13,
-        marginTop: Platform.OS === "ios" ? 4 : 0
+        marginTop: Platform.OS === "ios" ? 3 : 0
+    },
+    textSmall: {
+        fontSize: 10,
+        marginTop: Platform.OS === "ios" ? 3 : 0
     },
     textTiny: {
         fontSize: 9,
