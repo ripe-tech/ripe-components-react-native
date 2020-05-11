@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, Text, TouchableWithoutFeedback, ViewPropTypes } from "react-native";
+import { StyleSheet, View, Text, TouchableNativeFeedback, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -80,7 +80,7 @@ export class ButtonTab extends PureComponent {
 
     render() {
         return (
-            <TouchableWithoutFeedback
+            <TouchableNativeFeedback
                 style={this.props.style}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
@@ -107,7 +107,7 @@ export class ButtonTab extends PureComponent {
                         />
                     ) : null}
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableNativeFeedback>
         );
     }
 }
