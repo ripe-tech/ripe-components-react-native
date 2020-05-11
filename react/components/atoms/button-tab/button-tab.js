@@ -1,5 +1,13 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, Text, TouchableNativeFeedback, ViewPropTypes } from "react-native";
+import {
+    StyleSheet,
+    View,
+    Text,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ViewPropTypes,
+    Platform
+} from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -78,7 +86,43 @@ export class ButtonTab extends PureComponent {
         this.setState({ pressed: false });
     };
 
+    _renderInner() {
+        return (
+            <View style={styles.container}>
+                {this.props.icon ? (
+                    <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
+                ) : null}
+                {this.props.text ? <Text style={this._labelStyle()}>{this.props.text}</Text> : null}
+                {this.props.badgeCount > 0 ? (
+                    <Badge
+                        animationDuration={this.props.badgeAnimationDuration}
+                        backgroundColor={this.props.badgeBackgroundColor}
+                        color={this.props.badgeColor}
+                        count={this.props.badgeCount}
+                        countThreshold={this.props.badgeCountThreshold}
+                        hasAnimation={this.props.badgeHasAnimation}
+                        text={this.props.badgeText}
+                        style={styles.badge}
+                    />
+                ) : null}
+            </View>
+        );
+    }
+
     render() {
+        if (Platform.OS === "ios") {
+            return (
+                <TouchableWithoutFeedback
+                    style={this.props.style}
+                    disabled={this.props.disabled}
+                    onPress={this.props.onPress}
+                    onPressIn={this._onPressIn}
+                    onPressOut={this._onPressOut}
+                >
+                    {this._renderInner()}
+                </TouchableWithoutFeedback>
+            );
+        }
         return (
             <TouchableNativeFeedback
                 style={this.props.style}
@@ -87,26 +131,7 @@ export class ButtonTab extends PureComponent {
                 onPressIn={this._onPressIn}
                 onPressOut={this._onPressOut}
             >
-                <View style={styles.container}>
-                    {this.props.icon ? (
-                        <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
-                    ) : null}
-                    {this.props.text ? (
-                        <Text style={this._labelStyle()}>{this.props.text}</Text>
-                    ) : null}
-                    {this.props.badgeCount > 0 ? (
-                        <Badge
-                            animationDuration={this.props.badgeAnimationDuration}
-                            backgroundColor={this.props.badgeBackgroundColor}
-                            color={this.props.badgeColor}
-                            count={this.props.badgeCount}
-                            countThreshold={this.props.badgeCountThreshold}
-                            hasAnimation={this.props.badgeHasAnimation}
-                            text={this.props.badgeText}
-                            style={styles.badge}
-                        />
-                    ) : null}
-                </View>
+                {this._renderInner()}
             </TouchableNativeFeedback>
         );
     }
