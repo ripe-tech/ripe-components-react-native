@@ -67,8 +67,21 @@ export class ImageList extends PureComponent {
         return fillers;
     }
 
-    _onPressRemove = index => {
-        LayoutAnimation.easeInEaseOut();
+    _onPressAdd = async (animate = false) => {
+        const image = await pickImage();
+
+        if (image) {
+            if (animate) LayoutAnimation.easeInEaseOut();
+
+            this.setState(
+                state => ({ images: [...state.images, image] }),
+                () => this.props.onAddImage(image)
+            );
+        }
+    };
+
+    _onPressRemove = (index, animate = true) => {
+        if (animate) LayoutAnimation.easeInEaseOut();
 
         this.setState(state => {
             const image = state.images[index];
@@ -78,19 +91,6 @@ export class ImageList extends PureComponent {
             this.props.onRemoveImage(image, index);
             return { images };
         });
-    };
-
-    _onPressAdd = async () => {
-        const image = await pickImage();
-
-        if (image) {
-            LayoutAnimation.easeInEaseOut();
-
-            this.setState(
-                state => ({ images: [...state.images, image] }),
-                () => this.props.onAddImage(image)
-            );
-        }
     };
 
     _style() {
@@ -110,7 +110,7 @@ export class ImageList extends PureComponent {
                         iconHeight={26}
                         iconWidth={26}
                         text={"Add photo"}
-                        onPress={this._onPressAdd}
+                        onPress={() => this._onPressAdd()}
                         style={styles.buttonAdd}
                     />
                 ) : null}
