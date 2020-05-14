@@ -3,6 +3,7 @@ import { ViewPropTypes, StyleSheet, View, Image, Modal } from "react-native";
 import PropTypes from "prop-types";
 
 import { Touchable } from "../touchable";
+import { ButtonIcon } from "../button-icon";
 
 export class Lightbox extends PureComponent {
     static get propTypes() {
@@ -49,8 +50,16 @@ export class Lightbox extends PureComponent {
         );
     }
 
-    onBackButtonPress = () => {
+    closeLigthBox() {
         this.setVisibility(false);
+    }
+
+    onBackButtonPress = () => {
+        this.closeLigthBox();
+    };
+
+    onClosePress = () => {
+        this.closeLigthBox();
     };
 
     onLightboxPress = () => {
@@ -96,6 +105,17 @@ export class Lightbox extends PureComponent {
                 >
                     <View style={styles.fullscreenContainer}>
                         <Image style={this._imageFullscreenStyle()} source={this._imageSource()} />
+                        <ButtonIcon
+                            icon={"close"}
+                            onPress={this.onClosePress}
+                            style={styles.buttonClose}
+                            iconStrokeWidth={2}
+                            size={34}
+                            iconHeight={22}
+                            iconWidth={22}
+                            backgroundColor={"rgba(0,0,0,0.6)"}
+                            iconStrokeColor={"#ffffff"}
+                        />
                     </View>
                 </Modal>
             </View>
@@ -114,6 +134,11 @@ const styles = StyleSheet.create({
     fullscreenContainer: {
         flex: 1,
         backgroundColor: "#000000"
+    },
+    buttonClose: {
+        position: "absolute",
+        top: "6%",
+        left: "4%"
     }
 });
 
