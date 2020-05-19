@@ -2,6 +2,8 @@ import React, { PureComponent } from "react";
 import { ViewPropTypes, StyleSheet, View, Image, Modal } from "react-native";
 import PropTypes from "prop-types";
 
+import { isTabletSize } from "../../../util";
+
 import { Touchable } from "../touchable";
 import { ButtonIcon } from "../button-icon";
 
@@ -110,10 +112,10 @@ export class Lightbox extends PureComponent {
                             onPress={this.onClosePress}
                             style={styles.buttonClose}
                             iconStrokeWidth={2}
-                            size={34}
-                            iconHeight={22}
-                            iconWidth={22}
-                            backgroundColor={"rgba(0,0,0,0.6)"}
+                            size={isTabletSize() ? 52 : 34}
+                            iconHeight={isTabletSize() ? 34 : 22}
+                            iconWidth={isTabletSize() ? 34 : 22}
+                            backgroundColor={"#000000"}
                             iconStrokeColor={"#ffffff"}
                         />
                     </View>
