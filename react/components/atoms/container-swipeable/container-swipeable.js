@@ -5,26 +5,6 @@ import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
 export class ContainerSwipeable extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            swipingDirection: undefined,
-            animationPositionX: new Animated.Value(0)
-        };
-
-        this.screenWidth = Dimensions.get("screen").width;
-        this.slowDownThreshold = this.screenWidth * this.props.swipeThreshold;
-        this.animating = false;
-
-        this.panResponder = PanResponder.create({
-            onMoveShouldSetPanResponderCapture: this.onMoveShouldSetPanResponderCapture,
-            onPanResponderGrant: this.onPanResponderGrant,
-            onPanResponderMove: this.onPanResponderMove,
-            onPanResponderRelease: this.onPanResponderRelease
-        });
-    }
-
     static get propTypes() {
         return {
             swipeThreshold: PropTypes.number,
@@ -67,6 +47,26 @@ export class ContainerSwipeable extends PureComponent {
             onRightOptionTrigger: () => null,
             style: {}
         };
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            swipingDirection: undefined,
+            animationPositionX: new Animated.Value(0)
+        };
+
+        this.screenWidth = Dimensions.get("screen").width;
+        this.slowDownThreshold = this.screenWidth * this.props.swipeThreshold;
+        this.animating = false;
+
+        this.panResponder = PanResponder.create({
+            onMoveShouldSetPanResponderCapture: this.onMoveShouldSetPanResponderCapture,
+            onPanResponderGrant: this.onPanResponderGrant,
+            onPanResponderMove: this.onPanResponderMove,
+            onPanResponderRelease: this.onPanResponderRelease
+        });
     }
 
     isAfterThreshold(offset) {

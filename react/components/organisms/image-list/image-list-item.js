@@ -5,17 +5,6 @@ import PropTypes from "prop-types";
 import { ButtonIcon } from "../../atoms";
 
 export class ImageListItem extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.hitBox = {
-            top: 20,
-            right: 20,
-            bottom: 20,
-            left: 20
-        };
-    }
-
     static get propTypes() {
         return {
             icon: PropTypes.string,
@@ -41,6 +30,17 @@ export class ImageListItem extends PureComponent {
             onIconPress: () => {},
             size: 80,
             style: {}
+        };
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.hitBox = {
+            top: 20,
+            right: 20,
+            bottom: 20,
+            left: 20
         };
     }
 

@@ -3,14 +3,6 @@ import { Animated, ViewPropTypes, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 
 export class BarAnimated extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            offset: new Animated.Value(this.props.offset)
-        };
-    }
-
     static get propTypes() {
         return {
             offset: PropTypes.number.isRequired,
@@ -24,6 +16,14 @@ export class BarAnimated extends PureComponent {
         return {
             color: "#597cf0",
             style: {}
+        };
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            offset: new Animated.Value(this.props.offset)
         };
     }
 
