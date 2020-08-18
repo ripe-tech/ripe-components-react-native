@@ -35,8 +35,7 @@
     ],
     "scripts": {
         "cleanup": "rm -rf node_modules && rm -f package-lock.json",
-        "lint": "npm run lint",
-        "lint-base": "eslint \"./**/*.js\"",
+        "lint": "eslint \"./**/*.js\"",
         "lint-fix": "eslint \"./**/*.js\" --fix",
         "prettier": "prettier \"./**/*.{js,json}\" --write",
         "pretty": "npm run prettier && npm run lint-fix && npm run svgo",
