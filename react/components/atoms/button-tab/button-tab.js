@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, testId } from "../../../util";
 
 import { Icon } from "../icon";
 import { Badge } from "../badge";
@@ -35,8 +35,9 @@ export class ButtonTab extends PureComponent {
             colorSelected: PropTypes.string,
             selected: PropTypes.bool,
             disabled: PropTypes.bool,
+            onPress: PropTypes.func,
             style: ViewPropTypes.style,
-            onPress: PropTypes.func
+            testId: PropTypes.string
         };
     }
 
@@ -54,8 +55,9 @@ export class ButtonTab extends PureComponent {
             colorSelected: "#1d2631",
             selected: false,
             disabled: false,
+            onPress: () => {},
             style: {},
-            onPress: () => {}
+            testId: undefined
         };
     }
 
@@ -92,7 +94,7 @@ export class ButtonTab extends PureComponent {
                 {this.props.icon ? (
                     <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
                 ) : null}
-                {this.props.text ? <Text style={this._labelStyle()}>{this.props.text}</Text> : null}
+                {this.props.text ? <Text {...testId(this.props.testId || `button-tab-${this.props.text}`)} style={this._labelStyle()}>{this.props.text}</Text> : null}
                 {this.props.badgeCount > 0 ? (
                     <Badge
                         animationDuration={this.props.badgeAnimationDuration}

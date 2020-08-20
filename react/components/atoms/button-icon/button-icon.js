@@ -22,7 +22,8 @@ export class ButtonIcon extends PureComponent {
                 left: PropTypes.number
             }),
             onPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            testId: PropTypes.string
         };
     }
 
@@ -42,7 +43,8 @@ export class ButtonIcon extends PureComponent {
                 left: 20
             },
             onPress: undefined,
-            style: {}
+            style: {},
+            testId: undefined
         };
     }
 
@@ -73,6 +75,7 @@ export class ButtonIcon extends PureComponent {
                     width={this.props.iconWidth}
                     height={this.props.iconHeight}
                     strokeWidth={this.props.iconStrokeWidth}
+                    testId={(this.props.testId || `button-icon-${this.props.icon}`)}
                 />
             </TouchableOpacity>
         );

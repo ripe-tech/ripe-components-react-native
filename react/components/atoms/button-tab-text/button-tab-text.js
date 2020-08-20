@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { ViewPropTypes, StyleSheet, Platform, Text } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles, capitalize } from "../../../util";
+import { baseStyles, capitalize, testId } from "../../../util";
 
 import { Touchable } from "../touchable";
 
@@ -17,7 +17,8 @@ export class ButtonTabText extends PureComponent {
             activeOpacity: PropTypes.number,
             variant: PropTypes.string,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            testId: PropTypes.string
         };
     }
 
@@ -31,7 +32,8 @@ export class ButtonTabText extends PureComponent {
             activeOpacity: 0.5,
             variant: undefined,
             onPress: undefined,
-            style: {}
+            style: {},
+            testId: undefined
         };
     }
 
@@ -64,7 +66,7 @@ export class ButtonTabText extends PureComponent {
                 activeOpacity={this.props.activeOpacity}
                 onPress={this.props.onPress}
             >
-                <Text style={this._styleText()}>{this.props.text}</Text>
+                <Text style={this._styleText()} {...testId(this.props.testId || `button-tab-text-${this.props.text}`)}>{this.props.text}</Text>
             </Touchable>
         );
     }

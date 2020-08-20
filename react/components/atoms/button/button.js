@@ -3,7 +3,7 @@ import { StyleSheet, Text, ActivityIndicator, ViewPropTypes, Platform, View } fr
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, testId } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
@@ -22,8 +22,9 @@ export class Button extends PureComponent {
             gradientStart: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
             gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            onPress: PropTypes.func,
             style: ViewPropTypes.style,
-            onPress: PropTypes.func
+            testId: PropTypes.string
         };
     }
 
@@ -37,8 +38,9 @@ export class Button extends PureComponent {
             gradientLocations: [0.4, 0.84],
             gradientColors: ["#4a6fe9", "#6687f6"],
             width: undefined,
+            onPress: () => {},
             style: {},
-            onPress: () => {}
+            testId: undefined
         };
     }
 
@@ -60,7 +62,7 @@ export class Button extends PureComponent {
 
     _renderNormal() {
         return (
-            <View style={styles.container}>
+            <View style={styles.container} {...testId(this.props.testId || `button-${this.props.text}`)}>
                 {this.props.icon ? (
                     <Icon
                         icon={this.props.icon}

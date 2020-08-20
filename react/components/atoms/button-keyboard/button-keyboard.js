@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Platform, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles, capitalize, isTabletSize } from "../../../util";
+import { baseStyles, capitalize, isTabletSize, testId } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
@@ -17,7 +17,8 @@ export class ButtonKeyboard extends PureComponent {
             variant: PropTypes.string,
             onPress: PropTypes.func,
             onLongPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            testId: PropTypes.string
         };
     }
 
@@ -30,7 +31,8 @@ export class ButtonKeyboard extends PureComponent {
             variant: undefined,
             onPress: () => {},
             onLongPress: () => {},
-            style: {}
+            style: {},
+            testId: undefined
         };
     }
 
@@ -57,12 +59,13 @@ export class ButtonKeyboard extends PureComponent {
                 onPress={this._onPress}
                 onLongPress={this._onLongPress}
             >
-                {this.props.text ? <Text style={styles.text}>{this.props.text}</Text> : null}
+                {this.props.text ? <Text style={styles.text} {...testId(this.props.testId || `button-keyboard-${this.props.text}`)}>{this.props.text}</Text> : null}
                 {this.props.icon ? (
                     <Icon
                         icon={this.props.icon}
                         strokeWidth={this.props.strokeWidth}
                         color="#17425c"
+                        testId={this.props.testId || `button-keyboard-${this.props.icon}`}
                     />
                 ) : null}
             </Touchable>

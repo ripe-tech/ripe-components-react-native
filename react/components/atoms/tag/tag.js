@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, Platform, Text } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles, capitalize } from "../../../util";
+import { baseStyles, capitalize, testId } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
@@ -19,7 +19,8 @@ export class Tag extends PureComponent {
             iconHeight: PropTypes.number,
             size: PropTypes.string,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            testId: PropTypes.string
         };
     }
 
@@ -34,7 +35,8 @@ export class Tag extends PureComponent {
             iconHeight: undefined,
             size: "normal",
             onPress: undefined,
-            style: {}
+            style: {},
+            testId: undefined
         };
     }
 
@@ -79,9 +81,10 @@ export class Tag extends PureComponent {
                         color={this.props.color}
                         width={this.props.iconWidth}
                         height={this.props.iconHeight}
+                        {...testId(this.props.testId || `tag-icon-${this.props.icon}`)}
                     />
                 ) : null}
-                {this.props.text ? <Text style={this._textStyle()}>{this.props.text}</Text> : null}
+                {this.props.text ? <Text style={this._textStyle()} {...testId(this.props.testId || `tag-text-${this.props.text}`)}>{this.props.text}</Text> : null}
             </Touchable>
         );
     }

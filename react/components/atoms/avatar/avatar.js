@@ -2,6 +2,8 @@ import React, { PureComponent } from "react";
 import { ViewPropTypes, StyleSheet, Image } from "react-native";
 import PropTypes from "prop-types";
 
+import { testId } from "../../../util";
+
 import { Touchable } from "../touchable";
 
 export class Avatar extends PureComponent {
@@ -18,8 +20,9 @@ export class Avatar extends PureComponent {
                 right: PropTypes.number.isRequired,
                 bottom: PropTypes.number.isRequired
             }),
+            onPress: PropTypes.func,
             style: ViewPropTypes.style,
-            onPress: PropTypes.func
+            testId: PropTypes.string
         };
     }
 
@@ -30,8 +33,9 @@ export class Avatar extends PureComponent {
             borderRadius: 100,
             resizeMode: "contain",
             hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
+            onPress: undefined,
             style: {},
-            onPress: undefined
+            testId: undefined
         };
     }
 
@@ -60,6 +64,7 @@ export class Avatar extends PureComponent {
                     source={this.props.image}
                     style={styles.image}
                     resizeMode={this.props.resizeMode}
+                    {...this.props.testId ? testId(this.props.testId) : {}}
                 />
             </Touchable>
         );

@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, View, Text, Platform, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, testId } from "../../../util";
 
 import { ButtonIcon, Touchable } from "../../atoms";
 
@@ -24,7 +24,8 @@ export class KeyValue extends PureComponent {
             onPress: PropTypes.func,
             onButtonIconPress: PropTypes.func,
             onLongPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            testId: PropTypes.string
         };
     }
 
@@ -43,7 +44,8 @@ export class KeyValue extends PureComponent {
             onPress: () => {},
             onButtonIconPress: () => {},
             onLongPress: () => {},
-            style: {}
+            style: {},
+            testId: undefined
         };
     }
 
@@ -67,12 +69,12 @@ export class KeyValue extends PureComponent {
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
             >
-                <View style={styles.textContainer}>
-                    <Text style={this._keyStyle()}>{this.props._key}</Text>
+                <View style={styles.textContainer} {...testId(this.props.testId || `key-value-${this.props._key}`)}>
+                    <Text style={this._keyStyle()} {...testId(this.props.testId || `key-value-key-${this.props._key}`)}>{this.props._key}</Text>
                     {this.props.children ? (
                         this.props.children
                     ) : (
-                        <Text style={this._valueStyle()}>{this.props.value}</Text>
+                        <Text style={this._valueStyle()} {...testId(this.props.testId || `key-value-value-${this.props._key}`)}>{this.props.value}</Text>
                     )}
                 </View>
                 {this.props.icon ? (

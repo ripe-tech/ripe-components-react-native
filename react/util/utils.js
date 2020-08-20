@@ -1,3 +1,5 @@
+import { Platform } from "react-native";
+
 export const dateString = function (timestamp, { separator = "/", year = true } = {}) {
     const date = new Date(timestamp * 1000);
     const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
@@ -58,4 +60,12 @@ export const capitalize = function (value) {
 export const isImage = function (fileName) {
     const regex = /\.(jpg|jpeg|png|gif)$/i;
     return regex.test(fileName);
+};
+
+export const testId = function (id, normalizeId = true) {
+    if (!id) return {};
+    const normalized = normalizeId ? id.trim().toLowerCase().split(" ").join("-") : id;
+    return Platform.OS === "android" ?
+        { accessible: true, accessibilityLabel: normalized } :
+        { testID: normalized }
 };
