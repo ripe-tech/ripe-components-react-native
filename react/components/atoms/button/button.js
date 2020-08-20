@@ -62,7 +62,10 @@ export class Button extends PureComponent {
 
     _renderNormal() {
         return (
-            <View style={styles.container} {...testId(this.props.testId || `button-${this.props.text}`)}>
+            <View
+                style={styles.container}
+                {...testId(this.props.testId || `button-${this.props.text}`)}
+            >
                 {this.props.icon ? (
                     <Icon
                         icon={this.props.icon}

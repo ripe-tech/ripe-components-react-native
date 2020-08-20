@@ -69,12 +69,25 @@ export class KeyValue extends PureComponent {
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
             >
-                <View style={styles.textContainer} {...testId(this.props.testId || `key-value-${this.props._key}`)}>
-                    <Text style={this._keyStyle()} {...testId(this.props.testId || `key-value-key-${this.props._key}`)}>{this.props._key}</Text>
+                <View
+                    style={styles.textContainer}
+                    {...testId(this.props.testId || `key-value-${this.props._key}`)}
+                >
+                    <Text
+                        style={this._keyStyle()}
+                        {...testId(this.props.testId || `key-value-key-${this.props._key}`)}
+                    >
+                        {this.props._key}
+                    </Text>
                     {this.props.children ? (
                         this.props.children
                     ) : (
-                        <Text style={this._valueStyle()} {...testId(this.props.testId || `key-value-value-${this.props._key}`)}>{this.props.value}</Text>
+                        <Text
+                            style={this._valueStyle()}
+                            {...testId(this.props.testId || `key-value-value-${this.props._key}`)}
+                        >
+                            {this.props.value}
+                        </Text>
                     )}
                 </View>
                 {this.props.icon ? (

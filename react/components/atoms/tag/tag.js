@@ -84,7 +84,14 @@ export class Tag extends PureComponent {
                         {...testId(this.props.testId || `tag-icon-${this.props.icon}`)}
                     />
                 ) : null}
-                {this.props.text ? <Text style={this._textStyle()} {...testId(this.props.testId || `tag-text-${this.props.text}`)}>{this.props.text}</Text> : null}
+                {this.props.text ? (
+                    <Text
+                        style={this._textStyle()}
+                        {...testId(this.props.testId || `tag-text-${this.props.text}`)}
+                    >
+                        {this.props.text}
+                    </Text>
+                ) : null}
             </Touchable>
         );
     }

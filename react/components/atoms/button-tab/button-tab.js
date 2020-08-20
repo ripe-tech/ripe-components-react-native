@@ -94,7 +94,14 @@ export class ButtonTab extends PureComponent {
                 {this.props.icon ? (
                     <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
                 ) : null}
-                {this.props.text ? <Text {...testId(this.props.testId || `button-tab-${this.props.text}`)} style={this._labelStyle()}>{this.props.text}</Text> : null}
+                {this.props.text ? (
+                    <Text
+                        {...testId(this.props.testId || `button-tab-${this.props.text}`)}
+                        style={this._labelStyle()}
+                    >
+                        {this.props.text}
+                    </Text>
+                ) : null}
                 {this.props.badgeCount > 0 ? (
                     <Badge
                         animationDuration={this.props.badgeAnimationDuration}

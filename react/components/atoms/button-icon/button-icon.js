@@ -75,7 +75,7 @@ export class ButtonIcon extends PureComponent {
                     width={this.props.iconWidth}
                     height={this.props.iconHeight}
                     strokeWidth={this.props.iconStrokeWidth}
-                    testId={(this.props.testId || `button-icon-${this.props.icon}`)}
+                    testId={this.props.testId || `button-icon-${this.props.icon}`}
                 />
             </TouchableOpacity>
         );

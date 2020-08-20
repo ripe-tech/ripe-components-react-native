@@ -65,7 +65,7 @@ export const isImage = function (fileName) {
 export const testId = function (id, normalizeId = true) {
     if (!id) return {};
     const normalized = normalizeId ? id.trim().toLowerCase().split(" ").join("-") : id;
-    return Platform.OS === "android" ?
-        { accessible: true, accessibilityLabel: normalized } :
-        { testID: normalized }
+    return Platform.OS === "android"
+        ? { accessible: true, accessibilityLabel: normalized }
+        : { testID: normalized };
 };

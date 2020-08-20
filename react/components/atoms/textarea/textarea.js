@@ -79,7 +79,7 @@ export class TextArea extends PureComponent {
                 onChangeText={this.props.onValue}
                 onFocus={this.props.onFocus}
                 onBlur={this.props.onBlur}
-                {...this._testId() ? testId(`textarea-${this._testId()}`) : {}}
+                {...(this._testId() ? testId(`textarea-${this._testId()}`) : {})}
             >
                 {this.props.value}
             </TextInput>

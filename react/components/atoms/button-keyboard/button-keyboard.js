@@ -59,7 +59,14 @@ export class ButtonKeyboard extends PureComponent {
                 onPress={this._onPress}
                 onLongPress={this._onLongPress}
             >
-                {this.props.text ? <Text style={styles.text} {...testId(this.props.testId || `button-keyboard-${this.props.text}`)}>{this.props.text}</Text> : null}
+                {this.props.text ? (
+                    <Text
+                        style={styles.text}
+                        {...testId(this.props.testId || `button-keyboard-${this.props.text}`)}
+                    >
+                        {this.props.text}
+                    </Text>
+                ) : null}
                 {this.props.icon ? (
                     <Icon
                         icon={this.props.icon}

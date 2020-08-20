@@ -66,7 +66,12 @@ export class ButtonTabText extends PureComponent {
                 activeOpacity={this.props.activeOpacity}
                 onPress={this.props.onPress}
             >
-                <Text style={this._styleText()} {...testId(this.props.testId || `button-tab-text-${this.props.text}`)}>{this.props.text}</Text>
+                <Text
+                    style={this._styleText()}
+                    {...testId(this.props.testId || `button-tab-text-${this.props.text}`)}
+                >
+                    {this.props.text}
+                </Text>
             </Touchable>
         );
     }

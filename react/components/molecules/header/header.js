@@ -67,7 +67,11 @@ export class Header extends PureComponent {
                         />
                     </Touchable>
                 ) : null}
-                {this.props.title ? <Text style={styles.title} {...testId("text-header")}>{this.props.title}</Text> : null}
+                {this.props.title ? (
+                    <Text style={styles.title} {...testId("text-header")}>
+                        {this.props.title}
+                    </Text>
+                ) : null}
                 {this.props.buttonRightVisible && this.props.buttonRightIcon ? (
                     <Touchable
                         hitSlop={this.props.hitSlop}

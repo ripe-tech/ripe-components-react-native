@@ -64,7 +64,7 @@ export class Avatar extends PureComponent {
                     source={this.props.image}
                     style={styles.image}
                     resizeMode={this.props.resizeMode}
-                    {...this.props.testId ? testId(this.props.testId) : {}}
+                    {...(this.props.testId ? testId(this.props.testId) : {})}
                 />
             </Touchable>
         );
