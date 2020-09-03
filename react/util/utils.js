@@ -66,15 +66,18 @@ export const isImage = function (fileName) {
  * Generates a properties object from the base test identifier of a component
  * taking into consideration the current execution context.
  *
- * @param {String} id The identifier of the element as a plain string.
+ * @param {String} idPrefix The prefix of the identifier for the element as a plain string.
+ * @param {String} idSuffix The suffix of the identifier for the element as a plain string.
  * @param {Boolean} normalizeId If the identifier should be normalized according to
  * a series of standards (eg: dash instead of space).
  * @returns {Object} The resulting properties object that can be used to add properties
  * to a React component allowing it to be properly tested.
  */
-export const genTestProps = function (id, normalizeId = true) {
-    if (!id) return {};
-    const normalized = normalizeId ? id.trim().toLowerCase().split(" ").join("-") : id;
+export const genTestProps = function (idPrefix, idSuffix, normalizeId = true) {
+    if (!idPrefix || !idSuffix) return {};
+    idPrefix = normalizeId ? idPrefix.trim().toLowerCase().split(" ").join("-") : idPrefix;
+    idSuffix = normalizeId ? idSuffix.trim().toLowerCase().split(" ").join("-") : idSuffix;
+    const normalized = `${idPrefix}-${idSuffix}`;
     return Platform.OS === "android"
         ? { accessible: true, accessibilityLabel: normalized }
         : { testID: normalized };

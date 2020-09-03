@@ -21,8 +21,7 @@ export class Avatar extends PureComponent {
                 bottom: PropTypes.number.isRequired
             }),
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
-            testId: PropTypes.string
+            style: ViewPropTypes.style
         };
     }
 
@@ -34,8 +33,7 @@ export class Avatar extends PureComponent {
             resizeMode: "contain",
             hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
             onPress: undefined,
-            style: {},
-            testId: undefined
+            style: {}
         };
     }
 
@@ -64,7 +62,7 @@ export class Avatar extends PureComponent {
                     source={this.props.image}
                     style={styles.image}
                     resizeMode={this.props.resizeMode}
-                    {...(this.props.testId ? genTestProps(this.props.testId) : {})}
+                    {...genTestProps("avatar", this.testSuffix)}
                 />
             </Touchable>
         );

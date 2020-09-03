@@ -24,8 +24,7 @@ export class KeyValue extends PureComponent {
             onPress: PropTypes.func,
             onButtonIconPress: PropTypes.func,
             onLongPress: PropTypes.func,
-            style: ViewPropTypes.style,
-            testId: PropTypes.string
+            style: ViewPropTypes.style
         };
     }
 
@@ -44,8 +43,7 @@ export class KeyValue extends PureComponent {
             onPress: () => {},
             onButtonIconPress: () => {},
             onLongPress: () => {},
-            style: {},
-            testId: undefined
+            style: {}
         };
     }
 
@@ -69,13 +67,10 @@ export class KeyValue extends PureComponent {
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
             >
-                <View
-                    style={styles.textContainer}
-                    {...genTestProps(this.props.testId || `key-value-${this.props._key}`)}
-                >
+                <View style={styles.textContainer} {...genTestProps("key-value", this.testSuffix)}>
                     <Text
                         style={this._keyStyle()}
-                        {...genTestProps(this.props.testId || `key-value-key-${this.props._key}`)}
+                        {...genTestProps("key-value-key", this.testSuffix)}
                     >
                         {this.props._key}
                     </Text>
@@ -84,9 +79,7 @@ export class KeyValue extends PureComponent {
                     ) : (
                         <Text
                             style={this._valueStyle()}
-                            {...genTestProps(
-                                this.props.testId || `key-value-value-${this.props._key}`
-                            )}
+                            {...genTestProps("key-value-value", this.testSuffix)}
                         >
                             {this.props.value}
                         </Text>
