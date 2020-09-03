@@ -67,10 +67,10 @@ export class KeyValue extends PureComponent {
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
             >
-                <View style={styles.textContainer} {...genTestProps("key-value", this.testSuffix)}>
+                <View style={styles.textContainer} {...genTestProps(this.props.testPrefix, "key-value")}>
                     <Text
                         style={this._keyStyle()}
-                        {...genTestProps("key-value-key", this.testSuffix)}
+                        {...genTestProps(this.props.testPrefix, "key-value-key")}
                     >
                         {this.props._key}
                     </Text>
@@ -79,7 +79,7 @@ export class KeyValue extends PureComponent {
                     ) : (
                         <Text
                             style={this._valueStyle()}
-                            {...genTestProps("key-value-value", this.testSuffix)}
+                            {...genTestProps(this.props.testPrefix, "key-value-value")}
                         >
                             {this.props.value}
                         </Text>

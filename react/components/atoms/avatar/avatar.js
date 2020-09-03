@@ -62,7 +62,7 @@ export class Avatar extends PureComponent {
                     source={this.props.image}
                     style={styles.image}
                     resizeMode={this.props.resizeMode}
-                    {...genTestProps("avatar", this.testSuffix)}
+                    {...genTestProps(this.props.testPrefix, "avatar")}
                 />
             </Touchable>
         );

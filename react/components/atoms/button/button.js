@@ -23,8 +23,7 @@ export class Button extends PureComponent {
             gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
-            testId: PropTypes.string
+            style: ViewPropTypes.style
         };
     }
 
@@ -39,8 +38,7 @@ export class Button extends PureComponent {
             gradientColors: ["#4a6fe9", "#6687f6"],
             width: undefined,
             onPress: () => {},
-            style: {},
-            testId: undefined
+            style: {}
         };
     }
 
@@ -64,7 +62,7 @@ export class Button extends PureComponent {
         return (
             <View
                 style={styles.container}
-                {...genTestProps(this.props.testId || `button-${this.props.text}`)}
+                {...genTestProps(this.props.testPrefix, `button-${this.props.text}`)}
             >
                 {this.props.icon ? (
                     <Icon

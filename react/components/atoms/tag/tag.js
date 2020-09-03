@@ -19,8 +19,7 @@ export class Tag extends PureComponent {
             iconHeight: PropTypes.number,
             size: PropTypes.string,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
-            testId: PropTypes.string
+            style: ViewPropTypes.style
         };
     }
 
@@ -35,8 +34,7 @@ export class Tag extends PureComponent {
             iconHeight: undefined,
             size: "normal",
             onPress: undefined,
-            style: {},
-            testId: undefined
+            style: {}
         };
     }
 
@@ -81,13 +79,13 @@ export class Tag extends PureComponent {
                         color={this.props.color}
                         width={this.props.iconWidth}
                         height={this.props.iconHeight}
-                        {...genTestProps(this.props.testId || `tag-icon-${this.props.icon}`)}
+                        {...genTestProps(this.props.testPrefix, "tag-icon")}
                     />
                 ) : null}
                 {this.props.text ? (
                     <Text
                         style={this._textStyle()}
-                        {...genTestProps(this.props.testId || `tag-text-${this.props.text}`)}
+                        {...genTestProps(this.props.testPrefix, "tag-text")}
                     >
                         {this.props.text}
                     </Text>

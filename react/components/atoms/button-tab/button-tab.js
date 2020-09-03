@@ -36,8 +36,7 @@ export class ButtonTab extends PureComponent {
             selected: PropTypes.bool,
             disabled: PropTypes.bool,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
-            testId: PropTypes.string
+            style: ViewPropTypes.style
         };
     }
 
@@ -56,8 +55,7 @@ export class ButtonTab extends PureComponent {
             selected: false,
             disabled: false,
             onPress: () => {},
-            style: {},
-            testId: undefined
+            style: {}
         };
     }
 
@@ -96,7 +94,7 @@ export class ButtonTab extends PureComponent {
                 ) : null}
                 {this.props.text ? (
                     <Text
-                        {...genTestProps(this.props.testId || `button-tab-${this.props.text}`)}
+                        {...genTestProps(this.props.testPrefix, `button-tab-${this.props.text}`)}
                         style={this._labelStyle()}
                     >
                         {this.props.text}

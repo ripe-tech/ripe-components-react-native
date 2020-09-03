@@ -18,8 +18,7 @@ export class TextArea extends PureComponent {
             onBlur: PropTypes.func,
             color: PropTypes.string,
             variant: PropTypes.string,
-            style: ViewPropTypes.style,
-            testId: PropTypes.string
+            style: ViewPropTypes.style
         };
     }
 
@@ -36,8 +35,7 @@ export class TextArea extends PureComponent {
             onBlur: () => {},
             color: undefined,
             variant: undefined,
-            style: {},
-            testId: undefined
+            style: {}
         };
     }
 
@@ -66,8 +64,6 @@ export class TextArea extends PureComponent {
         ];
     };
 
-    _testId = () => this.props.testId || this.props.placeholder;
-
     render() {
         return (
             <TextInput
@@ -79,7 +75,7 @@ export class TextArea extends PureComponent {
                 onChangeText={this.props.onValue}
                 onFocus={this.props.onFocus}
                 onBlur={this.props.onBlur}
-                {...(this._genTestProps() ? genTestProps(`textarea-${this._genTestProps()}`) : {})}
+                {...genTestProps(this.props.testPrefix, "textarea")}
             >
                 {this.props.value}
             </TextInput>

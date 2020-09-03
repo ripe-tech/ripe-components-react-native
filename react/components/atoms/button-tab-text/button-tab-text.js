@@ -17,8 +17,7 @@ export class ButtonTabText extends PureComponent {
             activeOpacity: PropTypes.number,
             variant: PropTypes.string,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
-            testId: PropTypes.string
+            style: ViewPropTypes.style
         };
     }
 
@@ -32,8 +31,7 @@ export class ButtonTabText extends PureComponent {
             activeOpacity: 0.5,
             variant: undefined,
             onPress: undefined,
-            style: {},
-            testId: undefined
+            style: {}
         };
     }
 
@@ -68,7 +66,7 @@ export class ButtonTabText extends PureComponent {
             >
                 <Text
                     style={this._styleText()}
-                    {...genTestProps(this.props.testId || `button-tab-text-${this.props.text}`)}
+                    {...genTestProps(this.props.testPrefix, "button-tab-text")}
                 >
                     {this.props.text}
                 </Text>

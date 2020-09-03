@@ -2,6 +2,8 @@ import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
+import { genTestId } from "../../../util";
+
 import { Icon } from "../icon";
 
 export class ButtonIcon extends PureComponent {
@@ -22,8 +24,7 @@ export class ButtonIcon extends PureComponent {
                 left: PropTypes.number
             }),
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
-            testId: PropTypes.string
+            style: ViewPropTypes.style
         };
     }
 
@@ -43,8 +44,7 @@ export class ButtonIcon extends PureComponent {
                 left: 20
             },
             onPress: undefined,
-            style: {},
-            testId: undefined
+            style: {}
         };
     }
 
@@ -75,7 +75,7 @@ export class ButtonIcon extends PureComponent {
                     width={this.props.iconWidth}
                     height={this.props.iconHeight}
                     strokeWidth={this.props.iconStrokeWidth}
-                    testId={this.props.testId || `button-icon-${this.props.icon}`}
+                    testPrefix={genTestId(this.props.testPrefix, "button-icon")}
                 />
             </TouchableOpacity>
         );

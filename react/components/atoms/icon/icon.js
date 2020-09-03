@@ -22,8 +22,7 @@ export class Icon extends PureComponent {
             ]),
             height: PropTypes.number,
             width: PropTypes.number,
-            style: ViewPropTypes.style,
-            testId: PropTypes.string
+            style: ViewPropTypes.style
         };
     }
 
@@ -34,8 +33,7 @@ export class Icon extends PureComponent {
             height: 20,
             width: 20,
             strokeWidth: 1.5,
-            style: {},
-            testId: undefined
+            style: {}
         };
     }
 
@@ -54,7 +52,7 @@ export class Icon extends PureComponent {
                 stroke={this.props.color}
                 strokeWidth={this.props.strokeWidth}
                 style={this.props.style}
-                {...genTestProps(this.props.testId || `icon-${this.props.icon}`)}
+                {...genTestProps(this.props.testPrefix, `icon-${this.props.icon}`)}
             />
         );
     }
