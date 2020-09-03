@@ -23,7 +23,9 @@ export class Header extends PureComponent {
                 bottom: PropTypes.number.isRequired
             }),
             onButtonLeftPress: PropTypes.func,
-            onButtonRightPress: PropTypes.func
+            onButtonRightPress: PropTypes.func,
+            buttonLeftTestId: PropTypes.string,
+            buttonRightTestId: PropTypes.string
         };
     }
 
@@ -37,7 +39,9 @@ export class Header extends PureComponent {
             buttonRightVisible: false,
             hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
             onButtonLeftPress: undefined,
-            onButtonRightPress: undefined
+            onButtonRightPress: undefined,
+            buttonLeftTestId: undefined,
+            buttonRightTestId: undefined
         };
     }
 
@@ -63,7 +67,7 @@ export class Header extends PureComponent {
                             height={24}
                             strokeWidth={2}
                             color={"#1d2631"}
-                            testId={"button-header-left"}
+                            testId={this.props.buttonLeftTestId || "button-header-left"}
                         />
                     </Touchable>
                 ) : null}
@@ -86,7 +90,7 @@ export class Header extends PureComponent {
                             width={24}
                             height={30}
                             strokeWidth={2}
-                            testId={"button-header-right"}
+                            testId={this.props.buttonRightTestId || "button-header-right"}
                         />
                     </Touchable>
                 ) : null}
