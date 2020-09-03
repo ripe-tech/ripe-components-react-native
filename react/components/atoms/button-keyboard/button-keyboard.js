@@ -60,7 +60,10 @@ export class ButtonKeyboard extends PureComponent {
                 {this.props.text ? (
                     <Text
                         style={styles.text}
-                        {...genTestProps(this.props.testPrefix, `button-keyboard-${this.props.text}`)}
+                        {...genTestProps(
+                            this.props.testPrefix,
+                            `button-keyboard-${this.props.text}`
+                        )}
                     >
                         {this.props.text}
                     </Text>
@@ -70,7 +73,10 @@ export class ButtonKeyboard extends PureComponent {
                         icon={this.props.icon}
                         strokeWidth={this.props.strokeWidth}
                         color="#17425c"
-                        testPrefix={genTestId(this.props.testPrefix, `button-keyboard-${this.props.icon}`)}
+                        testPrefix={genTestId(
+                            this.props.testPrefix,
+                            `button-keyboard-${this.props.icon}`
+                        )}
                     />
                 ) : null}
             </Touchable>

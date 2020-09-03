@@ -62,9 +62,17 @@ export const isImage = function (fileName) {
     return regex.test(fileName);
 };
 
-export const genTestId = function(...ids) {
-    return ids.filter(Boolean).map(id => id.trim().toLowerCase().split(" ").join("-")).join("-");
-}
+/**
+ * Generates a test ID from a list of identifiers.
+ *
+ * @param  {...string} ids The list of identifiers to generate the test ID from.
+ */
+export const genTestId = function (...ids) {
+    return ids
+        .filter(Boolean)
+        .map(id => id.trim().toLowerCase().split(" ").join("-"))
+        .join("-");
+};
 
 /**
  * Generates a properties object from the base test identifier of a component
@@ -72,8 +80,6 @@ export const genTestId = function(...ids) {
  *
  * @param {String} idPrefix The prefix of the identifier for the element as a plain string.
  * @param {String} idSuffix The suffix of the identifier for the element as a plain string.
- * @param {Boolean} normalizeId If the identifier should be normalized according to
- * a series of standards (eg: dash instead of space).
  * @returns {Object} The resulting properties object that can be used to add properties
  * to a React component allowing it to be properly tested.
  */
@@ -81,5 +87,5 @@ export const genTestProps = function (idPrefix, idSuffix) {
     const id = genTestId(idPrefix, idSuffix);
     return Platform.OS === "android"
         ? { accessible: true, accessibilityLabel: id }
-        : { testID: normalized };
+        : { testID: id };
 };

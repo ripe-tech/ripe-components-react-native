@@ -67,7 +67,10 @@ export class KeyValue extends PureComponent {
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
             >
-                <View style={styles.textContainer} {...genTestProps(this.props.testPrefix, "key-value")}>
+                <View
+                    style={styles.textContainer}
+                    {...genTestProps(this.props.testPrefix, "key-value")}
+                >
                     <Text
                         style={this._keyStyle()}
                         {...genTestProps(this.props.testPrefix, "key-value-key")}
