@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles, testId } from "../../../util";
+import { baseStyles, genTestProps } from "../../../util";
 
 import { Icon } from "../icon";
 import { Badge } from "../badge";
@@ -96,7 +96,7 @@ export class ButtonTab extends PureComponent {
                 ) : null}
                 {this.props.text ? (
                     <Text
-                        {...testId(this.props.testId || `button-tab-${this.props.text}`)}
+                        {...genTestProps(this.props.testId || `button-tab-${this.props.text}`)}
                         style={this._labelStyle()}
                     >
                         {this.props.text}

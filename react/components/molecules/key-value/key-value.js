@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, View, Text, Platform, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles, testId } from "../../../util";
+import { baseStyles, genTestProps } from "../../../util";
 
 import { ButtonIcon, Touchable } from "../../atoms";
 
@@ -71,11 +71,11 @@ export class KeyValue extends PureComponent {
             >
                 <View
                     style={styles.textContainer}
-                    {...testId(this.props.testId || `key-value-${this.props._key}`)}
+                    {...genTestProps(this.props.testId || `key-value-${this.props._key}`)}
                 >
                     <Text
                         style={this._keyStyle()}
-                        {...testId(this.props.testId || `key-value-key-${this.props._key}`)}
+                        {...genTestProps(this.props.testId || `key-value-key-${this.props._key}`)}
                     >
                         {this.props._key}
                     </Text>
@@ -84,7 +84,9 @@ export class KeyValue extends PureComponent {
                     ) : (
                         <Text
                             style={this._valueStyle()}
-                            {...testId(this.props.testId || `key-value-value-${this.props._key}`)}
+                            {...genTestProps(
+                                this.props.testId || `key-value-value-${this.props._key}`
+                            )}
                         >
                             {this.props.value}
                         </Text>

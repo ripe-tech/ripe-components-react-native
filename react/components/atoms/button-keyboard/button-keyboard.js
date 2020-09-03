@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Platform, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles, capitalize, isTabletSize, testId } from "../../../util";
+import { baseStyles, capitalize, isTabletSize, genTestProps } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
@@ -62,7 +62,7 @@ export class ButtonKeyboard extends PureComponent {
                 {this.props.text ? (
                     <Text
                         style={styles.text}
-                        {...testId(this.props.testId || `button-keyboard-${this.props.text}`)}
+                        {...genTestProps(this.props.testId || `button-keyboard-${this.props.text}`)}
                     >
                         {this.props.text}
                     </Text>

@@ -3,7 +3,7 @@ import { ViewPropTypes } from "react-native";
 import { SvgXml } from "react-native-svg";
 import PropTypes from "prop-types";
 
-import { testId } from "../../../util";
+import { genTestProps } from "../../../util";
 import icons from "../../../assets/icons/";
 
 export class Icon extends PureComponent {
@@ -54,7 +54,7 @@ export class Icon extends PureComponent {
                 stroke={this.props.color}
                 strokeWidth={this.props.strokeWidth}
                 style={this.props.style}
-                {...testId(this.props.testId || `icon-${this.props.icon}`)}
+                {...genTestProps(this.props.testId || `icon-${this.props.icon}`)}
             />
         );
     }

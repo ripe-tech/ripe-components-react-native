@@ -62,7 +62,17 @@ export const isImage = function (fileName) {
     return regex.test(fileName);
 };
 
-export const testId = function (id, normalizeId = true) {
+/**
+ * Generates a properties object from the base test identifier of a component
+ * taking into consideration the current execution context.
+ *
+ * @param {String} id The identifier of the element as a plain string.
+ * @param {Boolean} normalizeId If the identifier should be normalized according to
+ * a series of standards (eg: dash instead of space).
+ * @returns {Object} The resulting properties object that can be used to add properties
+ * to a React component allowing it to be properly tested.
+ */
+export const genTestProps = function (id, normalizeId = true) {
     if (!id) return {};
     const normalized = normalizeId ? id.trim().toLowerCase().split(" ").join("-") : id;
     return Platform.OS === "android"

@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, TextInput } from "react-native";
 import PropTypes from "prop-types";
 
-import { capitalize, baseStyles, testId } from "../../../util";
+import { capitalize, baseStyles, genTestProps } from "../../../util";
 
 export class TextArea extends PureComponent {
     static get propTypes() {
@@ -79,7 +79,7 @@ export class TextArea extends PureComponent {
                 onChangeText={this.props.onValue}
                 onFocus={this.props.onFocus}
                 onBlur={this.props.onBlur}
-                {...(this._testId() ? testId(`textarea-${this._testId()}`) : {})}
+                {...(this._genTestProps() ? genTestProps(`textarea-${this._genTestProps()}`) : {})}
             >
                 {this.props.value}
             </TextInput>

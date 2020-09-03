@@ -3,7 +3,7 @@ import { StyleSheet, Text, ActivityIndicator, ViewPropTypes, Platform, View } fr
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
-import { baseStyles, testId } from "../../../util";
+import { baseStyles, genTestProps } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
@@ -64,7 +64,7 @@ export class Button extends PureComponent {
         return (
             <View
                 style={styles.container}
-                {...testId(this.props.testId || `button-${this.props.text}`)}
+                {...genTestProps(this.props.testId || `button-${this.props.text}`)}
             >
                 {this.props.icon ? (
                     <Icon

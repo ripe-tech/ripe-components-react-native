@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import SafeAreaView from "react-native-safe-area-view";
 
-import { baseStyles, testId } from "../../../util";
+import { baseStyles, genTestProps } from "../../../util";
 
 import { Icon, Touchable } from "../../atoms";
 
@@ -72,7 +72,7 @@ export class Header extends PureComponent {
                     </Touchable>
                 ) : null}
                 {this.props.title ? (
-                    <Text style={styles.title} {...testId("text-header")}>
+                    <Text style={styles.title} {...genTestProps("text-header")}>
                         {this.props.title}
                     </Text>
                 ) : null}
