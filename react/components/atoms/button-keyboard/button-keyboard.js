@@ -1,13 +1,14 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, Platform, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { baseStyles, capitalize, isTabletSize } from "../../../util";
+import { IdentifiableMixin, baseStyles, capitalize, isTabletSize } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
 
-export class ButtonKeyboard extends PureComponent {
+export class ButtonKeyboard extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             icon: PropTypes.string,
@@ -57,12 +58,17 @@ export class ButtonKeyboard extends PureComponent {
                 onPress={this._onPress}
                 onLongPress={this._onLongPress}
             >
-                {this.props.text ? <Text style={styles.text}>{this.props.text}</Text> : null}
+                {this.props.text ? (
+                    <Text style={styles.text} {...this.id(`button-keyboard-${this.props.text}`)}>
+                        {this.props.text}
+                    </Text>
+                ) : null}
                 {this.props.icon ? (
                     <Icon
                         icon={this.props.icon}
                         strokeWidth={this.props.strokeWidth}
                         color="#17425c"
+                        {...this.id(`button-keyboard-${this.props.icon}`)}
                     />
                 ) : null}
             </Touchable>

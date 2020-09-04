@@ -1,10 +1,11 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, TextInput } from "react-native";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { capitalize, baseStyles } from "../../../util";
+import { IdentifiableMixin, baseStyles, capitalize } from "../../../util";
 
-export class TextArea extends PureComponent {
+export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             value: PropTypes.string,
@@ -75,6 +76,7 @@ export class TextArea extends PureComponent {
                 onChangeText={this.props.onValue}
                 onFocus={this.props.onFocus}
                 onBlur={this.props.onBlur}
+                {...this.id("textarea")}
             >
                 {this.props.value}
             </TextInput>

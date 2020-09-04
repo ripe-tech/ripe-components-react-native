@@ -2,12 +2,13 @@ import React, { PureComponent } from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import SafeAreaView from "react-native-safe-area-view";
+import { mix } from "yonius";
 
-import { baseStyles } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { Icon, Touchable } from "../../atoms";
 
-export class Header extends PureComponent {
+export class Header extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             title: PropTypes.string,
@@ -63,10 +64,15 @@ export class Header extends PureComponent {
                             height={24}
                             strokeWidth={2}
                             color={"#1d2631"}
+                            {...this.id("header-button-left")}
                         />
                     </Touchable>
                 ) : null}
-                {this.props.title ? <Text style={styles.title}>{this.props.title}</Text> : null}
+                {this.props.title ? (
+                    <Text style={styles.title} {...this.id("header-text")}>
+                        {this.props.title}
+                    </Text>
+                ) : null}
                 {this.props.buttonRightVisible && this.props.buttonRightIcon ? (
                     <Touchable
                         hitSlop={this.props.hitSlop}
@@ -81,6 +87,7 @@ export class Header extends PureComponent {
                             width={24}
                             height={30}
                             strokeWidth={2}
+                            {...this.id("header-button-right")}
                         />
                     </Touchable>
                 ) : null}

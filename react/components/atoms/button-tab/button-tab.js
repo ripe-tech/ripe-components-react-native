@@ -9,13 +9,14 @@ import {
     Platform
 } from "react-native";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { baseStyles } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
 import { Badge } from "../badge";
 
-export class ButtonTab extends PureComponent {
+export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
     state = {
         pressed: false
     };
@@ -35,8 +36,8 @@ export class ButtonTab extends PureComponent {
             colorSelected: PropTypes.string,
             selected: PropTypes.bool,
             disabled: PropTypes.bool,
-            style: ViewPropTypes.style,
-            onPress: PropTypes.func
+            onPress: PropTypes.func,
+            style: ViewPropTypes.style
         };
     }
 
@@ -54,8 +55,8 @@ export class ButtonTab extends PureComponent {
             colorSelected: "#1d2631",
             selected: false,
             disabled: false,
-            style: {},
-            onPress: () => {}
+            onPress: () => {},
+            style: {}
         };
     }
 
@@ -92,7 +93,11 @@ export class ButtonTab extends PureComponent {
                 {this.props.icon ? (
                     <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
                 ) : null}
-                {this.props.text ? <Text style={this._labelStyle()}>{this.props.text}</Text> : null}
+                {this.props.text ? (
+                    <Text {...this.id(`button-tab-${this.props.text}`)} style={this._labelStyle()}>
+                        {this.props.text}
+                    </Text>
+                ) : null}
                 {this.props.badgeCount > 0 ? (
                     <Badge
                         animationDuration={this.props.badgeAnimationDuration}

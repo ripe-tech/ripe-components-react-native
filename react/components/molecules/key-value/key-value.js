@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, View, Text, Platform, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { baseStyles } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { ButtonIcon, Touchable } from "../../atoms";
 
-export class KeyValue extends PureComponent {
+export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             _key: PropTypes.string.isRequired,
@@ -67,12 +68,16 @@ export class KeyValue extends PureComponent {
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
             >
-                <View style={styles.textContainer}>
-                    <Text style={this._keyStyle()}>{this.props._key}</Text>
+                <View style={styles.textContainer} {...this.id("key-value")}>
+                    <Text style={this._keyStyle()} {...this.id("key-value-key")}>
+                        {this.props._key}
+                    </Text>
                     {this.props.children ? (
                         this.props.children
                     ) : (
-                        <Text style={this._valueStyle()}>{this.props.value}</Text>
+                        <Text style={this._valueStyle()} {...this.id("key-value-value")}>
+                            {this.props.value}
+                        </Text>
                     )}
                 </View>
                 {this.props.icon ? (

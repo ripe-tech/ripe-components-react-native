@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
 import { ViewPropTypes, StyleSheet, Platform, Text } from "react-native";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { baseStyles, capitalize } from "../../../util";
+import { IdentifiableMixin, baseStyles, capitalize } from "../../../util";
 
 import { Touchable } from "../touchable";
 
-export class ButtonTabText extends PureComponent {
+export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             active: PropTypes.bool,
@@ -64,7 +65,9 @@ export class ButtonTabText extends PureComponent {
                 activeOpacity={this.props.activeOpacity}
                 onPress={this.props.onPress}
             >
-                <Text style={this._styleText()}>{this.props.text}</Text>
+                <Text style={this._styleText()} {...this.id("button-tab-text")}>
+                    {this.props.text}
+                </Text>
             </Touchable>
         );
     }

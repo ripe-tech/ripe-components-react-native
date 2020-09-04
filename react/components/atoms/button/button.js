@@ -2,13 +2,14 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Text, ActivityIndicator, ViewPropTypes, Platform, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { baseStyles } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
 
-export class Button extends PureComponent {
+export class Button extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             text: PropTypes.string.isRequired,
@@ -22,8 +23,8 @@ export class Button extends PureComponent {
             gradientStart: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
             gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-            style: ViewPropTypes.style,
-            onPress: PropTypes.func
+            onPress: PropTypes.func,
+            style: ViewPropTypes.style
         };
     }
 
@@ -37,8 +38,8 @@ export class Button extends PureComponent {
             gradientLocations: [0.4, 0.84],
             gradientColors: ["#4a6fe9", "#6687f6"],
             width: undefined,
-            style: {},
-            onPress: () => {}
+            onPress: () => {},
+            style: {}
         };
     }
 
@@ -60,7 +61,7 @@ export class Button extends PureComponent {
 
     _renderNormal() {
         return (
-            <View style={styles.container}>
+            <View style={styles.container} {...this.id(`button-${this.props.text}`)}>
                 {this.props.icon ? (
                     <Icon
                         icon={this.props.icon}
