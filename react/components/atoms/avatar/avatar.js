@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { ViewPropTypes, StyleSheet, Image } from "react-native";
 import PropTypes from "prop-types";
 
-import { genTestProps } from "../../../util";
+import { genIdProps } from "../../../util";
 
 import { Touchable } from "../touchable";
 
@@ -62,7 +62,7 @@ export class Avatar extends PureComponent {
                     source={this.props.image}
                     style={styles.image}
                     resizeMode={this.props.resizeMode}
-                    {...genTestProps(this.props.testPrefix, "avatar")}
+                    {...genIdProps(this.props.idPrefix, "avatar")}
                 />
             </Touchable>
         );

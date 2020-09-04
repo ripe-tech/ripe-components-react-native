@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import SafeAreaView from "react-native-safe-area-view";
 
-import { baseStyles, genTestProps } from "../../../util";
+import { baseStyles, genIdProps } from "../../../util";
 
 import { Icon, Touchable } from "../../atoms";
 
@@ -63,12 +63,12 @@ export class Header extends PureComponent {
                             height={24}
                             strokeWidth={2}
                             color={"#1d2631"}
-                            testPrefix={`${this.props.testPrefix}-button-header-left`}
+                            idPrefix={`${this.props.idPrefix}-button-header-left`}
                         />
                     </Touchable>
                 ) : null}
                 {this.props.title ? (
-                    <Text style={styles.title} {...genTestProps("text-header")}>
+                    <Text style={styles.title} {...genIdProps("text-header")}>
                         {this.props.title}
                     </Text>
                 ) : null}
@@ -86,7 +86,7 @@ export class Header extends PureComponent {
                             width={24}
                             height={30}
                             strokeWidth={2}
-                            testPrefix={`${this.props.testPrefix}-button-header-right`}
+                            idPrefix={`${this.props.idPrefix}-button-header-right`}
                         />
                     </Touchable>
                 ) : null}

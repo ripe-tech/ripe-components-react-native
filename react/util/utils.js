@@ -75,6 +75,7 @@ export const isImage = function (fileName) {
  * to a React component allowing it to be properly selected.
  */
 export const genIdProps = function (idPrefix, idSuffix) {
+    console.log(this);
     const id = _genId(idPrefix, idSuffix);
     return Platform.OS === "android"
         ? { accessible: true, accessibilityLabel: id, idPrefix: id }

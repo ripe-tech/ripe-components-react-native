@@ -103,7 +103,7 @@ export class KeyboardNumeric extends PureComponent {
                     />
                     <ButtonKeyboard
                         style={styles.buttonKeyboard}
-                        testPrefix={"button-keyboard-backspace"}
+                        idPrefix={"button-keyboard-backspace"}
                         icon="chevron-left"
                         variant={"clean"}
                         value={"delete"}

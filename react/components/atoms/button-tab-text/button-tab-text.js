@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { ViewPropTypes, StyleSheet, Platform, Text } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles, capitalize, genTestProps } from "../../../util";
+import { baseStyles, capitalize, genIdProps } from "../../../util";
 
 import { Touchable } from "../touchable";
 
@@ -66,7 +66,7 @@ export class ButtonTabText extends PureComponent {
             >
                 <Text
                     style={this._styleText()}
-                    {...genTestProps(this.props.testPrefix, "button-tab-text")}
+                    {...genIdProps(this.props.idPrefix, "button-tab-text")}
                 >
                     {this.props.text}
                 </Text>

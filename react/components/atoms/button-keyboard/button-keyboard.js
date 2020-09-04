@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Platform, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles, capitalize, isTabletSize, genTestId, genTestProps } from "../../../util";
+import { baseStyles, capitalize, isTabletSize, genIdProps } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
@@ -60,10 +60,7 @@ export class ButtonKeyboard extends PureComponent {
                 {this.props.text ? (
                     <Text
                         style={styles.text}
-                        {...genTestProps(
-                            this.props.testPrefix,
-                            `button-keyboard-${this.props.text}`
-                        )}
+                        {...genIdProps(this.props.idPrefix, `button-keyboard-${this.props.text}`)}
                     >
                         {this.props.text}
                     </Text>
@@ -73,10 +70,7 @@ export class ButtonKeyboard extends PureComponent {
                         icon={this.props.icon}
                         strokeWidth={this.props.strokeWidth}
                         color="#17425c"
-                        testPrefix={genTestId(
-                            this.props.testPrefix,
-                            `button-keyboard-${this.props.icon}`
-                        )}
+                        {...genIdProps(this.props.idPrefix, `button-keyboard-${this.props.icon}`)}
                     />
                 ) : null}
             </Touchable>
