@@ -1,11 +1,12 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
 import { ButtonKeyboard } from "../../atoms";
-import { isTabletSize } from "../../../util";
+import { IdentifiableMixin, isTabletSize } from "../../../util";
 
-export class KeyboardNumeric extends PureComponent {
+export class KeyboardNumeric extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             onKeyPress: PropTypes.func,
@@ -103,7 +104,7 @@ export class KeyboardNumeric extends PureComponent {
                     />
                     <ButtonKeyboard
                         style={styles.buttonKeyboard}
-                        idPrefix={"button-keyboard-backspace"}
+                        {...this.id("keyboard-button-backspace")}
                         icon="chevron-left"
                         variant={"clean"}
                         value={"delete"}

@@ -1,13 +1,14 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, Platform, Text } from "react-native";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { baseStyles, capitalize, genIdProps } from "../../../util";
+import { IdentifiableMixin, baseStyles, capitalize } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
 
-export class Tag extends PureComponent {
+export class Tag extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             color: PropTypes.string,
@@ -79,14 +80,11 @@ export class Tag extends PureComponent {
                         color={this.props.color}
                         width={this.props.iconWidth}
                         height={this.props.iconHeight}
-                        {...genIdProps(this.props.idPrefix, "tag-icon")}
+                        {...this.id("tag-icon")}
                     />
                 ) : null}
                 {this.props.text ? (
-                    <Text
-                        style={this._textStyle()}
-                        {...genIdProps(this.props.idPrefix, "tag-text")}
-                    >
+                    <Text style={this._textStyle()} {...this.id("tag-text")}>
                         {this.props.text}
                     </Text>
                 ) : null}

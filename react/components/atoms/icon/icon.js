@@ -2,11 +2,12 @@ import React, { PureComponent } from "react";
 import { ViewPropTypes } from "react-native";
 import { SvgXml } from "react-native-svg";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { genIdProps } from "../../../util";
+import { IdentifiableMixin } from "../../../util";
 import icons from "../../../assets/icons/";
 
-export class Icon extends PureComponent {
+export class Icon extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             icon: PropTypes.string.isRequired,
@@ -52,7 +53,7 @@ export class Icon extends PureComponent {
                 stroke={this.props.color}
                 strokeWidth={this.props.strokeWidth}
                 style={this.props.style}
-                {...genIdProps(this.props.idPrefix, `icon-${this.props.icon}`)}
+                {...this.id(`icon-${this.props.icon}`)}
             />
         );
     }

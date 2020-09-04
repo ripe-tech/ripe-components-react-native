@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
 import { ViewPropTypes, StyleSheet, Image } from "react-native";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { genIdProps } from "../../../util";
+import { IdentifiableMixin } from "../../../util";
 
 import { Touchable } from "../touchable";
 
-export class Avatar extends PureComponent {
+export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
@@ -38,6 +39,7 @@ export class Avatar extends PureComponent {
     }
 
     _style = () => {
+        console.log("aqui");
         return [
             styles.avatar,
             {
@@ -62,7 +64,7 @@ export class Avatar extends PureComponent {
                     source={this.props.image}
                     style={styles.image}
                     resizeMode={this.props.resizeMode}
-                    {...genIdProps(this.props.idPrefix, "avatar")}
+                    {...this.id("avatar")}
                 />
             </Touchable>
         );

@@ -9,13 +9,14 @@ import {
     Platform
 } from "react-native";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { baseStyles, genIdProps } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
 import { Badge } from "../badge";
 
-export class ButtonTab extends PureComponent {
+export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
     state = {
         pressed: false
     };
@@ -93,10 +94,7 @@ export class ButtonTab extends PureComponent {
                     <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
                 ) : null}
                 {this.props.text ? (
-                    <Text
-                        {...genIdProps(this.props.idPrefix, `button-tab-${this.props.text}`)}
-                        style={this._labelStyle()}
-                    >
+                    <Text {...this.id(`button-tab-${this.props.text}`)} style={this._labelStyle()}>
                         {this.props.text}
                     </Text>
                 ) : null}

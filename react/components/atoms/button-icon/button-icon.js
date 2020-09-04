@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { genIdProps } from "../../../util";
+import { IdentifiableMixin } from "../../../util";
 
 import { Icon } from "../icon";
 
-export class ButtonIcon extends PureComponent {
+export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             icon: PropTypes.string.isRequired,
@@ -75,7 +76,7 @@ export class ButtonIcon extends PureComponent {
                     width={this.props.iconWidth}
                     height={this.props.iconHeight}
                     strokeWidth={this.props.iconStrokeWidth}
-                    {...genIdProps(this.props.idPrefix, "button-icon")}
+                    {...this.id("button-icon")}
                 />
             </TouchableOpacity>
         );

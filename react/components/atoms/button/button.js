@@ -2,13 +2,14 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Text, ActivityIndicator, ViewPropTypes, Platform, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { baseStyles, genIdProps } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
 
-export class Button extends PureComponent {
+export class Button extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             text: PropTypes.string.isRequired,
@@ -60,10 +61,7 @@ export class Button extends PureComponent {
 
     _renderNormal() {
         return (
-            <View
-                style={styles.container}
-                {...genIdProps(this.props.idPrefix, `button-${this.props.text}`)}
-            >
+            <View style={styles.container} {...this.id(`button-${this.props.text}`)}>
                 {this.props.icon ? (
                     <Icon
                         icon={this.props.icon}
