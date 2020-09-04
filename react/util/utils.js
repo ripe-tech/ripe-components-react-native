@@ -63,29 +63,34 @@ export const isImage = function (fileName) {
 };
 
 /**
- * Generates a test ID from a list of identifiers.
- *
- * @param  {...string} ids The list of identifiers to generate the test ID from.
- */
-export const genTestId = function (...ids) {
-    return ids
-        .filter(Boolean)
-        .map(id => id.trim().toLowerCase().split(" ").join("-"))
-        .join("-");
-};
-
-/**
- * Generates a properties object from the base test identifier of a component
+ * Generates a properties object from the base identifier of a component
  * taking into consideration the current execution context.
+ *
+ * The resulting structure can be used to access the component from external
+ * tools (eg: test automation).
  *
  * @param {String} idPrefix The prefix of the identifier for the element as a plain string.
  * @param {String} idSuffix The suffix of the identifier for the element as a plain string.
  * @returns {Object} The resulting properties object that can be used to add properties
- * to a React component allowing it to be properly tested.
+ * to a React component allowing it to be properly selected.
  */
-export const genTestProps = function (idPrefix, idSuffix) {
-    const id = genTestId(idPrefix, idSuffix);
+export const genIdProps = function (idPrefix, idSuffix) {
+    const id = _genId(idPrefix, idSuffix);
     return Platform.OS === "android"
-        ? { accessible: true, accessibilityLabel: id }
-        : { testID: id };
+        ? { accessible: true, accessibilityLabel: id, idPrefix: id }
+        : { testID: id, idPrefix: id };
+};
+
+/**
+ * Generates an identifier from a list of identifiers, sanitizing
+ * its internal structure from illegal characters.
+ *
+ * @param  {...String} ids The sequence of identifiers to generate
+ * identifier from.
+ */
+const _genId = function (...ids) {
+    return ids
+        .filter(Boolean)
+        .map(id => id.trim().toLowerCase().split(" ").join("-"))
+        .join("-");
 };
