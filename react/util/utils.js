@@ -62,6 +62,15 @@ export const isImage = function (fileName) {
     return regex.test(fileName);
 };
 
+/**
+ * Mixin that adds functionality related with the identification
+ * of components for external selection.
+ *
+ * @param {Class} superclass Parent class to be encapsulated with
+ * this mixin.
+ * @returns {Class} The new class with the added identifiable
+ * functionality.
+ */
 export const IdentifiableMixin = superclass =>
     class extends superclass {
         /**
