@@ -39,7 +39,6 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     _style = () => {
-        console.log("aqui");
         return [
             styles.avatar,
             {
