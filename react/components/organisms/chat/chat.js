@@ -14,6 +14,7 @@ export class Chat extends PureComponent {
             username: PropTypes.string.isRequired,
             messages: PropTypes.arrayOf(
                 PropTypes.exact({
+                    id: PropTypes.number,
                     avatarUrl: PropTypes.string.isRequired,
                     username: PropTypes.string.isRequired,
                     message: PropTypes.string.isRequired,
@@ -41,6 +42,15 @@ export class Chat extends PureComponent {
         };
     }
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            messages: this.props.messages,
+            sendingMessage: false
+        };
+    }
+
     focus = () => {
         this.input.focus();
     };
@@ -53,7 +63,26 @@ export class Chat extends PureComponent {
         this.scrollViewComponent.scrollToEnd({ animated: true });
     };
 
-    onRichTextInputPhotoAdded = source => {
+    async _onNewMessage(message) {
+        this.setState({ sendingMessage: true }, () => {
+            let result = true;
+            try {
+                result = this.props.onNewMessage(message);
+            } catch (err) {
+                result = null;
+            }
+            if (result) {
+                this.setState({ sendingMessage: false }, () => {
+                    this.scrollToEnd();
+                    this.input.setValue("");
+                });
+            } else {
+                this.setState({ sendingMessage: false });
+            }
+        });
+    }
+
+    onRichTextInputPhotoAdded = async source => {
         const message = {
             avatarUrl: this.props.avatarUrl,
             username: this.props.username,
@@ -61,11 +90,10 @@ export class Chat extends PureComponent {
             date: Date.now(),
             attachments: [source]
         };
-
-        this.props.onNewMessage(message);
+        await this._onNewMessage(message);
     };
 
-    onRichTextInputAttachmentsAdded = attachments => {
+    onRichTextInputAttachmentsAdded = async attachments => {
         const message = {
             avatarUrl: this.props.avatarUrl,
             username: this.props.username,
@@ -73,11 +101,10 @@ export class Chat extends PureComponent {
             date: Date.now(),
             attachments: attachments
         };
-
-        this.props.onNewMessage(message);
+        await this._onNewMessage(message);
     };
 
-    onRichTextInputSendMessage = text => {
+    onRichTextInputSendMessage = async text => {
         const message = {
             avatarUrl: this.props.avatarUrl,
             username: this.props.username,
@@ -85,9 +112,7 @@ export class Chat extends PureComponent {
             date: Date.now(),
             attachments: []
         };
-
-        this.scrollToEnd();
-        this.props.onNewMessage(message);
+        await this._onNewMessage(message);
     };
 
     render() {
@@ -118,6 +143,7 @@ export class Chat extends PureComponent {
                     ref={el => (this.input = el)}
                     style={styles.richTextInput}
                     placeholder={"Say something..."}
+                    sendButtonProps={{ loading: this.state.sendingMessage }}
                     multiline={true}
                     textareaMaxHeight={baseStyles.FONT_SIZE * 5}
                     onPhotoAdded={image => this.onRichTextInputPhotoAdded(image)}
