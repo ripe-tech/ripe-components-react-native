@@ -1,4 +1,7 @@
 import { Platform } from "react-native";
+import { readFile as readFileFs } from "react-native-fs";
+import { Buffer } from "buffer";
+import ripe from "ripe-sdk";
 
 export const dateString = function (timestamp, { separator = "/", year = true } = {}) {
     const date = new Date(timestamp * 1000);
@@ -60,6 +63,17 @@ export const capitalize = function (value) {
 export const isImage = function (fileName) {
     const regex = /\.(jpg|jpeg|png|gif)$/i;
     return regex.test(fileName);
+};
+
+export const readFile = async function (file) {
+    const base64 = file.base64 || (await readFileFs(file.uri, "base64"));
+    const bytes = new Buffer.from(base64, "base64");
+    return bytes;
+};
+
+export const fileToFileTuple = async function (file) {
+    const bytes = await readFile(file);
+    return ripe.ripe.FileTuple.fromData(bytes, file.name, file.type);
 };
 
 /**

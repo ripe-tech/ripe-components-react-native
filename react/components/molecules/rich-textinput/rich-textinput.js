@@ -14,6 +14,7 @@ export class RichTextInput extends PureComponent {
             textareaMinHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             textareaMaxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             animationTime: PropTypes.number,
+            sendButtonProps: PropTypes.object,
             onPhotoAdded: PropTypes.func,
             onAttachmentsAdded: PropTypes.func,
             onSendMessage: PropTypes.func,
@@ -31,6 +32,7 @@ export class RichTextInput extends PureComponent {
             textareaMinHeight: undefined,
             textareaMaxHeight: undefined,
             animationTime: 200,
+            sendButtonProps: {},
             onPhotoAdded: image => {},
             onAttachmentsAdded: attachments => {},
             onSendMessage: text => {},
@@ -50,6 +52,8 @@ export class RichTextInput extends PureComponent {
             moreOptionsOpacityValue: new Animated.Value(0)
         };
     }
+
+    setValue = (value, callback = () => {}) => this.setState({ value: value }, callback);
 
     focus = () => {
         this.textAreaComponent.focus();
@@ -102,8 +106,7 @@ export class RichTextInput extends PureComponent {
     };
 
     sendMessage = () => {
-        const value = this.state.value;
-        this.setState({ value: undefined }, () => this.props.onSendMessage(value));
+        this.props.onSendMessage(this.state.value);
     };
 
     onPhotoButtonPress = async () => {
@@ -238,6 +241,7 @@ export class RichTextInput extends PureComponent {
                     backgroundColor={"#ffffff"}
                     iconHeight={24}
                     iconWidth={24}
+                    {...this.props.sendButtonProps}
                     onPress={() => this.onSendButtonPress()}
                 />
             </View>

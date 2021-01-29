@@ -10,6 +10,7 @@ import { Avatar, Text, Link, Lightbox } from "../../atoms";
 export class ChatMessage extends PureComponent {
     static get propTypes() {
         return {
+            id: PropTypes.number,
             avatarUrl: PropTypes.string.isRequired,
             username: PropTypes.string.isRequired,
             message: PropTypes.string.isRequired,

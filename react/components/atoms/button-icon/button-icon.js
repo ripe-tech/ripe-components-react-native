@@ -13,6 +13,7 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
             icon: PropTypes.string.isRequired,
             size: PropTypes.number.isRequired,
             backgroundColor: PropTypes.string,
+            loading: PropTypes.bool,
             iconFill: PropTypes.string,
             iconHeight: PropTypes.number,
             iconWidth: PropTypes.number,
@@ -33,6 +34,7 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             size: 30,
             backgroundColor: "#ffffff",
+            loading: false,
             iconFill: undefined,
             iconHeight: 20,
             iconWidth: 20,
@@ -58,6 +60,7 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
                 width: this.props.size,
                 height: this.props.size
             },
+            this.props.loading ? { opacity: 0.4 } : null,
             this.props.style
         ];
     }
@@ -66,7 +69,7 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
         return (
             <TouchableOpacity
                 onPress={this.props.onPress}
-                disabled={!this.props.onPress}
+                disabled={this.props.disabled || !this.props.onPress}
                 style={this._style()}
             >
                 <Icon
