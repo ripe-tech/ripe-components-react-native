@@ -77,6 +77,22 @@ export const fileToFileTuple = async function (file) {
 };
 
 /**
+ * Retrieves the inferred base name value from the provided URI.
+ *
+ * The heuristic used is quite basic, gathering the last part
+ * of the URI path as the name.
+ *
+ * @param {String} uri The URI to be as the base input and from which
+ * the last part is going to be used as the name.
+ * @returns {String} The base name inferred from the URI or a `null`
+ * value in case none is found.
+ */
+export const getUriBasename = function (uri) {
+    if (!uri) return null;
+    return uri ? uri.substring(uri.lastIndexOf("/") + 1, uri.length) : null;
+};
+
+/**
  * Mixin that adds functionality related with the identification
  * of components for external selection.
  *
