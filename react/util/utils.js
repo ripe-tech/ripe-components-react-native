@@ -76,6 +76,11 @@ export const fileToFileTuple = async function (file) {
     return ripe.ripe.FileTuple.fromData(bytes, file.name, file.type);
 };
 
+export const getBasename = function (uri) {
+    if (!uri) return null;
+    return uri ? uri.substring(uri.lastIndexOf("/") + 1, uri.length) : null;
+};
+
 /**
  * Mixin that adds functionality related with the identification
  * of components for external selection.

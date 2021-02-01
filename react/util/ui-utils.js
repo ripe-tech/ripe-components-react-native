@@ -3,6 +3,8 @@ import DeviceInfo from "react-native-device-info";
 import DocumentPicker from "react-native-document-picker";
 import ImagePicker from "react-native-image-picker";
 
+import { getBasename } from "./utils";
+
 /**
  * The width in pixels to be used as a comparison and
  * determine if the current device represents a mobile
@@ -13,7 +15,7 @@ const MOBILE_WIDTH = 420;
 const normalizeAttachment = function (attachment) {
     return {
         uri: attachment.uri,
-        name: attachment.name,
+        name: attachment.name || getBasename(attachment.uri),
         type: attachment.type,
         size: attachment.size
     };
@@ -35,7 +37,7 @@ export const pickDocuments = async function (options = {}) {
 const normalizeImage = function (image) {
     return {
         uri: image.uri,
-        name: image.fileName,
+        name: image.fileName || getBasename(image.uri),
         type: image.type,
         size: image.fileSize,
         width: image.width,
@@ -76,7 +78,7 @@ export const pickImage = async function (options) {
                         { cancelable: false }
                     );
                 } else {
-                    Alert.alert("Error", "Could not load image", { cancelable: false });
+                    Alert.alert("Error", `Could not load image. ${response.error}`, { cancelable: false });
                 }
 
                 reject(new Error({ reason: "error", message: response.error }));
