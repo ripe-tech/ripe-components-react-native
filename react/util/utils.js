@@ -76,7 +76,18 @@ export const fileToFileTuple = async function (file) {
     return ripe.ripe.FileTuple.fromData(bytes, file.name, file.type);
 };
 
-export const getBasename = function (uri) {
+/**
+ * Retrieves the inferred base name value from the provided URI.
+ *
+ * The heuristic used is quite basic, gathering the last part
+ * of the URI path as the name.
+ *
+ * @param {String} uri The URI to be as the base input and from which
+ * the last part is going to be used as the name.
+ * @returns {String} The base name inferred from the URI or a `null`
+ * value in case none is found.
+ */
+export const getUriBasename = function (uri) {
     if (!uri) return null;
     return uri ? uri.substring(uri.lastIndexOf("/") + 1, uri.length) : null;
 };

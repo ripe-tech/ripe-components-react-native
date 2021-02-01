@@ -3,7 +3,7 @@ import DeviceInfo from "react-native-device-info";
 import DocumentPicker from "react-native-document-picker";
 import ImagePicker from "react-native-image-picker";
 
-import { getBasename } from "./utils";
+import { getUriBasename } from "./utils";
 
 /**
  * The width in pixels to be used as a comparison and
@@ -15,7 +15,7 @@ const MOBILE_WIDTH = 420;
 const normalizeAttachment = function (attachment) {
     return {
         uri: attachment.uri,
-        name: attachment.name || getBasename(attachment.uri),
+        name: attachment.name || getUriBasename(attachment.uri),
         type: attachment.type,
         size: attachment.size
     };
@@ -37,7 +37,7 @@ export const pickDocuments = async function (options = {}) {
 const normalizeImage = function (image) {
     return {
         uri: image.uri,
-        name: image.fileName || getBasename(image.uri),
+        name: image.fileName || getUriBasename(image.uri),
         type: image.type,
         size: image.fileSize,
         width: image.width,
