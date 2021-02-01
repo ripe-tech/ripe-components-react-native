@@ -78,7 +78,9 @@ export const pickImage = async function (options) {
                         { cancelable: false }
                     );
                 } else {
-                    Alert.alert("Error", `Could not load image. ${response.error}`, { cancelable: false });
+                    Alert.alert("Error", `Could not load image. ${response.error}`, {
+                        cancelable: false
+                    });
                 }
 
                 reject(new Error({ reason: "error", message: response.error }));
