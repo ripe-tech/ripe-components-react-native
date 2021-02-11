@@ -4,7 +4,7 @@ import { withKnobs, number, text, select } from "@storybook/addon-knobs";
 
 import { ButtonIcon } from "./button-icon";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Button Icon", module)
     .addDecorator(withKnobs)
     .add("Button Icon", () => {
         const icon = select(

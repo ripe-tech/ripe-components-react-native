@@ -5,7 +5,7 @@ import { Button, View, StyleSheet, Text } from "react-native";
 
 import { ContainerOpenable } from "./container-openable";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Container Openable", module)
     .addDecorator(withKnobs)
     .add("Container Openable", () => {
         const ref = React.createRef();

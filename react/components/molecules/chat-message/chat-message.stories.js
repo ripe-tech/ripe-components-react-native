@@ -4,7 +4,7 @@ import { withKnobs, text, number } from "@storybook/addon-knobs";
 
 import { ChatMessage } from "./chat-message";
 
-storiesOf("Molecules", module)
+storiesOf("Components/Molecules/Chat Message", module)
     .addDecorator(withKnobs)
     .add("Chat Message", () => {
         const avatarUrl = text(

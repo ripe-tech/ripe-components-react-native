@@ -4,7 +4,7 @@ import { withKnobs, number, text } from "@storybook/addon-knobs";
 
 import { BarAnimated } from "./bar-animated";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Bar Animated", module)
     .addDecorator(withKnobs)
     .add("Bar Animated", () => {
         const offset = number("Offset", 100);

@@ -5,7 +5,7 @@ import { withKnobs, number } from "@storybook/addon-knobs";
 
 import { FadeView } from "./fade-view";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Fade View", module)
     .addDecorator(withKnobs)
     .add("Fade View", () => {
         const duration = number("Duration", 500);

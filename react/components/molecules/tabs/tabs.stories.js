@@ -5,7 +5,7 @@ import { withKnobs, select } from "@storybook/addon-knobs";
 
 import { Tabs } from "./tabs";
 
-storiesOf("Molecules", module)
+storiesOf("Components/Molecules/Tab", module)
     .addDecorator(withKnobs)
     .add("Tab", () => {
         const selectedIndex = select(

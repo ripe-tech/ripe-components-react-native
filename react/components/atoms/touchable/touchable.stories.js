@@ -5,7 +5,7 @@ import { StyleSheet, Alert, Text } from "react-native";
 
 import { Touchable } from "./touchable";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Touchable", module)
     .addDecorator(withKnobs)
     .add("Touchable", () => {
         const activeOpacity = number("Active Opacity", 0.5);

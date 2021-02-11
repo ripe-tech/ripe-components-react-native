@@ -5,7 +5,7 @@ import { KeyboardAvoidingView, Platform } from "react-native";
 
 import { Chat } from "./chat";
 
-storiesOf("Organisms", module)
+storiesOf("Components/Organisms/Chat", module)
     .addDecorator(withKnobs)
     .add("Chat", () => {
         const avatarUrl = text(
