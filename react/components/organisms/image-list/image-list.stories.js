@@ -4,7 +4,7 @@ import { withKnobs } from "@storybook/addon-knobs";
 
 import { ImageList } from "../image-list";
 
-storiesOf("Organisms", module)
+storiesOf("Components/Organisms/Image List", module)
     .addDecorator(withKnobs)
     .add("Image List", () => {
         const images = [

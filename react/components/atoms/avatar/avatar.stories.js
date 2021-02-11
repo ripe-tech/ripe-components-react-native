@@ -4,7 +4,7 @@ import { withKnobs, number } from "@storybook/addon-knobs";
 
 import { Avatar } from "./avatar";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Avatar", module)
     .addDecorator(withKnobs)
     .add("Avatar", () => {
         const size = number("Size", undefined);

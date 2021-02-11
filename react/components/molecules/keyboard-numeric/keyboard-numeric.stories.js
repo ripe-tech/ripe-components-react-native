@@ -5,7 +5,7 @@ import { View } from "react-native";
 
 import { KeyboardNumeric } from "./keyboard-numeric";
 
-storiesOf("Molecules", module)
+storiesOf("Components/Molecules/Numeric Keyboard", module)
     .addDecorator(withKnobs)
     .add("Numeric Keyboard", () => {
         const onKeyPress = value => alert(value);

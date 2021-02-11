@@ -4,7 +4,7 @@ import { withKnobs, text, number, select } from "@storybook/addon-knobs";
 
 import { Lightbox } from "./lightbox";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Lightbox", module)
     .addDecorator(withKnobs)
     .add("Lightbox", () => {
         const uri = text(

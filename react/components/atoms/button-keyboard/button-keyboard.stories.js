@@ -4,7 +4,7 @@ import { withKnobs, text, select } from "@storybook/addon-knobs";
 
 import { ButtonKeyboard } from "./button-keyboard";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Button Keyboard", module)
     .addDecorator(withKnobs)
     .add("Button Keyboard", () => {
         const _text = text("Button Text", "8");

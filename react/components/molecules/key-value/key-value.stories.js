@@ -4,7 +4,7 @@ import { withKnobs, text, select, number } from "@storybook/addon-knobs";
 
 import { KeyValue } from "./key-value";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Key Value", module)
     .addDecorator(withKnobs)
     .add("Key Value", () => {
         const key = text("Key", "Key");

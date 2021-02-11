@@ -4,7 +4,7 @@ import { withKnobs, number } from "@storybook/addon-knobs";
 
 import { KeyValuePlaceholder } from "./key-value-placeholder";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Key Value Placeholder", module)
     .addDecorator(withKnobs)
     .add("Key Value Placeholder", () => {
         const numberOfLines = number("Number of lines", 1);

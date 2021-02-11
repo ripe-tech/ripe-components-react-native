@@ -4,7 +4,7 @@ import { withKnobs, select, text, number } from "@storybook/addon-knobs";
 
 import { Tag } from "./tag";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Tag", module)
     .addDecorator(withKnobs)
     .add("Tag", () => {
         const _text = text("Text", "Subscribed");

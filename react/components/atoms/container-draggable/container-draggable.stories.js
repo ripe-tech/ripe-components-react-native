@@ -6,7 +6,7 @@ import { Button, View, StyleSheet, Text } from "react-native";
 import { ContainerDraggable } from "./container-draggable";
 import { ContainerOpenable } from "../container-openable";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Container Draggable", module)
     .addDecorator(withKnobs)
     .add("Container Draggable", () => {
         const ref = React.createRef();

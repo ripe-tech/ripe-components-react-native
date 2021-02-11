@@ -4,7 +4,7 @@ import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 
 import { RichTextInput } from "./rich-textinput";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/RichTextInput", module)
     .addDecorator(withKnobs)
     .add("RichTextInput", () => {
         const onPhotoAdded = source => {

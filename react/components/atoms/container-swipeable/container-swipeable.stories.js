@@ -8,7 +8,7 @@ import { Icon } from "../icon";
 
 import { ContainerSwipeable } from "./container-swipeable";
 
-storiesOf("Atoms", module)
+storiesOf("Components/Atoms/Container Swipeable", module)
     .addDecorator(withKnobs)
     .add("Container Swipeable", () => {
         const swipeThreshold = number("Trigger Action Threshold Value", 0.25);

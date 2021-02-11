@@ -5,7 +5,7 @@ import { withKnobs, text, boolean } from "@storybook/addon-knobs";
 
 import { Header } from "./header";
 
-storiesOf("Molecules", module)
+storiesOf("Components/Molecules/Header", module)
     .addDecorator(withKnobs)
     .add("Header", () => {
         const title = text("Title", "Title");
