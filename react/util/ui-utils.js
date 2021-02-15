@@ -1,4 +1,11 @@
-import { Alert, Dimensions, Linking, Platform, ToastAndroid } from "react-native";
+import {
+    Alert,
+    Dimensions,
+    Linking,
+    PermissionsAndroid,
+    Platform,
+    ToastAndroid
+} from "react-native";
 import DeviceInfo from "react-native-device-info";
 import DocumentPicker from "react-native-document-picker";
 import { launchCamera } from "react-native-image-picker";
@@ -65,12 +72,23 @@ export const pickImageCamera = async function (options = { mediaType: "photo" })
                         { cancelable: false }
                     );
                 } else {
-                    Alert.alert("Error", `Could not load image. ${response.errorMessage}`, [{ text: "Close" }], {
-                        cancelable: false
-                    });
+                    Alert.alert(
+                        "Error",
+                        `Could not load image. ${response.errorMessage}`,
+                        [{ text: "Close" }],
+                        {
+                            cancelable: false
+                        }
+                    );
                 }
 
-                reject(new Error({ reason: "error", code: response.errorCode, message: response.errorMessage }));
+                reject(
+                    new Error({
+                        reason: "error",
+                        code: response.errorCode,
+                        message: response.errorMessage
+                    })
+                );
                 return;
             }
 
@@ -86,7 +104,7 @@ export const requestPermissionCamera = async () => {
     Platform.OS === "android"
         ? await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA)
         : Linking.openURL("app-settings:");
-}
+};
 
 export const notify = function (message) {
     Platform.OS === "android"
