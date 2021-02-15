@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Dimensions, ViewPropTypes, LayoutAnimation, View } from "react-native";
 import PropTypes from "prop-types";
 
-import { pickImage } from "../../../util";
+import { pickImageCamera } from "../../../util";
 
 import { ImageListItem } from "./image-list-item";
 import { ImageListItemAdd } from "./image-list-item-add";
@@ -68,7 +68,7 @@ export class ImageList extends PureComponent {
     }
 
     _onPressAdd = async (animate = false) => {
-        const image = await pickImage();
+        const image = await pickImageCamera();
 
         if (image) {
             if (animate) LayoutAnimation.easeInEaseOut();
