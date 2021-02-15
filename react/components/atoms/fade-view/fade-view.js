@@ -30,7 +30,8 @@ export class FadeView extends Component {
     componentDidMount() {
         Animated.timing(this.state.viewOpacity, {
             toValue: 1,
-            duration: this.props.duration
+            duration: this.props.duration,
+            useNativeDriver: true
         }).start(this.props.onFadeComplete || (() => {}));
     }
 

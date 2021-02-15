@@ -1,7 +1,7 @@
 import { Alert, Dimensions, Linking, Platform, ToastAndroid } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import DocumentPicker from "react-native-document-picker";
-import ImagePicker from "react-native-image-picker";
+import { launchCamera } from "react-native-image-picker";
 
 import { getUriBasename } from "./utils";
 
@@ -45,29 +45,16 @@ const normalizeImage = function (image) {
     };
 };
 
-export const pickImage = async function (options) {
-    options =
-        options !== undefined
-            ? options
-            : {
-                  title: "Select Image",
-                  mediaType: "photo",
-                  noData: true,
-                  storageOptions: {
-                      skipBackup: true,
-                      path: "images"
-                  }
-              };
-
+export const pickImageCamera = async function (options = { mediaType: "photo" }) {
     const promise = new Promise((resolve, reject) => {
-        ImagePicker.showImagePicker(options, response => {
+        launchCamera(options, response => {
             if (response.didCancel) {
                 resolve(null);
                 return;
             }
 
-            if (response.error) {
-                if (Platform.OS === "ios" && response.error === "Camera permissions not granted") {
+            if (response.errorCode) {
+                if (Platform.OS === "ios" && response.errorCode === "permission") {
                     Alert.alert(
                         "Authorize camera access in settings",
                         null,
@@ -78,12 +65,12 @@ export const pickImage = async function (options) {
                         { cancelable: false }
                     );
                 } else {
-                    Alert.alert("Error", `Could not load image. ${response.error}`, {
+                    Alert.alert("Error", `Could not load image. ${response.errorMessage}`, [{ text: "Close" }], {
                         cancelable: false
                     });
                 }
 
-                reject(new Error({ reason: "error", message: response.error }));
+                reject(new Error({ reason: "error", code: response.errorCode, message: response.errorMessage }));
                 return;
             }
 
@@ -94,6 +81,12 @@ export const pickImage = async function (options) {
     const result = await promise;
     return result;
 };
+
+export const requestPermissionCamera = async () => {
+    Platform.OS === "android"
+        ? await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA)
+        : Linking.openURL("app-settings:");
+}
 
 export const notify = function (message) {
     Platform.OS === "android"

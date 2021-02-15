@@ -32,7 +32,7 @@ export class Link extends PureComponent {
             case "blue":
                 return "#597cf0";
             default:
-                return color;
+                return "#1d2631";
         }
     }
 
@@ -65,7 +65,6 @@ export class Link extends PureComponent {
 
 const styles = StyleSheet.create({
     text: {
-        color: "#1d2631",
         textDecorationLine: "underline",
         fontFamily: baseStyles.FONT_BOOK,
         fontSize: baseStyles.FONT_SIZE

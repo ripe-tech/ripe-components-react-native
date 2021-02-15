@@ -91,6 +91,7 @@ export class ContainerOpenable extends PureComponent {
                 Animated.timing(this.state.contentHeight, {
                     toValue: 1,
                     duration: this.props.animationsDuration,
+                    useNativeDriver: false,
                     easing: Easing.inOut(Easing.ease)
                 }),
                 Animated.timing(this.state.overlayOpacity, {
@@ -114,6 +115,7 @@ export class ContainerOpenable extends PureComponent {
             Animated.timing(this.state.contentHeight, {
                 toValue: 0,
                 duration: this.props.animationsDuration,
+                useNativeDriver: false,
                 easing: Easing.inOut(Easing.ease)
             }),
             Animated.timing(this.state.overlayOpacity, {

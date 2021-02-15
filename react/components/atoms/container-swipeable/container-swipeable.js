@@ -125,7 +125,8 @@ export class ContainerSwipeable extends PureComponent {
         }
 
         Animated.timing(this.state.animationPositionX, {
-            toValue: 0
+            toValue: 0,
+            useNativeDriver: false
         }).start(() => {
             this.animating = false;
         });

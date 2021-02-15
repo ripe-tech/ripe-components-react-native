@@ -3,7 +3,7 @@ import { StyleSheet, ViewPropTypes, View, Animated, LayoutAnimation } from "reac
 import PropTypes from "prop-types";
 
 import { ButtonIcon, TextArea } from "../../atoms";
-import { pickImage, pickDocuments } from "../../../util";
+import { pickImageCamera, pickDocuments } from "../../../util";
 
 export class RichTextInput extends PureComponent {
     static get propTypes() {
@@ -83,11 +83,13 @@ export class RichTextInput extends PureComponent {
         Animated.parallel([
             Animated.timing(this.state.buttonsOpacityValue, {
                 toValue: 1,
-                duration: this.props.animationTime
+                duration: this.props.animationTime,
+                useNativeDriver: true
             }),
             Animated.timing(this.state.moreOptionsOpacityValue, {
                 toValue: 0,
-                duration: this.props.animationTime
+                duration: this.props.animationTime,
+                useNativeDriver: true
             })
         ]).start();
     };
@@ -96,11 +98,13 @@ export class RichTextInput extends PureComponent {
         Animated.parallel([
             Animated.timing(this.state.buttonsOpacityValue, {
                 toValue: 0,
-                duration: this.props.animationTime
+                duration: this.props.animationTime,
+                useNativeDriver: true
             }),
             Animated.timing(this.state.moreOptionsOpacityValue, {
                 toValue: 1,
-                duration: this.props.animationTime
+                duration: this.props.animationTime,
+                useNativeDriver: true
             })
         ]).start();
     };
@@ -110,7 +114,7 @@ export class RichTextInput extends PureComponent {
     };
 
     onPhotoButtonPress = async () => {
-        const image = await pickImage();
+        const image = await pickImageCamera();
 
         if (image) {
             this.props.onPhotoAdded(image);
