@@ -74,7 +74,9 @@ export const pickImageCamera = async function (options = { mediaType: "photo" })
                 } else {
                     Alert.alert(
                         "Error",
-                        `Could not load image. [${response.errorCode}]: ${response.errorMessage || ""}`,
+                        `Could not load image. [${response.errorCode}]: ${
+                            response.errorMessage || ""
+                        }`,
                         [{ text: "Close" }],
                         {
                             cancelable: false
