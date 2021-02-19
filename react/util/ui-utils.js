@@ -19,11 +19,23 @@ import { getUriBasename } from "./utils";
  */
 const MOBILE_WIDTH = 420;
 
+/**
+ * Normalizes the provided attachment object (coming from the
+ * picker) so that they can be better used internally.
+ *
+ * @param {Object} attachment An attachment object that is going
+ * to have all of its base component normalized.
+ * @returns {Object} The normalized version of the attachment with
+ * the URI, name, type and size fields, ready to be used internally
+ * under the react native environment.
+ */
 const normalizeAttachment = function (attachment) {
     let uri = attachment.uri;
 
     // convert the URI so that it becomes compatible
-    // with react-native
+    // with react-native internal logic, this logic is
+    // conditional to the iOS platforme as that's the
+    // only place where the URI must be decoded
     if (Platform.OS === "ios") uri = decodeURIComponent(uri);
 
     return {
