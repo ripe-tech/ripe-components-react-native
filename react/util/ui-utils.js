@@ -20,9 +20,15 @@ import { getUriBasename } from "./utils";
 const MOBILE_WIDTH = 420;
 
 const normalizeAttachment = function (attachment) {
+    let uri = attachment.uri;
+
+    // convert the URI so that it becomes compatible
+    // with react-native
+    if (Platform.OS === "ios") uri = decodeURIComponent(uri);
+
     return {
-        uri: attachment.uri,
-        name: attachment.name || getUriBasename(attachment.uri),
+        uri: uri,
+        name: attachment.name || getUriBasename(uri),
         type: attachment.type,
         size: attachment.size
     };
