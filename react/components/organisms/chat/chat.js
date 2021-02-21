@@ -63,7 +63,7 @@ export class Chat extends PureComponent {
         this.scrollViewComponent.scrollToEnd({ animated: true });
     };
 
-    getInputValue = () => this.input ? this.input.state.value || null : null;
+    getInputValue = () => (this.input ? this.input.state.value || null : null);
 
     async _onNewMessage(message) {
         this.setState({ sendingMessage: true }, () => {
