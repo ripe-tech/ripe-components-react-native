@@ -63,6 +63,8 @@ export class Chat extends PureComponent {
         this.scrollViewComponent.scrollToEnd({ animated: true });
     };
 
+    getInputValue = () => (this.input ? this.input.state.value || null : null);
+
     async _onNewMessage(message) {
         this.setState({ sendingMessage: true }, () => {
             let result = true;
@@ -86,7 +88,7 @@ export class Chat extends PureComponent {
         const message = {
             avatarUrl: this.props.avatarUrl,
             username: this.props.username,
-            message: undefined,
+            message: this.getInputValue(),
             date: Date.now(),
             attachments: [source]
         };
@@ -97,7 +99,7 @@ export class Chat extends PureComponent {
         const message = {
             avatarUrl: this.props.avatarUrl,
             username: this.props.username,
-            message: undefined,
+            message: this.getInputValue(),
             date: Date.now(),
             attachments: attachments
         };
