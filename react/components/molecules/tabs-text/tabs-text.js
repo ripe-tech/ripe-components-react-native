@@ -72,7 +72,7 @@ export class TabsText extends PureComponent {
         this.XScroll = XScroll;
     };
 
-    setOverflow = () => {
+    _setOverflow = () => {
         const tabsTextWidth = Object.values(this.tabLayouts)
             .map(value => value.width)
             .reduce(this._sum);
