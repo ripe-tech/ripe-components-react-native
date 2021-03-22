@@ -103,7 +103,7 @@ export class TabsText extends PureComponent {
             x: event.nativeEvent.layout.x,
             width: event.nativeEvent.layout.width
         };
-        if (index === this.props.tabs.length - 1) this.setOverflow();
+        if (index === this.props.tabs.length - 1) this._setOverflow();
         this._updateBar();
     };
 
