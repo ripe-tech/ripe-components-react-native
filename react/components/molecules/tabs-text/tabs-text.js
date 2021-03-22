@@ -1,5 +1,13 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, View } from "react-native";
+import {
+    StyleSheet,
+    ViewPropTypes,
+    View,
+    ScrollView,
+    Alert,
+    Dimensions,
+    useRef
+} from "react-native";
 import PropTypes from "prop-types";
 
 import { capitalize } from "../../../util";
@@ -37,6 +45,7 @@ export class TabsText extends PureComponent {
 
     constructor(props) {
         super(props);
+        this.scrollRef = React.createRef();
 
         this.state = {
             tabs: props.tabs,
@@ -45,6 +54,7 @@ export class TabsText extends PureComponent {
             animatedBarOffset: undefined
         };
         this.tabLayouts = {};
+        this.XScroll = 0;
     }
 
     onTabPress = tabSelectedIndex => {
@@ -52,6 +62,21 @@ export class TabsText extends PureComponent {
             this._updateBar();
             this.props.onTabChange(this.state.tabSelected);
         });
+        const deviceWidth = Dimensions.get("window").width;
+        const tabLayout = this.tabLayouts[tabSelectedIndex];
+        const overFlowRight = tabLayout.x + tabLayout.width > deviceWidth;
+        const overFlowLeft = this.XScroll > tabLayout.x;
+        const tabOverflows = overFlowRight || overFlowLeft;
+
+        if (tabOverflows) {
+            const X = overFlowRight ? tabLayout.x + tabLayout.width : tabLayout.x;
+            this.scrollRef.current.scrollTo({ x: X });
+        }
+    };
+
+    onScroll = event => {
+        const XScroll = event.nativeEvent.contentOffset.x;
+        this.XScroll = XScroll;
     };
 
     _updateBar = () => {
@@ -114,7 +139,14 @@ export class TabsText extends PureComponent {
 
     render() {
         return (
-            <View style={this._style()}>
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                style={this._style()}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                onScroll={this.onScroll}
+                ref={this.scrollRef}
+            >
                 {this._renderTabs()}
                 {this._animatedBarEnabled() ? (
                     <BarAnimated
@@ -123,7 +155,7 @@ export class TabsText extends PureComponent {
                         style={styles.barAnimated}
                     />
                 ) : null}
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -132,7 +164,7 @@ const styles = StyleSheet.create({
     tabsText: {
         borderBottomWidth: 1,
         borderColor: "#e4e8f0",
-        flexDirection: "row"
+        maxHeight: 50
     },
     tabsTextCompact: {
         borderTopWidth: 1,
