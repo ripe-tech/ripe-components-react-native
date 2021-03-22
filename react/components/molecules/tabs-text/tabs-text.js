@@ -47,6 +47,7 @@ export class TabsText extends PureComponent {
         };
         this.tabLayouts = {};
         this.XScroll = 0;
+        this.overflows = false;
     }
 
     onTabPress = tabSelectedIndex => {
@@ -69,6 +70,13 @@ export class TabsText extends PureComponent {
     onScroll = event => {
         const XScroll = event.nativeEvent.contentOffset.x;
         this.XScroll = XScroll;
+    };
+
+    setOverflow = () => {
+        const tabsTextWidth = Object.values(this.tabLayouts)
+            .map(value => value.width)
+            .reduce(this._sum);
+        this.overflows = tabsTextWidth > Dimensions.get("window").width;
     };
 
     _updateBar = () => {
@@ -95,6 +103,7 @@ export class TabsText extends PureComponent {
             x: event.nativeEvent.layout.x,
             width: event.nativeEvent.layout.width
         };
+        if (index === this.props.tabs.length - 1) this.setOverflow();
         this._updateBar();
     };
 
@@ -129,12 +138,17 @@ export class TabsText extends PureComponent {
         ));
     }
 
+    _sum = (previousValue, currentValue) => {
+        return previousValue + currentValue;
+    };
+
     render() {
         return (
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 style={this._style()}
                 horizontal={true}
+                scrollEnabled={this.overflows}
                 showsHorizontalScrollIndicator={false}
                 onScroll={this.onScroll}
                 ref={this.scrollRef}
