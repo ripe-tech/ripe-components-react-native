@@ -46,7 +46,7 @@ export class TabsText extends PureComponent {
             animatedBarOffset: undefined
         };
         this.tabLayouts = {};
-        this.XScroll = 0;
+        this.scroll = 0;
         this.overflows = false;
     }
 
