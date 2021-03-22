@@ -1,13 +1,5 @@
 import React, { PureComponent } from "react";
-import {
-    StyleSheet,
-    ViewPropTypes,
-    View,
-    ScrollView,
-    Alert,
-    Dimensions,
-    useRef
-} from "react-native";
+import { StyleSheet, ViewPropTypes, View, ScrollView, Dimensions } from "react-native";
 import PropTypes from "prop-types";
 
 import { capitalize } from "../../../util";
