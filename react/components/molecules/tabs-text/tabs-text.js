@@ -138,7 +138,7 @@ export class TabsText extends PureComponent {
         ));
     }
 
-    _sum = (previousValue, currentValue) => {
+    _summation = (previousValue, currentValue) => {
         return previousValue + currentValue;
     };
 
