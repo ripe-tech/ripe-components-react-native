@@ -59,10 +59,10 @@ export class TabsText extends PureComponent {
         const tabLayout = this.tabLayouts[tabSelectedIndex];
         const overflowRight = tabLayout.x + tabLayout.width > deviceWidth;
         const overflowLeft = this.XScroll > tabLayout.x;
-        const tabOverflows = overFlowRight || overFlowLeft;
+        const tabOverflows = overflowRight || overflowLeft;
 
         if (tabOverflows) {
-            const X = overFlowRight ? tabLayout.x + tabLayout.width : tabLayout.x;
+            const X = overflowRight ? tabLayout.x + tabLayout.width : tabLayout.x;
             this.scrollRef.current.scrollTo({ x: X });
         }
     };
@@ -75,7 +75,9 @@ export class TabsText extends PureComponent {
     _setOverflow = () => {
         const tabsTextWidth = Object.values(this.tabLayouts)
             .map(tabLayout => tabLayout.width)
-            .reduce(this._summation);
+            .reduce((previousValue, currentValue) => {
+                return previousValue + currentValue;
+            });
         this.overflows = tabsTextWidth > Dimensions.get("window").width;
     };
 
@@ -137,10 +139,6 @@ export class TabsText extends PureComponent {
             </View>
         ));
     }
-
-    _summation = (previousValue, currentValue) => {
-        return previousValue + currentValue;
-    };
 
     render() {
         return (
