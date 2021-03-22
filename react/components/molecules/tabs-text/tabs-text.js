@@ -74,7 +74,7 @@ export class TabsText extends PureComponent {
 
     _setOverflow = () => {
         const tabsTextWidth = Object.values(this.tabLayouts)
-            .map(value => value.width)
+            .map(tabLayout => tabLayout.width)
             .reduce(this._summation);
         this.overflows = tabsTextWidth > Dimensions.get("window").width;
     };
