@@ -19,6 +19,7 @@ export class TabsText extends PureComponent {
             tabsColor: PropTypes.string,
             tabSelected: PropTypes.number,
             variant: PropTypes.string,
+            parentWidth: PropTypes.number,
             onTabChange: PropTypes.func.isRequired,
             style: ViewPropTypes.style
         };
@@ -31,6 +32,7 @@ export class TabsText extends PureComponent {
             tabsColor: "#24425a",
             tabSelected: 0,
             variant: undefined,
+            parentWidth: undefined,
             style: {}
         };
     }
@@ -55,7 +57,7 @@ export class TabsText extends PureComponent {
             this._updateBar();
             this.props.onTabChange(this.state.tabSelected);
         });
-        const deviceWidth = Dimensions.get("window").width;
+        const deviceWidth = this.props.parentWidth || Dimensions.get("window").width;
         const tabLayout = this.tabLayouts[tabSelectedIndex];
         const overflowRight = tabLayout.x + tabLayout.width > deviceWidth;
         const overflowLeft = this.XScroll > tabLayout.x;
