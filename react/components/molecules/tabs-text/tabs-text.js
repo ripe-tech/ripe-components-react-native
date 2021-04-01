@@ -57,30 +57,12 @@ export class TabsText extends PureComponent {
             this._updateBar();
             this.props.onTabChange(this.state.tabSelected);
         });
-        const deviceWidth = this.props.parentWidth || Dimensions.get("window").width;
-        const tabLayout = this.tabLayouts[tabSelectedIndex];
-        const overflowRight = tabLayout.x + tabLayout.width > deviceWidth;
-        const overflowLeft = this.XScroll > tabLayout.x;
-        const tabOverflows = overflowRight || overflowLeft;
-
-        if (tabOverflows) {
-            const X = overflowRight ? tabLayout.x + tabLayout.width : tabLayout.x;
-            this.scrollRef.current.scrollTo({ x: X });
-        }
+        this._scrollToTabIfOverflows(tabSelectedIndex);
     };
 
     onScroll = event => {
         const XScroll = event.nativeEvent.contentOffset.x;
         this.XScroll = XScroll;
-    };
-
-    _setOverflow = () => {
-        const tabsTextWidth = Object.values(this.tabLayouts)
-            .map(tabLayout => tabLayout.width)
-            .reduce((previousValue, currentValue) => {
-                return previousValue + currentValue;
-            });
-        this.overflows = tabsTextWidth > Dimensions.get("window").width;
     };
 
     _updateBar = () => {
@@ -107,9 +89,22 @@ export class TabsText extends PureComponent {
             x: event.nativeEvent.layout.x,
             width: event.nativeEvent.layout.width
         };
-        if (index === this.props.tabs.length - 1) this._setOverflow();
+
         this._updateBar();
     };
+
+    _scrollToTabIfOverflows(tabSelectedIndex) {
+        const deviceWidth = this.props.parentWidth || Dimensions.get("window").width;
+        const tabLayout = this.tabLayouts[tabSelectedIndex];
+        const overflowRight = tabLayout.x + tabLayout.width > deviceWidth;
+        const overflowLeft = this.XScroll > tabLayout.x;
+        const tabOverflows = overflowRight || overflowLeft;
+
+        if (tabOverflows) {
+            const X = overflowRight ? tabLayout.x + tabLayout.width : tabLayout.x;
+            this.scrollRef.current.scrollTo({ x: X });
+        }
+    }
 
     _style() {
         return [
@@ -148,7 +143,7 @@ export class TabsText extends PureComponent {
                 contentContainerStyle={{ flexGrow: 1 }}
                 style={this._style()}
                 horizontal={true}
-                scrollEnabled={this.overflows}
+                alwaysBounceHorizontal={false}
                 showsHorizontalScrollIndicator={false}
                 onScroll={this.onScroll}
                 ref={this.scrollRef}
