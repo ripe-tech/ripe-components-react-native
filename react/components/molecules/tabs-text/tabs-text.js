@@ -61,7 +61,7 @@ export class TabsText extends PureComponent {
     };
 
     onScroll = event => {
-        const XScroll = event.nativeEvent.contentOffset.x;
+        const scroll = event.nativeEvent.contentOffset.x;
         this.scroll = scroll;
     };
 
@@ -95,14 +95,14 @@ export class TabsText extends PureComponent {
 
     _scrollTo(index) {
         const deviceWidth = this.props.parentWidth || Dimensions.get("window").width;
-        const tabLayout = this.tabLayouts[tabSelectedIndex];
+        const tabLayout = this.tabLayouts[index];
         const overflowRight = tabLayout.x + tabLayout.width > deviceWidth;
         const overflowLeft = this.XScroll > tabLayout.x;
         const tabOverflows = overflowRight || overflowLeft;
 
         if (tabOverflows) {
             const scroll = overflowRight ? tabLayout.x + tabLayout.width : tabLayout.x;
-            this.scrollRef.current.scrollTo({ x: X });
+            this.scrollRef.current.scrollTo({ x: scroll });
         }
     }
 
