@@ -62,7 +62,7 @@ export class TabsText extends PureComponent {
 
     onScroll = event => {
         const XScroll = event.nativeEvent.contentOffset.x;
-        this.XScroll = XScroll;
+        this.scroll = scroll;
     };
 
     _updateBar = () => {
