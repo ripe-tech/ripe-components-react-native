@@ -101,7 +101,7 @@ export class TabsText extends PureComponent {
         const tabOverflows = overflowRight || overflowLeft;
 
         if (tabOverflows) {
-            const X = overflowRight ? tabLayout.x + tabLayout.width : tabLayout.x;
+            const scroll = overflowRight ? tabLayout.x + tabLayout.width : tabLayout.x;
             this.scrollRef.current.scrollTo({ x: X });
         }
     }
