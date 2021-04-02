@@ -93,7 +93,7 @@ export class TabsText extends PureComponent {
         this._updateBar();
     };
 
-    _scrollToTabIfOverflows(tabSelectedIndex) {
+    _scrollTo(index) {
         const deviceWidth = this.props.parentWidth || Dimensions.get("window").width;
         const tabLayout = this.tabLayouts[tabSelectedIndex];
         const overflowRight = tabLayout.x + tabLayout.width > deviceWidth;
