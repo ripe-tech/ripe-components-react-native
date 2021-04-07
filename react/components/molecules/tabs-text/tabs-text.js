@@ -97,7 +97,7 @@ export class TabsText extends PureComponent {
         const deviceWidth = this.props.parentWidth || Dimensions.get("window").width;
         const tabLayout = this.tabLayouts[index];
         const overflowRight = tabLayout.x + tabLayout.width > deviceWidth;
-        const overflowLeft = this.XScroll > tabLayout.x;
+        const overflowLeft = this.scroll > tabLayout.x;
         const tabOverflows = overflowRight || overflowLeft;
 
         if (tabOverflows) {
