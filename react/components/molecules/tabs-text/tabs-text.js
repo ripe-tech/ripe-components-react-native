@@ -57,7 +57,7 @@ export class TabsText extends PureComponent {
             this._updateBar();
             this.props.onTabChange(this.state.tabSelected);
         });
-        this._scrollToTabIfOverflows(tabSelectedIndex);
+        this._scrollTo(tabSelectedIndex);
     };
 
     onScroll = event => {
