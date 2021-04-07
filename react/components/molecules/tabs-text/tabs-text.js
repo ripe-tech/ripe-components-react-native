@@ -49,7 +49,6 @@ export class TabsText extends PureComponent {
         };
         this.tabLayouts = {};
         this.scroll = 0;
-        this.overflows = false;
     }
 
     onTabPress = tabSelectedIndex => {
