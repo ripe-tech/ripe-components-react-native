@@ -39,7 +39,6 @@ export class TabsText extends PureComponent {
 
     constructor(props) {
         super(props);
-        this.scrollRef = React.createRef();
 
         this.state = {
             tabs: props.tabs,
@@ -49,6 +48,7 @@ export class TabsText extends PureComponent {
         };
         this.tabLayouts = {};
         this.scroll = 0;
+        this.scrollRef = React.createRef();
     }
 
     onTabPress = tabSelectedIndex => {
@@ -88,7 +88,6 @@ export class TabsText extends PureComponent {
             x: event.nativeEvent.layout.x,
             width: event.nativeEvent.layout.width
         };
-
         this._updateBar();
     };
 
