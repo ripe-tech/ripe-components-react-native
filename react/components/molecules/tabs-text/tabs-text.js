@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, View } from "react-native";
+import { StyleSheet, ViewPropTypes, View, ScrollView, Dimensions } from "react-native";
 import PropTypes from "prop-types";
 
 import { capitalize } from "../../../util";
@@ -19,6 +19,7 @@ export class TabsText extends PureComponent {
             tabsColor: PropTypes.string,
             tabSelected: PropTypes.number,
             variant: PropTypes.string,
+            parentWidth: PropTypes.number,
             onTabChange: PropTypes.func.isRequired,
             style: ViewPropTypes.style
         };
@@ -31,6 +32,7 @@ export class TabsText extends PureComponent {
             tabsColor: "#24425a",
             tabSelected: 0,
             variant: undefined,
+            parentWidth: undefined,
             style: {}
         };
     }
@@ -45,6 +47,8 @@ export class TabsText extends PureComponent {
             animatedBarOffset: undefined
         };
         this.tabLayouts = {};
+        this.scroll = 0;
+        this.scrollRef = React.createRef();
     }
 
     onTabPress = tabSelectedIndex => {
@@ -52,6 +56,12 @@ export class TabsText extends PureComponent {
             this._updateBar();
             this.props.onTabChange(this.state.tabSelected);
         });
+        this._scrollTo(tabSelectedIndex);
+    };
+
+    onScroll = event => {
+        const scroll = event.nativeEvent.contentOffset.x;
+        this.scroll = scroll;
     };
 
     _updateBar = () => {
@@ -80,6 +90,19 @@ export class TabsText extends PureComponent {
         };
         this._updateBar();
     };
+
+    _scrollTo(index) {
+        const deviceWidth = this.props.parentWidth || Dimensions.get("window").width;
+        const tabLayout = this.tabLayouts[index];
+        const overflowRight = tabLayout.x + tabLayout.width > deviceWidth;
+        const overflowLeft = this.scroll > tabLayout.x;
+        const tabOverflows = overflowRight || overflowLeft;
+
+        if (tabOverflows) {
+            const scroll = overflowRight ? tabLayout.x + tabLayout.width : tabLayout.x;
+            this.scrollRef.current.scrollTo({ x: scroll });
+        }
+    }
 
     _style() {
         return [
@@ -114,7 +137,15 @@ export class TabsText extends PureComponent {
 
     render() {
         return (
-            <View style={this._style()}>
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                style={this._style()}
+                horizontal={true}
+                alwaysBounceHorizontal={false}
+                showsHorizontalScrollIndicator={false}
+                onScroll={this.onScroll}
+                ref={this.scrollRef}
+            >
                 {this._renderTabs()}
                 {this._animatedBarEnabled() ? (
                     <BarAnimated
@@ -123,7 +154,7 @@ export class TabsText extends PureComponent {
                         style={styles.barAnimated}
                     />
                 ) : null}
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -132,7 +163,7 @@ const styles = StyleSheet.create({
     tabsText: {
         borderBottomWidth: 1,
         borderColor: "#e4e8f0",
-        flexDirection: "row"
+        maxHeight: 50
     },
     tabsTextCompact: {
         borderTopWidth: 1,
