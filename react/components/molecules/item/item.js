@@ -131,11 +131,13 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     headerText: {
+        marginTop: Platform.OS === "ios" ? 3 : 0,
         color: "#ffffff",
         marginLeft: 6,
         fontFamily: baseStyles.FONT
     },
     headerDate: {
+        marginTop: Platform.OS === "ios" ? 3 : 0,
         color: "#ffffff",
         flex: 1,
         textAlign: "right",
