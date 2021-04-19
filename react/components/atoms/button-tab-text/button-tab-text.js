@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, Platform, Text } from "react-native";
+import { ViewPropTypes, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -75,17 +75,15 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
 
 const styles = StyleSheet.create({
     buttonTabText: {
-        paddingVertical: 16,
-        paddingHorizontal: 4,
-        alignItems: "center"
+        alignItems: "center",
+        flex: 1,
+        justifyContent: "center"
     },
     buttonTabTextCompact: {
         paddingVertical: 9,
         paddingHorizontal: 16
     },
     text: {
-        marginTop: Platform.OS === "ios" ? 4 : 0,
-        height: Platform.OS === "ios" ? 17 : null,
         fontFamily: baseStyles.FONT,
         fontSize: 16,
         letterSpacing: 0.25
