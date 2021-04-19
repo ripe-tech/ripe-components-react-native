@@ -54,13 +54,14 @@ export class TabsText extends PureComponent {
     }
 
     onTabPress = tabSelectedIndex => {
-        if (this.state.tabSelected === tabSelectedIndex) this.props.onSelectedTabPress();
-        else {
-            this.setState({ tabSelected: tabSelectedIndex }, () => {
-                this._updateBar();
-                this.props.onTabChange(this.state.tabSelected);
-            });
+        if (this.state.tabSelected === tabSelectedIndex) {
+            this.props.onSelectedTabPress();
+            return;
         }
+        this.setState({ tabSelected: tabSelectedIndex }, () => {
+            this._updateBar();
+            this.props.onTabChange(this.state.tabSelected);
+        });
         this._scrollTo(tabSelectedIndex);
     };
 
