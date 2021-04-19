@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, Text } from "react-native";
+import { ViewPropTypes, StyleSheet, Text, Platform } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16
     },
     text: {
+        marginTop: Platform.OS === "ios" ? 4 : 0,
         fontFamily: baseStyles.FONT,
         fontSize: 16,
         letterSpacing: 0.25
