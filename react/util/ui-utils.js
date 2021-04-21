@@ -73,7 +73,7 @@ const normalizeImage = function (image) {
 export const pickImageCamera = async function (options = { mediaType: "photo" }) {
     const promise = new Promise((resolve, reject) => {
         launchCamera(options, response => {
-            _lauch(resolve, reject, response);
+            _lauchDialog(resolve, reject, response);
         });
     });
 
@@ -84,7 +84,7 @@ export const pickImageCamera = async function (options = { mediaType: "photo" })
 export const pickImageGalery = async function (options = { mediaType: "photo" }) {
     const promise = new Promise((resolve, reject) => {
         launchImageLibrary(options, response => {
-            _lauch(resolve, reject, response, false);
+            _lauchDialog(resolve, reject, response, false);
         });
     });
 
@@ -132,7 +132,7 @@ export const isMobile = function () {
     return !isTablet();
 };
 
-const _lauch = (resolve, reject, response, camera = true) => {
+const _lauchDialog = (resolve, reject, response, camera = true) => {
     if (response.didCancel) {
         resolve(null);
         return;
