@@ -132,7 +132,7 @@ export const isMobile = function () {
     return !isTablet();
 };
 
-const _handlePickImage = (resolve, reject, response, camera = true) => {
+const _handlePickImage = (resolve, reject, response, { message = "..." } = {}) => {
     if (response.didCancel) {
         resolve(null);
         return;
@@ -140,9 +140,6 @@ const _handlePickImage = (resolve, reject, response, camera = true) => {
 
     if (response.errorCode) {
         if (Platform.OS === "ios" && response.errorCode === "permission") {
-            const message = camera
-                ? "Authorize camera access in settings"
-                : "Authorize photo galery access in settings";
             Alert.alert(
                 message,
                 null,
