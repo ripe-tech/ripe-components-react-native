@@ -132,7 +132,12 @@ export const isMobile = function () {
     return !isTablet();
 };
 
-const _handlePickImage = (resolve, reject, response, { message = "..." } = {}) => {
+const _handlePickImage = (
+    resolve,
+    reject,
+    response,
+    { message = "Authorize access in settings" } = {}
+) => {
     if (response.didCancel) {
         resolve(null);
         return;
