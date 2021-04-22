@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     buttonTabTextCompact: {
+        flex: 0,
         paddingVertical: 9,
         paddingHorizontal: 16
     },
