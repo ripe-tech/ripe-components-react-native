@@ -217,6 +217,7 @@ import people from "./people.svg";
 import personAdd from "./person-add.svg";
 import person from "./person.svg";
 import phone from "./phone.svg";
+import photos from "./photos.svg";
 import pieChart from "./pie-chart.svg";
 import pizza from "./pizza.svg";
 import placeholder from "./placeholder.svg";
@@ -549,6 +550,7 @@ const icons = {
     "person-add": personAdd,
     person: person,
     phone: phone,
+    photos: photos,
     "pie-chart": pieChart,
     pizza: pizza,
     placeholder: placeholder,
