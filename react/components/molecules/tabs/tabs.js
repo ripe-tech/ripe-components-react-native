@@ -30,12 +30,14 @@ export class Tabs extends PureComponent {
     }
 
     onPressTab = route => {
-        if (this._isSelected(route))
+        if (this._isSelected(route)) {
             this.props.navigation.emit({
                 type: "tabPress",
                 canPreventDefault: true
             });
-        else this.props.navigation.navigate(route);
+        } else {
+            this.props.navigation.navigate(route);
+        }
     };
 
     _isSelected = id => {
