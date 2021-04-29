@@ -21,6 +21,7 @@ export class TabsText extends PureComponent {
             variant: PropTypes.string,
             parentWidth: PropTypes.number,
             onTabChange: PropTypes.func.isRequired,
+            onSelectedTabPress: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -33,6 +34,7 @@ export class TabsText extends PureComponent {
             tabSelected: 0,
             variant: undefined,
             parentWidth: undefined,
+            onSelectedTabPress: () => {},
             style: {}
         };
     }
@@ -52,6 +54,10 @@ export class TabsText extends PureComponent {
     }
 
     onTabPress = tabSelectedIndex => {
+        if (this.state.tabSelected === tabSelectedIndex) {
+            this.props.onSelectedTabPress();
+            return;
+        }
         this.setState({ tabSelected: tabSelectedIndex }, () => {
             this._updateBar();
             this.props.onTabChange(this.state.tabSelected);
