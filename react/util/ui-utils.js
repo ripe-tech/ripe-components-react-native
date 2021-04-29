@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import DocumentPicker from "react-native-document-picker";
-import { launchCamera } from "react-native-image-picker";
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
 import { getUriBasename } from "./utils";
 
@@ -73,46 +73,18 @@ const normalizeImage = function (image) {
 export const pickImageCamera = async function (options = { mediaType: "photo" }) {
     const promise = new Promise((resolve, reject) => {
         launchCamera(options, response => {
-            if (response.didCancel) {
-                resolve(null);
-                return;
-            }
+            _handlePickImage(resolve, reject, response);
+        });
+    });
 
-            if (response.errorCode) {
-                if (Platform.OS === "ios" && response.errorCode === "permission") {
-                    Alert.alert(
-                        "Authorize camera access in settings",
-                        null,
-                        [
-                            { text: "Not now" },
-                            { text: "Settings", onPress: () => Linking.openURL("app-settings:") }
-                        ],
-                        { cancelable: false }
-                    );
-                } else {
-                    Alert.alert(
-                        "Error",
-                        `Could not load image. [${response.errorCode}]: ${
-                            response.errorMessage || ""
-                        }`,
-                        [{ text: "Close" }],
-                        {
-                            cancelable: false
-                        }
-                    );
-                }
+    const result = await promise;
+    return result;
+};
 
-                reject(
-                    new Error({
-                        reason: "error",
-                        code: response.errorCode,
-                        message: response.errorMessage
-                    })
-                );
-                return;
-            }
-
-            resolve(normalizeImage(response));
+export const pickImageGalery = async function (options = { mediaType: "photo" }) {
+    const promise = new Promise((resolve, reject) => {
+        launchImageLibrary(options, response => {
+            _handlePickImage(resolve, reject, response, false);
         });
     });
 
@@ -158,4 +130,50 @@ export const isTablet = function () {
 
 export const isMobile = function () {
     return !isTablet();
+};
+
+const _handlePickImage = (
+    resolve,
+    reject,
+    response,
+    { message = "Authorize access in settings" } = {}
+) => {
+    if (response.didCancel) {
+        resolve(null);
+        return;
+    }
+
+    if (response.errorCode) {
+        if (Platform.OS === "ios" && response.errorCode === "permission") {
+            Alert.alert(
+                message,
+                null,
+                [
+                    { text: "Not now" },
+                    { text: "Settings", onPress: () => Linking.openURL("app-settings:") }
+                ],
+                { cancelable: false }
+            );
+        } else {
+            Alert.alert(
+                "Error",
+                `Could not load image. [${response.errorCode}]: ${response.errorMessage || ""}`,
+                [{ text: "Close" }],
+                {
+                    cancelable: false
+                }
+            );
+        }
+
+        reject(
+            new Error({
+                reason: "error",
+                code: response.errorCode,
+                message: response.errorMessage
+            })
+        );
+        return;
+    }
+
+    resolve(normalizeImage(response));
 };
