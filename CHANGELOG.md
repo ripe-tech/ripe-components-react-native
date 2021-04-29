@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Added Pick from image from gallery
 * Added `photos` icon to the icons library
+* Support dor `onSelectedTabTouch` event
 
 ### Changed
 
