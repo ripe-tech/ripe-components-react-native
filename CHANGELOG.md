@@ -6,12 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-* Add pick from image from gallery
-* Add 'photos' icon to the icons library 
 
 ### Added
 
-*
+* Added Pick from image from gallery
+* Added `photos` icon to the icons library
 
 ### Changed
 
