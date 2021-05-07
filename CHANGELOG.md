@@ -9,9 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Added Pick from image from gallery
-* Added `photos` icon to the icons library
-* Support for `onSelectedTabTouch` event
+*
 
 ### Changed
 
@@ -20,6 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *
+
+## [0.4.0] - 2021-04-07
+
+### Added
+
+* Added Pick from image from gallery
+* Added `photos` icon to the icons library
+* Support for `onSelectedTabTouch` event
 
 ## [0.3.3] - 2021-03-02
 
