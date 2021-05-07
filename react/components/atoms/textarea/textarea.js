@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, TextInput } from "react-native";
+import { Platform, StyleSheet, ViewPropTypes, TextInput } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -86,7 +86,8 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
 
 const styles = StyleSheet.create({
     textArea: {
-        paddingVertical: 4,
+        paddingTop: Platform.OS === "ios" ? 16 : 4,
+        paddingBottom: Platform.OS === "ios" ? 12 : 4,
         paddingHorizontal: 15,
         color: "#3e566a",
         backgroundColor: "#ffffff",
