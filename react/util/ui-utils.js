@@ -84,7 +84,7 @@ export const pickImageCamera = async function (options = { mediaType: "photo" })
 export const pickImageGalery = async function (options = { mediaType: "photo" }) {
     const promise = new Promise((resolve, reject) => {
         launchImageLibrary(options, response => {
-            _handlePickImage(resolve, reject, response, false);
+            _handlePickImage(resolve, reject, response);
         });
     });
 
