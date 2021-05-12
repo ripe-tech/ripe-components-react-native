@@ -57,6 +57,7 @@
         "mocha": "^8.3.0",
         "npm-check-updates": "^11.1.4",
         "prettier": "^2.2.1",
+        "react": "^17.0.1",
         "react-test-renderer": "^17.0.1",
         "sort-package-json": "^1.48.1",
         "svgo": "^2.3.0"
