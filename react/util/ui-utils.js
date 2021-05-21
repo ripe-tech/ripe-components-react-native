@@ -70,10 +70,25 @@ const normalizeImage = function (image) {
     };
 };
 
-export const pickImageCamera = async function (options = { mediaType: "photo" }) {
+export const pickImageCamera = async function ({
+    mediaType = "photo",
+    retry = true,
+    requestPermissions = true
+} = {}) {
+    const retryFun = retry
+        ? async () =>
+              await pickImageCamera({
+                  mediaType: mediaType,
+                  retry: false,
+                  requestPermissions: false
+              })
+        : null;
     const promise = new Promise((resolve, reject) => {
-        launchCamera(options, response => {
-            _handlePickImage(resolve, reject, response);
+        launchCamera({ mediaType: mediaType }, response => {
+            _handlePickImage(resolve, reject, response, {
+                retryFun: retryFun,
+                requestPermissions: requestPermissions
+            });
         });
     });
 
@@ -81,10 +96,25 @@ export const pickImageCamera = async function (options = { mediaType: "photo" })
     return result;
 };
 
-export const pickImageGalery = async function (options = { mediaType: "photo" }) {
+export const pickImageGalery = async function ({
+    mediaType = "photo",
+    retry = true,
+    requestPermissions = true
+} = {}) {
+    const retryFun = retry
+        ? async () =>
+              await pickImageGalery({
+                  mediaType: mediaType,
+                  retry: false,
+                  requestPermissions: false
+              })
+        : null;
     const promise = new Promise((resolve, reject) => {
-        launchImageLibrary(options, response => {
-            _handlePickImage(resolve, reject, response);
+        launchImageLibrary({ mediaType: mediaType }, response => {
+            _handlePickImage(resolve, reject, response, {
+                retryFun: retryFun,
+                requestPermissions: requestPermissions
+            });
         });
     });
 
@@ -92,11 +122,10 @@ export const pickImageGalery = async function (options = { mediaType: "photo" })
     return result;
 };
 
-export const requestPermissionCamera = async () => {
+export const requestPermissionCamera = async () =>
     Platform.OS === "android"
         ? await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA)
         : Linking.openURL("app-settings:");
-};
 
 export const notify = function (message) {
     Platform.OS === "android"
@@ -132,11 +161,11 @@ export const isMobile = function () {
     return !isTablet();
 };
 
-const _handlePickImage = (
+const _handlePickImage = async (
     resolve,
     reject,
     response,
-    { message = "Authorize access in settings" } = {}
+    { message = "Authorize access in settings", retryFun = null, requestPermissions = true } = {}
 ) => {
     if (response.didCancel) {
         resolve(null);
@@ -144,7 +173,7 @@ const _handlePickImage = (
     }
 
     if (response.errorCode) {
-        if (Platform.OS === "ios" && response.errorCode === "permission") {
+        if (Platform.OS === "ios" && response.errorCode === "permission" && requestPermissions) {
             Alert.alert(
                 message,
                 null,
@@ -154,6 +183,10 @@ const _handlePickImage = (
                 ],
                 { cancelable: false }
             );
+            resolve(retryFun ? await retryFun() : null);
+        } else if (Platform.OS === "android" && requestPermissions) {
+            const permission = await requestPermissionCamera();
+            resolve(permission === "granted" && retryFun ? await retryFun() : null);
         } else {
             Alert.alert(
                 "Error",
@@ -163,16 +196,14 @@ const _handlePickImage = (
                     cancelable: false
                 }
             );
+            reject(
+                new Error({
+                    reason: "error",
+                    code: response.errorCode,
+                    message: response.errorMessage
+                })
+            );
         }
-
-        reject(
-            new Error({
-                reason: "error",
-                code: response.errorCode,
-                message: response.errorMessage
-            })
-        );
-        return;
     }
 
     resolve(normalizeImage(response));
