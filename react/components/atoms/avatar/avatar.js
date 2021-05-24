@@ -22,6 +22,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
                 bottom: PropTypes.number.isRequired
             }),
             onPress: PropTypes.func,
+            onError: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -35,6 +36,13 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
             hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
             onPress: undefined,
             style: {}
+        };
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            imageSrc: this.props.image
         };
     }
 
@@ -60,9 +68,14 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
                 hitSlop={this.props.hitSlop}
             >
                 <Image
-                    source={this.props.image}
+                    source={this.state.imageSrc}
                     style={styles.image}
                     resizeMode={this.props.resizeMode}
+                    onError={() => {
+                        this.setState({ imageSrc: require('./assets/avatar.png') })
+                        this.props.onError;
+
+                    }}
                     {...this.id("avatar")}
                 />
             </Touchable>
