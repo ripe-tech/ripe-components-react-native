@@ -75,7 +75,7 @@ export const pickImageCamera = async function ({
     retry = true,
     requestPermissions = true
 } = {}) {
-    const retryFun = retry
+    const retryFunction = retry
         ? async () =>
               await pickImageCamera({
                   mediaType: mediaType,
@@ -86,7 +86,7 @@ export const pickImageCamera = async function ({
     const promise = new Promise((resolve, reject) => {
         launchCamera({ mediaType: mediaType }, response => {
             _handlePickImage(resolve, reject, response, {
-                retryFun: retryFun,
+                retryFunction: retryFunction,
                 requestPermissions: requestPermissions
             });
         });
@@ -101,7 +101,7 @@ export const pickImageGalery = async function ({
     retry = true,
     requestPermissions = true
 } = {}) {
-    const retryFun = retry
+    const retryFunction = retry
         ? async () =>
               await pickImageGalery({
                   mediaType: mediaType,
@@ -112,7 +112,7 @@ export const pickImageGalery = async function ({
     const promise = new Promise((resolve, reject) => {
         launchImageLibrary({ mediaType: mediaType }, response => {
             _handlePickImage(resolve, reject, response, {
-                retryFun: retryFun,
+                retryFunction: retryFunction,
                 requestPermissions: requestPermissions
             });
         });
@@ -165,7 +165,11 @@ const _handlePickImage = async (
     resolve,
     reject,
     response,
-    { message = "Authorize access in settings", retryFun = null, requestPermissions = true } = {}
+    {
+        message = "Authorize access in settings",
+        retryFunction = null,
+        requestPermissions = true
+    } = {}
 ) => {
     if (response.didCancel) {
         resolve(null);
@@ -183,10 +187,10 @@ const _handlePickImage = async (
                 ],
                 { cancelable: false }
             );
-            resolve(retryFun ? await retryFun() : null);
+            resolve(retryFunction ? await retryFunction() : null);
         } else if (Platform.OS === "android" && requestPermissions) {
             const permission = await requestPermissionCamera();
-            resolve(permission === "granted" && retryFun ? await retryFun() : null);
+            resolve(permission === "granted" && retryFunction ? await retryFunction() : null);
         } else {
             Alert.alert(
                 "Error",
