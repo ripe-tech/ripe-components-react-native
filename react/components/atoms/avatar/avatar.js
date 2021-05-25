@@ -47,6 +47,11 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
         };
     }
 
+    onLoadingError = () => {
+        this.setState({ imageSrc: require("./assets/avatar.png") });
+        if (this.props.onError) this.props.onError();
+    }
+
     _style = () => {
         return [
             styles.avatar,
@@ -72,10 +77,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
                     source={this.state.imageSrc}
                     style={styles.image}
                     resizeMode={this.props.resizeMode}
-                    onError={() => {
-                        this.setState({ imageSrc: require("./assets/avatar.png") });
-                        this.props.onError;
-                    }}
+                    onError={this.onLoadingError()}
                     {...this.id("avatar")}
                 />
             </Touchable>
