@@ -35,6 +35,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
             resizeMode: "contain",
             hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
             onPress: undefined,
+            onError: undefined,
             style: {}
         };
     }
