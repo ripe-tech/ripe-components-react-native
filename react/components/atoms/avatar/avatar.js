@@ -50,7 +50,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
     onLoadingError = () => {
         this.setState({ imageSrc: require("./assets/avatar.png") });
         if (this.props.onError) this.props.onError();
-    }
+    };
 
     _style = () => {
         return [
