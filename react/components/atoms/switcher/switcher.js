@@ -1,0 +1,137 @@
+import React, { PureComponent } from "react";
+import { StyleSheet, Text, Animated, View } from "react-native";
+import PropTypes from "prop-types";
+import { IdentifiableMixin, baseStyles } from "../../../util";
+import { Touchable } from "../touchable";
+import { mix } from "yonius";
+
+export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
+    static get propTypes() {
+        return {
+            checked: PropTypes.bool,
+            disabled: PropTypes.bool,
+            checkedText: PropTypes.string,
+            unCheckedText: PropTypes.string,
+            variant: PropTypes.string,
+            animationDuration: PropTypes.number,
+            onValueUpdate: PropTypes.func
+        };
+    }
+
+    static get defaultProps() {
+        return {
+            checked: false,
+            disabled: false,
+            variant: "colored",
+            checkedText: "checked",
+            unCheckedText: "unchecked",
+            animationDuration: 200,
+            onValueUpdate: () => {}
+        };
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isChecked: this.props.checked,
+            marginLeft: this.props.checked ? new Animated.Value(20) : new Animated.Value(0),
+            backgroundColor: this.props.checked ? new Animated.Value(150) : new Animated.Value(0)
+        };
+    }
+
+    _getText() {
+        return this.state.isChecked ? this.props.checkedText : this.props.unCheckedText;
+    }
+
+    _style = () => {
+        const isColored = this.props.variant === "colored";
+        return [
+            styles.switcher,
+            {
+                backgroundColor: this.state.backgroundColor.interpolate({
+                    inputRange: [0, 150],
+                    outputRange: ["#cccccc", isColored ? "#45a777" : "#1d1d1d"]
+                }),
+                borderColor: this.state.backgroundColor.interpolate({
+                    inputRange: [0, 150],
+                    outputRange: ["#cccccc", isColored ? "#45a777" : "#1d1d1d"]
+                }),
+                opacity: this.props.disabled ? 0.3 : 1
+            }
+        ];
+    };
+
+    _buttonStyle = () => {
+        return [styles.button, { marginLeft: this.state.marginLeft }];
+    };
+
+    onPress = () => {
+        const marginLeftValue = this.state.isChecked ? 0 : 20;
+        const backgroundColor = this.state.isChecked ? 0 : 150;
+        Animated.parallel([
+            Animated.timing(this.state.marginLeft, {
+                toValue: marginLeftValue,
+                duration: this.props.animationDuration,
+                useNativeDriver: false
+            }),
+            Animated.timing(this.state.backgroundColor, {
+                toValue: backgroundColor,
+                duration: this.props.animationDuration,
+                useNativeDriver: false
+            })
+        ]).start(() => {
+            this.setState({ isChecked: !this.state.isChecked }, () =>
+                this.props.onValueUpdate(this.state.isChecked)
+            );
+        });
+    };
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <Animated.View style={this._style()}>
+                    <Touchable
+                        onPress={this.onPress}
+                        disabled={this.props.disabled}
+                        activeOpacity={this.props.activeOpacity}
+                        hitSlop={this.props.hitSlop}
+                        {...this.id("switcher")}
+                    >
+                        <Animated.View style={this._buttonStyle()} />
+                    </Touchable>
+                </Animated.View>
+                <Text style={styles.text}>{this._getText()}</Text>
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center"
+    },
+    switcher: {
+        display: "flex",
+        borderWidth: 2,
+        justifyContent: "center",
+        height: 24,
+        width: 44,
+        borderRadius: 500
+    },
+    button: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        backgroundColor: "#ffffff"
+    },
+    text: {
+        fontFamily: baseStyles.FONT,
+        alignSelf: "center",
+        marginLeft: 5,
+        minWidth: 75
+    }
+});
+
+export default Switcher;
