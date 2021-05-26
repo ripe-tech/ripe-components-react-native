@@ -13,7 +13,7 @@ storiesOf("Components/Atoms/Lightbox", module)
         );
         const width = number("Width", 200);
         const height = number("Height", 150);
-        const borderRadius = number("Border Radius", undefined);
+        const borderRadius = number("Border Radius", 100);
         const resizeMode = select(
             "Resize Mode",
             {

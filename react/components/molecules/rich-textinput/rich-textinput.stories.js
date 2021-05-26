@@ -19,8 +19,8 @@ storiesOf("Components/Atoms/RichTextInput", module)
         const value = text("Value", undefined);
         const placeholder = text("Placeholder", "Placeholder example");
         const multiline = boolean("Multiline", false);
-        const textareaMinHeight = number("TextArea Min Height", undefined);
-        const textareaMaxHeight = number("TextArea Max Height", undefined);
+        const textareaMinHeight = number("TextArea Min Height", 200);
+        const textareaMaxHeight = number("TextArea Max Height", 200);
         const animationTime = number("Animation Time", 200);
         return (
             <RichTextInput

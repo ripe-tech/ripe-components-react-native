@@ -22,7 +22,7 @@ storiesOf("Components/Atoms/Button", module)
         const loading = boolean("Loading", false);
         const disabled = boolean("Disabled", false);
         const iconStrokeWidth = number("Icon Stroke Width", 0.5);
-        const width = number("Width", undefined);
+        const width = number("Width", 300);
         return (
             <Button
                 text={_text || undefined}

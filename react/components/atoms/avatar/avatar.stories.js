@@ -7,9 +7,10 @@ import { Avatar } from "./avatar";
 storiesOf("Components/Atoms/Avatar", module)
     .addDecorator(withKnobs)
     .add("Avatar", () => {
-        const size = number("Size", undefined);
-        const activeOpacity = number("Active Opacity", undefined);
-        const borderRadius = number("Border Radius", undefined);
+        const size = number("Size", 40);
+        const activeOpacity = number("Active Opacity", 0.7);
+        const borderRadius = number("Border Radius", 100);
+
         return (
             <Avatar
                 image={{
