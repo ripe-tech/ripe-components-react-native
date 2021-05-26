@@ -8,6 +8,14 @@ storiesOf("Components/Atoms/Checkbox", module)
     .addDecorator(withKnobs)
     .add("Checkbox", () => {
         const label = text("Label", "Label");
+        const icon = select(
+            "Icon",
+            {
+                Unset: undefined,
+                Minus: "minus-round"
+            },
+            undefined
+        );
         const checked = boolean("Checked", false);
         const disabled = boolean("Disabled", false);
         const size = number("Size", 20);
@@ -22,6 +30,7 @@ storiesOf("Components/Atoms/Checkbox", module)
         return (
             <Checkbox
                 label={label || undefined}
+                icon={icon || undefined}
                 checked={checked}
                 disabled={disabled}
                 size={size || undefined}

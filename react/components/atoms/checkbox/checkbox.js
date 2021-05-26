@@ -24,7 +24,7 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
 
     static get defaultProps() {
         return {
-            icon: "ok",
+            icon: "check",
             checked: false,
             disabled: false,
             size: 20,
@@ -101,9 +101,9 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
                             <Icon
                                 icon={this.props.icon}
                                 color={this._iconColor()}
-                                strokeWidth={3}
-                                height={this.props.size / 2 + 5}
-                                width={this.props.size / 2 + 5}
+                                strokeWidth={0.1}
+                                height={this.props.size / 2 + 1}
+                                width={this.props.size / 2 + 1}
                             />
                         </View>
                     )}
