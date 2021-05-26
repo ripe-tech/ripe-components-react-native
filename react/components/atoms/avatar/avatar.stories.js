@@ -7,18 +7,17 @@ import { Avatar } from "./avatar";
 storiesOf("Components/Atoms/Avatar", module)
     .addDecorator(withKnobs)
     .add("Avatar", () => {
-        const size = number("Size", 40);
-        const activeOpacity = number("Active Opacity", 0.7);
-        const borderRadius = number("Border Radius", 100);
-
+        const size = number("Size", -1);
+        const activeOpacity = number("Active Opacity", -1);
+        const borderRadius = number("Border Radius", -1);
         return (
             <Avatar
                 image={{
                     uri: "https://id.platforme.com/admin/accounts/v-fl%40platforme.com/avatar"
                 }}
-                size={size}
-                borderRadius={borderRadius}
-                activeOpacity={activeOpacity}
+                size={size === -1 ? size : undefined}
+                borderRadius={borderRadius === -1 ? borderRadius : undefined}
+                activeOpacity={activeOpacity === -1 ? activeOpacity : undefined}
                 onPress={() => {
                     alert("Nice touch!");
                 }}
