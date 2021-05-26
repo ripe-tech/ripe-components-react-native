@@ -13,15 +13,15 @@ storiesOf("Components/Atoms/Textarea", module)
         const value = text("Value", undefined);
         const placeholder = text("Placeholder", "Placeholder example");
         const multiline = boolean("Multiline", false);
-        const minHeight = number("Min Height", 200);
-        const maxHeight = number("Max Height", 200);
+        const minHeight = number("Min Height", -1);
+        const maxHeight = number("Max Height", -1);
         return (
             <TextArea
                 value={value}
                 placeholder={placeholder}
                 multiline={multiline}
-                minHeight={minHeight}
-                maxHeight={maxHeight}
+                minHeight={minHeight === -1 ? undefined : minHeight}
+                maxHeight={maxHeight === -1 ? undefined : maxHeight}
                 onValue={onValue}
             />
         );

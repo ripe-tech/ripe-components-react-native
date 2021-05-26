@@ -15,9 +15,9 @@ storiesOf("Components/Atoms/Avatar", module)
                 image={{
                     uri: "https://id.platforme.com/admin/accounts/v-fl%40platforme.com/avatar"
                 }}
-                size={size === -1 ? size : undefined}
-                borderRadius={borderRadius === -1 ? borderRadius : undefined}
-                activeOpacity={activeOpacity === -1 ? activeOpacity : undefined}
+                size={size === -1 ? undefined : size}
+                borderRadius={borderRadius === -1 ? undefined : borderRadius}
+                activeOpacity={activeOpacity === -1 ? undefined : activeOpacity}
                 onPress={() => {
                     alert("Nice touch!");
                 }}
