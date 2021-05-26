@@ -22,14 +22,14 @@ storiesOf("Components/Atoms/Button", module)
         const loading = boolean("Loading", false);
         const disabled = boolean("Disabled", false);
         const iconStrokeWidth = number("Icon Stroke Width", 0.5);
-        const width = number("Width", undefined);
+        const width = number("Width", -1);
         return (
             <Button
                 text={_text || undefined}
                 icon={icon}
                 loading={loading}
                 disabled={disabled}
-                width={width || undefined}
+                width={width === -1 ? undefined : width}
                 iconStrokeWidth={iconStrokeWidth || undefined}
             />
         );

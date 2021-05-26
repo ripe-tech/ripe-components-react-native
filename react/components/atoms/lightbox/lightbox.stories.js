@@ -9,11 +9,11 @@ storiesOf("Components/Atoms/Lightbox", module)
     .add("Lightbox", () => {
         const uri = text(
             "URI",
-            "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.redd.it%2F4jkwjjrlxnr21.jpg&f=1&nofb=1"
+            "https://sandbox.platforme.com/api/compose?brand=dummy&model=dummy"
         );
         const width = number("Width", 200);
         const height = number("Height", 150);
-        const borderRadius = number("Border Radius", undefined);
+        const borderRadius = number("Border Radius", -1);
         const resizeMode = select(
             "Resize Mode",
             {
@@ -30,7 +30,7 @@ storiesOf("Components/Atoms/Lightbox", module)
                 uri={uri}
                 width={width}
                 height={height}
-                borderRadius={borderRadius}
+                borderRadius={borderRadius === -1 ? undefined : borderRadius}
                 resizeMode={resizeMode}
             />
         );

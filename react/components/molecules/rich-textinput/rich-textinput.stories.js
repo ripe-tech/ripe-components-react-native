@@ -19,16 +19,16 @@ storiesOf("Components/Atoms/RichTextInput", module)
         const value = text("Value", undefined);
         const placeholder = text("Placeholder", "Placeholder example");
         const multiline = boolean("Multiline", false);
-        const textareaMinHeight = number("TextArea Min Height", undefined);
-        const textareaMaxHeight = number("TextArea Max Height", undefined);
+        const textareaMinHeight = number("TextArea Min Height", -1);
+        const textareaMaxHeight = number("TextArea Max Height", -1);
         const animationTime = number("Animation Time", 200);
         return (
             <RichTextInput
                 value={value}
                 placeholder={placeholder}
                 multiline={multiline}
-                textareaMinHeight={textareaMinHeight}
-                textareaMaxHeight={textareaMaxHeight}
+                textareaMinHeight={textareaMinHeight === -1 ? undefined : textareaMinHeight}
+                textareaMaxHeight={textareaMaxHeight === -1 ? undefined : textareaMaxHeight}
                 animationTime={animationTime}
                 onPhotoAdded={onPhotoAdded}
                 onAttachmentsAdded={onAttachmentsAdded}
