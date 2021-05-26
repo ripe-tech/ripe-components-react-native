@@ -50,11 +50,11 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
             {
                 backgroundColor: this.state.backgroundColor.interpolate({
                     inputRange: [0, 150],
-                    outputRange: ["#cccccc", isColored ? "#45a777" : "#1d1d1d"]
+                    outputRange: ["#cccccc", isColored ? "#507BF8" : "#1d1d1d"]
                 }),
                 borderColor: this.state.backgroundColor.interpolate({
                     inputRange: [0, 150],
-                    outputRange: ["#cccccc", isColored ? "#45a777" : "#1d1d1d"]
+                    outputRange: ["#cccccc", isColored ? "#507BF8" : "#1d1d1d"]
                 }),
                 opacity: this.props.disabled ? 0.3 : 1
             }
