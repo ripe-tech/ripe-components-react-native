@@ -77,7 +77,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
                     source={this.state.imageSrc}
                     style={styles.image}
                     resizeMode={this.props.resizeMode}
-                    onError={this.onLoadingError()}
+                    onError={this.onLoadingError}
                     {...this.id("avatar")}
                 />
             </Touchable>
