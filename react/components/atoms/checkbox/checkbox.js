@@ -72,7 +72,7 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
         return this.props.icon;
     };
 
-    _style = () => {
+    _styleBox = () => {
         const base = [
             styles.checkboxBox,
             {
@@ -89,7 +89,7 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
         return base;
     };
 
-    _textStyle = () => {
+    _labelStyle = () => {
         const base = [styles.checkboxLabel];
         if (this.props.disabled) base.push(styles.checkboxLabelDisabled);
         return base;
@@ -104,7 +104,7 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
                 onPressIn={this.onPressIn}
                 onPressOut={this.onPressOut}
             >
-                <View style={this._style()} {...this.id("checkbox")}>
+                <View style={this._styleBox()} {...this.id("checkbox")}>
                     {(this.state.checkedData || this.state.active) && (
                         <View style={styles.checkboxIconContainer}>
                             <Icon
@@ -116,7 +116,7 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
                         </View>
                     )}
                 </View>
-                <Text style={this._textStyle()}>{this.props.label}</Text>
+                <Text style={this._labelStyle()}>{this.props.label}</Text>
             </Touchable>
         );
     }
