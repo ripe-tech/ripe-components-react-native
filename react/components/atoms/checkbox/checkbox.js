@@ -38,7 +38,8 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
         super(props);
 
         this.state = {
-            checkedData: props.checked
+            checkedData: props.checked,
+            active: false
         };
     }
 
@@ -49,9 +50,14 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
         });
     }
 
-    onPress = () => {
+    onPressIn = () => {
+        this.setState({ active: true });
+    };
+
+    onPressOut = () => {
         this.setState(
             prevState => ({
+                active: false,
                 checkedData: !prevState.checkedData
             }),
             () => {
@@ -60,9 +66,10 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
         );
     };
 
-    _iconColor = () => {
-        if (this.props.disabled) return this.props.disabled ? "#000000" : "#ffffff";
-        return "#ffffff";
+    _icon = () => {
+        if (this.props.disabled) return `${this.props.icon}-gray`;
+        if (this.state.active) return `${this.props.icon}-blue`;
+        return this.props.icon;
     };
 
     _style = () => {
@@ -74,6 +81,7 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
             }
         ];
         if (this.state.checkedData) base.push(styles.checkboxBoxChecked);
+        if (this.state.active) base.push(styles.checkboxBoxActive);
         if (this.props.variant === "error") base.push(styles.checkboxBoxError);
         if (this.props.disabled) base.push(styles.checkboxBoxDisabled);
 
@@ -93,17 +101,28 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
                 style={styles.checkbox}
                 activeOpacity={0.8}
                 disabled={this.props.disabled}
-                onPress={this.onPress}
+                onPressIn={this.onPressIn}
+                onPressOut={this.onPressOut}
             >
                 <View style={this._style()}>
-                    {this.state.checkedData && (
-                        <View style={styles.checkboxIconContainer}>
+                    {(this.state.checkedData || this.state.active) && (
+                        <View
+                            style={[
+                                styles.checkboxIconContainer,
+                                {
+                                    flex: 1,
+                                    justifyContent: "center"
+                                }
+                            ]}
+                        >
                             <Icon
-                                icon={this.props.icon}
-                                color={this._iconColor()}
-                                strokeWidth={0.1}
-                                height={this.props.size / 2 + 1}
-                                width={this.props.size / 2 + 1}
+                                style={{
+                                    flex: 1
+                                }}
+                                icon={this._icon()}
+                                color={null}
+                                width={this.props.size / 2}
+                                height={this.props.size / 2}
                             />
                         </View>
                     )}
@@ -116,7 +135,6 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
 
 const styles = StyleSheet.create({
     checkbox: {
-        borderWidth: 0,
         overflow: "hidden",
         flexDirection: "row",
         alignItems: "center"
@@ -134,13 +152,19 @@ const styles = StyleSheet.create({
         borderColor: "#597cf0",
         borderRadius: 6
     },
-    checkboxBoxDisabled: {
+    checkboxBoxActive: {
         backgroundColor: "#c3c9cf",
         borderColor: "#c3c9cf",
         borderWidth: 2,
         borderStyle: "solid",
-        borderRadius: 6,
-        opacity: 0.5
+        borderRadius: 6
+    },
+    checkboxBoxDisabled: {
+        backgroundColor: "#F6F7F9",
+        borderColor: "#F6F7F9",
+        borderWidth: 2,
+        borderStyle: "solid",
+        borderRadius: 6
     },
     checkboxBoxError: {
         borderColor: "#ce544d",
@@ -149,7 +173,6 @@ const styles = StyleSheet.create({
         borderRadius: 6
     },
     checkboxIconContainer: {
-        flex: 1,
         justifyContent: "center",
         alignItems: "center"
     },
