@@ -38,6 +38,7 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
 
     constructor(props) {
         super(props);
+
         this.state = {
             checkedData: this.props.checked,
             marginLeft: this.props.checked
