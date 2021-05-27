@@ -7,10 +7,11 @@ import { Switcher } from "./switcher";
 storiesOf("Components/Atoms/Switcher", module)
     .addDecorator(withKnobs)
     .add("Switcher", () => {
-        const checked = boolean("checked", false);
+        const checked = boolean("Checked", false);
+        const disabled = boolean("Disabled", false);
         const animationDuration = number("Animation Duration", 200);
-        const checkedText = text("Checked text", "Checked!");
-        const uncheckedText = text("Unchecked text", "Not checked!");
+        const checkedText = text("Checked text", "");
+        const uncheckedText = text("Unchecked text", "");
         const variant = select(
             "Variant",
             {
@@ -24,6 +25,7 @@ storiesOf("Components/Atoms/Switcher", module)
             <Switcher
                 variant={variant || undefined}
                 checked={checked || undefined}
+                disabled={checked || undefined}
                 checkedText={checkedText || undefined}
                 uncheckedText={uncheckedText || undefined}
                 animationDuration={animationDuration || undefined}
