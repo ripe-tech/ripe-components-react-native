@@ -22,6 +22,8 @@ export class Touchable extends PureComponent {
             useForeground: PropTypes.bool,
             onLongPress: PropTypes.func,
             onPress: PropTypes.func,
+            onPressIn: PropTypes.func,
+            onPressOut: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -32,6 +34,8 @@ export class Touchable extends PureComponent {
             hitSlop: undefined,
             onLongPress: undefined,
             onPress: undefined,
+            onPressIn: undefined,
+            onPressOut: undefined,
             style: undefined,
             activeOpacity: undefined,
             useForeground: true
@@ -46,6 +50,8 @@ export class Touchable extends PureComponent {
                     activeOpacity={this.props.activeOpacity}
                     disabled={this.props.disabled}
                     onPress={this.props.onPress}
+                    onPressIn={this.props.onPressIn}
+                    onPressOut={this.props.onPressOut}
                     onLongPress={this.props.onLongPress}
                     hitSlop={this.props.hitSlop}
                 >
@@ -57,6 +63,8 @@ export class Touchable extends PureComponent {
             <TouchableNativeFeedback
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
+                onPressIn={this.props.onPressIn}
+                onPressOut={this.props.onPressOut}
                 onLongPress={this.props.onLongPress}
                 hitSlop={this.props.hitSlop}
                 useForeground={this.props.useForeground}
