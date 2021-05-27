@@ -1,9 +1,11 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, Animated, View } from "react-native";
+import { StyleSheet, Text, Animated, View, Platform } from "react-native";
 import PropTypes from "prop-types";
-import { IdentifiableMixin, baseStyles } from "../../../util";
-import { Touchable } from "../touchable";
 import { mix } from "yonius";
+
+import { IdentifiableMixin, baseStyles } from "../../../util";
+
+import { Touchable } from "../touchable";
 
 export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
@@ -11,9 +13,11 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
             checked: PropTypes.bool,
             disabled: PropTypes.bool,
             checkedText: PropTypes.string,
-            unCheckedText: PropTypes.string,
+            uncheckedText: PropTypes.string,
             variant: PropTypes.string,
             animationDuration: PropTypes.number,
+            marginLeftValue: PropTypes.number,
+            backgroundColorValue: PropTypes.number,
             onValueUpdate: PropTypes.func
         };
     }
@@ -24,8 +28,10 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
             disabled: false,
             variant: "colored",
             checkedText: "checked",
-            unCheckedText: "unchecked",
+            uncheckedText: "unchecked",
             animationDuration: 200,
+            marginLeftValue: 20,
+            colorInputRangeValue: 150,
             onValueUpdate: () => {}
         };
     }
@@ -33,14 +39,32 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
     constructor(props) {
         super(props);
         this.state = {
-            isChecked: this.props.checked,
-            marginLeft: this.props.checked ? new Animated.Value(20) : new Animated.Value(0),
-            backgroundColor: this.props.checked ? new Animated.Value(150) : new Animated.Value(0)
+            checkedData: this.props.checked,
+            marginLeft: this.props.checked
+                ? new Animated.Value(this.props.marginLeftValue)
+                : new Animated.Value(0),
+            backgroundColor: this.props.checked
+                ? new Animated.Value(this.props.backgroundColorValue)
+                : new Animated.Value(0)
         };
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.checked !== this.props.checked) {
+            this.setState({
+                checkedData: this.props.checked,
+                marginLeft: this.props.checked
+                    ? new Animated.Value(this.props.marginLeftValue)
+                    : new Animated.Value(0),
+                backgroundColor: this.props.checked
+                    ? new Animated.Value(this.props.backgroundColorValue)
+                    : new Animated.Value(0)
+            });
+        }
+    }
+
     _getText() {
-        return this.state.isChecked ? this.props.checkedText : this.props.unCheckedText;
+        return this.state.checkedData ? this.props.checkedText : this.props.uncheckedText;
     }
 
     _style = () => {
@@ -66,8 +90,8 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     onPress = () => {
-        const marginLeftValue = this.state.isChecked ? 0 : 20;
-        const backgroundColor = this.state.isChecked ? 0 : 150;
+        const marginLeftValue = this.state.checkedData ? 0 : this.props.marginLeftValue;
+        const backgroundColor = this.state.checkedData ? 0 : this.props.colorInputRangeValue;
         Animated.parallel([
             Animated.timing(this.state.marginLeft, {
                 toValue: marginLeftValue,
@@ -80,8 +104,9 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
                 useNativeDriver: false
             })
         ]).start(() => {
-            this.setState({ isChecked: !this.state.isChecked }, () =>
-                this.props.onValueUpdate(this.state.isChecked)
+            this.setState(
+                prevState => ({ checkedData: !prevState.checkedData }),
+                () => this.props.onValueUpdate(this.state.checkedData)
             );
         });
     };
@@ -127,6 +152,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff"
     },
     text: {
+        paddingTop: Platform.OS === "ios" ? 1 : 0,
         fontFamily: baseStyles.FONT,
         alignSelf: "center",
         marginLeft: 5,
