@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
-import { IdentifiableMixin, baseStyles } from "../../../util";
+import { IdentifiableMixin, baseStyles, capitalize } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
@@ -73,26 +73,21 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _styleBox = () => {
-        const base = [
+        return [
             styles.checkboxBox,
             {
                 width: this.props.size,
                 height: this.props.size
-            }
+            },
+            this.state.checkedData ? styles.checkboxBoxChecked : {},
+            this.state.active ? styles.checkboxBoxActive : {},
+            styles[`checkboxBox${capitalize(this.props.variant)}`],
+            this.props.disabled ? styles.checkboxBoxDisabled : {}
         ];
-        if (this.state.checkedData) base.push(styles.checkboxBoxChecked);
-        if (this.state.active) base.push(styles.checkboxBoxActive);
-        if (this.props.variant === "error") base.push(styles.checkboxBoxError);
-        if (this.props.disabled) base.push(styles.checkboxBoxDisabled);
-
-        base.push(this.props.style);
-        return base;
     };
 
     _labelStyle = () => {
-        const base = [styles.checkboxLabel];
-        if (this.props.disabled) base.push(styles.checkboxLabelDisabled);
-        return base;
+        return [styles.checkboxLabel, this.props.disabled ? styles.checkboxLabelDisabled : {}];
     };
 
     render() {
@@ -136,17 +131,11 @@ const styles = StyleSheet.create({
     },
     checkboxBoxChecked: {
         backgroundColor: "#597cf0",
-        borderWidth: 2,
-        borderStyle: "solid",
-        borderColor: "#597cf0",
-        borderRadius: 6
+        borderWidth: 0
     },
     checkboxBoxActive: {
         backgroundColor: "#c3c9cf",
-        borderColor: "#c3c9cf",
-        borderWidth: 2,
-        borderStyle: "solid",
-        borderRadius: 6
+        borderWidth: 0
     },
     checkboxBoxDisabled: {
         backgroundColor: "#F6F7F9",
