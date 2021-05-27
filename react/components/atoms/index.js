@@ -6,6 +6,7 @@ export * from "./button-icon";
 export * from "./button-keyboard";
 export * from "./button-tab";
 export * from "./button-tab-text";
+export * from "./checkbox";
 export * from "./container-draggable";
 export * from "./container-openable";
 export * from "./icon";
