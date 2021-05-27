@@ -25,7 +25,7 @@ storiesOf("Components/Atoms/Switcher", module)
             <Switcher
                 variant={variant || undefined}
                 checked={checked || undefined}
-                disabled={checked || undefined}
+                disabled={disabled || undefined}
                 checkedText={checkedText || undefined}
                 uncheckedText={uncheckedText || undefined}
                 animationDuration={animationDuration || undefined}
