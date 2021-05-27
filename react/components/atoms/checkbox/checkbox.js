@@ -106,19 +106,8 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
             >
                 <View style={this._style()}>
                     {(this.state.checkedData || this.state.active) && (
-                        <View
-                            style={[
-                                styles.checkboxIconContainer,
-                                {
-                                    flex: 1,
-                                    justifyContent: "center"
-                                }
-                            ]}
-                        >
+                        <View style={styles.checkboxIconContainer}>
                             <Icon
-                                style={{
-                                    flex: 1
-                                }}
                                 icon={this._icon()}
                                 color={null}
                                 width={this.props.size / 2}
@@ -173,6 +162,7 @@ const styles = StyleSheet.create({
         borderRadius: 6
     },
     checkboxIconContainer: {
+        flex: 1,
         justifyContent: "center",
         alignItems: "center"
     },
