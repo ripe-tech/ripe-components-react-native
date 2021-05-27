@@ -52,7 +52,7 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
 
     componentDidUpdate(prevProps) {
         if (prevProps.checked !== this.props.checked) {
-            setChecked(this.props.checked)
+            this._setChecked(this.props.checked);
         }
     }
 
@@ -82,7 +82,7 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
         return [styles.button, { marginLeft: this.state.marginLeft }];
     };
 
-    _setChecked = (checked) => {
+    _setChecked = checked => {
         const marginLeftValue = checked ? 0 : this.props.marginLeftValue;
         const backgroundColor = checked ? 0 : this.props.colorInputRangeValue;
         Animated.parallel([
