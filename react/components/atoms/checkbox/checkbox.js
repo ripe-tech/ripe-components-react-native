@@ -104,7 +104,7 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
                 onPressIn={this.onPressIn}
                 onPressOut={this.onPressOut}
             >
-                <View style={this._style()}>
+                <View style={this._style()} {...this.id("checkbox")}>
                     {(this.state.checkedData || this.state.active) && (
                         <View style={styles.checkboxIconContainer}>
                             <Icon
