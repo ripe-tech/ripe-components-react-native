@@ -52,15 +52,7 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
 
     componentDidUpdate(prevProps) {
         if (prevProps.checked !== this.props.checked) {
-            this.setState({
-                checkedData: this.props.checked,
-                marginLeft: this.props.checked
-                    ? new Animated.Value(this.props.marginLeftValue)
-                    : new Animated.Value(0),
-                backgroundColor: this.props.checked
-                    ? new Animated.Value(this.props.colorInputRangeValue)
-                    : new Animated.Value(0)
-            });
+            setChecked(this.props.checked)
         }
     }
 
@@ -68,18 +60,18 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
         return this.state.checkedData ? this.props.checkedText : this.props.uncheckedText;
     }
 
-    _style = () => {
+    _switcherStyle = () => {
         const isColored = this.props.variant === "colored";
         return [
             styles.switcher,
             {
                 backgroundColor: this.state.backgroundColor.interpolate({
                     inputRange: [0, 150],
-                    outputRange: ["#cccccc", isColored ? "#507BF8" : "#1d1d1d"]
+                    outputRange: ["#cccccc", isColored ? "#507bf8" : "#1d1d1d"]
                 }),
                 borderColor: this.state.backgroundColor.interpolate({
                     inputRange: [0, 150],
-                    outputRange: ["#cccccc", isColored ? "#507BF8" : "#1d1d1d"]
+                    outputRange: ["#cccccc", isColored ? "#507bf8" : "#1d1d1d"]
                 }),
                 opacity: this.props.disabled ? 0.3 : 1
             }
@@ -90,9 +82,9 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
         return [styles.button, { marginLeft: this.state.marginLeft }];
     };
 
-    onPress = () => {
-        const marginLeftValue = this.state.checkedData ? 0 : this.props.marginLeftValue;
-        const backgroundColor = this.state.checkedData ? 0 : this.props.colorInputRangeValue;
+    _setChecked = (checked) => {
+        const marginLeftValue = checked ? 0 : this.props.marginLeftValue;
+        const backgroundColor = checked ? 0 : this.props.colorInputRangeValue;
         Animated.parallel([
             Animated.timing(this.state.marginLeft, {
                 toValue: marginLeftValue,
@@ -112,10 +104,14 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
         });
     };
 
+    onPress = () => {
+        this._setChecked(this.state.checkedData);
+    };
+
     render() {
         return (
             <View style={styles.container}>
-                <Animated.View style={this._style()}>
+                <Animated.View style={this._switcherStyle()}>
                     <Touchable
                         onPress={this.onPress}
                         disabled={this.props.disabled}
