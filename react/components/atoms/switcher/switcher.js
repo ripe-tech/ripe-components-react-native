@@ -50,7 +50,7 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
         };
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (prevProps.checked !== this.props.checked) {
             this.setState({
                 checkedData: this.props.checked,
