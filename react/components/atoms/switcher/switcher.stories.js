@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, select, text, number, boolean } from "@storybook/addon-knobs";
+import { withKnobs, boolean, number, select, text } from "@storybook/addon-knobs";
 
 import { Switcher } from "./switcher";
 
