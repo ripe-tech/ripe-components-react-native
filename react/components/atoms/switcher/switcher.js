@@ -17,7 +17,7 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
             variant: PropTypes.string,
             animationDuration: PropTypes.number,
             marginLeftValue: PropTypes.number,
-            backgroundColorValue: PropTypes.number,
+            colorInputRangeValue: PropTypes.number,
             onValueUpdate: PropTypes.func
         };
     }
@@ -45,7 +45,7 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
                 ? new Animated.Value(this.props.marginLeftValue)
                 : new Animated.Value(0),
             backgroundColor: this.props.checked
-                ? new Animated.Value(this.props.backgroundColorValue)
+                ? new Animated.Value(this.props.colorInputRangeValue)
                 : new Animated.Value(0)
         };
     }
@@ -58,7 +58,7 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
                     ? new Animated.Value(this.props.marginLeftValue)
                     : new Animated.Value(0),
                 backgroundColor: this.props.checked
-                    ? new Animated.Value(this.props.backgroundColorValue)
+                    ? new Animated.Value(this.props.colorInputRangeValue)
                     : new Animated.Value(0)
             });
         }
