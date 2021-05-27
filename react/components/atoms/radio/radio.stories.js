@@ -7,8 +7,8 @@ import { Radio } from "./radio";
 storiesOf("Components/Atoms/Radio", module)
     .addDecorator(withKnobs)
     .add("Radio", () => {
-        const label = text("Radio Label", "");
-        const value = text("Value", "");
+        const label = text("Label", "Label");
+        const value = text("Value", undefined);
         const checked = boolean("Checked", false);
         const disabled = boolean("Disabled", false);
         const size = number("Size", 20);

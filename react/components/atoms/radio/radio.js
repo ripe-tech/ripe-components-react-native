@@ -1,9 +1,9 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
-import { IdentifiableMixin } from "../../../util";
+import { IdentifiableMixin, baseStyles, capitalize } from "../../../util";
 
 import { Touchable } from "../touchable";
 
@@ -43,9 +43,8 @@ export class Radio extends mix(PureComponent).with(IdentifiableMixin) {
         };
     }
 
-    componentDidUpate(prevProps) {
+    componentDidUpdate(prevProps) {
         if (prevProps.checked === this.props.checked) return;
-
         this.setState({
             checkedData: this.props.checked
         });
@@ -71,41 +70,39 @@ export class Radio extends mix(PureComponent).with(IdentifiableMixin) {
         return [
             styles.radio,
             {
-                width: this.props.size,
                 height: this.props.size
             }
         ];
-    }
+    };
 
     _styleExterior = () => {
-        const base = [
+        return [
             styles.radioExterior,
             {
                 width: this.props.size,
                 height: this.props.size
-            }
+            },
+            this.state.checkedData ? styles.radioExteriorChecked : {},
+            this.state.active ? styles.radioExteriorActive : {},
+            styles[`radioExterior${capitalize(this.props.variant)}`],
+            this.props.disabled ? styles.radioExteriorDisabled : {}
         ];
-
-        if (this.state.checkedData) base.push(styles.radioExteriorChecked)
-        if (this.state.active) base.push(styles.radioExteriorActive)
-        if (this.props.disabled) base.push(styles.radioExteriorDisabled)
-
-        return base;
     };
 
     _styleInterior = () => {
-        const base = [
+        return [
             styles.radioInterior,
             {
                 width: this.props.size / 3,
                 height: this.props.size / 3
-            }
+            },
+            this.state.active ? styles.radioInteriorActive : {},
+            this.props.disabled ? styles.radioInteriorDisabled : {}
         ];
+    };
 
-        if (this.state.active) base.push(styles.radioInteriorActive)
-        if (this.props.disabled) base.push(styles.radioInteriorDisabled)
-
-        return base;
+    _styleLabel = () => {
+        return [styles.radioLabel, this.props.disabled ? styles.radioLabelDisabled : {}];
     };
 
     render() {
@@ -122,7 +119,7 @@ export class Radio extends mix(PureComponent).with(IdentifiableMixin) {
                         <View style={this._styleInterior()} />
                     )}
                 </View>
-                <Text>{this.props.label}</Text>
+                <Text style={this._styleLabel()}>{this.props.label}</Text>
             </Touchable>
         );
     }
@@ -130,8 +127,9 @@ export class Radio extends mix(PureComponent).with(IdentifiableMixin) {
 
 const styles = StyleSheet.create({
     radio: {
-        borderRadius: 50,
-        overflow: "hidden"
+        overflow: "hidden",
+        flexDirection: "row",
+        alignItems: "center"
     },
     radioExterior: {
         borderRadius: 50,
@@ -150,6 +148,10 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         backgroundColor: "#c3c9cf"
     },
+    radioExteriorError: {
+        borderWidth: 2,
+        borderColor: "#ce544d"
+    },
     radioExteriorDisabled: {
         borderWidth: 0,
         backgroundColor: "#f6f7f9"
@@ -164,6 +166,16 @@ const styles = StyleSheet.create({
     },
     radioInteriorDisabled: {
         backgroundColor: "#a6adb4"
+    },
+    radioLabel: {
+        fontFamily: baseStyles.FONT,
+        marginLeft: 4,
+        marginTop: Platform.OS === "ios" ? 3 : 0,
+        marginBottom: Platform.OS === "ios" ? 0 : 2,
+        opacity: 1
+    },
+    radioLabelDisabled: {
+        opacity: 0.5
     }
 });
 
