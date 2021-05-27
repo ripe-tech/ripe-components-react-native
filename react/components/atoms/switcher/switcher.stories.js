@@ -9,9 +9,9 @@ storiesOf("Components/Atoms/Switcher", module)
     .add("Switcher", () => {
         const checked = boolean("Checked", false);
         const disabled = boolean("Disabled", false);
-        const animationDuration = number("Animation Duration", 200);
-        const checkedText = text("Checked Text", "");
-        const uncheckedText = text("Unchecked Text", "");
+        const animationDuration = number("Animation Duration", -1);
+        const checkedText = text("Checked Text", undefined);
+        const uncheckedText = text("Unchecked Text", undefined);
         const variant = select(
             "Variant",
             {
@@ -23,12 +23,12 @@ storiesOf("Components/Atoms/Switcher", module)
         );
         return (
             <Switcher
-                variant={variant || undefined}
-                checked={checked || undefined}
-                disabled={disabled || undefined}
-                checkedText={checkedText || undefined}
-                uncheckedText={uncheckedText || undefined}
-                animationDuration={animationDuration || undefined}
+                variant={variant}
+                checked={checked}
+                disabled={disabled}
+                checkedText={checkedText}
+                uncheckedText={uncheckedText}
+                animationDuration={animationDuration === -1 ? undefined : animationDuration}
                 onValueUpdate={value => () => alert("Switcher state", value)}
             />
         );
