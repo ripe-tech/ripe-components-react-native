@@ -10,8 +10,8 @@ storiesOf("Components/Atoms/Switcher", module)
         const checked = boolean("Checked", false);
         const disabled = boolean("Disabled", false);
         const animationDuration = number("Animation Duration", 200);
-        const checkedText = text("Checked text", "");
-        const uncheckedText = text("Unchecked text", "");
+        const checkedText = text("Checked Text", "");
+        const uncheckedText = text("Unchecked Text", "");
         const variant = select(
             "Variant",
             {
