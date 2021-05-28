@@ -68,6 +68,9 @@ import chatAlt from "./chat-alt.svg";
 import chatRemove from "./chat-remove.svg";
 import chatWarning from "./chat-warning.svg";
 import chat from "./chat.svg";
+import check from "./check.svg";
+import checkBlue from "./check-blue.svg";
+import checkGray from "./check-gray.svg";
 import checkboxIntermediate from "./checkbox-intermediate.svg";
 import checkbox from "./checkbox.svg";
 import chevronDown from "./chevron-down.svg";
@@ -191,6 +194,9 @@ import maximise from "./maximise.svg";
 import microphone from "./microphone.svg";
 import minimise from "./minimise.svg";
 import minus from "./minus.svg";
+import minusRound from "./minus-round.svg";
+import minusRoundBlue from "./minus-round-blue.svg";
+import minusRoundGray from "./minus-round-gray.svg";
 import moon from "./moon.svg";
 import mouse from "./mouse.svg";
 import music from "./music.svg";
@@ -401,6 +407,9 @@ const icons = {
     "chat-remove": chatRemove,
     "chat-warning": chatWarning,
     chat: chat,
+    check: check,
+    "check-blue": checkBlue,
+    "check-gray": checkGray,
     "checkbox-intermediate": checkboxIntermediate,
     checkbox: checkbox,
     "chevron-down": chevronDown,
@@ -524,6 +533,9 @@ const icons = {
     microphone: microphone,
     minimise: minimise,
     minus: minus,
+    "minus-round": minusRound,
+    "minus-round-blue": minusRoundBlue,
+    "minus-round-gray": minusRoundGray,
     moon: moon,
     mouse: mouse,
     music: music,
