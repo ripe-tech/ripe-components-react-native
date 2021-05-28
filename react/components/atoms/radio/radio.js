@@ -113,6 +113,7 @@ export class Radio extends mix(PureComponent).with(IdentifiableMixin) {
                 disabled={this.props.disabled}
                 onPressIn={this.onPressIn}
                 onPressOut={this.onPressOut}
+                {...this.id("radio")}
             >
                 <View style={this._styleExterior()}>
                     {(this.state.checkedData || this.state.active) && (
