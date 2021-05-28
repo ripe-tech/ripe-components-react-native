@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TextInput, ViewPropTypes, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -57,7 +57,7 @@ export class TextInputRipe extends mix(PureComponent).with(IdentifiableMixin) {
                     placeholderTextColor={"#869aa"}
                     onChangeText={changedText => {
                         this.setState({ text: changedText }, () => {
-                            if (this.props.onValueUpdate) this.props.onValueUpdate(text);
+                            if (this.props.onValueUpdate) this.props.onValueUpdate(changedText);
                         });
                     }}
                 />
