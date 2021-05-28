@@ -11,7 +11,7 @@ export class Radio extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             label: PropTypes.string,
-            value: PropTypes.string,
+            value: PropTypes.any,
             checked: PropTypes.bool,
             disabled: PropTypes.bool,
             variant: PropTypes.string,
