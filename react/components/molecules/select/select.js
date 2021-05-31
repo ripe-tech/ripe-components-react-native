@@ -3,7 +3,7 @@ import { StyleSheet, ViewPropTypes, View } from "react-native";
 import PropTypes from "prop-types";
 import RNPickerSelect from "react-native-picker-select";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, equal } from "../../../util";
 
 import { Icon } from "../../atoms";
 
@@ -11,20 +11,10 @@ export class Select extends PureComponent {
     static get propTypes() {
         return {
             options: PropTypes.array,
-            value: PropTypes.string,
-            visible: PropTypes.bool,
+            value: PropTypes.any,
             placeholder: PropTypes.string,
-            autoScroll: PropTypes.bool, // check this
             disabled: PropTypes.bool,
-            align: PropTypes.string,
-            direction: PropTypes.string,
             width: PropTypes.number,
-            maxHeight: PropTypes.number,
-            dropdownMinWidth: PropTypes.number,
-            dropdownMaxWidth: PropTypes.number,
-            keyTimeout: PropTypes.number,
-            activeOpacity: PropTypes.number,
-            onUpdateVisible: PropTypes.func,
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -34,19 +24,10 @@ export class Select extends PureComponent {
         return {
             options: [],
             value: undefined,
-            visible: false,
-            placeholder: "",
-            autoScroll: true,
+            placeholder: undefined,
             disabled: false,
-            align: "right",
-            direction: "bottom",
             width: undefined,
-            maxHeight: 206,
-            dropdownMinWidth: undefined,
-            dropdownMaxWidth: undefined,
             keyTimeout: 500,
-            activeOpacity: 0.75,
-            onUpdateVisible: () => {},
             onUpdateValue: () => {},
             style: {}
         };
@@ -60,9 +41,13 @@ export class Select extends PureComponent {
         };
     }
 
-    onButtonPress = () => {
-        this.props.onUpdateVisible();
-    };
+    componentDidUpdate(prevProps) {
+        if (!equal(prevProps.value, this.props.value)) {
+            this.setState({
+                valueData: this.props.value
+            });
+        }
+    }
 
     onValueChange = value => {
         this.setState({
@@ -70,8 +55,28 @@ export class Select extends PureComponent {
         });
     };
 
+    _icon = () => {
+        return <Icon icon={"chevron-down"} color={"#1b2632"} strokeWidth={2} />;
+    };
+
+    _items = () => {
+        return this.props.options.map(option => ({
+            ...option,
+            key: option.value,
+
+            // workaround for placeholder use overriding
+            // the selected item style
+            color: option.value === this.state.valueData ? "#7f7f7f" : "#000000"
+        }));
+    };
+
     _style = () => {
-        return [styles.select, this.props.style];
+        return [
+            styles.select,
+            { width: this.props.width },
+            this.props.style,
+            this.props.disabled ? styles.disabled : {}
+        ];
     };
 
     _pickerStyle = () => {
@@ -83,7 +88,19 @@ export class Select extends PureComponent {
                 borderWidth: 1,
                 fontFamily: baseStyles.FONT_BOOK,
                 fontSize: 14,
-                paddingLeft: 10
+                paddingLeft: 10,
+                height: 40
+            },
+            inputIOSContainer: {
+                color: "#24425a",
+                backgroundColor: "#f6f7f9",
+                borderColor: "#e4e8f0",
+                borderWidth: 1,
+                fontFamily: baseStyles.FONT_BOOK,
+                fontSize: 14,
+                paddingLeft: 10,
+                height: 40,
+                justifyContent: "center"
             },
             placeholder: {
                 color: "#24425a"
@@ -100,12 +117,12 @@ export class Select extends PureComponent {
             <View style={this._style()}>
                 <RNPickerSelect
                     style={this._pickerStyle()}
-                    selectedValue={this.state.valueData}
-                    items={this.props.options.map(option => ({ ...option, key: option.value }))}
+                    value={this.state.valueData}
+                    items={this._items()}
                     placeholder={{ label: this.props.placeholder, value: null }}
                     disabled={this.props.disabled}
                     useNativeAndroidPickerStyle={false}
-                    Icon={() => <Icon icon={"chevron-down"} color={"#1b2632"} strokeWidth={2} />}
+                    Icon={this._icon}
                     onValueChange={this.onValueChange}
                 />
             </View>
@@ -116,6 +133,9 @@ export class Select extends PureComponent {
 const styles = StyleSheet.create({
     select: {
         width: "100%"
+    },
+    disabled: {
+        opacity: 0.75
     }
 });
 
