@@ -50,9 +50,12 @@ export class Select extends PureComponent {
     }
 
     onValueChange = value => {
-        this.setState({
-            valueData: value
-        });
+        this.setState(
+            {
+                valueData: value
+            },
+            () => this.props.onUpdateValue(value)
+        );
     };
 
     _icon = () => {
