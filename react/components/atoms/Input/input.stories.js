@@ -2,20 +2,20 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, bool, text } from "@storybook/addon-knobs";
 
-import { TextInputRipe } from "./text-input";
+import { InputRipe } from "./input";
 
-storiesOf("Components/Atoms/Text Input", module)
+storiesOf("Components/Atoms/Input", module)
     .addDecorator(withKnobs)
-    .add("Text Input", () => {
-        const title = text("Tile", "");
-        const value = text("Text", "");
+    .add("Input", () => {
+        const header = text("Header", undefined);
+        const value = text("Value", undefined);
         const hasBorder = bool("Has Border", false);
         const borderColor = text("Border Color", "#e4e8f0");
-        const placeholder = text("Placeholder", "Insert text here");
+        const placeholder = text("Placeholder", undefined);
 
         return (
-            <TextInputRipe
-                title={title}
+            <InputRipe
+                header={header}
                 value={value}
                 hasBorder={hasBorder}
                 borderColor={borderColor}

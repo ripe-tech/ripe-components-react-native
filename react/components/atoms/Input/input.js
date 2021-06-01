@@ -5,10 +5,10 @@ import { mix } from "yonius";
 
 import { IdentifiableMixin, baseStyles } from "../../../util";
 
-export class TextInputRipe extends mix(PureComponent).with(IdentifiableMixin) {
+export class InputRipe extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
-            title: PropTypes.string,
+            header: PropTypes.string,
             placeholder: PropTypes.string,
             value: PropTypes.string,
             hasBorder: PropTypes.bool,
@@ -19,9 +19,9 @@ export class TextInputRipe extends mix(PureComponent).with(IdentifiableMixin) {
 
     static get defaultProps() {
         return {
-            placeholder: "Insert value here",
+            placeholder: this.props.header,
             borderColor: "#e4e8f0",
-            title: undefined,
+            header: undefined,
             value: undefined,
             hasBorder: undefined,
             onValueUpdate: undefined
@@ -32,13 +32,25 @@ export class TextInputRipe extends mix(PureComponent).with(IdentifiableMixin) {
         super(props);
 
         this.state = {
-            text: this.props.value
+            valueData: this.props.value
         };
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.value !== this.props.value) {
+            this.onChangeValue(this.props.value);
+        }
+    }
+
+    onChangeValue = value => {
+        this.setState({ valueData: value }, () => {
+            if (this.props.onValueUpdate) this.props.onValueUpdate(value);
+        });
+    };
+
     _style = () => {
         return [
-            styles.textInput,
+            styles.container,
             {
                 borderColor: this.props.hasBorder ? "#e4e8f0" : "transparent",
                 borderBottomWidth: this.props.hasBorder ? 1 : 0
@@ -55,11 +67,7 @@ export class TextInputRipe extends mix(PureComponent).with(IdentifiableMixin) {
                     value={this.props.value}
                     placeholder={this.props.placeholder}
                     placeholderTextColor={"#869aa"}
-                    onChangeText={changedText => {
-                        this.setState({ text: changedText }, () => {
-                            if (this.props.onValueUpdate) this.props.onValueUpdate(changedText);
-                        });
-                    }}
+                    onChangeText={changedText => this.onChangeValue(changedText)}
                 />
             </View>
         );
@@ -67,7 +75,7 @@ export class TextInputRipe extends mix(PureComponent).with(IdentifiableMixin) {
 }
 
 const styles = StyleSheet.create({
-    textInput: {
+    container: {
         fontFamily: baseStyles.FONT,
         display: "flex",
         flexDirection: "column",
@@ -87,4 +95,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default TextInputRipe;
+export default InputRipe;
