@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, ViewPropTypes, StyleSheet } from "react-native";
+import { Animated, StyleSheet, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 export class BarAnimated extends PureComponent {

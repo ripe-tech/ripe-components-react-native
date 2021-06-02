@@ -1,10 +1,10 @@
 import React, { PureComponent } from "react";
 import {
-    ViewPropTypes,
     Platform,
-    View,
     TouchableNativeFeedback,
-    TouchableOpacity
+    TouchableOpacity,
+    View,
+    ViewPropTypes
 } from "react-native";
 import PropTypes from "prop-types";
 
