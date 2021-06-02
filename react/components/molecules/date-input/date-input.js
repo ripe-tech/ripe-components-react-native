@@ -12,6 +12,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             value: PropTypes.instanceOf(Date),
+            header: PropTypes.string,
             disabled: PropTypes.bool,
             activeOpacity: PropTypes.number,
             onUpdateValue: PropTypes.func,
@@ -22,6 +23,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
     static get defaultProps() {
         return {
             value: new Date(),
+            header: undefined,
             disabled: false,
             activeOpacity: 0.75,
             onUpdateValue: () => {},
@@ -31,8 +33,6 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
 
     constructor(props) {
         super(props);
-
-        console.log("props", props.value);
 
         this.state = {
             valueData: this.props.value,
@@ -48,7 +48,6 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     onChange = (event, value) => {
-        console.log("val", value);
         this.setState(
             prevState => ({
                 valueData: value || prevState.valueData,
@@ -60,6 +59,10 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
 
     _style = () => {
         return [styles.dateInput, this.props.style];
+    };
+
+    _buttonStyle = () => {
+        return [styles.dateInputButton, this.props.disabled ? styles.dateInputButtonDisabled : {}];
     };
 
     _renderCalendar = () => {
@@ -93,13 +96,15 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
         return (
             <View style={this._style()} {...this.id("date-input")}>
                 <Touchable
-                    style={styles.dateInputButton}
+                    style={this._buttonStyle()}
                     activeOpacity={this.props.activeOpacity}
-                    disabled={false}
+                    disabled={this.props.disabled}
                     onPress={this.onPress}
                 >
                     <View style={styles.columnText}>
-                        <Text style={styles.headerText}>Birth Date</Text>
+                        {Boolean(this.props.header) && (
+                            <Text style={styles.headerText}>{this.props.header}</Text>
+                        )}
                         <Text style={styles.dateText}>
                             {this.state.valueData?.toLocaleDateString()}
                         </Text>
@@ -128,6 +133,9 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "center"
     },
+    dateInputButtonDisabled: {
+        opacity: 0.5
+    },
     columnText: {
         flex: 1,
         marginHorizontal: 15
@@ -148,9 +156,6 @@ const styles = StyleSheet.create({
         color: "#223645",
         fontSize: 16,
         lineHeight: 18
-    },
-    modal: {
-        width: "100%"
     }
 });
 
