@@ -19,11 +19,11 @@ export class InputRipe extends mix(PureComponent).with(IdentifiableMixin) {
 
     static get defaultProps() {
         return {
-            placeholder: this.props.header,
+            placeholder: undefined,
             borderColor: "#e4e8f0",
             header: undefined,
             value: undefined,
-            hasBorder: undefined,
+            hasBorder: true,
             onValueUpdate: undefined
         };
     }
@@ -37,9 +37,10 @@ export class InputRipe extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.value !== this.props.value) {
-            this.onChangeValue(this.props.value);
-        }
+        if (prevProps.value === this.props.value) return;
+        this.setState({
+            valueData: this.props.value
+        });
     }
 
     onChangeValue = value => {
@@ -53,21 +54,22 @@ export class InputRipe extends mix(PureComponent).with(IdentifiableMixin) {
             styles.container,
             {
                 borderColor: this.props.hasBorder ? "#e4e8f0" : "transparent",
-                borderBottomWidth: this.props.hasBorder ? 1 : 0
+                borderBottomWidth: this.props.hasBorder ? 1 : 0,
+                borderTopWidth: this.props.hasBorder ? 1 : 0
             }
         ];
     };
 
     render() {
         return (
-            <View style={this._style()} {...this.id("text-input-ripe")}>
-                <Text style={styles.title}>{this.props.title}</Text>
+            <View style={this._style()} {...this.id("input-ripe")}>
+                <Text style={styles.header}>{this.props.header}</Text>
                 <TextInput
                     style={styles.input}
-                    value={this.props.value}
-                    placeholder={this.props.placeholder}
-                    placeholderTextColor={"#869aa"}
-                    onChangeText={changedText => this.onChangeValue(changedText)}
+                    value={this.state.valueData}
+                    placeholder={this.props.placeholder || this.props.header}
+                    placeholderTextColor={"#869aaa"}
+                    onChangeText={this.onChangeValue}
                 />
             </View>
         );
@@ -79,15 +81,16 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.FONT,
         display: "flex",
         flexDirection: "column",
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        paddingVertical: 15
     },
-    title: {
+    header: {
         fontSize: 12,
         color: "#4f7af8",
         letterSpacing: 0.6
     },
     input: {
-        fontSize: 18,
+        fontSize: 16,
         height: 30,
         width: "100%",
         color: "#223645",
