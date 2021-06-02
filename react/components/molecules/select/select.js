@@ -117,7 +117,7 @@ export class Select extends PureComponent {
 
     render() {
         return (
-            <View style={this._style()}>
+            <View style={this._style()} {...this.id("select")}>
                 <RNPickerSelect
                     style={this._pickerStyle()}
                     value={this.state.valueData}
