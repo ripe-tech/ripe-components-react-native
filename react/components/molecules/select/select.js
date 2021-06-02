@@ -2,12 +2,13 @@ import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, View } from "react-native";
 import PropTypes from "prop-types";
 import RNPickerSelect from "react-native-picker-select";
+import { mix } from "yonius";
 
-import { baseStyles, equal } from "../../../util";
+import { IdentifiableMixin, baseStyles, equal } from "../../../util";
 
 import { Icon } from "../../atoms";
 
-export class Select extends PureComponent {
+export class Select extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             options: PropTypes.array,
