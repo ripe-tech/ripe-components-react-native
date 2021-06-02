@@ -2,8 +2,9 @@ import React, { PureComponent } from "react";
 import { StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { KeyValue } from "../key-value";
 import { isTabletSize } from "../../../util";
+
+import { KeyValue } from "../key-value";
 
 export class KeyValues extends PureComponent {
     static get propTypes() {

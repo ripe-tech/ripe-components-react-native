@@ -1,10 +1,10 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, Platform, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { Icon, Touchable } from "../../atoms";
-
 import { baseStyles } from "../../../util";
+
+import { Icon, Touchable } from "../../atoms";
 
 export class ImageListItemAdd extends PureComponent {
     static get propTypes() {
