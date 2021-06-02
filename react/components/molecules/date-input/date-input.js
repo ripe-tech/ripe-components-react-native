@@ -1,14 +1,14 @@
 import React, { PureComponent } from "react";
 import { Platform, StyleSheet, Text, ViewPropTypes, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-
+import { mix } from "yonius";
 import PropTypes from "prop-types";
 
-import { baseStyles } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { ContainerOpenable, Icon, Touchable } from "../../atoms";
 
-export class DateInput extends PureComponent {
+export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             value: PropTypes.instanceOf(Date),
@@ -91,7 +91,7 @@ export class DateInput extends PureComponent {
 
     render() {
         return (
-            <View style={this._style()}>
+            <View style={this._style()} {...this.id("date-input")}>
                 <Touchable
                     style={styles.dateInputButton}
                     activeOpacity={this.props.activeOpacity}
