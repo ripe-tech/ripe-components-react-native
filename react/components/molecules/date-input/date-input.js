@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
-import { Modal, Platform, StyleSheet, ViewPropTypes, View, Text } from "react-native";
+import { Platform, StyleSheet, Text, ViewPropTypes, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
 
-import { Icon, Touchable } from "../../atoms";
+import { ContainerOpenable, Icon, Touchable } from "../../atoms";
 
 export class DateInput extends PureComponent {
     static get propTypes() {
@@ -44,6 +44,7 @@ export class DateInput extends PureComponent {
         this.setState({
             visible: true
         });
+        if (Platform.OS === "ios") this.container.toggle();
     };
 
     onChange = (event, value) => {
@@ -64,32 +65,24 @@ export class DateInput extends PureComponent {
     _renderCalendar = () => {
         if (Platform.OS === "ios") {
             return (
-                <Modal
-                    style={styles.modal}
-                    animationType="fade"
-                    transparent={false}
-                    visible={this.state.visible}
-                    onRequestClose={() => {
-                        this.setState({
-                            visible: false
-                        });
-                    }}
-                >
+                <ContainerOpenable ref={el => (this.container = el)}>
                     <DateTimePicker
-                        style={{ height: "70%", margin: "10%" }}
                         value={this.state.valueData}
                         mode={"date"}
                         is24Hour={false}
                         display="inline"
                         onChange={this.onChange}
                     />
-                </Modal>
+                </ContainerOpenable>
             );
         }
+
+        if (!this.state.visible) return;
         return (
             <DateTimePicker
                 value={this.state.valueData}
                 mode={"date"}
+                display={"calendar"}
                 is24Hour={false}
                 onChange={this.onChange}
             />
