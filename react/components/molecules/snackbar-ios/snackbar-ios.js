@@ -1,13 +1,13 @@
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, ViewPropTypes, Platform, Text } from "react-native";
+import { Animated, Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
 import { baseStyles, IdentifiableMixin } from "../../../util";
 
-import { Touchable } from "../touchable";
+import { Touchable } from "../../atoms";
 
-export class SnackbarIos extends mix(PureComponent).width(IdentifiableMixin) {
+export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             text: PropTypes.string,
@@ -25,6 +25,7 @@ export class SnackbarIos extends mix(PureComponent).width(IdentifiableMixin) {
             actionText: undefined,
             duration: 5000,
             animationDuration: 300,
+            onActionPress: () => {},
             style: {}
         };
     }
@@ -33,18 +34,15 @@ export class SnackbarIos extends mix(PureComponent).width(IdentifiableMixin) {
         super(props);
 
         this.state = {
-            text: this.props.text,
-            actionText: this.props.actionText,
-            animationDuration: this.props.animationDuration,
             opacity: new Animated.Value(0),
-            toastTimeout: null
+            snackbarTimeout: null
         };
     }
 
     _stopPrevAnimations() {
         this.state.opacity.stopAnimation();
         this.state.opacity.setValue(0);
-        clearTimeout(this.toastTimeout);
+        clearTimeout(this.snackbarTimeout);
     }
 
     show() {
@@ -54,11 +52,11 @@ export class SnackbarIos extends mix(PureComponent).width(IdentifiableMixin) {
             duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
-        this.toastTimeout = setTimeout(() => this.hide(), this.props.duration);
+        this.snackbarTimeout = setTimeout(this.hide, this.props.duration);
     }
 
     hide() {
-        clearTimeout(this.toastTimeout);
+        clearTimeout(this.snackbarTimeout);
         Animated.timing(this.state.opacity, {
             toValue: 0,
             duration: this.props.animationDuration,
@@ -68,7 +66,7 @@ export class SnackbarIos extends mix(PureComponent).width(IdentifiableMixin) {
 
     _style = () => {
         return [
-            styles.toast,
+            styles.snackbar,
             {
                 opacity: this.state.opacity
             },
@@ -81,7 +79,7 @@ export class SnackbarIos extends mix(PureComponent).width(IdentifiableMixin) {
             <Animated.View style={this._style()} {...this.id("snackbar-ios")}>
                 <Text style={styles.text}>{this.props.text}</Text>
                 {this.props.actionText ? (
-                    <Touchable style={styles.action}>
+                    <Touchable onPress={this.props.onActionPress} style={styles.action}>
                         <Text style={styles.actionText}>{this.props.actionText}</Text>
                     </Touchable>
                 ) : null}
@@ -91,7 +89,7 @@ export class SnackbarIos extends mix(PureComponent).width(IdentifiableMixin) {
 }
 
 const styles = StyleSheet.create({
-    toast: {
+    snackbar: {
         alignItems: "center",
         backgroundColor: "#ffffff",
         borderColor: "transparent",
@@ -110,6 +108,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontFamily: baseStyles.FONT_BOOK,
         fontSize: 16,
+        color: "#223645",
         paddingTop: Platform.OS === "ios" ? 4 : 0
     },
     action: {
