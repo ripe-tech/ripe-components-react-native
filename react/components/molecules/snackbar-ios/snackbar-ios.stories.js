@@ -11,6 +11,7 @@ storiesOf("Components/Molecules/Snackbar ios", module)
         const ref = React.createRef();
         const _text = text("Text", "Marked as read.");
         const actionText = text("Action Text", "Undo");
+
         return (
             <View>
                 <Button title="Show" onPress={() => ref.current.show()} />
