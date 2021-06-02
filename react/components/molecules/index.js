@@ -8,6 +8,7 @@ export * from "./key-values";
 export * from "./key-values-placeholder";
 export * from "./keyboard-numeric";
 export * from "./rich-textinput";
+export * from "./snackbar-ios";
 export * from "./section-view";
 export * from "./tabs";
 export * from "./tabs-text";
