@@ -33,7 +33,7 @@ export class ToastMessage extends PureComponent {
         super(props);
 
         this.state = {
-            opacity: new Animated.Value(0),
+            opacity: new Animated.Value(0)
         };
     }
 
