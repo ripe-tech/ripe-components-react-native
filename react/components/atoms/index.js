@@ -12,6 +12,7 @@ export * from "./container-openable";
 export * from "./icon";
 export * from "./lightbox";
 export * from "./link";
+export * from "./progress-bar";
 export * from "./tag";
 export * from "./text";
 export * from "./textarea";
