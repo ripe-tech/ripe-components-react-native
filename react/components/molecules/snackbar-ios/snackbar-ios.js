@@ -43,7 +43,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
         this.state.opacity.stopAnimation();
         this.state.opacity.setValue(0);
         clearTimeout(this.snackbarTimeout);
-    }
+    };
 
     show = () => {
         this._stopPrevAnimations();
@@ -53,7 +53,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
             useNativeDriver: true
         }).start();
         this.snackbarTimeout = setTimeout(this.hide, this.props.duration);
-    }
+    };
 
     show = () => {
         clearTimeout(this.snackbarTimeout);
@@ -62,7 +62,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
             duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
-    }
+    };
 
     _style = () => {
         return [

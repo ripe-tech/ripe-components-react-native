@@ -11,7 +11,7 @@ storiesOf("Components/Molecules/Snackbar ios", module)
         const ref = React.createRef();
         const _text = text("Text", "Marked as read.");
         const actionText = text("Action Text", "Undo");
-        const animationDuration = number("Animation Duration", -1)
+        const animationDuration = number("Animation Duration", -1);
 
         return (
             <View>
