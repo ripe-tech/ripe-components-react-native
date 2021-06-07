@@ -13,7 +13,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
             text: PropTypes.string,
             actionText: PropTypes.string,
             duration: PropTypes.number,
-            showDuration: PropTypes.number,
+            animationDuration: PropTypes.number,
             onActionPress: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -24,7 +24,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
             text: undefined,
             actionText: undefined,
             duration: 5000,
-            showDuration: 300,
+            animationDuration: 300,
             onActionPress: () => {},
             style: {}
         };
@@ -34,7 +34,8 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
         super(props);
 
         this.state = {
-            opacity: new Animated.Value(0)
+            opacity: new Animated.Value(0),
+            snackbarTimeout: null
         };
     }
 
@@ -48,7 +49,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
         this._stopPrevAnimations();
         Animated.timing(this.state.opacity, {
             toValue: 1,
-            duration: this.props.showDuration,
+            duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
         this.snackbarTimeout = setTimeout(this.hide, this.props.duration);
@@ -58,7 +59,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
         clearTimeout(this.snackbarTimeout);
         Animated.timing(this.state.opacity, {
             toValue: 0,
-            duration: this.props.showDuration,
+            duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
     };
