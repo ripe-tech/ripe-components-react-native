@@ -12,7 +12,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             text: PropTypes.string,
             actionText: PropTypes.string,
-            duration: PropTypes.number,
+            showDuration: PropTypes.number,
             animationDuration: PropTypes.number,
             onActionPress: PropTypes.func,
             style: ViewPropTypes.style
@@ -52,7 +52,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
             duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
-        this.snackbarTimeout = setTimeout(this.hide, this.props.duration);
+        this.snackbarTimeout = setTimeout(this.hide, this.props.showDuration);
     };
 
     show = () => {
