@@ -68,8 +68,9 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             ...option,
             key: option.value,
 
-            // workaround for placeholder use overriding
-            // the selected item style
+            // when setting a placeholder, it overrides the selected
+            // item styling, so an workaround was made by setting
+            // the selected item background color explicitly
             color: option.value === this.state.valueData ? "#7f7f7f" : "#000000"
         }));
     };
