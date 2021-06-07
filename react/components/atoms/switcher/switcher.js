@@ -41,46 +41,17 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
 
         this.state = {
             checkedData: this.props.checked,
-            marginLeft: this.props.checked
-                ? new Animated.Value(this.props.marginLeftValue)
-                : new Animated.Value(0),
-            backgroundColor: this.props.checked
-                ? new Animated.Value(this.props.colorInputRangeValue)
-                : new Animated.Value(0)
+            marginLeft: new Animated.Value(this.props.checked ? this.props.marginLeftValue : 0),
+            backgroundColor: new Animated.Value(
+                this.props.checked ? this.props.colorInputRangeValue : 0
+            )
         };
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.checked !== this.props.checked) {
-            this.setChecked(this.props.checked);
-        }
+        if (prevProps.checked === this.props.checked) return;
+        this.setChecked(this.props.checked);
     }
-
-    _getText() {
-        return this.state.checkedData ? this.props.checkedText : this.props.uncheckedText;
-    }
-
-    _switcherStyle = () => {
-        const isColored = this.props.variant === "colored";
-        return [
-            styles.switcher,
-            {
-                backgroundColor: this.state.backgroundColor.interpolate({
-                    inputRange: [0, 150],
-                    outputRange: ["#cccccc", isColored ? "#507bf8" : "#1d1d1d"]
-                }),
-                borderColor: this.state.backgroundColor.interpolate({
-                    inputRange: [0, 150],
-                    outputRange: ["#cccccc", isColored ? "#507bf8" : "#1d1d1d"]
-                }),
-                opacity: this.props.disabled ? 0.3 : 1
-            }
-        ];
-    };
-
-    _buttonStyle = () => {
-        return [styles.button, { marginLeft: this.state.marginLeft }];
-    };
 
     setChecked = checked => {
         const marginLeftValue = checked ? 0 : this.props.marginLeftValue;
@@ -106,6 +77,32 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
 
     onPress = () => {
         this.setChecked(this.state.checkedData);
+    };
+
+    _getText() {
+        return this.state.checkedData ? this.props.checkedText : this.props.uncheckedText;
+    }
+
+    _switcherStyle = () => {
+        const isColored = this.props.variant === "colored";
+        return [
+            styles.switcher,
+            {
+                backgroundColor: this.state.backgroundColor.interpolate({
+                    inputRange: [0, 150],
+                    outputRange: ["#cccccc", isColored ? "#507bf8" : "#1d1d1d"]
+                }),
+                borderColor: this.state.backgroundColor.interpolate({
+                    inputRange: [0, 150],
+                    outputRange: ["#cccccc", isColored ? "#507bf8" : "#1d1d1d"]
+                }),
+                opacity: this.props.disabled ? 0.3 : 1
+            }
+        ];
+    };
+
+    _buttonStyle = () => {
+        return [styles.button, { marginLeft: this.state.marginLeft }];
     };
 
     render() {
