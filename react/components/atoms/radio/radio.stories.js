@@ -8,7 +8,6 @@ storiesOf("Components/Atoms/Radio", module)
     .addDecorator(withKnobs)
     .add("Radio", () => {
         const label = text("Label", "Label");
-        const value = text("Value", undefined);
         const checked = boolean("Checked", false);
         const disabled = boolean("Disabled", false);
         const size = number("Size", 20);
@@ -24,7 +23,6 @@ storiesOf("Components/Atoms/Radio", module)
         return (
             <Radio
                 label={label || undefined}
-                value={value || undefined}
                 checked={checked}
                 disabled={disabled}
                 size={size || undefined}
