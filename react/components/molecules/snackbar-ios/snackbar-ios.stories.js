@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, View } from "react-native";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, text } from "@storybook/addon-knobs";
+import { withKnobs, number, text } from "@storybook/addon-knobs";
 
 import { SnackbarIos } from "./snackbar-ios";
 
@@ -11,6 +11,7 @@ storiesOf("Components/Molecules/Snackbar ios", module)
         const ref = React.createRef();
         const _text = text("Text", "Marked as read.");
         const actionText = text("Action Text", "Undo");
+        const animationDuration = number("Animation Duration", -1)
 
         return (
             <View>
@@ -20,6 +21,7 @@ storiesOf("Components/Molecules/Snackbar ios", module)
                     text={_text}
                     actionText={actionText}
                     ref={ref}
+                    animationDuration={animationDuration === -1 ? undefined : width}
                     onActionPress={() => {
                         alert("Action presssed!");
                     }}

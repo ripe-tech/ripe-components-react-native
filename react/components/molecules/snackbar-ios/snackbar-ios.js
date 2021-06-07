@@ -39,13 +39,13 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
         };
     }
 
-    _stopPrevAnimations() {
+    _stopPrevAnimations = () => {
         this.state.opacity.stopAnimation();
         this.state.opacity.setValue(0);
         clearTimeout(this.snackbarTimeout);
     }
 
-    show() {
+    show = () => {
         this._stopPrevAnimations();
         Animated.timing(this.state.opacity, {
             toValue: 1,
@@ -55,7 +55,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
         this.snackbarTimeout = setTimeout(this.hide, this.props.duration);
     }
 
-    hide() {
+    show = () => {
         clearTimeout(this.snackbarTimeout);
         Animated.timing(this.state.opacity, {
             toValue: 0,
@@ -78,11 +78,11 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
         return (
             <Animated.View style={this._style()} {...this.id("snackbar-ios")}>
                 <Text style={styles.text}>{this.props.text}</Text>
-                {this.props.actionText ? (
+                {this.props.actionText && (
                     <Touchable onPress={this.props.onActionPress} style={styles.action}>
                         <Text style={styles.actionText}>{this.props.actionText}</Text>
                     </Touchable>
-                ) : null}
+                )}
             </Animated.View>
         );
     }
