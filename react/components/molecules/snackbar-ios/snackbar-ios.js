@@ -23,7 +23,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             text: undefined,
             actionText: undefined,
-            duration: 5000,
+            showDuration: 5000,
             animationDuration: 300,
             onActionPress: () => {},
             style: {}
@@ -55,7 +55,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
         this.snackbarTimeout = setTimeout(this.hide, this.props.showDuration);
     };
 
-    show = () => {
+    hide = () => {
         clearTimeout(this.snackbarTimeout);
         Animated.timing(this.state.opacity, {
             toValue: 0,

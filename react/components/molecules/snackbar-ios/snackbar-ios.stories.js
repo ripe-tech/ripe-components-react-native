@@ -25,7 +25,7 @@ storiesOf("Components/Molecules/Snackbar ios", module)
                     animationDuration={animationDuration === -1 ? undefined : animationDuration}
                     showDuration={showDuration === -1 ? undefined : showDuration}
                     onActionPress={() => {
-                        alert("Action presssed!");
+                        alert("Action pressed!");
                     }}
                 />
             </View>
