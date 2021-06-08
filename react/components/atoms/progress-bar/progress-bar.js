@@ -56,19 +56,6 @@ export class ProgressBar extends mix(PureComponent).with(IdentifiableMixin) {
         return `${Math.round((this.props.currentStep / this.props.steps) * 100)}%`;
     };
 
-    _barStyle = () => {
-        return [
-            styles.bar,
-            {
-                backgroundColor: this.props.color,
-                width: this.state.barWidth.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: ["0%", "100%"]
-                })
-            }
-        ];
-    };
-
     _easeFunction = () => {
         switch (this.props.fillTransitionMode) {
             case "ease":
@@ -84,6 +71,19 @@ export class ProgressBar extends mix(PureComponent).with(IdentifiableMixin) {
             default:
                 return Easing.ease;
         }
+    };
+
+    _barStyle = () => {
+        return [
+            styles.bar,
+            {
+                backgroundColor: this.props.color,
+                width: this.state.barWidth.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: ["0%", "100%"]
+                })
+            }
+        ];
     };
 
     render() {
