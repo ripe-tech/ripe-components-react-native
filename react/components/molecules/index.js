@@ -1,4 +1,5 @@
 export * from "./chat-message";
+export * from "./checkbox-group";
 export * from "./header";
 export * from "./item";
 export * from "./item-notification";

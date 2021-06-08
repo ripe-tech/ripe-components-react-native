@@ -1,0 +1,107 @@
+import React, { PureComponent } from "react";
+import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { mix } from "yonius";
+import PropTypes from "prop-types";
+
+import { IdentifiableMixin } from "../../../util";
+
+import { Checkbox } from "../../atoms";
+
+export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
+    static get propTypes() {
+        return {
+            items: PropTypes.arrayOf(
+                PropTypes.exact({
+                    label: PropTypes.string,
+                    value: PropTypes.string.isRequired,
+                    disabled: PropTypes.bool,
+                    error: PropTypes.bool
+                })
+            ),
+            values: PropTypes.object,
+            error: PropTypes.bool,
+            disabled: PropTypes.bool,
+            beforeItem: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+            afterItem: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+            onUpdateValues: PropTypes.func,
+            style: ViewPropTypes.style
+        };
+    }
+
+    static get defaultProps() {
+        return {
+            items: [],
+            values: {},
+            error: false,
+            disabled: false,
+            onUpdateValues: () => {},
+            style: {}
+        };
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            checkedData: props.values
+        };
+    }
+
+    onUpdateChecked = (event, item) => {
+        this.setState(
+            prevState => ({
+                checkedData: {
+                    ...prevState.checkedData,
+                    [item.value]: !prevState.checkedData[item.value]
+                }
+            }),
+            () => this.props.onUpdateValues(this.state.checkedData)
+        );
+    };
+
+    _renderCheckboxes = () => {
+        return this.props.items.map((item, index) => (
+            <View style={styles.checkboxItem}>
+                {this.props.beforeItem &&
+                    React.cloneElement(this.props.beforeItem, {
+                        index: index,
+                        item: item,
+                        checked: this.state.checkedData[item.value]
+                    })}
+                <Checkbox
+                    key={index}
+                    label={item.label || item.value}
+                    checked={this.state.checkedData[item.value]}
+                    disabled={item.disabled || this.props.disabled}
+                    variant={item.variant || this.props.error ? "error" : null}
+                    onUpdateChecked={event => this.onUpdateChecked(event, item)}
+                />
+                {this.props.afterItem &&
+                    React.cloneElement(this.props.afterItem, {
+                        index: index,
+                        item: item,
+                        checked: this.state.checkedData[item.value]
+                    })}
+            </View>
+        ));
+    };
+
+    render() {
+        return (
+            <View style={[styles.checkboxGroup, this.props.style]} {...this.id("checkbox-group")}>
+                {this._renderCheckboxes()}
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    checkboxGroup: {
+        overflow: "hidden"
+    },
+    checkboxItem: {
+        marginBottom: 10
+    }
+});
+
+export default CheckboxGroup;
