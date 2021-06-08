@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Fallback image on loading error in avatar component
 * Checkbox component
+* Progress bar component
 
 ### Changed
 
