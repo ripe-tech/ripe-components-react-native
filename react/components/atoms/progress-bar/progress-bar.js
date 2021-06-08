@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, Easing, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Animated, Easing, Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -46,7 +46,7 @@ export class ProgressBar extends mix(PureComponent).with(IdentifiableMixin) {
             Animated.timing(this.state.barWidth, {
                 toValue: this.props.currentStep / this.props.steps,
                 duration: this.props.fillTransitionTime,
-                easing: Easing.ease,
+                easing: this._easeFunction(),
                 useNativeDriver: false
             }).start();
         }
@@ -67,6 +67,23 @@ export class ProgressBar extends mix(PureComponent).with(IdentifiableMixin) {
                 })
             }
         ];
+    };
+
+    _easeFunction = () => {
+        switch (this.props.fillTransitionMode) {
+            case "ease":
+                return Easing.ease;
+            case "ease-in":
+                return Easing.in(Easing.ease);
+            case "ease-out":
+                return Easing.out(Easing.ease);
+            case "ease-in-out":
+                return Easing.inOut(Easing.ease);
+            case "linear":
+                return Easing.linear;
+            default:
+                return Easing.ease;
+        }
     };
 
     render() {
@@ -95,11 +112,12 @@ const styles = StyleSheet.create({
     },
     text: {
         textAlign: "right",
-        width: 30,
+        width: 35,
         marginLeft: 5,
         fontSize: 12,
         letterSpacing: 0.25,
         color: "#869aaa",
+        marginBottom: Platform.OS === "ios" ? 0 : 2,
         fontFamily: baseStyles.FONT_BOOK
     }
 });

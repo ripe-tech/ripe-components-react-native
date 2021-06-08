@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, boolean, number, text } from "@storybook/addon-knobs";
+import { withKnobs, boolean, number, select, text } from "@storybook/addon-knobs";
 
 import { Button } from "../button";
 import { ProgressBar } from "./progress-bar";
@@ -73,6 +73,8 @@ class Wrapper extends PureComponent {
                         currentStep={this.props.currentStep}
                         steps={this.props.steps}
                         showLabel={this.props.showLabel}
+                        fillTransitionTime={this.props.fillTransitionTime}
+                        fillTransitionMode={this.props.fillTransitionMode}
                     />
                 </View>
                 <View>
@@ -87,6 +89,8 @@ class Wrapper extends PureComponent {
                         currentStep={this.state.simulatedCurrentStep}
                         steps={100}
                         showLabel={this.props.showLabel}
+                        fillTransitionTime={this.props.fillTransitionTime}
+                        fillTransitionMode={this.props.fillTransitionMode}
                     />
                 </View>
             </View>
@@ -101,6 +105,18 @@ storiesOf("Components/Atoms/Progress Bar", module)
         const currentStep = number("Current Step", 1);
         const color = text("Color", "#4a6fe9");
         const showLabel = boolean("Show Label", false);
+        const fillTransitionTime = number("Fill Transition Time (ms)", 500);
+        const fillTransitionMode = select(
+            "Fill Transition Mode",
+            {
+                ease: "ease",
+                "ease-in": "ease-in",
+                "ease-out": "ease-out",
+                "ease-in-out": "ease-in-out",
+                linear: "linear"
+            },
+            "ease"
+        );
         const simulationAdvanceStep = number("Simulation Advance Step", 5);
         const simulationStepTime = number("Simulation Step Time (ms)", 500);
 
@@ -110,6 +126,8 @@ storiesOf("Components/Atoms/Progress Bar", module)
                 steps={steps}
                 currentStep={currentStep}
                 showLabel={showLabel}
+                fillTransitionTime={fillTransitionTime}
+                fillTransitionMode={fillTransitionMode}
                 simulationAdvanceStep={simulationAdvanceStep}
                 simulationStepTime={simulationStepTime}
             />
