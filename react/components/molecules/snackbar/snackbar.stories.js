@@ -3,11 +3,11 @@ import { Button, View } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, number, text } from "@storybook/addon-knobs";
 
-import { SnackbarIos } from "./snackbar-ios";
+import { Snackbar } from "./snackbar";
 
-storiesOf("Components/Molecules/Snackbar ios", module)
+storiesOf("Components/Molecules/Snackbar", module)
     .addDecorator(withKnobs)
-    .add("SnackbarIos", () => {
+    .add("Snackbar", () => {
         const ref = React.createRef();
         const _text = text("Text", "Marked as read.");
         const actionText = text("Action Text", "Undo");
@@ -18,7 +18,7 @@ storiesOf("Components/Molecules/Snackbar ios", module)
             <View>
                 <Button title="Show" onPress={() => ref.current.show()} />
                 <Button title="Hide" onPress={() => ref.current.hide()} />
-                <SnackbarIos
+                <Snackbar
                     text={_text}
                     actionText={actionText}
                     ref={ref}

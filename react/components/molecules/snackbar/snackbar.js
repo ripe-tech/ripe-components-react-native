@@ -7,7 +7,7 @@ import { baseStyles, IdentifiableMixin } from "../../../util";
 
 import { Touchable } from "../../atoms";
 
-export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
+export class Snackbar extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             text: PropTypes.string,
@@ -56,12 +56,16 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     hide = () => {
-        clearTimeout(this.snackbarTimeout);
         Animated.timing(this.state.opacity, {
             toValue: 0,
             duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
+    };
+
+    _onActionPress = () => {
+        this.hide();
+        if (this.props.onActionPress) this.props.onActionPress();
     };
 
     _style = () => {
@@ -79,7 +83,7 @@ export class SnackbarIos extends mix(PureComponent).with(IdentifiableMixin) {
             <Animated.View style={this._style()} {...this.id("snackbar-ios")}>
                 <Text style={styles.text}>{this.props.text}</Text>
                 {this.props.actionText && (
-                    <Touchable onPress={this.props.onActionPress} style={styles.action}>
+                    <Touchable onPress={this._onActionPress()} style={styles.action}>
                         <Text style={styles.actionText}>{this.props.actionText}</Text>
                     </Touchable>
                 )}
