@@ -51,6 +51,15 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     onValueChange = value => {
+        if (value === "_empty") {
+            // workaround for not allowing the "no items" options to
+            // be selected, for android it requires the double update
+            // so that it forces the select to update its value to the
+            // placeholder
+            this.setState({ valueData: "" }, () => this.setState({ valueData: null }));
+            return;
+        }
+
         this.setState(
             {
                 valueData: value
@@ -64,6 +73,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _items = () => {
+        if (this.props.options.length === 0) return [{ label: "No items", value: "_empty" }];
+
         return this.props.options.map(option => ({
             ...option,
             key: option.value,
