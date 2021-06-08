@@ -34,6 +34,8 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
             values: {},
             error: false,
             disabled: false,
+            beforeItem: undefined,
+            afterItem: undefined,
             onUpdateValues: () => {},
             style: {}
         };
@@ -61,7 +63,7 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
 
     _renderCheckboxes = () => {
         return this.props.items.map((item, index) => (
-            <View style={styles.checkboxItem}>
+            <View style={styles.checkboxItem} key={item.value}>
                 {this.props.beforeItem &&
                     React.cloneElement(this.props.beforeItem, {
                         index: index,
@@ -69,7 +71,6 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
                         checked: this.state.checkedData[item.value]
                     })}
                 <Checkbox
-                    key={index}
                     label={item.label || item.value}
                     checked={this.state.checkedData[item.value]}
                     disabled={item.disabled || this.props.disabled}
