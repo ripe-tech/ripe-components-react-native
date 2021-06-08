@@ -62,7 +62,7 @@ export class Radio extends mix(PureComponent).with(IdentifiableMixin) {
                 checkedData: !prevState.checkedData,
                 active: false
             }),
-            () => this.props.onUpdateChecked(this.state.checkedData)
+            () => this.props.onUpdateChecked(this.props.value)
         );
     };
 
