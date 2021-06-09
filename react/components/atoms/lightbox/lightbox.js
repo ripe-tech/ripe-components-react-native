@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, View, Image, Modal } from "react-native";
+import { Image, Modal, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { isTabletSize } from "../../../util";
 
-import { Touchable } from "../touchable";
 import { ButtonIcon } from "../button-icon";
+import { Touchable } from "../touchable";
 
 export class Lightbox extends PureComponent {
     static get propTypes() {
@@ -17,8 +17,8 @@ export class Lightbox extends PureComponent {
             borderRadius: PropTypes.number,
             resizeMode: PropTypes.string,
             resizeModeFullScreen: PropTypes.string,
-            style: ViewPropTypes.style,
-            onVisible: PropTypes.func
+            onVisible: PropTypes.func,
+            style: ViewPropTypes.style
         };
     }
 
@@ -31,8 +31,8 @@ export class Lightbox extends PureComponent {
             borderRadius: undefined,
             resizeMode: undefined,
             resizeModeFullScreen: undefined,
-            style: {},
-            onVisible: () => {}
+            onVisible: () => {},
+            style: {}
         };
     }
 

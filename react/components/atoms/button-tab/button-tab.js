@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
 import {
+    Platform,
     StyleSheet,
-    View,
     Text,
     TouchableNativeFeedback,
     TouchableWithoutFeedback,
-    ViewPropTypes,
-    Platform
+    View,
+    ViewPropTypes
 } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";

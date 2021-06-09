@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, ViewPropTypes, Platform } from "react-native";
+import { Animated, Platform, StyleSheet, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
