@@ -30,15 +30,15 @@ export class Touchable extends PureComponent {
 
     static get defaultProps() {
         return {
+            activeOpacity: undefined,
             disabled: undefined,
             hitSlop: undefined,
+            useForeground: true,
             onLongPress: undefined,
             onPress: undefined,
             onPressIn: undefined,
             onPressOut: undefined,
-            style: undefined,
-            activeOpacity: undefined,
-            useForeground: true
+            style: {}
         };
     }
 

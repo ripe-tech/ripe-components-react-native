@@ -19,9 +19,9 @@ export class ItemNotification extends PureComponent {
 
     static get defaultProps() {
         return {
-            onPress: () => {},
             text: undefined,
-            unread: false
+            unread: false,
+            onPress: () => {}
         };
     }
 
