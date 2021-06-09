@@ -12,3 +12,4 @@ export * from "./section-view";
 export * from "./tabs";
 export * from "./tabs-text";
 export * from "./toast-message";
+export * from "./toggle-button";
