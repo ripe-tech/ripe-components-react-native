@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, number, select, text } from "@storybook/addon-knobs";
+import { withKnobs, boolean, number, select, text } from "@storybook/addon-knobs";
 
 import { ButtonIcon } from "./button-icon";
 
@@ -22,6 +22,8 @@ storiesOf("Components/Atoms/Button Icon", module)
         const height = number("Icon Height", 20);
         const width = number("Icon Width", 20);
         const strokeWidth = number("Icon Stroke Width", 1);
+        const disabled = boolean("Disabled", false);
+
         return (
             <ButtonIcon
                 icon={icon}
@@ -31,6 +33,7 @@ storiesOf("Components/Atoms/Button Icon", module)
                 iconStrokeWidth={strokeWidth}
                 iconHeight={height}
                 iconWidth={width}
+                disabled={disabled}
                 onPress={() => alert("Amazing press!")}
             />
         );
