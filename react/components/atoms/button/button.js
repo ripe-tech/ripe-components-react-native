@@ -12,11 +12,15 @@ import { Touchable } from "../touchable";
 export class Button extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
-            text: PropTypes.string.isRequired,
+            text: PropTypes.string,
             icon: PropTypes.string,
             loading: PropTypes.bool,
             disabled: PropTypes.bool,
             iconStrokeWidth: PropTypes.number,
+            iconColor: PropTypes.string,
+            iconFillColor: PropTypes.string,
+            textColor: PropTypes.string,
+            backgroundColor: PropTypes.string,
             gradientAngle: PropTypes.number,
             gradientColors: PropTypes.arrayOf(PropTypes.string),
             gradientLocations: PropTypes.arrayOf(PropTypes.number),
@@ -30,10 +34,15 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
 
     static get defaultProps() {
         return {
+            text: undefined,
             icon: undefined,
             loading: false,
             disabled: false,
+            iconColor: undefined,
+            iconFillColor: undefined,
             iconStrokeWidth: undefined,
+            textColor: "#ffffff",
+            backgroundColor: undefined,
             gradientAngle: 62,
             gradientLocations: [0.4, 0.84],
             gradientColors: ["#4a6fe9", "#6687f6"],
@@ -47,6 +56,14 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
         return [styles.button, this.props.style];
     };
 
+    _iconStyle = () => {
+        return [
+            {
+                marginRight: this.props.text ? 15 : 0
+            }
+        ];
+    };
+
     _linearGradientStyle = () => {
         return [
             styles.container,
@@ -55,8 +72,21 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
         ];
     };
 
+    _buttonStyle = () => {
+        return [
+            styles.container,
+            { width: this.props.width },
+            { backgroundColor: this.props.backgroundColor },
+            this.props.disabled ? styles.buttonDisabled : {}
+        ];
+    };
+
+    _textStyle = () => {
+        return [styles.text, { color: this.props.textColor }];
+    };
+
     _renderLoading() {
-        return <ActivityIndicator color="#ffffff" />;
+        return <ActivityIndicator style={styles.container} color="#ffffff" />;
     }
 
     _renderNormal() {
@@ -65,12 +95,13 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
                 {this.props.icon ? (
                     <Icon
                         icon={this.props.icon}
-                        color="#ffffff"
-                        style={styles.icon}
+                        color={this.props.iconColor || "#ffffff"}
+                        fill={this.props.iconFillColor || "#ffffff"}
+                        style={this._iconStyle()}
                         strokeWidth={this.props.iconStrokeWidth}
                     />
                 ) : null}
-                <Text style={styles.text}>{this.props.text}</Text>
+                <Text style={this._textStyle()}>{this.props.text}</Text>
             </View>
         );
     }
@@ -83,15 +114,22 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
             >
-                <LinearGradient
-                    style={this._linearGradientStyle()}
-                    angle={this.props.gradientAngle}
-                    colors={this.props.gradientColors}
-                    locations={this.props.gradientLocations}
-                    useAngle={true}
-                >
-                    {this.props.loading ? this._renderLoading() : this._renderNormal()}
-                </LinearGradient>
+                {!this.props.backgroundColor && (
+                    <LinearGradient
+                        style={this._linearGradientStyle()}
+                        angle={this.props.gradientAngle}
+                        colors={this.props.gradientColors}
+                        locations={this.props.gradientLocations}
+                        useAngle={true}
+                    >
+                        {this.props.loading ? this._renderLoading() : this._renderNormal()}
+                    </LinearGradient>
+                )}
+                {this.props.backgroundColor && (
+                    <View style={this._buttonStyle()}>
+                        {this.props.loading ? this._renderLoading() : this._renderNormal()}
+                    </View>
+                )}
             </Touchable>
         );
     }
@@ -112,13 +150,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    icon: {
-        marginRight: 15
-    },
     text: {
         fontSize: 16,
         letterSpacing: 0.25,
-        color: "#ffffff",
         marginTop: Platform.OS === "ios" ? 4 : 0,
         fontFamily: baseStyles.FONT_BOOK
     }
