@@ -62,7 +62,7 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
                 width: this.props.size,
                 height: this.props.size
             },
-            this.props.loading ? { opacity: 0.5 } : {},
+            this.props.loading ? { opacity: 0.4 } : {},
             this.props.disabled ? { opacity: 0.5 } : {},
             this.props.style
         ];
