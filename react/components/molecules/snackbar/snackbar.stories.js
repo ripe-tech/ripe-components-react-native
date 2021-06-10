@@ -11,8 +11,8 @@ storiesOf("Components/Molecules/Snackbar", module)
         const ref = React.createRef();
         const _text = text("Text", "Marked as read.");
         const actionText = text("Action Text", "Undo");
-        const animationDuration = number("Animation Duration", -1);
         const showDuration = number("Show Duration", -1);
+        const animationDuration = number("Animation Duration", -1);
 
         return (
             <View>
@@ -22,8 +22,8 @@ storiesOf("Components/Molecules/Snackbar", module)
                     text={_text}
                     actionText={actionText}
                     ref={ref}
-                    animationDuration={animationDuration === -1 ? undefined : animationDuration}
                     showDuration={showDuration === -1 ? undefined : showDuration}
+                    animationDuration={animationDuration === -1 ? undefined : animationDuration}
                     onActionPress={() => {
                         alert("Action pressed!");
                     }}
