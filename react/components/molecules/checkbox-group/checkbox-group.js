@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, View, ViewPropTypes } from "react-native";
-import { mix } from "yonius";
+import { equal, mix } from "yonius";
 import PropTypes from "prop-types";
 
 import { IdentifiableMixin } from "../../../util";
@@ -45,19 +45,25 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
         super(props);
 
         this.state = {
-            checkedData: props.values
+            valueData: props.values
         };
+    }
+
+    componentDidUpdate(prevProps) {
+        if (!equal(prevProps.values, this.props.values)) {
+            this.setState({ valueData: this.props.values });
+        }
     }
 
     onUpdateChecked = (event, item) => {
         this.setState(
             prevState => ({
-                checkedData: {
-                    ...prevState.checkedData,
-                    [item.value]: !prevState.checkedData[item.value]
+                valueData: {
+                    ...prevState.valueData,
+                    [item.value]: !prevState.valueData[item.value]
                 }
             }),
-            () => this.props.onUpdateValues(this.state.checkedData)
+            () => this.props.onUpdateValues(this.state.valueData)
         );
     };
 
@@ -68,11 +74,11 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
                     React.cloneElement(this.props.beforeItem, {
                         index: index,
                         item: item,
-                        checked: this.state.checkedData[item.value]
+                        checked: this.state.valueData[item.value]
                     })}
                 <Checkbox
                     label={item.label || item.value}
-                    checked={this.state.checkedData[item.value]}
+                    checked={this.state.valueData[item.value]}
                     disabled={item.disabled || this.props.disabled}
                     variant={item.variant || this.props.error ? "error" : null}
                     onUpdateChecked={event => this.onUpdateChecked(event, item)}
@@ -81,7 +87,7 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
                     React.cloneElement(this.props.afterItem, {
                         index: index,
                         item: item,
-                        checked: this.state.checkedData[item.value]
+                        checked: this.state.valueData[item.value]
                     })}
             </View>
         ));
