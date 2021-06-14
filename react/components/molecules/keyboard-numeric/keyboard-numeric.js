@@ -3,8 +3,9 @@ import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
-import { ButtonKeyboard } from "../../atoms";
 import { IdentifiableMixin, isTabletSize } from "../../../util";
+
+import { ButtonKeyboard } from "../../atoms";
 
 export class KeyboardNumeric extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {

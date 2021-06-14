@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, ActivityIndicator, ViewPropTypes, Platform, View } from "react-native";
+import { ActivityIndicator, Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
