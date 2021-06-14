@@ -2,11 +2,11 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, boolean, select } from "@storybook/addon-knobs";
 
-import { ToggleButtons } from "./toggle-buttons";
+import { ButtonGroup } from "./button-group";
 
-storiesOf("Components/Organisms/Toggle Buttons", module)
+storiesOf("Components/Organisms/Button Group", module)
     .addDecorator(withKnobs)
-    .add("Toggle Buttons", () => {
+    .add("Button Group", () => {
         const items = [
             {
                 value: "A",
@@ -31,5 +31,5 @@ storiesOf("Components/Organisms/Toggle Buttons", module)
         );
         const disabled = boolean("Disabled", false);
 
-        return <ToggleButtons items={items} value={value} disabled={disabled} />;
+        return <ButtonGroup items={items} value={value} disabled={disabled} />;
     });

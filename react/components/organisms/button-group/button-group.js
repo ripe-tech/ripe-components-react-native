@@ -7,7 +7,7 @@ import { IdentifiableMixin } from "../../../util";
 
 import { ToggleButton } from "../../molecules";
 
-export class ToggleButtons extends mix(PureComponent).with(IdentifiableMixin) {
+export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             items: PropTypes.array,
@@ -81,12 +81,12 @@ export class ToggleButtons extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     render() {
-        return <View style={styles.toggleButtons}>{this._renderButtons()}</View>;
+        return <View style={styles.buttonGroup}>{this._renderButtons()}</View>;
     }
 }
 
 const styles = StyleSheet.create({
-    toggleButtons: {
+    buttonGroup: {
         flexDirection: "row",
         overflow: "hidden"
     },
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ToggleButtons;
+export default ButtonGroup;
