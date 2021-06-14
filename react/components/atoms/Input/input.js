@@ -81,8 +81,7 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.FONT,
         display: "flex",
         flexDirection: "column",
-        paddingHorizontal: 15,
-        paddingVertical: 15
+        padding: 15
     },
     header: {
         fontSize: 12,
