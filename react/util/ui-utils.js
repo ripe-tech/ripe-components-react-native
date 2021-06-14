@@ -59,15 +59,15 @@ export const pickDocuments = async function (options = {}) {
     }
 };
 
-const normalizeImage = function (image) {
-    return {
+const normalizeImage = function (images) {
+    return images.assets.map(image => ({
         uri: image.uri,
         name: image.fileName || getUriBasename(image.uri),
         type: image.type,
         size: image.fileSize,
         width: image.width,
         height: image.height
-    };
+    }));
 };
 
 export const pickImageCamera = async function ({
@@ -98,6 +98,7 @@ export const pickImageCamera = async function ({
 
 export const pickImageGalery = async function ({
     mediaType = "photo",
+    selectionLimit = 5,
     retry = true,
     requestPermissions = true
 } = {}) {
@@ -105,12 +106,13 @@ export const pickImageGalery = async function ({
         ? async () =>
               await pickImageGalery({
                   mediaType: mediaType,
+                  selectionLimit: selectionLimit,
                   retry: false,
                   requestPermissions: false
               })
         : null;
     const promise = new Promise((resolve, reject) => {
-        launchImageLibrary({ mediaType: mediaType }, response => {
+        launchImageLibrary({ mediaType: mediaType, selectionLimit: selectionLimit }, response => {
             _handlePickImage(resolve, reject, response, {
                 retryFunction: retryFunction,
                 requestPermissions: requestPermissions
