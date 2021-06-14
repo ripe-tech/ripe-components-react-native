@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, text, number, boolean } from "@storybook/addon-knobs";
+import { withKnobs, boolean, number, text } from "@storybook/addon-knobs";
 import { View } from "react-native";
 
 import { ItemNotification } from "./item-notification";

@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, text, number } from "@storybook/addon-knobs";
+import { withKnobs, number, text } from "@storybook/addon-knobs";
 
 import { Badge } from "./badge";
 

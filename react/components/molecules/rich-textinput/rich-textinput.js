@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, View, Animated, LayoutAnimation } from "react-native";
+import { Animated, LayoutAnimation, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
+import { pickDocuments, pickImageCamera } from "../../../util";
+
 import { ButtonIcon, TextArea } from "../../atoms";
-import { pickImageCamera, pickDocuments } from "../../../util";
 
 export class RichTextInput extends PureComponent {
     static get propTypes() {
