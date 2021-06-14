@@ -5,7 +5,7 @@ import { mix } from "yonius";
 
 import { IdentifiableMixin } from "../../../util";
 
-import { ToggleButton } from "../../molecules";
+import { ButtonToggle } from "../../molecules";
 
 export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
@@ -63,9 +63,9 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
 
     _renderButtons = () => {
         return this.props.items.map((item, index) => (
-            <ToggleButton
+            <ButtonToggle
                 key={item.value}
-                style={styles.toggleButton}
+                style={styles.ButtonToggle}
                 text={item.label || item.value}
                 value={this.state.valueData === item.value}
                 buttonProps={{
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         overflow: "hidden"
     },
-    toggleButton: {
+    ButtonToggle: {
         marginRight: 5
     }
 });

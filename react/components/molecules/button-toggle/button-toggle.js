@@ -7,7 +7,7 @@ import { IdentifiableMixin } from "../../../util";
 
 import { Button } from "../../atoms";
 
-export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
+export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             text: PropTypes.string,
@@ -88,10 +88,10 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
 
     _style = () => {
         return [
-            styles.toggleButton,
-            this.props.orientation === "middle" ? styles.toggleButtonMiddle : {},
-            this.props.orientation === "left" ? styles.toggleButtonLeft : {},
-            this.props.orientation === "right" ? styles.toggleButtonRight : {}
+            styles.buttonToggle,
+            this.props.orientation === "middle" ? styles.buttonToggleMiddle : {},
+            this.props.orientation === "left" ? styles.buttonToggleLeft : {},
+            this.props.orientation === "right" ? styles.buttonToggleRight : {}
         ];
     };
 
@@ -114,24 +114,24 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
 }
 
 const styles = StyleSheet.create({
-    toggleButton: {
+    buttonToggle: {
         overflow: "hidden",
         minWidth: 60,
         borderRadius: 5
     },
-    toggleButtonLeft: {
+    buttonToggleLeft: {
         borderRadius: 0,
         borderTopLeftRadius: 5,
         borderBottomLeftRadius: 5
     },
-    toggleButtonMiddle: {
+    buttonToggleMiddle: {
         borderRadius: 0
     },
-    toggleButtonRight: {
+    buttonToggleRight: {
         borderRadius: 0,
         borderTopRightRadius: 5,
         borderBottomRightRadius: 5
     }
 });
 
-export default ToggleButton;
+export default ButtonToggle;

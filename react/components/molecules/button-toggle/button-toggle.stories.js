@@ -2,11 +2,11 @@ import React from "react";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, boolean, select, text } from "@storybook/addon-knobs";
 
-import { ToggleButton } from "./toggle-button";
+import { ButtonToggle } from "./button-toggle";
 
-storiesOf("Components/Molecules/Toggle Button", module)
+storiesOf("Components/Molecules/Button Toggle", module)
     .addDecorator(withKnobs)
-    .add("Toggle Button", () => {
+    .add("Button Toggle", () => {
         const _text = text("Text", undefined);
         const icon = select(
             "Icon",
@@ -43,7 +43,7 @@ storiesOf("Components/Molecules/Toggle Button", module)
         const value = boolean("Value", false);
 
         return (
-            <ToggleButton
+            <ButtonToggle
                 text={_text}
                 icon={icon}
                 iconSecondary={iconSecondary}
