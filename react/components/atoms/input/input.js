@@ -19,12 +19,12 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
 
     static get defaultProps() {
         return {
-            placeholder: undefined,
-            borderColor: "#e4e8f0",
             header: undefined,
+            placeholder: undefined,
             value: undefined,
             showBorder: true,
-            onValueUpdate: undefined
+            borderColor: "#e4e8f0",
+            onValueUpdate: value => {}
         };
     }
 
@@ -46,7 +46,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
 
     onChangeValue = value => {
         this.setState({ valueData: value }, () => {
-            if (this.props.onValueUpdate) this.props.onValueUpdate(value);
+            this.props.onValueUpdate(value);
         });
     };
 
