@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { Platform, StyleSheet, Text, ViewPropTypes, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { dateStringUTC } from "ripe-commons";
 import { mix } from "yonius";
 import PropTypes from "prop-types";
 
@@ -44,7 +45,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
         this.setState({
             visible: true
         });
-        if (Platform.OS === "ios") this.container.toggle();
+        if (Platform.OS === "ios" && this.container) this.container.toggle();
     };
 
     onChange = (event, value) => {
@@ -66,6 +67,11 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _renderCalendar = () => {
+        // iOS date-time picker does not appear in a modal
+        // (like Android) but as a element in the page,
+        // so it has to be always rendered inside a container
+        // (even when not active) that opens when the user
+        // presses the button
         if (Platform.OS === "ios") {
             return (
                 <ContainerOpenable ref={el => (this.container = el)}>
@@ -80,6 +86,12 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
             );
         }
 
+        // only renders the Android picker modal
+        // when the user presses the button and
+        // changes the state to visible, which is
+        // different than iOS since the container
+        // openable is toggled, but the picker
+        // is already rendered
         if (!this.state.visible) return;
         return (
             <DateTimePicker
@@ -106,7 +118,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
                             <Text style={styles.headerText}>{this.props.header}</Text>
                         )}
                         <Text style={styles.dateText}>
-                            {this.state.valueData?.toLocaleDateString()}
+                            {dateStringUTC(this.state.valueData / 1000)}
                         </Text>
                     </View>
                     <Icon style={styles.icon} icon={"calendar-round"} strokeWidth={0.1} size={16} />
