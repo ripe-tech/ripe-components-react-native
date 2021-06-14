@@ -1,19 +1,20 @@
 import React, { PureComponent } from "react";
-import { Animated, Platform, StyleSheet, ViewPropTypes } from "react-native";
+import { Animated, Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
+import { mix } from "yonius";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, IdentifiableMixin } from "../../../util";
 
-import { Link, Text } from "../../atoms";
+import { Touchable } from "../../atoms";
 
-export class ToastMessage extends PureComponent {
+export class Snackbar extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             text: PropTypes.string,
-            linkText: PropTypes.string,
-            linkUrl: PropTypes.string,
+            actionText: PropTypes.string,
             duration: PropTypes.number,
             animationDuration: PropTypes.number,
+            onActionPress: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -21,10 +22,10 @@ export class ToastMessage extends PureComponent {
     static get defaultProps() {
         return {
             text: undefined,
-            linkText: undefined,
-            linkUrl: undefined,
+            actionText: undefined,
             duration: 5000,
             animationDuration: 300,
+            onActionPress: () => {},
             style: {}
         };
     }
@@ -33,42 +34,43 @@ export class ToastMessage extends PureComponent {
         super(props);
 
         this.state = {
-            text: this.props.text,
-            linkText: this.props.linkText,
-            animationDuration: this.props.animationDuration,
             opacity: new Animated.Value(0),
-            toastTimeout: null
+            snackbarTimeout: null
         };
     }
 
-    _stopPrevAnimations() {
+    _stopPrevAnimations = () => {
         this.state.opacity.stopAnimation();
         this.state.opacity.setValue(0);
-        clearTimeout(this.toastTimeout);
-    }
+        clearTimeout(this.snackbarTimeout);
+    };
 
-    show() {
+    show = () => {
         this._stopPrevAnimations();
         Animated.timing(this.state.opacity, {
             toValue: 1,
             duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
-        this.toastTimeout = setTimeout(() => this.hide(), this.props.duration);
-    }
+        this.snackbarTimeout = setTimeout(this.hide, this.props.duration);
+    };
 
-    hide() {
-        clearTimeout(this.toastTimeout);
+    hide = () => {
         Animated.timing(this.state.opacity, {
             toValue: 0,
             duration: this.props.animationDuration,
             useNativeDriver: true
         }).start();
-    }
+    };
+
+    _onActionPress = () => {
+        this.hide();
+        if (this.props.onActionPress) this.props.onActionPress();
+    };
 
     _style = () => {
         return [
-            styles.toast,
+            styles.snackbar,
             {
                 opacity: this.state.opacity
             },
@@ -78,24 +80,20 @@ export class ToastMessage extends PureComponent {
 
     render() {
         return (
-            <Animated.View style={this._style()}>
+            <Animated.View style={this._style()} {...this.id("snackbar-ios")}>
                 <Text style={styles.text}>{this.props.text}</Text>
-                {this.props.linkText ? (
-                    <Link
-                        text={this.props.linkText}
-                        url={this.props.linkUrl}
-                        color={"blue"}
-                        styleText={styles.linkText}
-                        style={styles.link}
-                    />
-                ) : null}
+                {this.props.actionText && (
+                    <Touchable onPress={this._onActionPress()} style={styles.action}>
+                        <Text style={styles.actionText}>{this.props.actionText}</Text>
+                    </Touchable>
+                )}
             </Animated.View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    toast: {
+    snackbar: {
         alignItems: "center",
         backgroundColor: "#ffffff",
         borderColor: "transparent",
@@ -107,23 +105,25 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 0.4,
         paddingHorizontal: 18,
-        paddingVertical: 10,
+        paddingVertical: 14,
         marginHorizontal: 8
     },
     text: {
         flex: 1,
         fontFamily: baseStyles.FONT_BOOK,
         fontSize: 16,
+        color: "#223645",
         paddingTop: Platform.OS === "ios" ? 4 : 0
     },
-    link: {
+    action: {
         marginLeft: 20
     },
-    linkText: {
+    actionText: {
         fontFamily: baseStyles.FONT_BOOK,
         fontSize: 16,
+        color: "#4f7af8",
         paddingTop: Platform.OS === "ios" ? 4 : 0
     }
 });
 
-export default ToastMessage;
+export default Snackbar;

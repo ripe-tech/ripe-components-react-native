@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Platform, Text, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
