@@ -98,7 +98,7 @@ export const pickImageCamera = async function ({
 
 export const pickImageGalery = async function ({
     mediaType = "photo",
-    selectionLimit = 5,
+    selectionLimit = 0,
     retry = true,
     requestPermissions = true
 } = {}) {
