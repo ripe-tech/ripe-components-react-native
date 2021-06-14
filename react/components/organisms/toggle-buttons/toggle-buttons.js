@@ -34,7 +34,7 @@ export class ToggleButtons extends mix(PureComponent).with(IdentifiableMixin) {
         super(props);
 
         this.state = {
-            valueData: props.active
+            valueData: props.value
         };
     }
 
