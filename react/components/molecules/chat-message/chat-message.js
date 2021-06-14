@@ -1,11 +1,10 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, View, Text as RNText } from "react-native";
-
+import { StyleSheet, Text as RNText, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles, isImage, dateTimeString } from "../../../util";
+import { baseStyles, dateTimeString, isImage } from "../../../util";
 
-import { Avatar, Text, Link, Lightbox } from "../../atoms";
+import { Avatar, Lightbox, Link, Text } from "../../atoms";
 
 export class ChatMessage extends PureComponent {
     static get propTypes() {

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, ViewPropTypes, TextInput } from "react-native";
+import { Platform, StyleSheet, TextInput, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -14,11 +14,11 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
             minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onSubmit: PropTypes.func,
+            color: PropTypes.string,
+            variant: PropTypes.string,
             onValue: PropTypes.func,
             onFocus: PropTypes.func,
             onBlur: PropTypes.func,
-            color: PropTypes.string,
-            variant: PropTypes.string,
             style: ViewPropTypes.style
         };
     }
@@ -30,12 +30,12 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
             multiline: false,
             minHeight: undefined,
             maxHeight: undefined,
+            color: undefined,
+            variant: undefined,
             onSubmit: () => {},
             onValue: () => {},
             onFocus: () => {},
             onBlur: () => {},
-            color: undefined,
-            variant: undefined,
             style: {}
         };
     }

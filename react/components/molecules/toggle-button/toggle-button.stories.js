@@ -12,26 +12,24 @@ storiesOf("Components/Molecules/Toggle Button", module)
             "Icon",
             {
                 Unset: undefined,
-                Id: "id",
                 Add: "add",
                 Alarm: "alarm",
                 Bell: "bell"
             },
-            "id"
+            "add"
         );
         const iconSecondary = select(
             "Inactive Icon",
             {
                 Unset: undefined,
-                IdBlue: "id-blue",
                 Add: "add",
                 Alarm: "alarm",
                 Bell: "bell"
             },
-            "id-blue"
+            "add"
         );
-        const color = text("Color", "#f4f5f7");
-        const colorSecondary = text("Active Color", "#4a6fe9");
+        const color = text("Color", undefined);
+        const colorSecondary = text("Active Color", undefined);
         const orientation = select(
             "Orientation",
             {
@@ -42,9 +40,7 @@ storiesOf("Components/Molecules/Toggle Button", module)
             },
             undefined
         );
-        const active = boolean("Active", false);
-        const loading = boolean("Loading", false);
-        const disabled = boolean("Disabled", false);
+        const value = boolean("Value", false);
 
         return (
             <ToggleButton
@@ -54,9 +50,7 @@ storiesOf("Components/Molecules/Toggle Button", module)
                 color={color}
                 colorSecondary={colorSecondary}
                 orientation={orientation}
-                active={active}
-                loading={loading}
-                disabled={disabled}
+                value={value}
             />
         );
     });

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, boolean, text, number, select } from "@storybook/addon-knobs";
+import { withKnobs, boolean, number, select, text } from "@storybook/addon-knobs";
 
 import { Item } from "./item";
 

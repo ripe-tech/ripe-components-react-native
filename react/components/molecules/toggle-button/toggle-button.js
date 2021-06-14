@@ -15,11 +15,8 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
             iconSecondary: PropTypes.string,
             color: PropTypes.string,
             colorSecondary: PropTypes.string,
-            active: PropTypes.bool,
+            value: PropTypes.bool,
             orientation: PropTypes.string,
-            loading: PropTypes.bool,
-            disabled: PropTypes.bool,
-            showText: PropTypes.bool,
             buttonIconProps: PropTypes.object,
             onUpdateActive: PropTypes.func,
             style: ViewPropTypes.style
@@ -33,13 +30,10 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
             iconSecondary: undefined,
             color: "#f4f5f7",
             colorSecondary: "#4a6fe9",
-            active: false,
+            value: false,
             orientation: undefined,
-            loading: false,
-            disabled: false,
-            showText: false,
             buttonIconProps: {},
-            onUpdateActive: () => {},
+            onUpdateActive: value => {},
             style: {}
         };
     }
@@ -48,50 +42,48 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
         super(props);
 
         this.state = {
-            activeData: props.active
+            valueData: props.value
         };
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.active !== this.props.active) {
+        if (prevProps.value !== this.props.value) {
             this.setState({
-                activeData: this.props.active
+                valueData: this.props.value
             });
         }
     }
 
-    onPress = () => {
+    onPress = event => {
         this.setState(
             prevState => ({
-                activeData: !prevState.activeData
+                valueData: !prevState.valueData
             }),
-            () => this.props.onUpdateActive(this.state.activeData)
+            () => this.props.onUpdateActive(this.state.valueData)
         );
     };
 
     _text = () => {
         // shows text if no icon is provided or if
         // the user explicitly chooses
-        return !this.props.icon || this.props.showText ? this.props.text : null;
+        return !this.props.icon || this.props.text ? this.props.text : null;
     };
 
     _icon = () => {
-        return this.state.activeData
-            ? this.props.icon
-            : this.props.iconSecondary || this.props.icon;
+        return this.state.valueData ? this.props.icon : this.props.iconSecondary || this.props.icon;
     };
 
     _color = () => {
         return (
-            (this.state.activeData ? this.props.colorSecondary : this.props.color) ||
+            (this.state.valueData ? this.props.colorSecondary : this.props.color) ||
             this.props.color
         );
     };
 
     _contentColor = () => {
-        // switches the icon color with the active color
+        // switches the icon color with the value color
         // when the button is not active
-        return this.state.activeData ? "#ffffff" : this.props.colorSecondary || "#000000";
+        return this.state.valueData ? "#ffffff" : this.props.colorSecondary || "#000000";
     };
 
     _style = () => {
@@ -113,8 +105,6 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
                 iconColor={this._contentColor()}
                 iconFillColor={this._contentColor()}
                 textColor={this._contentColor()}
-                loading={this.props.loading}
-                disabled={this.props.disabled}
                 {...this.props.buttonIconProps}
                 onPress={this.onPress}
                 {...this.id("toggle-button")}

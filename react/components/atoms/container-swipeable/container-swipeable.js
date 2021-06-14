@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, Animated, PanResponder, Dimensions, View } from "react-native";
+import { Animated, Dimensions, PanResponder, StyleSheet, View, ViewPropTypes } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-
 import PropTypes from "prop-types";
 
 export class ContainerSwipeable extends PureComponent {
