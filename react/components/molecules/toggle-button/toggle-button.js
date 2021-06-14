@@ -39,7 +39,7 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
             disabled: false,
             showText: false,
             buttonIconProps: {},
-            onUpdateActive: () => {},
+            onUpdateActive: active => {},
             style: {}
         };
     }
@@ -60,7 +60,7 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
         }
     }
 
-    onPress = () => {
+    onPress = event => {
         this.setState(
             prevState => ({
                 activeData: !prevState.activeData

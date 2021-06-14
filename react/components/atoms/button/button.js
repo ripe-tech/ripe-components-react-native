@@ -38,9 +38,9 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             icon: undefined,
             loading: false,
             disabled: false,
-            iconColor: undefined,
-            iconFillColor: undefined,
             iconStrokeWidth: undefined,
+            iconColor: "#ffffff",
+            iconFillColor: "#ffffff",
             textColor: "#ffffff",
             backgroundColor: undefined,
             gradientAngle: 62,
@@ -94,10 +94,10 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             <View style={styles.container} {...this.id(`button-${this.props.text}`)}>
                 {this.props.icon ? (
                     <Icon
-                        icon={this.props.icon}
-                        color={this.props.iconColor || "#ffffff"}
-                        fill={this.props.iconFillColor || "#ffffff"}
                         style={this._iconStyle()}
+                        icon={this.props.icon}
+                        color={this.props.iconColor}
+                        fill={this.props.iconFillColor}
                         strokeWidth={this.props.iconStrokeWidth}
                     />
                 ) : null}
@@ -105,6 +105,23 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             </View>
         );
     }
+
+    _renderButton = () => {
+        const content = this.props.loading ? this._renderLoading() : this._renderNormal();
+
+        if (this.props.backgroundColor) return <View style={this._buttonStyle()}>{content}</View>;
+        return (
+            <LinearGradient
+                style={this._linearGradientStyle()}
+                angle={this.props.gradientAngle}
+                colors={this.props.gradientColors}
+                locations={this.props.gradientLocations}
+                useAngle={true}
+            >
+                {content}
+            </LinearGradient>
+        );
+    };
 
     render() {
         return (
@@ -114,22 +131,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
             >
-                {!this.props.backgroundColor && (
-                    <LinearGradient
-                        style={this._linearGradientStyle()}
-                        angle={this.props.gradientAngle}
-                        colors={this.props.gradientColors}
-                        locations={this.props.gradientLocations}
-                        useAngle={true}
-                    >
-                        {this.props.loading ? this._renderLoading() : this._renderNormal()}
-                    </LinearGradient>
-                )}
-                {this.props.backgroundColor && (
-                    <View style={this._buttonStyle()}>
-                        {this.props.loading ? this._renderLoading() : this._renderNormal()}
-                    </View>
-                )}
+                {this._renderButton()}
             </Touchable>
         );
     }
