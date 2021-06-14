@@ -12,7 +12,7 @@ import { ContainerOpenable, Icon, Touchable } from "../../atoms";
 export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
-            value: PropTypes.instanceOf(Date),
+            value: PropTypes.number,
             header: PropTypes.string,
             disabled: PropTypes.bool,
             activeOpacity: PropTypes.number,
@@ -23,7 +23,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
 
     static get defaultProps() {
         return {
-            value: new Date(),
+            value: Date.now(),
             header: undefined,
             disabled: false,
             activeOpacity: 0.75,
@@ -39,6 +39,12 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
             valueData: this.props.value,
             visible: false
         };
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.value !== this.props.value) {
+            this.setState({ valueData: this.props.value });
+        }
     }
 
     onPress = () => {
@@ -76,7 +82,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
             return (
                 <ContainerOpenable ref={el => (this.container = el)}>
                     <DateTimePicker
-                        value={this.state.valueData}
+                        value={new Date(this.state.valueData)}
                         mode={"date"}
                         is24Hour={false}
                         display="inline"
@@ -95,7 +101,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
         if (!this.state.visible) return;
         return (
             <DateTimePicker
-                value={this.state.valueData}
+                value={new Date(this.state.valueData)}
                 mode={"date"}
                 display={"calendar"}
                 is24Hour={false}
