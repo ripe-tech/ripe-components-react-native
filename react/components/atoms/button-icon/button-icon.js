@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -14,6 +14,7 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
             size: PropTypes.number.isRequired,
             backgroundColor: PropTypes.string,
             loading: PropTypes.bool,
+            disabled: PropTypes.bool,
             iconFill: PropTypes.string,
             iconHeight: PropTypes.number,
             iconWidth: PropTypes.number,
@@ -35,6 +36,7 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
             size: 30,
             backgroundColor: "#ffffff",
             loading: false,
+            disabled: false,
             iconFill: undefined,
             iconHeight: 20,
             iconWidth: 20,
@@ -60,7 +62,8 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
                 width: this.props.size,
                 height: this.props.size
             },
-            this.props.loading ? { opacity: 0.4 } : null,
+            this.props.loading ? { opacity: 0.4 } : {},
+            this.props.disabled ? { opacity: 0.5 } : {},
             this.props.style
         ];
     }

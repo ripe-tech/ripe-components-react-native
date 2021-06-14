@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
+import { withKnobs, boolean, number, text } from "@storybook/addon-knobs";
 
 import { RichTextInput } from "./rich-textinput";
 

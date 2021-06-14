@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes, StyleSheet, View, ScrollView } from "react-native";
-
+import { ScrollView, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
