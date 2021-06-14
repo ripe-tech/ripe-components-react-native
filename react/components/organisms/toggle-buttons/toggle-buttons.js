@@ -25,7 +25,7 @@ export class ToggleButtons extends mix(PureComponent).with(IdentifiableMixin) {
             value: undefined,
             loading: false,
             disabled: false,
-            onUpdateValue: () => {},
+            onUpdateValue: value => {},
             style: {}
         };
     }
