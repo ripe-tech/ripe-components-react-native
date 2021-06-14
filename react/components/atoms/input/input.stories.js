@@ -9,7 +9,7 @@ storiesOf("Components/Atoms/Input", module)
     .add("Input", () => {
         const header = text("Header", "Name");
         const value = text("Value", undefined);
-        const hasBorder = boolean("Has Border", true);
+        const showBorder = boolean("Show Border", true);
         const borderColor = text("Border Color", "#e4e8f0");
         const placeholder = text("Placeholder", undefined);
 
@@ -17,7 +17,7 @@ storiesOf("Components/Atoms/Input", module)
             <Input
                 header={header}
                 value={value}
-                hasBorder={hasBorder}
+                showBorder={showBorder}
                 borderColor={borderColor}
                 placeholder={placeholder}
             />

@@ -11,7 +11,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
             header: PropTypes.string,
             placeholder: PropTypes.string,
             value: PropTypes.string,
-            hasBorder: PropTypes.bool,
+            showBorder: PropTypes.bool,
             borderColor: PropTypes.string,
             onValueUpdate: PropTypes.func
         };
@@ -23,7 +23,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
             borderColor: "#e4e8f0",
             header: undefined,
             value: undefined,
-            hasBorder: true,
+            showBorder: true,
             onValueUpdate: undefined
         };
     }
@@ -37,10 +37,11 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.value === this.props.value) return;
-        this.setState({
-            valueData: this.props.value
-        });
+        if (prevProps.value !== this.props.value) {
+            this.setState({
+                valueData: this.props.value
+            });
+        }
     }
 
     onChangeValue = value => {
@@ -53,9 +54,9 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
         return [
             styles.input,
             {
-                borderColor: this.props.hasBorder ? "#e4e8f0" : "transparent",
-                borderBottomWidth: this.props.hasBorder ? 1 : 0,
-                borderTopWidth: this.props.hasBorder ? 1 : 0
+                borderColor: this.props.showBorder ? "#e4e8f0" : "transparent",
+                borderBottomWidth: this.props.showBorder ? 1 : 0,
+                borderTopWidth: this.props.showBorder ? 1 : 0
             }
         ];
     };
@@ -63,7 +64,9 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
     render() {
         return (
             <View style={this._style()} {...this.id("input-ripe")}>
-                <Text style={styles.header}>{this.props.header}</Text>
+                {Boolean(this.props.header) && (
+                    <Text style={styles.header}>{this.props.header}</Text>
+                )}
                 <TextInput
                     style={styles.textInput}
                     value={this.state.valueData}
