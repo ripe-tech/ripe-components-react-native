@@ -17,7 +17,7 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
             colorSecondary: PropTypes.string,
             value: PropTypes.bool,
             orientation: PropTypes.string,
-            buttonIconProps: PropTypes.object,
+            buttonProps: PropTypes.object,
             onUpdateActive: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -32,7 +32,7 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
             colorSecondary: "#4a6fe9",
             value: false,
             orientation: undefined,
-            buttonIconProps: {},
+            buttonProps: {},
             onUpdateActive: value => {},
             style: {}
         };
@@ -66,7 +66,7 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
     _text = () => {
         // shows text if no icon is provided or if
         // the user explicitly chooses
-        return !this.props.icon || this.props.text ? this.props.text : null;
+        return this.props.icon ? null : this.props.text;
     };
 
     _icon = () => {
@@ -105,7 +105,7 @@ export class ToggleButton extends mix(PureComponent).with(IdentifiableMixin) {
                 iconColor={this._contentColor()}
                 iconFillColor={this._contentColor()}
                 textColor={this._contentColor()}
-                {...this.props.buttonIconProps}
+                {...this.props.buttonProps}
                 onPress={this.onPress}
                 {...this.id("toggle-button")}
             />

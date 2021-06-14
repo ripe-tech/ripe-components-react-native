@@ -67,9 +67,12 @@ export class ToggleButtons extends mix(PureComponent).with(IdentifiableMixin) {
                 key={item.value}
                 style={styles.toggleButton}
                 text={item.label || item.value}
-                active={this.state.valueData === item.value}
-                loading={item.loading || this.props.loading}
-                disabled={item.disabled || this.props.disabled}
+                value={this.state.valueData === item.value}
+                buttonProps={{
+                    ...item.buttonProps,
+                    loading: item.loading || this.props.loading,
+                    disabled: item.disabled || this.props.disabled
+                }}
                 orientation={this._orientation(index)}
                 onUpdateActive={() => this.onUpdateActive(item.value)}
                 {...item.buttonProps}
