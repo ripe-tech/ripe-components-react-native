@@ -36,7 +36,7 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
             disabled: false,
             beforeItem: undefined,
             afterItem: undefined,
-            onUpdateValues: () => {},
+            onUpdateValues: value => {},
             style: {}
         };
     }
