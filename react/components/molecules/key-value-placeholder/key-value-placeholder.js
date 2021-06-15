@@ -1,8 +1,6 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, View } from "react-native";
-
 import LinearGradient from "react-native-linear-gradient";
-
 import PropTypes from "prop-types";
 
 export class KeyValuePlaceholder extends PureComponent {

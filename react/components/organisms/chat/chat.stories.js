@@ -1,7 +1,7 @@
 import React from "react";
+import { KeyboardAvoidingView, Platform } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text } from "@storybook/addon-knobs";
-import { KeyboardAvoidingView, Platform } from "react-native";
 
 import { Chat } from "./chat";
 
