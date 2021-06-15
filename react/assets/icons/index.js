@@ -53,6 +53,7 @@ import calendarAdd from "./calendar-add.svg";
 import calendarDecline from "./calendar-decline.svg";
 import calendarEvent from "./calendar-event.svg";
 import calendar from "./calendar.svg";
+import calendarRound from "./calendar-round.svg";
 import cameraRear from "./camera-rear.svg";
 import camera from "./camera.svg";
 import cancel from "./cancel.svg";
@@ -392,6 +393,7 @@ const icons = {
     "calendar-decline": calendarDecline,
     "calendar-event": calendarEvent,
     calendar: calendar,
+    "calendar-round": calendarRound,
     "camera-rear": cameraRear,
     camera: camera,
     cancel: cancel,
