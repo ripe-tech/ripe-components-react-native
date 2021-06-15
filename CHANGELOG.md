@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Checkbox component
 * Snackbar component
 * Progress bar component
+* Toggle button component
+* Multiple files selection with image picker
+* Date input component
+* Switcher component
 
 ### Changed
 
