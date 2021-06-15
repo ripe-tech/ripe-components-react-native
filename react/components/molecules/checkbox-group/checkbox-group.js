@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, View, ViewPropTypes } from "react-native";
-import { equal, mix } from "yonius";
 import PropTypes from "prop-types";
+import { equal, mix } from "yonius";
 
 import { IdentifiableMixin } from "../../../util";
 

@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import { Text, View } from "react-native";
+import PropTypes from "prop-types";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, boolean } from "@storybook/addon-knobs";
-import PropTypes from "prop-types";
 
 import { CheckboxGroup } from "./checkbox-group";
 
