@@ -83,7 +83,7 @@ export class RadioGroup extends mix(PureComponent).with(IdentifiableMixin) {
                     label={item.label || item.value}
                     value={item.value}
                     checked={item.value === this.state.valueData}
-                    disabled={item.disabled || this.props.disabled}
+                    disabled={item.disabled === undefined ? this.props.disabled : item.disabled}
                     variant={item.variant || this.props.error ? "error" : null}
                     onUpdateChecked={this.onUpdateChecked}
                 />
