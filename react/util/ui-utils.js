@@ -60,14 +60,23 @@ export const pickDocuments = async function (options = {}) {
 };
 
 const normalizeImages = function (images) {
-    return images.assets.map(image => ({
-        uri: image.uri,
-        name: image.fileName || getUriBasename(image.uri),
-        type: image.type,
-        size: image.fileSize,
-        width: image.width,
-        height: image.height
-    }));
+    return images?.assets
+        ? images.assets.map(image => ({
+              uri: image.uri,
+              name: image.fileName || getUriBasename(image.uri),
+              type: image.type,
+              size: image.fileSize,
+              width: image.width,
+              height: image.height
+          }))
+        : {
+              uri: images.uri,
+              name: images.fileName || getUriBasename(images.uri),
+              type: images.type,
+              size: images.fileSize,
+              width: images.width,
+              height: images.height
+          };
 };
 
 export const pickImageCamera = async function ({
