@@ -60,7 +60,7 @@ export const pickDocuments = async function (options = {}) {
 };
 
 const normalizeImages = function (images) {
-    return images?.assets
+    return images.assets
         ? images.assets.map(image => ({
               uri: image.uri,
               name: image.fileName || getUriBasename(image.uri),
