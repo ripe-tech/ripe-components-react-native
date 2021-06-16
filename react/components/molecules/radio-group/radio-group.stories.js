@@ -41,10 +41,5 @@ storiesOf("Components/Molecules/Radio Group", module)
         const error = boolean("Error", false);
         const disabled = boolean("Disabled", false);
 
-        return <RadioGroup
-            items={items}
-            value={value}
-            error={error}
-            disabled={disabled}
-        />;
+        return <RadioGroup items={items} value={value} error={error} disabled={disabled} />;
     });
