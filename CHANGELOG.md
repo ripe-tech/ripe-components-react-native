@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Fallback image on loading error in avatar component
 * Checkbox component
 * Radio button component
+* Snackbar component
+* Progress bar component
+* Toggle button component
+* Multiple files selection with image picker
+* Date input component
+* Switcher component
 
 ### Changed
 

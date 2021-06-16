@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, Image, View } from "react-native";
+import { Image, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { ButtonIcon } from "../../atoms";
@@ -13,8 +13,8 @@ export class ImageListItem extends PureComponent {
             iconSize: PropTypes.number,
             iconStrokeWidth: PropTypes.number,
             showIcon: PropTypes.bool,
-            onIconPress: PropTypes.func,
             size: PropTypes.number.isRequired,
+            onIconPress: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -27,8 +27,8 @@ export class ImageListItem extends PureComponent {
             iconSize: 20,
             iconStrokeWidth: 2,
             showIcon: true,
-            onIconPress: () => {},
             size: 80,
+            onIconPress: () => {},
             style: {}
         };
     }
