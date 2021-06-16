@@ -55,12 +55,12 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
         }
     }
 
-    onUpdateChecked = (event, item) => {
+    onUpdateChecked = (value, item) => {
         this.setState(
             prevState => ({
                 valueData: {
                     ...prevState.valueData,
-                    [item.value]: !prevState.valueData[item.value]
+                    [item.value]: value
                 }
             }),
             () => this.props.onUpdateValues(this.state.valueData)
@@ -71,7 +71,7 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
         return this.props.items.map((item, index) => (
             <View style={styles.checkboxItem} key={item.value}>
                 {this.props.beforeItem &&
-                    React.cloneElement(this.props.beforeItem, {
+                    React.cloneElement(React.Children.only(this.props.beforeItem), {
                         index: index,
                         item: item,
                         checked: this.state.valueData[item.value]
@@ -79,12 +79,12 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
                 <Checkbox
                     label={item.label || item.value}
                     checked={this.state.valueData[item.value]}
-                    disabled={item.disabled || this.props.disabled}
+                    disabled={item.disabled === undefined ? this.props.disabled : item.disabled}
                     variant={item.variant || this.props.error ? "error" : null}
-                    onUpdateChecked={event => this.onUpdateChecked(event, item)}
+                    onUpdateChecked={value => this.onUpdateChecked(value, item)}
                 />
                 {this.props.afterItem &&
-                    React.cloneElement(this.props.afterItem, {
+                    React.cloneElement(React.Children.only(this.props.afterItem), {
                         index: index,
                         item: item,
                         checked: this.state.valueData[item.value]
