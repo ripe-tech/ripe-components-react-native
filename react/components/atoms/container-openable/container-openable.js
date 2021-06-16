@@ -1,15 +1,15 @@
 import React, { PureComponent } from "react";
 import {
-    ViewPropTypes,
-    StyleSheet,
-    View,
-    Dimensions,
     Animated,
+    Dimensions,
     Easing,
-    StatusBar,
-    Platform,
     Modal,
-    TouchableOpacity
+    Platform,
+    StatusBar,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+    ViewPropTypes
 } from "react-native";
 import PropTypes from "prop-types";
 import { initialWindowSafeAreaInsets } from "react-native-safe-area-context";

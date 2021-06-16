@@ -1,10 +1,10 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, Platform, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { Icon, Touchable } from "../../atoms";
-
 import { baseStyles } from "../../../util";
+
+import { Icon, Touchable } from "../../atoms";
 
 export class ImageListItemAdd extends PureComponent {
     static get propTypes() {
@@ -16,10 +16,10 @@ export class ImageListItemAdd extends PureComponent {
             iconHeight: PropTypes.number,
             iconWidth: PropTypes.number,
             iconStrokeWidth: PropTypes.number,
-            onPress: PropTypes.func,
             text: PropTypes.string,
             textColor: PropTypes.string,
             size: PropTypes.number.isRequired,
+            onPress: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -32,9 +32,9 @@ export class ImageListItemAdd extends PureComponent {
             iconHeight: 20,
             iconWidth: 20,
             iconStrokeWidth: 1,
-            onPress: undefined,
             text: undefined,
             textColor: "#a4adb5",
+            onPress: undefined,
             style: {}
         };
     }
