@@ -36,7 +36,7 @@ export class RadioGroup extends mix(PureComponent).with(IdentifiableMixin) {
             disabled: false,
             beforeItem: undefined,
             afterItem: undefined,
-            onUpdateValue: () => {},
+            onUpdateValue: value => {},
             style: {}
         };
     }
@@ -64,6 +64,10 @@ export class RadioGroup extends mix(PureComponent).with(IdentifiableMixin) {
             () => this.props.onUpdateValue(value)
         );
     };
+
+    _style() {
+        return [styles.radioGroup, this.props.style];
+    }
 
     _renderRadios = () => {
         return this.props.items.map((item, index) => (
@@ -94,7 +98,7 @@ export class RadioGroup extends mix(PureComponent).with(IdentifiableMixin) {
 
     render() {
         return (
-            <View style={[styles.radioGroup, this.props.style]} {...this.id("radio-group")}>
+            <View style={[this._style()]} {...this.id("radio-group")}>
                 {this._renderRadios()}
             </View>
         );
