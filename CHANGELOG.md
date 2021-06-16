@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* `normalizeImages` function handling of images coming from camera
 
 ## [0.4.0] - 2021-04-07
 
