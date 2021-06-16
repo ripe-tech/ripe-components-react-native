@@ -98,7 +98,7 @@ export class RadioGroup extends mix(PureComponent).with(IdentifiableMixin) {
 
     render() {
         return (
-            <View style={[this._style()]} {...this.id("radio-group")}>
+            <View style={this._style()} {...this.id("radio-group")}>
                 {this._renderRadios()}
             </View>
         );
