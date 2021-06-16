@@ -50,10 +50,11 @@ export class RadioGroup extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.value === this.props.value) return;
-        this.setState({
-            valueData: this.props.value
-        });
+        if (prevProps.value !== this.props.value) {
+            this.setState({
+                valueData: this.props.value
+            });
+        }
     }
 
     onUpdateChecked = value => {
@@ -73,7 +74,7 @@ export class RadioGroup extends mix(PureComponent).with(IdentifiableMixin) {
         return this.props.items.map((item, index) => (
             <View style={styles.radioItem} key={item.value}>
                 {this.props.beforeItem &&
-                    React.cloneElement(this.props.beforeItem, {
+                    React.cloneElement(React.Children.only(this.props.beforeItem), {
                         index: index,
                         item: item,
                         checked: item.value === this.state.valueData
@@ -87,7 +88,7 @@ export class RadioGroup extends mix(PureComponent).with(IdentifiableMixin) {
                     onUpdateChecked={this.onUpdateChecked}
                 />
                 {this.props.afterItem &&
-                    React.cloneElement(this.props.afterItem, {
+                    React.cloneElement(React.Children.only(this.props.afterItem), {
                         index: index,
                         item: item,
                         checked: item.value === this.state.valueData
