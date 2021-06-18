@@ -11,6 +11,8 @@ export * from "./container-draggable";
 export * from "./container-openable";
 export * from "./container-swipeable";
 export * from "./icon";
+export * from "./input";
+export * from "./input-animated";
 export * from "./lightbox";
 export * from "./link";
 export * from "./progress-bar";
