@@ -8,23 +8,29 @@ import { IdentifiableMixin, baseStyles } from "../../../util";
 export class Input extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
-            header: PropTypes.string,
             placeholder: PropTypes.string,
             value: PropTypes.string,
             showBorder: PropTypes.bool,
+            padding: PropTypes.bool,
             borderColor: PropTypes.string,
-            onValueUpdate: PropTypes.func
+            height: PropTypes.number,
+            onValueUpdate: PropTypes.func,
+            onFocus: PropTypes.func,
+            onBlur: PropTypes.func
         };
     }
 
     static get defaultProps() {
         return {
-            header: undefined,
             placeholder: undefined,
             value: undefined,
             showBorder: true,
+            padding: true,
             borderColor: "#e4e8f0",
-            onValueUpdate: value => {}
+            height: undefined,
+            onValueUpdate: value => {},
+            onFocus: () => {},
+            onBlur: () => {}
         };
     }
 
@@ -50,13 +56,31 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
         });
     };
 
+    focus = () => {
+        this.textInputComponent.focus();
+    };
+
+    blur = () => {
+        this.textInputComponent.blur();
+    };
+
     _style = () => {
         return [
             styles.input,
             {
                 borderColor: this.props.showBorder ? "#e4e8f0" : "transparent",
                 borderBottomWidth: this.props.showBorder ? 1 : 0,
-                borderTopWidth: this.props.showBorder ? 1 : 0
+                borderTopWidth: this.props.showBorder ? 1 : 0,
+                padding: this.props.padding ? 15 : 0
+            }
+        ];
+    };
+
+    _styleTextInput = () => {
+        return [
+            styles.textInput,
+            {
+                height: this.props.height ? this.props.height : "100%"
             }
         ];
     };
@@ -64,15 +88,15 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
     render() {
         return (
             <View style={this._style()} {...this.id("input-ripe")}>
-                {Boolean(this.props.header) && (
-                    <Text style={styles.header}>{this.props.header}</Text>
-                )}
                 <TextInput
-                    style={styles.textInput}
+                    ref={el => (this.textInputComponent = el)}
+                    style={this._styleTextInput()}
                     value={this.state.valueData}
                     placeholder={this.props.placeholder || this.props.header}
                     placeholderTextColor={"#869aaa"}
                     onChangeText={this.onChangeValue}
+                    onBlur={this.props.onBlur}
+                    onFocus={this.props.onFocus}
                 />
             </View>
         );
@@ -85,11 +109,6 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         padding: 15
-    },
-    header: {
-        fontSize: 12,
-        color: "#4f7af8",
-        letterSpacing: 0.6
     },
     textInput: {
         fontSize: 16,
