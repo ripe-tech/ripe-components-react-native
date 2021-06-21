@@ -11,6 +11,7 @@ storiesOf("Components/Molecules/Input Animated", module)
         const header = text("Header", "Name");
         const placeholder = text("Placeholder", undefined);
         const borderBottomActiveColor = text("Border Bottom ActiveColor", "#4f7af8");
+        const placeholderTextColor = text("Placeholder Text Color", "#869aaa");
         const value = text("Value", undefined);
 
         return (
@@ -26,6 +27,7 @@ storiesOf("Components/Molecules/Input Animated", module)
                     header={header}
                     placeholder={placeholder}
                     borderBottomActiveColor={borderBottomActiveColor}
+                    placeholderTextColor={placeholderTextColor}
                     value={value}
                 />
             </Touchable>
