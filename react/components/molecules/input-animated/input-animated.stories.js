@@ -1,15 +1,15 @@
 import React from "react";
-import { View } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text } from "@storybook/addon-knobs";
 
 import { InputAnimated } from "./input-animated";
-import { Touchable } from "../touchable";
+import { Touchable } from "../../atoms";
 
-storiesOf("Components/Atoms/Input Animated", module)
+storiesOf("Components/Molecules/Input Animated", module)
     .addDecorator(withKnobs)
     .add("Input Animated", () => {
         const header = text("Header", "Name");
+        const placeholder = text("Placeholder", undefined);
         const borderBottomActiveColor = text("Border Bottom ActiveColor", "#4f7af8");
         const value = text("Value", undefined);
 
@@ -24,6 +24,7 @@ storiesOf("Components/Atoms/Input Animated", module)
                 <InputAnimated
                     ref={el => (this.input = el)}
                     header={header}
+                    placeholder={placeholder}
                     borderBottomActiveColor={borderBottomActiveColor}
                     value={value}
                 />

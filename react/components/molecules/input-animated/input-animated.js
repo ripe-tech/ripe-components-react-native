@@ -42,7 +42,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
         this.textFontSizeFocus = 12;
 
         this.headerTextColorBlur = 0;
-        this.headerTextColorFocus = 150;
+        this.headerTextColorFocus = 1;
 
         this.underlineOpacityBlur = 1;
         this.underlineOpacityFocus = 0;
@@ -95,7 +95,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
         return [
             {
                 color: this.state.headerTextColor.interpolate({
-                    inputRange: [0, 150],
+                    inputRange: [0, 1],
                     outputRange: ["#4f4f4f", "#4f7af8"]
                 }),
                 fontSize: this.state.textFontSize
@@ -226,7 +226,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
                     <Input
                         ref={el => (this.input = el)}
                         value={this.state.valueData}
-                        placeholder={this.props.placeholder}
+                        placeholder={this.props.placeholder || this.props.header}
                         placeholderTextColor={"#869aaa"}
                         height={40}
                         showBorder={false}
