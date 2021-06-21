@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -12,6 +12,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
             value: PropTypes.string,
             showBorder: PropTypes.bool,
             padding: PropTypes.bool,
+            placeholderTextColor: PropTypes.string,
             borderColor: PropTypes.string,
             height: PropTypes.number,
             onValueUpdate: PropTypes.func,
@@ -26,6 +27,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
             value: undefined,
             showBorder: true,
             padding: true,
+            placeholderTextColor: "#869aaa",
             borderColor: "#e4e8f0",
             height: undefined,
             onValueUpdate: value => {},
@@ -93,7 +95,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
                     style={this._styleTextInput()}
                     value={this.state.valueData}
                     placeholder={this.props.placeholder || this.props.header}
-                    placeholderTextColor={"#869aaa"}
+                    placeholderTextColor={this.props.placeholderTextColor}
                     onChangeText={this.onChangeValue}
                     onBlur={this.props.onBlur}
                     onFocus={this.props.onFocus}
