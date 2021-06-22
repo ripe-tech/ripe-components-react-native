@@ -76,6 +76,41 @@ export const fileToFileTuple = async function (file) {
     return ripe.ripe.FileTuple.fromData(bytes, file.name, file.type);
 };
 
+export const isPrimitive = function (object) {
+    return object !== Object(object);
+};
+
+export const typeOf = function (object) {
+    if (object === null) return "null";
+    if (Array.isArray(object)) return "array";
+    return typeof object;
+};
+
+export const equal = function (first, second) {
+    if (first === second) {
+        return true;
+    }
+
+    if (typeOf(first) !== typeOf(second)) {
+        return false;
+    }
+
+    if (isPrimitive(first) && isPrimitive(second)) {
+        return first === second;
+    }
+
+    if (Object.keys(first).length !== Object.keys(second).length) {
+        return false;
+    }
+
+    for (const key in first) {
+        if (!(key in second)) return false;
+        if (!equal(first[key], second[key])) return false;
+    }
+
+    return true;
+};
+
 /**
  * Retrieves the inferred base name value from the provided URI.
  *
