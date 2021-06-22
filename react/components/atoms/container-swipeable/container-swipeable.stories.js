@@ -1,7 +1,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { View, StyleSheet, Text } from "react-native";
-import { withKnobs, number, boolean } from "@storybook/addon-knobs";
+import { StyleSheet, Text, View } from "react-native";
+import { withKnobs, boolean, number } from "@storybook/addon-knobs";
 
 import { baseStyles } from "../../../util";
 import { Icon } from "../icon";
