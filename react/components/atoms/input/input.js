@@ -29,7 +29,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
             padding: true,
             placeholderTextColor: "#869aaa",
             borderColor: "#e4e8f0",
-            height: undefined,
+            height: 30,
             onValueUpdate: value => {},
             onFocus: () => {},
             onBlur: () => {}
@@ -70,37 +70,25 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
         return [
             styles.input,
             {
-                borderColor: this.props.showBorder ? "#e4e8f0" : "transparent",
-                borderBottomWidth: this.props.showBorder ? 1 : 0,
-                borderTopWidth: this.props.showBorder ? 1 : 0,
-                padding: this.props.padding ? 15 : 0
-            }
-        ];
-    };
-
-    _styleTextInput = () => {
-        return [
-            styles.textInput,
-            {
                 height: this.props.height ? this.props.height : "100%"
-            }
+            },
+            this.props.style
         ];
     };
 
     render() {
         return (
-            <View style={this._style()} {...this.id("input-ripe")}>
-                <TextInput
-                    ref={el => (this.textInputComponent = el)}
-                    style={this._styleTextInput()}
-                    value={this.state.valueData}
-                    placeholder={this.props.placeholder || this.props.header}
-                    placeholderTextColor={this.props.placeholderTextColor}
-                    onChangeText={this.onChangeValue}
-                    onBlur={this.props.onBlur}
-                    onFocus={this.props.onFocus}
-                />
-            </View>
+            <TextInput
+                ref={el => (this.textInputComponent = el)}
+                style={this._style()}
+                value={this.state.valueData}
+                placeholder={this.props.placeholder || this.props.header}
+                placeholderTextColor={this.props.placeholderTextColor}
+                onChangeText={this.onChangeValue}
+                onBlur={this.props.onBlur}
+                onFocus={this.props.onFocus}
+                {...this.id("input-ripe")}
+            />
         );
     }
 }
@@ -108,13 +96,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
 const styles = StyleSheet.create({
     input: {
         fontFamily: baseStyles.FONT,
-        display: "flex",
-        flexDirection: "column",
-        padding: 15
-    },
-    textInput: {
         fontSize: 16,
-        height: 30,
         width: "100%",
         color: "#223645",
         letterSpacing: 0.8
