@@ -7,10 +7,7 @@ import { Lightbox } from "./lightbox";
 storiesOf("Components/Atoms/Lightbox", module)
     .addDecorator(withKnobs)
     .add("Lightbox", () => {
-        const uri = text(
-            "URI",
-            "https://uploads-ssl.webflow.com/6058ae7c564d2124a415d2c8/60a51e4c0bd2098e21a9e34d_value03.jpg"
-        );
+        const uri = text("URI", "https://cdn.platforme.com/images/platforme.png");
         const width = number("Width", 200);
         const height = number("Height", 150);
         const borderRadius = number("Border Radius", -1);
@@ -34,7 +31,7 @@ storiesOf("Components/Atoms/Lightbox", module)
                 Stretch: "stretch",
                 Center: "center"
             },
-            undefined
+            "contain"
         );
         return (
             <Lightbox
