@@ -213,18 +213,21 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
 
     render() {
         return (
-            <View style={this._style()} {...this.id("input-animated")}>
-                <Touchable activeOpacity={0.8} onPress={this.onHeaderPress}>
-                    <Animated.View style={styles.header}>
-                        {Boolean(this.props.header) && (
-                            <Animated.View style={this._headerTextStyle()}>
-                                <Animated.Text style={this._textStyle()}>
-                                    {this.props.header}
-                                </Animated.Text>
-                            </Animated.View>
-                        )}
-                    </Animated.View>
-                </Touchable>
+            <Touchable
+                style={this._style()}
+                activeOpacity={0.8}
+                onPress={this.onHeaderPress}
+                {...this.id("input-animated")}
+            >
+                <Animated.View style={styles.header}>
+                    {Boolean(this.props.header) && (
+                        <Animated.View style={this._headerTextStyle()}>
+                            <Animated.Text style={this._textStyle()}>
+                                {this.props.header}
+                            </Animated.Text>
+                        </Animated.View>
+                    )}
+                </Animated.View>
                 <Animated.View style={this._underlineStyle()} />
                 <Animated.View style={this._inputStyle()}>
                     <Input
@@ -240,7 +243,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
                         onBlur={this._onBlur}
                     />
                 </Animated.View>
-            </View>
+            </Touchable>
         );
     }
 }
