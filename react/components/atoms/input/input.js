@@ -10,10 +10,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             placeholder: PropTypes.string,
             value: PropTypes.string,
-            showBorder: PropTypes.bool,
-            padding: PropTypes.bool,
             placeholderTextColor: PropTypes.string,
-            borderColor: PropTypes.string,
             height: PropTypes.number,
             onValueUpdate: PropTypes.func,
             onFocus: PropTypes.func,
@@ -25,10 +22,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             placeholder: undefined,
             value: undefined,
-            showBorder: true,
-            padding: true,
             placeholderTextColor: "#869aaa",
-            borderColor: "#e4e8f0",
             height: 30,
             onValueUpdate: value => {},
             onFocus: () => {},
