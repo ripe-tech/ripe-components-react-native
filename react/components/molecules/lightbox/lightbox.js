@@ -4,8 +4,7 @@ import PropTypes from "prop-types";
 
 import { isTabletSize } from "../../../util";
 
-import { ButtonIcon } from "../button-icon";
-import { Touchable } from "../touchable";
+import { ButtonIcon, Touchable } from "../../atoms";
 
 export class Lightbox extends PureComponent {
     static get propTypes() {
