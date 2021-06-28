@@ -26,6 +26,7 @@ export class Chat extends PureComponent {
                     )
                 })
             ),
+            scrollAnimated: PropTypes.bool,
             onNewMessage: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -36,6 +37,7 @@ export class Chat extends PureComponent {
             avatarUrl: undefined,
             username: undefined,
             messages: [],
+            scrollAnimated: true,
             onNewMessage: () => {},
             style: {}
         };
@@ -59,7 +61,7 @@ export class Chat extends PureComponent {
     };
 
     scrollToEnd = () => {
-        this.scrollViewComponent.scrollToEnd({ animated: true });
+        this.scrollViewComponent.scrollToEnd({ animated: this.props.scrollAnimated });
     };
 
     getInputValue = () => (this.input ? this.input.state.value || null : null);
