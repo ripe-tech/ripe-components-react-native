@@ -236,8 +236,6 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
                         placeholder={this.props.placeholder || this.props.header}
                         placeholderTextColor={this.props.placeholderTextColor}
                         height={40}
-                        showBorder={false}
-                        padding={false}
                         onValueUpdate={this.onChangeValue}
                         onFocus={this._onFocus}
                         onBlur={this._onBlur}
