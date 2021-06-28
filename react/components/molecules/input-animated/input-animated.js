@@ -37,6 +37,8 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
     constructor(props) {
         super(props);
 
+        this.animationDuration = 250;
+
         this.headerTextYPositionBlur = 5;
         this.headerTextYPositionFocus = 30;
 
@@ -153,37 +155,37 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
         Animated.parallel([
             Animated.timing(this.state.headerTextYPosition, {
                 toValue: blur ? this.headerTextYPositionBlur : this.headerTextYPositionFocus,
-                duration: 300,
+                duration: this.animationDuration,
                 useNativeDriver: false
             }),
             Animated.timing(this.state.headerTextColor, {
                 toValue: blur ? this.headerTextColorBlur : this.headerTextColorFocus,
-                duration: 300,
+                duration: this.animationDuration,
                 useNativeDriver: false
             }),
             Animated.timing(this.state.textFontSize, {
                 toValue: blur ? this.textFontSizeBlur : this.textFontSizeFocus,
-                duration: 300,
+                duration: this.animationDuration,
                 useNativeDriver: false
             }),
             Animated.timing(this.state.underlineOpacity, {
                 toValue: blur ? this.underlineOpacityBlur : this.underlineOpacityFocus,
-                duration: 300,
+                duration: this.animationDuration,
                 useNativeDriver: false
             }),
             Animated.timing(this.state.underlineYTransform, {
                 toValue: blur ? this.underlineYTransformBlur : this.underlineYTransformFocus,
-                duration: 300,
+                duration: this.animationDuration,
                 useNativeDriver: false
             }),
             Animated.timing(this.state.inputBorderOpacity, {
                 toValue: blur ? this.inputBorderOpacityBlur : this.inputBorderOpacityFocus,
-                duration: 300,
+                duration: this.animationDuration,
                 useNativeDriver: false
             }),
             Animated.timing(this.state.inputYTransform, {
                 toValue: blur ? this.inputYTransformBlur : this.inputYTransformFocus,
-                duration: 300,
+                duration: this.animationDuration,
                 useNativeDriver: false
             })
         ]).start(() => {
