@@ -7,7 +7,6 @@ import { Input } from "./input";
 storiesOf("Components/Atoms/Input", module)
     .addDecorator(withKnobs)
     .add("Input", () => {
-        const header = text("Header", "Name");
         const value = text("Value", undefined);
         const showBorder = boolean("Show Border", true);
         const borderColor = text("Border Color", "#e4e8f0");
@@ -15,7 +14,6 @@ storiesOf("Components/Atoms/Input", module)
 
         return (
             <Input
-                header={header}
                 value={value}
                 showBorder={showBorder}
                 borderColor={borderColor}
