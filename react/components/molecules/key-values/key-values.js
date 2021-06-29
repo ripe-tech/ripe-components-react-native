@@ -15,6 +15,7 @@ export class KeyValues extends PureComponent {
                     value: PropTypes.string.isRequired,
                     keyColor: PropTypes.string,
                     valueColor: PropTypes.string,
+                    border: PropTypes.string,
                     icon: PropTypes.string,
                     iconBackgroundColor: PropTypes.string,
                     iconColor: PropTypes.string,
@@ -64,6 +65,7 @@ export class KeyValues extends PureComponent {
                             value={item.value}
                             keyColor={item.keyColor}
                             valueColor={item.valueColor}
+                            border={item.border}
                             icon={item.icon}
                             iconBackgroundColor={item.iconBackgroundColor}
                             iconColor={item.iconColor}
