@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { TabsText } from "../../molecules";
 
-export class Tabs extends PureComponent {
+export class TabsSwipeable extends PureComponent {
     static get propTypes() {
         return {
             tabs: PropTypes.arrayOf(
@@ -18,6 +18,7 @@ export class Tabs extends PureComponent {
             ),
             currentTab: PropTypes.number,
             swipeThreshold: PropTypes.number,
+            shouldPanThreshold: PropTypes.number,
             onTabChange: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -28,6 +29,7 @@ export class Tabs extends PureComponent {
             tabs: [],
             currentTab: 0,
             swipeThreshold: 0.5,
+            shouldPanThreshold: 5,
             onTabChange: () => {},
             style: {}
         };
@@ -102,7 +104,8 @@ export class Tabs extends PureComponent {
     };
 
     onMoveShouldSetPanResponderCapture = (event, gestureState) => {
-        return !this.animating;
+        // only moves if the ge
+        return !this.animating && Math.abs(gestureState.dx) > 5;
     };
 
     onPanResponderMove = (event, gestureState) => {
@@ -242,4 +245,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Tabs;
+export default TabsSwipeable;
