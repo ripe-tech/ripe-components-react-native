@@ -10,7 +10,7 @@ import { Input, Touchable } from "../../atoms";
 export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
-            header: PropTypes.string,
+            label: PropTypes.string,
             borderBottomActiveColor: PropTypes.string,
             placeholderTextColor: PropTypes.string,
             placeholder: PropTypes.string,
@@ -23,7 +23,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
 
     static get defaultProps() {
         return {
-            header: undefined,
+            label: undefined,
             borderBottomActiveColor: "#4f7af8",
             placeholderTextColor: "#869aaa",
             placeholder: undefined,
@@ -39,14 +39,14 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
 
         this.animationDuration = 250;
 
-        this.headerTextYPositionBlur = 5;
-        this.headerTextYPositionFocus = 30;
+        this.labelTextYPositionBlur = 5;
+        this.labelTextYPositionFocus = 30;
 
         this.textFontSizeBlur = 16;
         this.textFontSizeFocus = 12;
 
-        this.headerTextColorBlur = 0;
-        this.headerTextColorFocus = 1;
+        this.labelTextColorBlur = 0;
+        this.labelTextColorFocus = 1;
 
         this.underlineOpacityBlur = 1;
         this.underlineOpacityFocus = 0;
@@ -63,9 +63,9 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
         this.state = {
             valueData: this.props.value,
             focused: true,
-            headerTextYPosition: new Animated.Value(this.headerTextYPositionBlur),
+            labelTextYPosition: new Animated.Value(this.labelTextYPositionBlur),
             textFontSize: new Animated.Value(this.textFontSizeBlur),
-            headerTextColor: new Animated.Value(this.headerTextColorBlur),
+            labelTextColor: new Animated.Value(this.labelTextColorBlur),
             underlineOpacity: new Animated.Value(this.underlineOpacityBlur),
             underlineYTransform: new Animated.Value(this.underlineYTransformBlur),
             inputBorderOpacity: new Animated.Value(this.inputBorderOpacityBlur),
@@ -86,11 +86,11 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
         }
     }
 
-    _headerTextStyle = () => {
+    _labelTextStyle = () => {
         return [
-            styles.headerText,
+            styles.labelText,
             {
-                bottom: this.state.headerTextYPosition
+                bottom: this.state.labelTextYPosition
             }
         ];
     };
@@ -98,7 +98,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
     _textStyle = () => {
         return [
             {
-                color: this.state.headerTextColor.interpolate({
+                color: this.state.labelTextColor.interpolate({
                     inputRange: [0, 1],
                     outputRange: ["#4f4f4f", "#4f7af8"]
                 }),
@@ -153,13 +153,13 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
         }
 
         Animated.parallel([
-            Animated.timing(this.state.headerTextYPosition, {
-                toValue: blur ? this.headerTextYPositionBlur : this.headerTextYPositionFocus,
+            Animated.timing(this.state.labelTextYPosition, {
+                toValue: blur ? this.labelTextYPositionBlur : this.labelTextYPositionFocus,
                 duration: this.animationDuration,
                 useNativeDriver: false
             }),
-            Animated.timing(this.state.headerTextColor, {
-                toValue: blur ? this.headerTextColorBlur : this.headerTextColorFocus,
+            Animated.timing(this.state.labelTextColor, {
+                toValue: blur ? this.labelTextColorBlur : this.labelTextColorFocus,
                 duration: this.animationDuration,
                 useNativeDriver: false
             }),
@@ -220,10 +220,10 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
                 {...this.id("input-animated")}
             >
                 <Animated.View style={styles.header}>
-                    {Boolean(this.props.header) && (
-                        <Animated.View style={this._headerTextStyle()}>
+                    {Boolean(this.props.label) && (
+                        <Animated.View style={this._labelTextStyle()}>
                             <Animated.Text style={this._textStyle()}>
-                                {this.props.header}
+                                {this.props.label}
                             </Animated.Text>
                         </Animated.View>
                     )}
@@ -233,7 +233,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
                     <Input
                         ref={el => (this.input = el)}
                         value={this.state.valueData}
-                        placeholder={this.props.placeholder || this.props.header}
+                        placeholder={this.props.placeholder || this.props.label}
                         placeholderTextColor={this.props.placeholderTextColor}
                         height={40}
                         onValueUpdate={this.onChangeValue}
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#c3c9cf",
         height: 1
     },
-    headerText: {
+    labelText: {
         fontSize: 16,
         position: "absolute"
     },

@@ -8,7 +8,7 @@ import { Touchable } from "../../atoms";
 storiesOf("Components/Molecules/Input Animated", module)
     .addDecorator(withKnobs)
     .add("Input Animated", () => {
-        const header = text("Header", "Name");
+        const label = text("Label", "Name");
         const placeholder = text("Placeholder", undefined);
         const borderBottomActiveColor = text("Border Bottom ActiveColor", "#4f7af8");
         const placeholderTextColor = text("Placeholder Text Color", "#869aaa");
@@ -24,7 +24,7 @@ storiesOf("Components/Molecules/Input Animated", module)
             >
                 <InputAnimated
                     ref={el => (this.input = el)}
-                    header={header}
+                    label={label}
                     placeholder={placeholder}
                     borderBottomActiveColor={borderBottomActiveColor}
                     placeholderTextColor={placeholderTextColor}
