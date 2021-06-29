@@ -53,6 +53,12 @@ export class TabsText extends PureComponent {
         this.scrollRef = React.createRef();
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.tabSelected !== this.props.tabSelected) {
+            this.onTabPress(this.props.tabSelected);
+        }
+    }
+
     onTabPress = tabSelectedIndex => {
         if (this.state.tabSelected === tabSelectedIndex) {
             this.props.onSelectedTabPress();
