@@ -6,17 +6,35 @@ import PropTypes from "prop-types";
 export class KeyValuePlaceholder extends PureComponent {
     static get propTypes() {
         return {
-            numberOfLines: PropTypes.number,
             colors: PropTypes.arrayOf(PropTypes.string).isRequired,
-            locations: PropTypes.arrayOf(PropTypes.number).isRequired
+            locations: PropTypes.arrayOf(PropTypes.number).isRequired,
+            numberOfLines: PropTypes.number,
+            border: PropTypes.string
         };
     }
 
     static get defaultProps() {
         return {
-            numberOfLines: 1
+            numberOfLines: 1,
+            border: undefined
         };
     }
+
+    _borderStyle = () => {
+        switch (this.props.border) {
+            case "none":
+                return { borderBottomWidth: 0 };
+            case "hard":
+                return { borderBottomWidth: 2, borderBottomColor: "#c0c6d1" };
+            case "soft":
+            default:
+                return { borderBottomWidth: 1, borderBottomColor: "#e4e8f0" };
+        }
+    };
+
+    _style = () => {
+        return [styles.sectionViewPlaceholder, this._borderStyle(), this.props.style];
+    };
 
     _renderLines() {
         const componentsToReturn = [];
@@ -38,7 +56,7 @@ export class KeyValuePlaceholder extends PureComponent {
 
     render() {
         return (
-            <View style={styles.sectionViewPlaceholder}>
+            <View style={this._style()}>
                 <View style={styles.textContainer}>
                     <LinearGradient
                         style={styles.key}
