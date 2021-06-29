@@ -37,8 +37,8 @@ export class Tabs extends PureComponent {
         super(props);
 
         this.state = {
-            currentTabData: this.props.currentTab,
-            previousTab: this.props.currentTab,
+            nextTab: this.props.currentTab,
+            currentTab: this.props.currentTab,
             swipingDirection: undefined,
             animationPositionX: new Animated.Value(0),
             nextAnimationPositionX: new Animated.Value(0)
@@ -58,7 +58,7 @@ export class Tabs extends PureComponent {
 
     componentDidUpdate(prevProps) {
         if (prevProps.currentTab !== this.props.currentTab) {
-            this.setState({ currentTabData: this.props.currentTab });
+            this.setState({ nextTab: this.props.currentTab });
         }
     }
 
@@ -68,30 +68,34 @@ export class Tabs extends PureComponent {
     }
 
     setSwipingDirection(offset) {
-        if (offset > 0 && this.state.previousTab > 0) {
+        // sets the swiping direction and the current tab
+        // data as the next tab content that will be loaded
+        // as the swiping animation progresses
+        if (offset > 0 && this.state.currentTab > 0) {
             this.setState(prevState => ({
                 swipingDirection: "left",
-                currentTabData: prevState.previousTab - 1
+                nextTab: prevState.currentTab - 1
             }));
             this.state.nextAnimationPositionX.setValue(this.screenWidth);
-            return true;
-        } else if (offset < 0 && this.state.previousTab < this.props.tabs.length - 1) {
+            return "left";
+        } else if (offset < 0 && this.state.currentTab < this.props.tabs.length - 1) {
             this.setState(prevState => ({
                 swipingDirection: "right",
-                currentTabData: prevState.previousTab + 1
+                nextTab: prevState.currentTab + 1
             }));
             this.state.nextAnimationPositionX.setValue(-1 * this.screenWidth);
-            return true;
+            return "right";
         }
 
+        this.state.nextAnimationPositionX.setValue(0);
         this.setState({ swipingDirection: undefined });
-        return false;
+        return null;
     }
 
     onTabChange = tabIndex => {
         this.setState(
             {
-                previousTab: tabIndex
+                currentTab: tabIndex
             },
             () => this.props.onTabChange(tabIndex)
         );
@@ -104,15 +108,17 @@ export class Tabs extends PureComponent {
     onPanResponderMove = (event, gestureState) => {
         if (this.animating) return;
 
-        if (!this.setSwipingDirection(gestureState.dx)) {
-            this.state.animationPositionX.setValue(0);
-            return;
-        }
+        // gets the swiping direction result, to be used to
+        // calculate the position of the next tab content
+        const swipingDirection = this.setSwipingDirection(gestureState.dx);
+        if (!swipingDirection) return;
 
+        // calculates the position of the next tab content based
+        // on the swiping direction
         let nextPositionXValue = 0;
-        if (this.state.swipingDirection === "left") {
+        if (swipingDirection === "left") {
             nextPositionXValue = -1 * this.screenWidth + gestureState.dx;
-        } else if (this.state.swipingDirection === "right") {
+        } else if (swipingDirection === "right") {
             nextPositionXValue = this.screenWidth + gestureState.dx;
         }
 
@@ -122,41 +128,58 @@ export class Tabs extends PureComponent {
 
     onPanResponderRelease = (event, gestureState) => {
         this.animating = true;
-        let finalValue = 0;
         let afterThreshold = this.isAfterThreshold(gestureState.dx);
+        let currentFinalValue = 0;
+        let nextFinalValue = 0;
 
-        if (afterThreshold && this.state.swipingDirection === "left") {
-            finalValue = this.screenWidth;
-        } else if (afterThreshold && this.state.swipingDirection === "right") {
-            finalValue = -1 * this.screenWidth;
+        // calculates the final position of the current and next tab
+        // content when the user stops swiping, the content may default
+        // to the starting position if the threshold was not surpassed
+        if (this.state.swipingDirection === "left") {
+            currentFinalValue = afterThreshold ? this.screenWidth : 0;
+            nextFinalValue = afterThreshold ? 0 : -1 * this.screenWidth;
+        } else if (this.state.swipingDirection === "right") {
+            currentFinalValue = afterThreshold ? -1 * this.screenWidth : 0;
+            nextFinalValue = afterThreshold ? 0 : this.screenWidth;
         }
 
+        // starts the animations with the final position of the panels
+        // and, if the threshold was surpassed, sets the previous tab
+        // content with the one being shown now and, if the threshold
+        // was not surpassed, the current tab state is reset to the
+        // one before the start of the animation
         Animated.parallel([
             Animated.timing(this.state.animationPositionX, {
-                toValue: finalValue,
+                toValue: currentFinalValue,
                 useNativeDriver: false
             }),
             Animated.timing(this.state.nextAnimationPositionX, {
-                toValue: 0,
+                toValue: nextFinalValue,
                 useNativeDriver: false
             })
         ]).start(() => {
             this.animating = false;
-            if (!afterThreshold) return;
-            this.setState(
-                {
-                    previousTab: this.state.currentTabData
-                },
-                () => {
-                    this.state.nextAnimationPositionX.setValue(0);
-                    this.state.animationPositionX.setValue(0);
-                }
-            );
+            if (!afterThreshold) {
+                this.setState({
+                    swipingDirection: undefined,
+                    nextTab: this.state.currentTab
+                });
+                return;
+            }
+
+            // sets the now current content to the previous
+            // tab content so that new swiping state change
+            // can happen again
+            this.state.animationPositionX.setValue(0);
+            this.setState({
+                swipingDirection: undefined,
+                currentTab: this.state.nextTab
+            });
         });
     };
 
     _renderNext = () => {
-        return this.props.tabs[this.state.currentTabData].render();
+        return this.props.tabs[this.state.nextTab].render();
     };
 
     _style() {
@@ -185,16 +208,17 @@ export class Tabs extends PureComponent {
             <View style={this._style()}>
                 <TabsText
                     tabs={this.props.tabs}
-                    tabSelected={this.state.previousTab}
+                    tabSelected={this.state.currentTab}
                     onTabChange={this.onTabChange}
                     onSelectedTabPress={this._scrollTop}
+                    ref={this.tabsTextRef}
                 />
                 <View style={this._style()} {...this.panResponder.panHandlers}>
                     <Animated.View style={this._nextContentStyle()}>
                         {this.state.swipingDirection ? this._renderNext() : null}
                     </Animated.View>
                     <Animated.View style={this._currentContentStyle()}>
-                        {this.props.tabs[this.state.previousTab].render()}
+                        {this.props.tabs[this.state.currentTab].render()}
                     </Animated.View>
                 </View>
             </View>
