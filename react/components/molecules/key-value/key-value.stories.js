@@ -11,6 +11,7 @@ storiesOf("Components/Atoms/Key Value", module)
         const value = text("Value", "Value");
         const keyColor = text("Key Color", "#4f7af8");
         const valueColor = text("Value Color", "#223645");
+        const border = select("Border type", { None: "none", Soft: "soft", Hard: "hard" }, null);
         const icon = select(
             "Icon",
             { Add: "add", Alarm: "alarm", Bell: "bell", Phone: "phone", None: null },
@@ -27,6 +28,7 @@ storiesOf("Components/Atoms/Key Value", module)
                 _key={key}
                 value={value}
                 icon={icon}
+                border={border}
                 keyColor={keyColor}
                 valueColor={valueColor}
                 iconBackgroundColor={iconBackgroundColor}
