@@ -17,6 +17,7 @@ export class TabsSwipeable extends PureComponent {
                 })
             ),
             currentTab: PropTypes.number,
+            textVariant: PropTypes.string,
             swipeThreshold: PropTypes.number,
             shouldPanThreshold: PropTypes.number,
             onTabChange: PropTypes.func,
@@ -28,6 +29,7 @@ export class TabsSwipeable extends PureComponent {
         return {
             tabs: [],
             currentTab: 0,
+            textVariant: undefined,
             swipeThreshold: 0.5,
             shouldPanThreshold: 5,
             onTabChange: () => {},
@@ -211,6 +213,7 @@ export class TabsSwipeable extends PureComponent {
             <View style={this._style()}>
                 <TabsText
                     tabs={this.props.tabs}
+                    variant={this.props.textVariant}
                     tabSelected={this.state.currentTab}
                     onTabChange={this.onTabChange}
                     onSelectedTabPress={this._scrollTop}
@@ -241,7 +244,8 @@ const styles = StyleSheet.create({
     tabContent: {
         position: "absolute",
         width: "100%",
-        height: "100%"
+        height: "100%",
+        backgroundColor: "red",
     }
 });
 
