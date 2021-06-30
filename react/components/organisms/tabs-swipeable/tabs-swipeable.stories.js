@@ -3,11 +3,11 @@ import { Text, View } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, select } from "@storybook/addon-knobs";
 
-import { Tabs } from "../tabs";
+import { TabsSwipeable } from "../tabs-swipeable";
 
-storiesOf("Components/Organisms/Tabs", module)
+storiesOf("Components/Organisms/Tabs Swipeable", module)
     .addDecorator(withKnobs)
-    .add("Tabs", () => {
+    .add("Tabs Swipeable", () => {
         const tabs = [
             {
                 text: "Activity",
@@ -26,9 +26,6 @@ storiesOf("Components/Organisms/Tabs", module)
                 render: () => {
                     return (
                         <View
-                            ref={ref => {
-                                this.orderRef = ref;
-                            }}
                             style={{
                                 flex: 1,
                                 flexDirection: "column",
@@ -49,9 +46,6 @@ storiesOf("Components/Organisms/Tabs", module)
                             ))}
                         </View>
                     );
-                },
-                scrollToTop: () => {
-                    this.orderRef.scrollToOffset({ animated: true, offset: 0 });
                 }
             },
             {
@@ -77,5 +71,5 @@ storiesOf("Components/Organisms/Tabs", module)
             undefined
         );
 
-        return <Tabs tabs={tabs} currentTab={currentTab} />;
+        return <TabsSwipeable tabs={tabs} currentTab={currentTab} />;
     });
