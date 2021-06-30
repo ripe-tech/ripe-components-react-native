@@ -1,16 +1,24 @@
 import React, { PureComponent } from "react";
-import { Alert, Dimensions, Image, Modal, PanResponder, ScrollView, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import {
+    Dimensions,
+    Image,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+    ViewPropTypes
+} from "react-native";
 import PropTypes from "prop-types";
 
 import { isTabletSize } from "../../../util";
 
-import { ButtonIcon, Touchable } from "../../atoms";
+import { ButtonIcon } from "../../atoms";
 
 export class ImageCarrousel extends PureComponent {
     static get propTypes() {
         return {
             selectedImage: PropTypes.number,
-            borderRadius: PropTypes.number,
             resizeModeFullScreen: PropTypes.string,
             images: PropTypes.array,
             onVisible: PropTypes.func,
@@ -20,10 +28,8 @@ export class ImageCarrousel extends PureComponent {
 
     static get defaultProps() {
         return {
-            uri: undefined,
             src: undefined,
             selectedImage: 0,
-            borderRadius: undefined,
             resizeModeFullScreen: undefined,
             images: [],
             onVisible: () => {},
@@ -58,10 +64,12 @@ export class ImageCarrousel extends PureComponent {
             return;
         }
         const currentPagePosition = imageIndex * Dimensions.get("window").width;
-        this.setState({currentPagePosition: currentPagePosition, selectedImageData: imageIndex}, () => {
-            this.setVisibility(true);
-        })
-        
+        this.setState(
+            { currentPagePosition: currentPagePosition, selectedImageData: imageIndex },
+            () => {
+                this.setVisibility(true);
+            }
+        );
     }
 
     closeLigthBox() {
@@ -71,8 +79,8 @@ export class ImageCarrousel extends PureComponent {
     onScroll = event => {
         const scroll = event.nativeEvent.contentOffset.x;
 
-        const currentPage = Math.round(scroll / this.scrollCoeficient); 
-        this.setState({selectedImageData: currentPage})
+        const currentPage = Math.round(scroll / this.scrollCoeficient);
+        this.setState({ selectedImageData: currentPage });
     };
 
     onBackButtonPress = () => {
@@ -87,11 +95,11 @@ export class ImageCarrousel extends PureComponent {
         this.setVisibility(true);
     };
 
-    _imageSource = (image) => {
+    _imageSource = image => {
         return image.uri ? { uri: image.uri } : image.src;
     };
 
-    _imageFullscreenStyle = (image) => {
+    _imageFullscreenStyle = image => {
         return [
             styles.imageFullscreen,
             {
@@ -113,9 +121,9 @@ export class ImageCarrousel extends PureComponent {
                 >
                     <View style={styles.fullscreenContainer}>
                         <ScrollView
-                            contentOffset={{x: this.state.currentPagePosition, y: 0}}
-                            style={{ flex: 1}}
-                            contentContainerStyle={{ flexGrow: 1}}
+                            contentOffset={{ x: this.state.currentPagePosition, y: 0 }}
+                            style={{ flex: 1 }}
+                            contentContainerStyle={{ flexGrow: 1 }}
                             horizontal={true}
                             pagingEnabled={true}
                             showsHorizontalScrollIndicator={true}
@@ -126,7 +134,7 @@ export class ImageCarrousel extends PureComponent {
                                     key={index}
                                     style={this._imageFullscreenStyle(image)}
                                     source={this._imageSource(image)}
-                                /> 
+                                />
                             ))}
                         </ScrollView>
                         <ButtonIcon

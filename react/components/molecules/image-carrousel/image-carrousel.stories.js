@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, View } from "react-native";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, number, select, text } from "@storybook/addon-knobs";
+import { withKnobs, select } from "@storybook/addon-knobs";
 
 import { Touchable } from "../../atoms";
 import { ImageCarrousel } from "./image-carrousel";
@@ -9,23 +9,8 @@ import { ImageCarrousel } from "./image-carrousel";
 storiesOf("Components/molecules/ImageCarrousel", module)
     .addDecorator(withKnobs)
     .add("Image Carroussel", () => {
-        const uri = text("URI", "https://cdn.platforme.com/images/platforme.png");
-        const width = number("Width", 200);
-        const height = number("Height", 150);
-        const borderRadius = number("Border Radius", -1);
         const resizeModeFullScreen = select(
             "Resize Mode FullScreen",
-            {
-                Unset: undefined,
-                Cover: "cover",
-                Contain: "contain",
-                Stretch: "stretch",
-                Center: "center"
-            },
-            "contain"
-        );
-        const resizeMode = select(
-            "Resize Mode",
             {
                 Unset: undefined,
                 Cover: "cover",
@@ -74,12 +59,8 @@ storiesOf("Components/molecules/ImageCarrousel", module)
                 ))}
                 <ImageCarrousel
                     ref={ref => (this.carrousel = ref)}
-                    width={width}
                     selectedImage={selectedImage}
                     images={images}
-                    height={height}
-                    borderRadius={borderRadius === -1 ? undefined : borderRadius}
-                    resizeMode={resizeMode}
                     resizeModeFullScreen={resizeModeFullScreen}
                 />
             </View>
