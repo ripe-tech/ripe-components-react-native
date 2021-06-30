@@ -148,22 +148,6 @@ export class TabsSwipeable extends PureComponent {
             nextFinalValue = afterThreshold ? 0 : this.screenWidth;
         }
 
-        // if the threshold was surpassed, updates the current active tab
-        // with the new one and if it was not surpassed, resets the next
-        // tab state, this update is done here so that the tab text can update
-        // before the end of the swiping animation
-        if (afterThreshold) {
-            this.setState({
-                swipingDirection: undefined,
-                currentTab: this.state.nextTab
-            });
-        } else {
-            this.setState({
-                swipingDirection: undefined,
-                nextTab: this.state.currentTab
-            });
-        }
-
         // starts the animations with the final position of the panels
         // and, if the threshold was surpassed, sets the previous tab
         // content with the one being shown now and, if the threshold
@@ -181,8 +165,21 @@ export class TabsSwipeable extends PureComponent {
         ]).start(() => {
             this.animating = false;
 
-            if (!afterThreshold) return;
-            this.state.animationPositionX.setValue(0);
+            // if the threshold was surpassed, updates the current active
+            // tab with the new one and if it was not surpassed, resets
+            // the next tab state
+            if (afterThreshold) {
+                this.setState({
+                    swipingDirection: undefined,
+                    currentTab: this.state.nextTab
+                });
+                this.state.animationPositionX.setValue(0);
+            } else {
+                this.setState({
+                    swipingDirection: undefined,
+                    nextTab: this.state.currentTab
+                });
+            }
         });
     };
 
