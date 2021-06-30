@@ -2,6 +2,7 @@ export * from "./button-toggle";
 export * from "./chat-message";
 export * from "./date-input";
 export * from "./header";
+export * from "./image-carrousel";
 export * from "./item";
 export * from "./item-notification";
 export * from "./key-value";
