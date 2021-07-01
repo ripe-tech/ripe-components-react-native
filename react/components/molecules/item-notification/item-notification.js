@@ -9,10 +9,10 @@ import { baseStyles, dateTimeString } from "../../../util";
 export class ItemNotification extends PureComponent {
     static get propTypes() {
         return {
-            avatarURL: PropTypes.String,
+            avatarURL: PropTypes.string,
             onPress: PropTypes.func,
             text: PropTypes.String,
-            timestamp: PropTypes.Number,
+            timestamp: PropTypes.number,
             unread: PropTypes.bool
         };
     }
