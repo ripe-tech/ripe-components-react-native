@@ -9,9 +9,9 @@ storiesOf("Components/Molecules/Key Values", module)
     .add("Key Values", () => {
         const items = [
             { key: "E-mail", value: "gcc@platforme.com" },
-            { key: "Company", value: "Platforme" },
-            { key: "Position", value: "Head of Software Development" },
-            { key: "Birth date", value: "14/03/1993" },
+            { key: "Company", value: "Platforme", border: "none" },
+            { key: "Position", value: "Head of Software Development", border: "soft" },
+            { key: "Birth date", value: "14/03/1993", border: "hard" },
             { key: "Nationality", value: "Portuguese" }
         ];
         const twoColumns = boolean("Two Columns", false);

@@ -16,7 +16,7 @@ export class KeyValuePlaceholder extends PureComponent {
     static get defaultProps() {
         return {
             numberOfLines: 1,
-            border: undefined
+            border: "soft"
         };
     }
 
@@ -27,7 +27,6 @@ export class KeyValuePlaceholder extends PureComponent {
             case "hard":
                 return { borderBottomWidth: 2, borderBottomColor: "#c0c6d1" };
             case "soft":
-            default:
                 return { borderBottomWidth: 1, borderBottomColor: "#e4e8f0" };
         }
     };
