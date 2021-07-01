@@ -34,7 +34,7 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             keyColor: "#4f7af8",
             valueColor: "#223645",
-            border: undefined,
+            border: "soft",
             icon: undefined,
             iconBackgroundColor: undefined,
             iconColor: undefined,
@@ -65,7 +65,6 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
             case "hard":
                 return { borderBottomWidth: 2, borderBottomColor: "#c0c6d1" };
             case "soft":
-            default:
                 return { borderBottomWidth: 1, borderBottomColor: "#e4e8f0" };
         }
     };

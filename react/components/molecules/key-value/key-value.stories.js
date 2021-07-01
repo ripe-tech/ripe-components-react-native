@@ -11,7 +11,7 @@ storiesOf("Components/Atoms/Key Value", module)
         const value = text("Value", "Value");
         const keyColor = text("Key Color", "#4f7af8");
         const valueColor = text("Value Color", "#223645");
-        const border = select("Border type", { None: "none", Soft: "soft", Hard: "hard" }, null);
+        const border = select("Border Type", { None: "none", Soft: "soft", Hard: "hard" }, null);
         const icon = select(
             "Icon",
             { Add: "add", Alarm: "alarm", Bell: "bell", Phone: "phone", None: null },
@@ -23,6 +23,7 @@ storiesOf("Components/Atoms/Key Value", module)
         const iconHeight = number("Icon Height", 20);
         const iconWidth = number("Icon Width", 20);
         const iconStrokeWidth = number("Icon Stroke Width", 2);
+
         return (
             <KeyValue
                 _key={key}

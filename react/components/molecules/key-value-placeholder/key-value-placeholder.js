@@ -75,9 +75,7 @@ const styles = StyleSheet.create({
     sectionViewPlaceholder: {
         flexDirection: "row",
         paddingVertical: 16,
-        paddingHorizontal: 16,
-        borderBottomWidth: 1,
-        borderBottomColor: "#e4e8f0"
+        paddingHorizontal: 16
     },
     textContainer: {
         flex: 1
