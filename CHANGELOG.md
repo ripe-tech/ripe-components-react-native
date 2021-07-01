@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Fallback image on loading error in avatar component
 * Checkbox component
+* Select component
 * Radio button component
 * Snackbar component
 * Progress bar component
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Multiple files selection with image picker
 * Date input component
 * Switcher component
+* Radio group component
 * Checkbox group component
 
 ### Changed
@@ -26,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* `normalizeImages` function handling of images coming from camera
 
 ## [0.4.0] - 2021-04-07
 
