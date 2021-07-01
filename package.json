@@ -63,6 +63,7 @@
         "svgo": "^2.3.0"
     },
     "peerDependencies": {
+        "@react-native-community/clipboard": "^1.5.1",
         "@react-native-picker/picker": "^1.16.1",
         "buffer": "^6.0.3",
         "react": "^17.0.1",
