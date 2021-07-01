@@ -33,7 +33,7 @@ export class OneSignalProvider extends Component {
         try {
             await this.initOneSignal();
         } catch (err) {
-            this.props.handleErrorSimple(err);
+            this.props.errorHandler(err);
         }
     }
 
