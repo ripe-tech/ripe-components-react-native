@@ -1,5 +1,13 @@
 import React, { PureComponent } from "react";
-import { Animated, Dimensions, PanResponder, StyleSheet, View, ViewPropTypes } from "react-native";
+import {
+    Animated,
+    Dimensions,
+    Easing,
+    PanResponder,
+    StyleSheet,
+    View,
+    ViewPropTypes
+} from "react-native";
 import PropTypes from "prop-types";
 
 import { TabsText } from "../../molecules";
@@ -53,10 +61,13 @@ export class TabsSwipeable extends PureComponent {
         this.animating = false;
 
         this.panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: () => true,
+            onPanResponderTerminationRequest: () => false,
             onMoveShouldSetPanResponderCapture: this.onMoveShouldSetPanResponderCapture,
             onPanResponderGrant: this.onPanResponderGrant,
             onPanResponderMove: this.onPanResponderMove,
-            onPanResponderRelease: this.onPanResponderRelease
+            onPanResponderRelease: this.onPanResponderRelease,
+            onPanResponderTerminate: this.onPanResponderTerminate,
         });
     }
 
@@ -106,8 +117,10 @@ export class TabsSwipeable extends PureComponent {
     };
 
     onMoveShouldSetPanResponderCapture = (event, gestureState) => {
-        // only moves if the ge
-        return !this.animating && Math.abs(gestureState.dx) > 5;
+        // only moves if the distance moved is bigger than a threshold,
+        // so that it does not block movement for scroll views inside
+        // the tabs content
+        return !this.animating && Math.abs(gestureState.dx) > this.props.shouldPanThreshold;
     };
 
     onPanResponderMove = (event, gestureState) => {
@@ -132,6 +145,14 @@ export class TabsSwipeable extends PureComponent {
     };
 
     onPanResponderRelease = (event, gestureState) => {
+        this._releasePanel(gestureState);
+    };
+
+    onPanResponderTerminate = (event, gestureState) => {
+        this._releasePanel(gestureState);
+    };
+
+    _releasePanel = gestureState => {
         this.animating = true;
         let afterThreshold = this.isAfterThreshold(gestureState.dx);
         let currentFinalValue = 0;
@@ -156,11 +177,13 @@ export class TabsSwipeable extends PureComponent {
         Animated.parallel([
             Animated.timing(this.state.animationPositionX, {
                 toValue: currentFinalValue,
-                useNativeDriver: false
+                useNativeDriver: false,
+                easing: Easing.ease
             }),
             Animated.timing(this.state.nextAnimationPositionX, {
                 toValue: nextFinalValue,
-                useNativeDriver: false
+                useNativeDriver: false,
+                easing: Easing.ease
             })
         ]).start(() => {
             this.animating = false;
