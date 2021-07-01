@@ -4,11 +4,14 @@ import * as Sentry from "@sentry/react-native";
 import PropTypes from "prop-types";
 import { toTokensM } from "yonius";
 import { API as RipeIdAPI } from "ripe-id-api";
-import { RipeAPI } from "ripe-sdk";
+
+import { RipeContext } from "../ripe-context";
 
 export const OAuthContext = React.createContext();
 
 export class OAuthProvider extends Component {
+    static contextType = RipeContext;
+
     static get propTypes() {
         return {
             environment: PropTypes.string.isRequired
@@ -19,7 +22,6 @@ export class OAuthProvider extends Component {
         super(props);
 
         this.ripeIdApi = new RipeIdAPI(this.getRipeIdOptions());
-        this.ripeApi = new RipeAPI(this.getRipeOptions());
         this.state = {
             loaded: false,
             logoutMessage: null,
@@ -57,23 +59,6 @@ export class OAuthProvider extends Component {
         }
     }
 
-    getRipeOptions() {
-        switch (this.props.environment) {
-            case "production":
-            case "beta":
-                return {
-                    url: "https://app.platforme.com/api/",
-                    noBundles: false
-                };
-
-            default:
-                return {
-                    url: "https://sandbox.platforme.com/api/",
-                    noBundles: false
-                };
-        }
-    }
-
     async trySetAccount() {
         const token = await AsyncStorage.getItem("token");
         const account = await AsyncStorage.getItem("account");
@@ -90,7 +75,7 @@ export class OAuthProvider extends Component {
 
         // runs the remote authentication process on the
         // RIPE Core (using the access token)
-        await this.ripeApi.authPidP(token);
+        await this.context.ripeApi.authPidP(token);
 
         // updates the OAuth context state according to the
         // newly found information (account, ACL, tokens, etc)
@@ -151,7 +136,6 @@ export class OAuthProvider extends Component {
     }
 
     async componentDidMount() {
-        await this.ripeApi.isReady();
         await this.trySetAccount();
         this.setState({ loaded: true });
     }
