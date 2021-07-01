@@ -11,7 +11,7 @@ export class ItemNotification extends PureComponent {
         return {
             avatarURL: PropTypes.string,
             onPress: PropTypes.func,
-            text: PropTypes.String,
+            text: PropTypes.string,
             timestamp: PropTypes.number,
             unread: PropTypes.bool
         };
