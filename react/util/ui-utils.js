@@ -148,6 +148,7 @@ export const notify = function (message) {
 
 export const toClipboard = function (value, notification = true) {
     Clipboard.setString(`${value}`);
+
     if (notification) {
         notify("Copied to clipboard");
         Vibration.vibrate();
