@@ -63,7 +63,7 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
             case "none":
                 return { borderBottomWidth: 0 };
             case "hard":
-                return { borderBottomWidth: 2, borderBottomColor: "#c0c6d1" };
+                return { borderBottomWidth: 1, borderBottomColor: "#a7abb4" };
             case "soft":
                 return { borderBottomWidth: 1, borderBottomColor: "#e4e8f0" };
         }
