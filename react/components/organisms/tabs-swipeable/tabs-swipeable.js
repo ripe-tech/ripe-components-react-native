@@ -1,5 +1,12 @@
 import React, { PureComponent } from "react";
-import { Dimensions, ScrollView, StyleSheet, View, ViewPropTypes } from "react-native";
+import {
+    ActivityIndicator,
+    Dimensions,
+    ScrollView,
+    StyleSheet,
+    View,
+    ViewPropTypes
+} from "react-native";
 import PropTypes from "prop-types";
 
 import { TabsText } from "../../molecules";
@@ -18,8 +25,7 @@ export class TabsSwipeable extends PureComponent {
             ),
             selectedTab: PropTypes.number,
             textVariant: PropTypes.string,
-            swipeThreshold: PropTypes.number,
-            shouldPanThreshold: PropTypes.number,
+            loading: PropTypes.bool,
             onTabChange: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -30,6 +36,7 @@ export class TabsSwipeable extends PureComponent {
             tabs: [],
             selectedTab: 0,
             textVariant: undefined,
+            loading: false,
             onTabChange: () => {},
             style: {}
         };
@@ -95,6 +102,22 @@ export class TabsSwipeable extends PureComponent {
         return [styles.tabContent, { width: this.screenWidth }];
     };
 
+    _renderTabs = () => {
+        let indexes = [this.state.selectedTab];
+
+        if (this.state.selectedTab === this.props.tabs.length - 1)
+            indexes = [this.state.selectedTab - 1, ...indexes];
+        else if (this.state.selectedTab > 0)
+            indexes = [this.state.selectedTab - 1, ...indexes, this.state.selectedTab + 1];
+        else if (this.state.selectedTab === 0) indexes = [...indexes, this.state.selectedTab + 1];
+
+        return indexes.map(i => (
+            <View key={i} style={this._tabStyle()}>
+                {this.props.tabs[i].render()}
+            </View>
+        ));
+    };
+
     render() {
         return (
             <View style={this._style()}>
@@ -105,26 +128,30 @@ export class TabsSwipeable extends PureComponent {
                     onTabChange={this.onTabChange}
                     onSelectedTabPress={this.onSelectedTabPress}
                 />
-                <ScrollView
-                    contentOffset={{ x: this.state.selectedTabPosition, y: 0 }}
-                    style={{ flex: 1 }}
-                    contentContainerStyle={{ flexGrow: 1 }}
-                    horizontal={true}
-                    pagingEnabled={true}
-                    scrollEnabled={!this.state.animating}
-                    showsHorizontalScrollIndicator={false}
-                    onScroll={this.onScroll}
-                    onMomentumScrollEnd={this.onMomentumScrollEnd}
-                    ref={ref => {
-                        this.scrollView = ref;
-                    }}
-                >
-                    {Object.values(this.props.tabs).map((tab, index) => (
-                        <View key={index} style={this._tabStyle()}>
-                            {tab.render()}
-                        </View>
-                    ))}
-                </ScrollView>
+                {this.props.loading ? (
+                    <ActivityIndicator
+                        style={styles.loadingIndicator}
+                        size="large"
+                        color="#6687f6"
+                    />
+                ) : (
+                    <ScrollView
+                        contentOffset={{ x: this.state.selectedTabPosition, y: 0 }}
+                        style={{ flex: 1 }}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        horizontal={true}
+                        pagingEnabled={true}
+                        scrollEnabled={!this.state.animating}
+                        showsHorizontalScrollIndicator={false}
+                        onScroll={this.onScroll}
+                        onMomentumScrollEnd={this.onMomentumScrollEnd}
+                        ref={ref => {
+                            this.scrollView = ref;
+                        }}
+                    >
+                        {this._renderTabs()}
+                    </ScrollView>
+                )}
             </View>
         );
     }
@@ -133,6 +160,11 @@ export class TabsSwipeable extends PureComponent {
 const styles = StyleSheet.create({
     tabs: {
         flex: 1
+    },
+    loadingIndicator: {
+        flex: 1,
+        justifyContent: "flex-start",
+        marginTop: "25%"
     },
     tabContent: {
         height: "100%",
