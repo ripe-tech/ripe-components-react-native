@@ -14,14 +14,18 @@ export class OAuthProvider extends Component {
 
     static get propTypes() {
         return {
-            environment: PropTypes.string.isRequired
+            ripeIdOptions: PropTypes.shape({
+                clientId: PropTypes.string.isRequired,
+                clientSecret: PropTypes.string.isRequired,
+                redirectUrl: PropTypes.func.isRequired
+            })
         };
     }
 
     constructor(props) {
         super(props);
 
-        this.ripeIdApi = new RipeIdAPI(this.getRipeIdOptions());
+        this.ripeIdApi = new RipeIdAPI(this.props.ripeIdOptions);
         this.state = {
             loaded: false,
             logoutMessage: null,
@@ -36,27 +40,6 @@ export class OAuthProvider extends Component {
         this.ripeIdApi.bind("access_token", async accessToken => {
             await AsyncStorage.setItem("accessToken", accessToken);
         });
-    }
-
-    getRipeIdOptions() {
-        switch (this.props.environment) {
-            case "production":
-            case "beta":
-                return {
-                    clientId: "466956a34d9ae66786be2042d763c2c4",
-                    clientSecret:
-                        "de362ce74af44f44da08481d0e52e4233e474ec324b947402fba782085fc5c0f",
-                    redirectUrl: "https://ripe-id-mobile.platforme.com/oauth"
-                };
-
-            default:
-                return {
-                    clientId: "466956a34d9ae66786be2042d763c2c4",
-                    clientSecret:
-                        "de362ce74af44f44da08481d0e52e4233e474ec324b947402fba782085fc5c0f",
-                    redirectUrl: "https://ripe-id-mobile.platforme.com/oauth"
-                };
-        }
     }
 
     async trySetAccount() {
