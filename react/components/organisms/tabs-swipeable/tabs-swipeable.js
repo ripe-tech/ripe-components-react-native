@@ -49,7 +49,8 @@ export class TabsSwipeable extends PureComponent {
 
         this.state = {
             selectedTab: this.props.selectedTab,
-            selectedTabPosition: this.props.selectedTab * this.screenWidth
+            selectedTabPosition: this.props.selectedTab * this.screenWidth,
+            animating: false
         };
     }
 
@@ -62,16 +63,18 @@ export class TabsSwipeable extends PureComponent {
     onTabChange = tabIndex => {
         this.setState(
             {
-                selectedTab: tabIndex,
-                selectedTabPosition: tabIndex * this.screenWidth
+                animating: true,
+                selectedTab: tabIndex
             },
             () => {
+                this.scrollView.scrollTo({ x: tabIndex * this.screenWidth, y: 0 });
                 this.props.onTabChange(tabIndex);
             }
         );
     };
 
     onScroll = event => {
+        if (this.state.animating) return;
         const scroll = event.nativeEvent.contentOffset.x;
 
         const selectedTab = Math.round(scroll / this.screenWidth);
@@ -79,13 +82,16 @@ export class TabsSwipeable extends PureComponent {
 
         this.setState(
             {
-                selectedTab: selectedTab,
-                selectedTabPosition: selectedTab * this.screenWidth
+                selectedTab: selectedTab
             },
             () => {
                 if (updated) this.props.onTabChange(selectedTab);
             }
         );
+    };
+
+    onMomentumScrollEnd = () => {
+        this.setState({ animating: false });
     };
 
     onSelectedTabPress = () => {
@@ -119,13 +125,13 @@ export class TabsSwipeable extends PureComponent {
                     />
                 ) : (
                     <ScrollView
-                        contentOffset={{ x: this.state.selectedTabPosition, y: 0 }}
                         style={{ flex: 1 }}
                         contentContainerStyle={{ flexGrow: 1 }}
                         horizontal={true}
                         pagingEnabled={true}
                         showsHorizontalScrollIndicator={false}
                         onScroll={this.onScroll}
+                        onMomentumScrollEnd={this.onMomentumScrollEnd}
                         ref={ref => {
                             this.scrollView = ref;
                         }}
@@ -144,7 +150,8 @@ export class TabsSwipeable extends PureComponent {
 
 const styles = StyleSheet.create({
     tabs: {
-        flex: 1
+        flex: 1,
+        height: "100%"
     },
     loadingIndicator: {
         flex: 1,
