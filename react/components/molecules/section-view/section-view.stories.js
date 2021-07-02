@@ -5,7 +5,7 @@ import { withKnobs, text } from "@storybook/addon-knobs";
 
 import { SectionView } from "./section-view";
 
-storiesOf("Components/Molecules/Section View", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Section View", () => {
         const _text = text("Text", "Label");
