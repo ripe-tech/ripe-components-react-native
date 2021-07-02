@@ -38,7 +38,14 @@ export class Card extends PureComponent {
     _avatarStyle() {
         return {
             ...styles.avatar,
-            ...this.props.style?.image
+            ...this.props.style?.avatar
+        };
+    }
+
+    _iconStyle() {
+        return {
+            ...styles.avatar,
+            ...this.props.style?.icon
         };
     }
 
@@ -64,6 +71,7 @@ export class Card extends PureComponent {
     _renderCardImageIcon() {
         return (
             <Icon
+                style={this._iconStyle()}
                 icon={this.props.icon}
                 color={this.props.iconColor}
                 fill={this.props.iconFill}
@@ -125,6 +133,9 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     avatar: {
+        marginRight: 20
+    },
+    icon: {
         marginRight: 20
     },
     textContainer: {
