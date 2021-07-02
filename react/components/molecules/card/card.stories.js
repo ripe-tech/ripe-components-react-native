@@ -8,14 +8,11 @@ import { Card } from "./card";
 storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Card", () => {
-        const imageUrl = text(
-            "Avatar Url",
-            "https://id.platforme.com/admin/accounts/v-fl%40platforme.com/avatar"
-        );
+        const imageUrl = text("Avatar Url", "http://i.pravatar.cc");
         const icon = text("Icon", "");
-        const title = text("Title", "Title");
-        const _text = text("Text", "Text");
-        const subtext = text("Text Secondary", "Subtext");
+        const title = text("Title", "John Doe");
+        const _text = text("Text", "Software Engineer");
+        const subtext = text("Text Secondary", "Portugal");
         return (
             <View style={{ alignItems: "center", flex: 1, padding: 10 }}>
                 <Card
