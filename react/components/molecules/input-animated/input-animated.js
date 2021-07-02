@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, View } from "react-native";
+import { Animated, StyleSheet, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -15,6 +15,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
             placeholderTextColor: PropTypes.string,
             placeholder: PropTypes.string,
             value: PropTypes.string,
+            style: ViewPropTypes.style,
             onValueUpdate: PropTypes.func,
             onBlur: PropTypes.func,
             onFocus: PropTypes.func
@@ -28,6 +29,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
             placeholderTextColor: "#869aaa",
             placeholder: undefined,
             value: undefined,
+            style: {},
             onValueUpdate: value => {},
             onFocus: () => {},
             onBlur: () => {}
@@ -131,7 +133,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _style = () => {
-        return [styles.inputAnimated];
+        return [styles.inputAnimated, this.props.style];
     };
 
     _onFocus = () => {
