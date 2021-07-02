@@ -27,6 +27,8 @@ export class Chat extends PureComponent {
                 })
             ),
             onNewMessage: PropTypes.func,
+            onScrollBottom: PropTypes.func,
+            onScroll: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -37,6 +39,8 @@ export class Chat extends PureComponent {
             username: undefined,
             messages: [],
             onNewMessage: () => {},
+            onScrollBottom: () => {},
+            onScroll: event => {},
             style: {}
         };
     }
@@ -63,6 +67,16 @@ export class Chat extends PureComponent {
     };
 
     getInputValue = () => (this.input ? this.input.state.value || null : null);
+
+    onScroll = event => {
+        this.props.onScroll(event);
+        if (
+            event.nativeEvent.layoutMeasurement.height + event.nativeEvent.contentOffset.y >=
+            event.nativeEvent.contentSize.height
+        ) {
+            this.props.onScrollBottom();
+        }
+    };
 
     async _onNewMessage(message) {
         this.setState({ sendingMessage: true }, () => {
@@ -123,6 +137,7 @@ export class Chat extends PureComponent {
                     style={styles.chatMessagesContainer}
                     ref={ref => (this.scrollViewComponent = ref)}
                     onContentSizeChange={this.scrollToEnd}
+                    onScroll={this.onScroll}
                 >
                     <View style={styles.chatMessagesContent}>
                         {this.props.messages.map((message, index) => {
