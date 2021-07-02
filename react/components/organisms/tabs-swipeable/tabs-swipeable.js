@@ -42,7 +42,8 @@ export class TabsSwipeable extends PureComponent {
 
         this.state = {
             selectedTabPosition: this.props.selectedTab * this.screenWidth,
-            selectedTab: this.props.selectedTab
+            selectedTab: this.props.selectedTab,
+            animating: false
         };
     }
 
@@ -55,17 +56,30 @@ export class TabsSwipeable extends PureComponent {
     onTabChange = tabIndex => {
         this.setState(
             {
+                animating: true,
                 selectedTab: tabIndex
             },
-            () => this.props.onTabChange(tabIndex)
+            () => {
+                this.props.onTabChange(tabIndex);
+                this.scrollView.scrollTo({ x: tabIndex * this.screenWidth, y: 0 });
+            }
         );
     };
 
     onScroll = event => {
+        if (this.state.animating) return;
         const scroll = event.nativeEvent.contentOffset.x;
 
         const selectedTab = Math.round(scroll / this.screenWidth);
-        this.setState({ selectedTab: selectedTab });
+        const updated = selectedTab !== this.state.selectedTab;
+        this.setState({ selectedTab: selectedTab }, () => {
+            if (updated) this.props.onTabChange(selectedTab);
+        });
+    };
+
+    onMomentumScrollEnd = () => {
+        if (!this.state.animating) return;
+        this.setState({ animating: false });
     };
 
     onSelectedTabPress = () => {
@@ -96,11 +110,18 @@ export class TabsSwipeable extends PureComponent {
                     contentContainerStyle={{ flexGrow: 1 }}
                     horizontal={true}
                     pagingEnabled={true}
+                    scrollEnabled={!this.state.animating}
                     showsHorizontalScrollIndicator={false}
                     onScroll={this.onScroll}
+                    onMomentumScrollEnd={this.onMomentumScrollEnd}
+                    ref={ref => {
+                        this.scrollView = ref;
+                    }}
                 >
-                    {Object.values(this.props.tabs).map(val => (
-                        <View style={this._tabStyle()}>{val.render()}</View>
+                    {Object.values(this.props.tabs).map((tab, index) => (
+                        <View key={index} style={this._tabStyle()}>
+                            {tab.render()}
+                        </View>
                     ))}
                 </ScrollView>
             </View>
