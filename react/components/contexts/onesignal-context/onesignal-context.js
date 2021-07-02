@@ -15,7 +15,9 @@ export class OneSignalProvider extends Component {
     static get propTypes() {
         return {
             errorHandler: PropTypes.func.isRequired,
-            environment: PropTypes.string.isRequired
+            options: PropTypes.shape({
+                appId: PropTypes.string.isRequired
+            })
         };
     }
 
@@ -38,13 +40,12 @@ export class OneSignalProvider extends Component {
     }
 
     async initOneSignal() {
-        const options = this.getOnesignalOptions();
-        this.setState({ appId: options.appId });
+        this.setState({ appId: this.props.options.appId });
 
         // configure the app ID in the global One Signal instance
         // and then update the notification open handler to handle
         // actions (clicks) in push notification
-        OneSignal.setAppId(options.appId);
+        OneSignal.setAppId(this.props.options.appId);
         OneSignal.setNotificationOpenedHandler(event => {
             const data = event.notification.additionalData;
             if (data.params) NavigationRef.current.navigate("orderDetail", data.params);
@@ -67,16 +68,6 @@ export class OneSignalProvider extends Component {
         if (deviceState.userId) {
             this.setState({ deviceId: deviceState.userId, pushToken: deviceState.pushToken });
             await this.context.ripeApi.createDeviceIdP(deviceState.userId);
-        }
-    }
-
-    getOnesignalOptions() {
-        switch (this.props.environment) {
-            case "production":
-            case "beta":
-                return { appId: "b20b16aa-c321-434a-bb36-630f72dfab5d" };
-            default:
-                return { appId: "fa0a45d2-071c-4d2c-a066-4e35d5b29d5c" };
         }
     }
 

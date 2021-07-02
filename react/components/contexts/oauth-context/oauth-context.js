@@ -14,7 +14,7 @@ export class OAuthProvider extends Component {
 
     static get propTypes() {
         return {
-            ripeIdOptions: PropTypes.shape({
+            options: PropTypes.shape({
                 clientId: PropTypes.string.isRequired,
                 clientSecret: PropTypes.string.isRequired,
                 redirectUrl: PropTypes.func.isRequired
@@ -25,7 +25,7 @@ export class OAuthProvider extends Component {
     constructor(props) {
         super(props);
 
-        this.ripeIdApi = new RipeIdAPI(this.props.ripeIdOptions);
+        this.ripeIdApi = new RipeIdAPI(this.props.options);
         this.state = {
             loaded: false,
             logoutMessage: null,

@@ -8,41 +8,25 @@ export class PusherProvider extends Component {
     static get propTypes() {
         return {
             errorHandler: PropTypes.func.isRequired,
-            environment: PropTypes.string.isRequired
+            options: PropTypes.shape({
+                appKey: PropTypes.string.isRequired,
+                options: PropTypes.object
+            })
         };
     }
 
     constructor(props) {
         super(props);
 
-        const options = this.getPusherOptions();
-        if (!options) return;
+        if (!this.props.options) return;
 
-        Pusher.logToConsole = options.logToConsole;
-        this.pusher = new Pusher(options.appKey, options.options);
+        Pusher.logToConsole = this.props.options.logToConsole;
+        this.pusher = new Pusher(this.props.options.appKey, this.props.options.options);
         this.pusher.connection.bind("error", err => this.props.errorHandler(err));
 
         this.state = {
             pusher: this.pusher
         };
-    }
-
-    getPusherOptions() {
-        switch (this.props.environment) {
-            case "production":
-            case "beta":
-                return {
-                    appKey: "1aca2958aca8ee02a2ae",
-                    options: { cluster: "eu" }
-                };
-
-            default:
-                return {
-                    appKey: "456c1a9d4a9b06b58063",
-                    logToConsole: true,
-                    options: { cluster: "eu", activityTimeout: 6000 }
-                };
-        }
     }
 
     render() {

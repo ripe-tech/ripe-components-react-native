@@ -7,7 +7,7 @@ export const RipeContext = React.createContext();
 export class RipeProvider extends Component {
     static get propTypes() {
         return {
-            ripeOptions: PropTypes.shape({
+            options: PropTypes.shape({
                 url: PropTypes.string.isRequired,
                 noBundles: PropTypes.bool.isRequired
             })
@@ -21,7 +21,7 @@ export class RipeProvider extends Component {
     }
 
     async componentDidMount() {
-        const ripeApi = new RipeAPI(this.props.ripeOptions);
+        const ripeApi = new RipeAPI(this.props.options);
         await ripeApi.isReady();
 
         this.setState({ ripeApi: ripeApi });
