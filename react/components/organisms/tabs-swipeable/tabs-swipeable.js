@@ -10,7 +10,7 @@ export class TabsSwipeable extends PureComponent {
             tabs: PropTypes.arrayOf(
                 PropTypes.shape({
                     text: PropTypes.string.isRequired,
-                    emptyText: PropTypes.string.isRequired,
+                    emptyText: PropTypes.string,
                     render: PropTypes.func.isRequired,
                     scrollToTop: PropTypes.func,
                     loadMore: PropTypes.func
@@ -83,6 +83,7 @@ export class TabsSwipeable extends PureComponent {
     };
 
     onSelectedTabPress = () => {
+        if (!this.props.tabs[this.state.selectedTab].scrollToTop) return;
         this.props.tabs[this.state.selectedTab].scrollToTop();
     };
 
