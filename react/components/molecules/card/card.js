@@ -103,25 +103,27 @@ export class Card extends PureComponent {
 }
 const styles = StyleSheet.create({
     style: {
+        alignItems: "center",
         backgroundColor: "#ffffff",
-        borderBottomColor: "#e4e8f0",
         borderRadius: 6,
         flexDirection: "row",
         height: 100,
         shadowColor: "#435764",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.4,
-        paddingBottom: 15,
-        paddingLeft: 20,
-        paddingTop: 19,
+        paddingBottom: 20,
+        paddingLeft: 25,
+        paddingTop: 20,
         paddingRight: 20,
         width: "100%"
+    },
+    avatar: {
+        marginRight: 20
     },
     textContainer: {
         fontFamily: baseStyles.FONT,
         height: 65,
-        justifyContent: "space-around",
-        marginLeft: 20
+        justifyContent: "space-around"
     },
     title: {
         fontSize: 18
