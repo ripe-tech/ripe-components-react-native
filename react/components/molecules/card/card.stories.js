@@ -31,9 +31,6 @@ storiesOf("Molecules", module)
                     title={title}
                     text={_text}
                     subtext={subtext}
-                    onPress={() => {
-                        alert("Pressed");
-                    }}
                 />
             </View>
         );
