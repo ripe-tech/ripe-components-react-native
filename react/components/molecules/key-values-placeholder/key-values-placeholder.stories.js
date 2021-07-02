@@ -4,7 +4,7 @@ import { withKnobs, number } from "@storybook/addon-knobs";
 
 import { KeyValuesPlaceholder } from "./key-values-placeholder";
 
-storiesOf("Components/Molecules/Key Values Placeholder", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Key Values Placeholder", () => {
         const numberOfItems = number("Number of items", 2);
