@@ -48,9 +48,8 @@ export class TabsSwipeable extends PureComponent {
         this.screenWidth = Dimensions.get("screen").width;
 
         this.state = {
-            selectedTabPosition: this.props.selectedTab * this.screenWidth,
             selectedTab: this.props.selectedTab,
-            animating: false
+            selectedTabPosition: this.props.selectedTab * this.screenWidth
         };
     }
 
@@ -63,30 +62,30 @@ export class TabsSwipeable extends PureComponent {
     onTabChange = tabIndex => {
         this.setState(
             {
-                animating: true,
-                selectedTab: tabIndex
+                selectedTab: tabIndex,
+                selectedTabPosition: tabIndex * this.screenWidth
             },
             () => {
                 this.props.onTabChange(tabIndex);
-                this.scrollView.scrollTo({ x: tabIndex * this.screenWidth, y: 0 });
             }
         );
     };
 
     onScroll = event => {
-        if (this.state.animating) return;
         const scroll = event.nativeEvent.contentOffset.x;
 
         const selectedTab = Math.round(scroll / this.screenWidth);
         const updated = selectedTab !== this.state.selectedTab;
-        this.setState({ selectedTab: selectedTab }, () => {
-            if (updated) this.props.onTabChange(selectedTab);
-        });
-    };
 
-    onMomentumScrollEnd = () => {
-        if (!this.state.animating) return;
-        this.setState({ animating: false });
+        this.setState(
+            {
+                selectedTab: selectedTab,
+                selectedTabPosition: selectedTab * this.screenWidth
+            },
+            () => {
+                if (updated) this.props.onTabChange(selectedTab);
+            }
+        );
     };
 
     onSelectedTabPress = () => {
@@ -100,22 +99,6 @@ export class TabsSwipeable extends PureComponent {
 
     _tabStyle = () => {
         return [styles.tabContent, { width: this.screenWidth }];
-    };
-
-    _renderTabs = () => {
-        let indexes = [this.state.selectedTab];
-
-        if (this.state.selectedTab === this.props.tabs.length - 1)
-            indexes = [this.state.selectedTab - 1, ...indexes];
-        else if (this.state.selectedTab > 0)
-            indexes = [this.state.selectedTab - 1, ...indexes, this.state.selectedTab + 1];
-        else if (this.state.selectedTab === 0) indexes = [...indexes, this.state.selectedTab + 1];
-
-        return indexes.map(i => (
-            <View key={i} style={this._tabStyle()}>
-                {this.props.tabs[i].render()}
-            </View>
-        ));
     };
 
     render() {
@@ -141,15 +124,17 @@ export class TabsSwipeable extends PureComponent {
                         contentContainerStyle={{ flexGrow: 1 }}
                         horizontal={true}
                         pagingEnabled={true}
-                        scrollEnabled={!this.state.animating}
                         showsHorizontalScrollIndicator={false}
                         onScroll={this.onScroll}
-                        onMomentumScrollEnd={this.onMomentumScrollEnd}
                         ref={ref => {
                             this.scrollView = ref;
                         }}
                     >
-                        {this._renderTabs()}
+                        {Object.values(this.props.tabs).map((tab, i) => (
+                            <View key={i} style={this._tabStyle()}>
+                                {tab.render()}
+                            </View>
+                        ))}
                     </ScrollView>
                 )}
             </View>
