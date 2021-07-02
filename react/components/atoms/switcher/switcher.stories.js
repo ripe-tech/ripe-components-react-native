@@ -4,7 +4,7 @@ import { withKnobs, boolean, number, select, text } from "@storybook/addon-knobs
 
 import { Switcher } from "./switcher";
 
-storiesOf("Components/Atoms/Switcher", module)
+storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Switcher", () => {
         const checked = boolean("Checked", false);

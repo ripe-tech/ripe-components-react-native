@@ -103,7 +103,7 @@ export class Chat extends PureComponent {
             username: this.props.username,
             message: this.getInputValue(),
             date: Date.now(),
-            attachments: [source]
+            attachments: source
         };
         await this._onNewMessage(message);
     };

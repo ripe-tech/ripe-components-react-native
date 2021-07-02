@@ -9,6 +9,7 @@ export * from "./key-value-placeholder";
 export * from "./key-values";
 export * from "./key-values-placeholder";
 export * from "./keyboard-numeric";
+export * from "./radio-group";
 export * from "./rich-textinput";
 export * from "./section-view";
 export * from "./select";
