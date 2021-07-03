@@ -4,7 +4,7 @@ import { withKnobs, boolean, number, select, text } from "@storybook/addon-knobs
 
 import { Button } from "./button";
 
-storiesOf("Components/Atoms/Button", module)
+storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Button", () => {
         const _text = text("Button Text", "Use Platforme ID");

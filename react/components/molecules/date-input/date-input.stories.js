@@ -4,7 +4,7 @@ import { withKnobs, boolean, date, number, text } from "@storybook/addon-knobs";
 
 import { DateInput } from "./date-input";
 
-storiesOf("Components/Molecules/DateInput", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("DateInput", () => {
         const value = date("Date", new Date());
