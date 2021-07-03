@@ -17,7 +17,7 @@ export class OAuthProvider extends Component {
             options: PropTypes.shape({
                 clientId: PropTypes.string.isRequired,
                 clientSecret: PropTypes.string.isRequired,
-                redirectUrl: PropTypes.func.isRequired
+                redirectUrl: PropTypes.string.isRequired
             })
         };
     }
