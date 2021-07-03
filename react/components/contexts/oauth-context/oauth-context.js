@@ -92,7 +92,7 @@ export class OAuthProvider extends Component {
     async logout(message = null) {
         // re-creates the RIPE ID API instance and invalidates the
         // current RIPE SDK instance as it's no longer going to be used
-        this.ripeIdApi = new RipeIdAPI(this.getRipeIdOptions());
+        this.ripeIdApi = new RipeIdAPI(this.props.options);
         this.context.ripeApi.unauth();
 
         // registers the access token callback function to be able
