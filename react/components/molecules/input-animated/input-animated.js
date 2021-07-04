@@ -15,6 +15,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
             placeholderTextColor: PropTypes.string,
             placeholder: PropTypes.string,
             value: PropTypes.string,
+            secureTextEntry: PropTypes.bool,
             style: ViewPropTypes.style,
             onValueUpdate: PropTypes.func,
             onBlur: PropTypes.func,
@@ -29,6 +30,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
             placeholderTextColor: "#869aaa",
             placeholder: undefined,
             value: undefined,
+            secureTextEntry: false,
             style: {},
             onValueUpdate: value => {},
             onFocus: () => {},
@@ -238,6 +240,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
                         placeholder={this.props.placeholder || this.props.label}
                         placeholderTextColor={this.props.placeholderTextColor}
                         height={40}
+                        secureTextEntry={this.props.secureTextEntry}
                         onValueUpdate={this.onChangeValue}
                         onFocus={this._onFocus}
                         onBlur={this._onBlur}
