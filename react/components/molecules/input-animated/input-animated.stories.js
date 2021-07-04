@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, text } from "@storybook/addon-knobs";
+import { withKnobs, boolean, text } from "@storybook/addon-knobs";
 
 import { InputAnimated } from "./input-animated";
 import { Touchable } from "../../atoms";
@@ -13,6 +13,7 @@ storiesOf("Components/Molecules/Input Animated", module)
         const borderBottomActiveColor = text("Border Bottom ActiveColor", "#4f7af8");
         const placeholderTextColor = text("Placeholder Text Color", "#869aaa");
         const value = text("Value", undefined);
+        const secureTextEntry = boolean("Secure entry", false);
 
         return (
             <Touchable
@@ -28,6 +29,7 @@ storiesOf("Components/Molecules/Input Animated", module)
                     placeholder={placeholder}
                     borderBottomActiveColor={borderBottomActiveColor}
                     placeholderTextColor={placeholderTextColor}
+                    secureTextEntry={secureTextEntry}
                     value={value}
                 />
             </Touchable>
