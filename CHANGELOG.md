@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Date input component
 * Switcher component
 * Input animated component
+* Added `animateScrollBottom` prop to chat
+* `onScroll` and `onScrollBottom` props in chat component
+* Radio group component
 
 ### Changed
 
@@ -29,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 * `normalizeImages` function handling of images coming from camera
+* `onRichTextInputPhotoAdded` function in chat component as from the time the `react-native-image-picker` was bumped to v4.0, there is no need to force an array in attachment property
 
 ## [0.4.0] - 2021-04-07
 

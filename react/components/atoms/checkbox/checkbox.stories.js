@@ -4,7 +4,7 @@ import { withKnobs, boolean, number, select, text } from "@storybook/addon-knobs
 
 import { Checkbox } from "./checkbox";
 
-storiesOf("Components/Atoms/Checkbox", module)
+storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Checkbox", () => {
         const label = text("Label", "Label");

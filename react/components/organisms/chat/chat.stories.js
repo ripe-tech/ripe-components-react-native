@@ -5,7 +5,7 @@ import { withKnobs, text } from "@storybook/addon-knobs";
 
 import { Chat } from "./chat";
 
-storiesOf("Components/Organisms/Chat", module)
+storiesOf("Organisms", module)
     .addDecorator(withKnobs)
     .add("Chat", () => {
         const avatarUrl = text(
