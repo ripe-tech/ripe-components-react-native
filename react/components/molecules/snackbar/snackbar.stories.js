@@ -5,7 +5,7 @@ import { withKnobs, number, text } from "@storybook/addon-knobs";
 
 import { Snackbar } from "./snackbar";
 
-storiesOf("Components/Molecules/Snackbar", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Snackbar", () => {
         const ref = React.createRef();

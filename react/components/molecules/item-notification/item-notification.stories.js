@@ -5,7 +5,7 @@ import { View } from "react-native";
 
 import { ItemNotification } from "./item-notification";
 
-storiesOf("Components/Molecules/Notification Item", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Notification Item", () => {
         const avatarUrl = text(
