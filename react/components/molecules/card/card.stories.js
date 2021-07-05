@@ -12,11 +12,10 @@ storiesOf("Molecules", module)
         const icon = select(
             "Icon",
             {
-                Unset: undefined,
+                Unset: null,
                 Add: "add",
                 Alarm: "alarm",
-                Bell: "bell",
-                None: null
+                Bell: "bell"
             },
             null
         );
