@@ -29,6 +29,7 @@ export class KeyValues extends PureComponent {
                 })
             ).isRequired,
             keyValueTwoColumns: PropTypes.bool,
+            showNotSet: PropTypes.bool,
             style: ViewPropTypes.style
         };
     }
@@ -36,9 +37,14 @@ export class KeyValues extends PureComponent {
     static get defaultProps() {
         return {
             keyValueTwoColumns: isTabletSize(),
+            showNotSet: true,
             style: {}
         };
     }
+
+    _shouldShow = item => {
+        return Boolean(item.value) || (!item.value && this.props.showNotSet);
+    };
 
     _style = () => {
         return [this.props.keyValueTwoColumns ? styles.keyValuesColumns : {}, this.props.style];
@@ -57,27 +63,29 @@ export class KeyValues extends PureComponent {
             <View style={this._style()}>
                 {this.props.items.map((item, index) => (
                     <View style={this._keyValueWrapperStyle()} key={item.key}>
-                        <KeyValue
-                            style={this._keyValueStyle(index)}
-                            key={item.key}
-                            _key={item.key}
-                            value={item.value}
-                            keyColor={item.keyColor}
-                            valueColor={item.valueColor}
-                            icon={item.icon}
-                            iconBackgroundColor={item.iconBackgroundColor}
-                            iconColor={item.iconColor}
-                            iconSize={item.iconSize}
-                            iconHeight={item.iconHeight}
-                            iconWidth={item.iconWidth}
-                            iconStrokeWidth={item.iconStrokeWidth}
-                            pressable={item.pressable}
-                            onPress={item.onPress}
-                            onButtonIconPress={item.onButtonIconPress}
-                            onLongPress={item.onLongPress}
-                        >
-                            {item.valueComponent}
-                        </KeyValue>
+                        {this._shouldShow(item) && (
+                            <KeyValue
+                                style={this._keyValueStyle(index)}
+                                key={item.key}
+                                _key={item.key}
+                                value={item.value}
+                                keyColor={item.keyColor}
+                                valueColor={item.valueColor}
+                                icon={item.icon}
+                                iconBackgroundColor={item.iconBackgroundColor}
+                                iconColor={item.iconColor}
+                                iconSize={item.iconSize}
+                                iconHeight={item.iconHeight}
+                                iconWidth={item.iconWidth}
+                                iconStrokeWidth={item.iconStrokeWidth}
+                                pressable={item.pressable}
+                                onPress={item.onPress}
+                                onButtonIconPress={item.onButtonIconPress}
+                                onLongPress={item.onLongPress}
+                            >
+                                {item.valueComponent}
+                            </KeyValue>
+                        )}
                     </View>
                 ))}
             </View>
