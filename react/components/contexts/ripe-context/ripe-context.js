@@ -7,10 +7,7 @@ export const RipeContext = React.createContext();
 export class RipeProvider extends Component {
     static get propTypes() {
         return {
-            options: PropTypes.shape({
-                url: PropTypes.string.isRequired,
-                noBundles: PropTypes.bool.isRequired
-            })
+            options: PropTypes.object
         };
     }
 
