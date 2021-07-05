@@ -43,7 +43,7 @@ export class KeyValues extends PureComponent {
     }
 
     _shouldShow = item => {
-        return Boolean(item.value) || (!item.value && this.props.showUnset);
+        return Boolean(item.value) || this.props.showUnset;
     };
 
     _style = () => {
