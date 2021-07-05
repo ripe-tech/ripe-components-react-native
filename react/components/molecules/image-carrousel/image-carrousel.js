@@ -118,7 +118,7 @@ export class ImageCarrousel extends PureComponent {
                     <View style={styles.fullscreenContainer}>
                         <ScrollView
                             contentOffset={{ x: this.state.currentPagePosition, y: 0 }}
-                            style={{ flex: 1 }}
+                            style={styles.scrollView}
                             contentContainerStyle={{ flexGrow: 1 }}
                             horizontal={true}
                             pagingEnabled={true}
@@ -156,6 +156,9 @@ export class ImageCarrousel extends PureComponent {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1
+    },
+    scrollView: {
         flex: 1
     },
     imageFullscreen: {
