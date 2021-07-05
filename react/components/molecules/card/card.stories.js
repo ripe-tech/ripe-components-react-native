@@ -8,7 +8,7 @@ import { Card } from "./card";
 storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Card", () => {
-        const imageUrl = text("Avatar Url", "http://i.pravatar.cc");
+        const avatarUrl = text("Avatar Url", "http://i.pravatar.cc");
         const icon = select(
             "Icon",
             {
@@ -25,7 +25,7 @@ storiesOf("Molecules", module)
         return (
             <View style={{ alignItems: "center", flex: 1, padding: 10 }}>
                 <Card
-                    avatarURL={imageUrl}
+                    avatarURL={avatarUrl}
                     icon={icon}
                     title={title}
                     text={_text}
