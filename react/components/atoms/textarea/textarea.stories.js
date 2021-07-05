@@ -4,7 +4,7 @@ import { withKnobs, boolean, number, text } from "@storybook/addon-knobs";
 
 import { TextArea } from "./textarea";
 
-storiesOf("Components/Atoms/Textarea", module)
+storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Textarea", () => {
         const onValue = value => {

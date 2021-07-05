@@ -5,7 +5,7 @@ import { withKnobs } from "@storybook/addon-knobs";
 
 import { KeyboardNumeric } from "./keyboard-numeric";
 
-storiesOf("Components/Molecules/Numeric Keyboard", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Numeric Keyboard", () => {
         const onKeyPress = value => alert(value);

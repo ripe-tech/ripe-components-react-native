@@ -4,7 +4,7 @@ import { withKnobs, boolean, number, select, text } from "@storybook/addon-knobs
 
 import { Select } from "./select";
 
-storiesOf("Components/Molecules/Select", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Select", () => {
         const placeholder = text("Placeholder", "This is a placeholder text");
