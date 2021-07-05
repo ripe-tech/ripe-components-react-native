@@ -29,7 +29,7 @@ export class KeyValues extends PureComponent {
                 })
             ).isRequired,
             keyValueTwoColumns: PropTypes.bool,
-            showNotSet: PropTypes.bool,
+            showUnset: PropTypes.bool,
             style: ViewPropTypes.style
         };
     }
@@ -37,13 +37,13 @@ export class KeyValues extends PureComponent {
     static get defaultProps() {
         return {
             keyValueTwoColumns: isTabletSize(),
-            showNotSet: true,
+            showUnset: true,
             style: {}
         };
     }
 
     _shouldShow = item => {
-        return Boolean(item.value) || (!item.value && this.props.showNotSet);
+        return Boolean(item.value) || (!item.value && this.props.showUnset);
     };
 
     _style = () => {
