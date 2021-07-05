@@ -28,7 +28,6 @@ export class ImageCarrousel extends PureComponent {
 
     static get defaultProps() {
         return {
-            src: undefined,
             selectedImage: 0,
             resizeModeFullScreen: undefined,
             images: [],
@@ -40,11 +39,10 @@ export class ImageCarrousel extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.scrollCoeficient = Dimensions.get("window").width;
+        this.scrollCoefficient = Dimensions.get("window").width;
 
         this.state = {
             visible: false,
-            currentPagePositionPosition: this.props.selectedImage * this.scrollCoeficient,
             selectedImageData: this.props.selectedImage
         };
     }
@@ -54,7 +52,7 @@ export class ImageCarrousel extends PureComponent {
             {
                 visible: value
             },
-            this.props.onVisible(value)
+            () => this.props.onVisible(value)
         );
     }
 
@@ -66,9 +64,7 @@ export class ImageCarrousel extends PureComponent {
         const currentPagePosition = imageIndex * Dimensions.get("window").width;
         this.setState(
             { currentPagePosition: currentPagePosition, selectedImageData: imageIndex },
-            () => {
-                this.setVisibility(true);
-            }
+            () => this.setVisibility(true)
         );
     }
 
@@ -79,7 +75,7 @@ export class ImageCarrousel extends PureComponent {
     onScroll = event => {
         const scroll = event.nativeEvent.contentOffset.x;
 
-        const currentPage = Math.round(scroll / this.scrollCoeficient);
+        const currentPage = Math.round(scroll / this.scrollCoefficient);
         this.setState({ selectedImageData: currentPage });
     };
 
@@ -104,7 +100,7 @@ export class ImageCarrousel extends PureComponent {
             styles.imageFullscreen,
             {
                 resizeMode: this.props.resizeModeFullScreen,
-                width: this.scrollCoeficient
+                width: this.scrollCoefficient
             },
             image?.style
         ];
@@ -138,15 +134,15 @@ export class ImageCarrousel extends PureComponent {
                             ))}
                         </ScrollView>
                         <ButtonIcon
-                            icon={"close"}
-                            onPress={this.onClosePress}
                             style={styles.buttonClose}
+                            icon={"close"}
                             iconStrokeWidth={2}
                             size={isTabletSize() ? 52 : 34}
                             iconHeight={isTabletSize() ? 34 : 22}
                             iconWidth={isTabletSize() ? 34 : 22}
                             backgroundColor={"#000000"}
                             iconStrokeColor={"#ffffff"}
+                            onPress={this.onClosePress}
                         />
                         <Text style={styles.title}>
                             {`${this.state.selectedImageData + 1} / ${this.props.images.length}`}
