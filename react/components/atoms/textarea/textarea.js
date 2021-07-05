@@ -10,6 +10,7 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             value: PropTypes.string,
             placeholder: PropTypes.string,
+            placeholderTextColor: PropTypes.string,
             multiline: PropTypes.bool,
             minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -27,6 +28,7 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             value: undefined,
             placeholder: undefined,
+            placeholderTextColor: undefined,
             multiline: false,
             minHeight: undefined,
             maxHeight: undefined,
@@ -71,6 +73,7 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
                 ref={el => (this.textInputComponent = el)}
                 style={this._style()}
                 placeholder={this.props.placeholder}
+                placeholderTextColor={this.props.placeholderTextColor}
                 multiline={this.props.multiline}
                 onSubmitEditing={this.onSubmit}
                 onChangeText={this.props.onValue}
