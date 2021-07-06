@@ -11,7 +11,7 @@ export class AvatarLabel extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
-            label: PropTypes.string,
+            label: PropTypes.string.isRequired,
             size: PropTypes.number,
             activeOpacity: PropTypes.number,
             borderRadius: PropTypes.number,
@@ -30,43 +30,31 @@ export class AvatarLabel extends mix(PureComponent).with(IdentifiableMixin) {
 
     static get defaultProps() {
         return {
-            label: undefined,
             size: 40,
+            borderRadius: 100,
             onPress: PropTypes.func,
             onError: PropTypes.func,
             style: {}
         };
     }
 
-    _text = () => {
-        // shows text if no icon is provided or if
-        // the user explicitly chooses
-        return this.props.icon ? null : this.props.text;
-    };
-
-    _icon = () => {
-        return this.state.valueData ? this.props.icon : this.props.iconSecondary || this.props.icon;
-    };
-
-    _color = () => {
-        return (
-            (this.state.valueData ? this.props.colorSecondary : this.props.color) ||
-            this.props.color
-        );
-    };
-
-    _contentColor = () => {
-        // switches the icon color with the value color
-        // when the button is not active
-        return this.state.valueData ? "#ffffff" : this.props.colorSecondary || "#000000";
-    };
-
     _style = () => {
-        return [styles.avatarLabel, { width: this.props.size, height: this.props.size }];
+        return [
+            styles.avatarLabel,
+            {
+                width: this.props.size,
+                height: this.props.size,
+                borderRadius: this.props.borderRadius
+            }
+        ];
     };
 
     _labelStyle = () => {
-        return [styles.labelText, { fontSize: this.props.size / 4 }];
+        return [styles.label, { height: this.props.size / 3 }];
+    };
+
+    _labelTextStyle = () => {
+        return [styles.labelText, { fontSize: this.props.size / 6 }];
     };
 
     render() {
@@ -75,16 +63,15 @@ export class AvatarLabel extends mix(PureComponent).with(IdentifiableMixin) {
                 <Avatar
                     image={this.props.image}
                     size={this.props.size}
-                    borderRadius={this.props.borderRadius}
+                    borderRadius={0}
                     activeOpacity={this.props.activeOpacity}
                     resizeMode={this.props.resizeMode}
                     hitSlop={this.props.hitSlop}
                     onPress={this.props.onPress}
                     onError={this.props.onError}
                 />
-                <View style={styles.label}>
-                    <Text style={this._labelStyle()}>{this.props.label}</Text>
-                </View>
+                <View style={this._labelStyle()} />
+                <Text style={this._labelTextStyle()}>{this.props.label}</Text>
             </View>
         );
     }
@@ -96,12 +83,16 @@ const styles = StyleSheet.create({
     },
     label: {
         backgroundColor: "#000000",
-        opacity: 0.4,
+        width: "100%",
+        opacity: 0.5,
         position: "absolute",
         bottom: 0
     },
     labelText: {
-        alignSelf: "center"
+        alignSelf: "center",
+        color: "#ffffff",
+        position: "absolute",
+        bottom: "7%"
     }
 });
 
