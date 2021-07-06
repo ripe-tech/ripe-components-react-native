@@ -4,7 +4,7 @@ import { withKnobs, text as knobText } from "@storybook/addon-knobs";
 
 import { Link } from "./link";
 
-storiesOf("Components/Atoms/Link", module)
+storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Link", () => {
         const text = knobText("Text", "Platforme Link");

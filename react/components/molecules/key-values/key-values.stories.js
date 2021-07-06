@@ -4,7 +4,7 @@ import { withKnobs, boolean } from "@storybook/addon-knobs";
 
 import { KeyValues } from "./key-values";
 
-storiesOf("Components/Molecules/Key Values", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Key Values", () => {
         const items = [
