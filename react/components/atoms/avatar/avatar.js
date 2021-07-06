@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Image, StyleSheet, ViewPropTypes } from "react-native";
+import { Image, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -11,6 +11,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
+            label: PropTypes.string,
             size: PropTypes.number,
             activeOpacity: PropTypes.number,
             borderRadius: PropTypes.number,
@@ -29,6 +30,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
 
     static get defaultProps() {
         return {
+            label: undefined,
             size: 40,
             activeOpacity: 0.7,
             borderRadius: 100,
@@ -64,6 +66,34 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
         ];
     };
 
+    _labelStyle = () => {
+        return [styles.label, { height: this.props.size / 3 }];
+    };
+
+    _labelTextStyle = () => {
+        return [
+            styles.labelText,
+            {
+                lineHeight: this.props.size / 6,
+                fontSize: this.props.size / 6,
+                maxWidth: this.props.size
+            }
+        ];
+    };
+
+    _renderLabel = () => {
+        if (!this.props.label) return;
+
+        return (
+            <View style={this._labelStyle()}>
+                <View style={styles.labelOpacity} />
+                <Text style={this._labelTextStyle()} numberOfLines={1}>
+                    {this.props.label}
+                </Text>
+            </View>
+        );
+    };
+
     render() {
         return (
             <Touchable
@@ -80,6 +110,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
                     onError={this.onLoadingError}
                     {...this.id("avatar")}
                 />
+                {this._renderLabel()}
             </Touchable>
         );
     }
@@ -92,6 +123,24 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         height: "100%"
+    },
+    label: {
+        width: "100%",
+        position: "absolute",
+        bottom: 0,
+        justifyContent: "center"
+    },
+    labelOpacity: {
+        backgroundColor: "#000000",
+        width: "100%",
+        height: "100%",
+        opacity: 0.5,
+        position: "absolute"
+    },
+    labelText: {
+        alignSelf: "center",
+        color: "#ffffff",
+        position: "absolute"
     }
 });
 

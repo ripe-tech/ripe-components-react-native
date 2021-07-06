@@ -1,4 +1,3 @@
-export * from "./avatar-label";
 export * from "./button-toggle";
 export * from "./chat-message";
 export * from "./date-input";
