@@ -4,7 +4,7 @@ import { withKnobs, select } from "@storybook/addon-knobs";
 
 import { TabsText } from "./tabs-text";
 
-storiesOf("Components/Molecules/Tabs Text", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Tabs Text", () => {
         const tabs = [
