@@ -9,8 +9,6 @@ export class Search extends PureComponent {
         return {
             value: PropTypes.string,
             placeholder: PropTypes.string,
-            textareaMinHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-            textareaMaxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             buttonProps: PropTypes.object,
             onFocus: PropTypes.func,
             onValue: PropTypes.func,
@@ -41,9 +39,7 @@ export class Search extends PureComponent {
         this.state = {
             value: this.props.value,
             buttonsVisible: true,
-            focused: false,
-            buttonsOpacityValue: new Animated.Value(1),
-            moreOptionsOpacityValue: new Animated.Value(0)
+            focused: false
         };
     }
 
@@ -99,12 +95,6 @@ export class Search extends PureComponent {
         }
     };
 
-    _buttonsStyle = () => {
-        const style = [styles.buttons, { opacity: this.state.buttonsOpacityValue }];
-
-        return style;
-    };
-
     _style = () => {
         return [styles.Search, this.props.style];
     };
@@ -119,8 +109,7 @@ export class Search extends PureComponent {
                     value={this.state.value}
                     placeholder={this.props.placeholder}
                     placeholderTextColor={"#223645"}
-                    minHeight={this.props.textareaMinHeight}
-                    maxHeight={this.props.textareaMaxHeight}
+                    minHeight={40}
                     onValue={value => this.onTextAreaValue(value)}
                     onSubmit={() => this.onTextAreaSubmit()}
                     onFocus={() => this.onTextAreaFocus()}
