@@ -9,7 +9,6 @@ export class Search extends PureComponent {
         return {
             value: PropTypes.string,
             placeholder: PropTypes.string,
-            multiline: PropTypes.bool,
             textareaMinHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             textareaMaxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             buttonProps: PropTypes.object,
@@ -120,7 +119,6 @@ export class Search extends PureComponent {
                     value={this.state.value}
                     placeholder={this.props.placeholder}
                     placeholderTextColor={"#223645"}
-                    multiline={this.props.multiline}
                     minHeight={this.props.textareaMinHeight}
                     maxHeight={this.props.textareaMaxHeight}
                     onValue={value => this.onTextAreaValue(value)}
