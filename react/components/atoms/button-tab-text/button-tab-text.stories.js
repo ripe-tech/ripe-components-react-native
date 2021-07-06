@@ -4,7 +4,7 @@ import { withKnobs, boolean, select, text } from "@storybook/addon-knobs";
 
 import { ButtonTabText } from "./button-tab-text";
 
-storiesOf("Components/Atoms/Button Tab Text", module)
+storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Button Tab Text", () => {
         const _text = text("Text", "User");

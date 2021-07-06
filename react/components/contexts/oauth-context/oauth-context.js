@@ -58,7 +58,7 @@ export class OAuthProvider extends Component {
 
         // runs the remote authentication process on the
         // RIPE Core (using the access token)
-        await this.context.ripeApi.authPidP(token);
+        if (this.context.ripeApi) await this.context.ripeApi.authPidP(token);
 
         // updates the OAuth context state according to the
         // newly found information (account, ACL, tokens, etc)
@@ -93,7 +93,7 @@ export class OAuthProvider extends Component {
         // re-creates the RIPE ID API instance and invalidates the
         // current RIPE SDK instance as it's no longer going to be used
         this.ripeIdApi = new RipeIdAPI(this.props.options);
-        this.context.ripeApi.unauth();
+        if (this.context.ripeApi) this.context.ripeApi.unauth();
 
         // registers the access token callback function to be able
         // to update the internal async storage

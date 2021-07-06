@@ -4,7 +4,7 @@ import { withKnobs, boolean, select, text } from "@storybook/addon-knobs";
 
 import { ButtonToggle } from "./button-toggle";
 
-storiesOf("Components/Molecules/Button Toggle", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Button Toggle", () => {
         const _text = text("Text", undefined);
