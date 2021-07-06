@@ -139,15 +139,16 @@ const styles = StyleSheet.create({
     },
     textArea: {
         flex: 1,
+        paddingBottom: 0,
+        paddingTop: 0,
         borderRadius: 6,
-        backgroundColor: "#ffffff",
-        height: 40
+        backgroundColor: "#ffffff"
     },
     button: {
         position: "absolute",
         backgroundColor: "transparent",
-        top: 8,
-        right: 20
+        top: 13,
+        right: 18
     }
 });
 
