@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, ViewPropTypes } from "react-native";
+import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -54,7 +54,7 @@ export class AvatarLabel extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _labelTextStyle = () => {
-        return [styles.labelText, { fontSize: this.props.size / 6 }];
+        return [styles.labelText, { fontSize: this.props.size / 6, maxWidth: this.props.size }];
     };
 
     render() {
@@ -71,7 +71,9 @@ export class AvatarLabel extends mix(PureComponent).with(IdentifiableMixin) {
                     onError={this.props.onError}
                 />
                 <View style={this._labelStyle()} />
-                <Text style={this._labelTextStyle()}>{this.props.label}</Text>
+                <Text style={this._labelTextStyle()} numberOfLines={1}>
+                    {this.props.label}
+                </Text>
             </View>
         );
     }
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         color: "#ffffff",
         position: "absolute",
-        bottom: "7%"
+        bottom: "8%"
     }
 });
 
