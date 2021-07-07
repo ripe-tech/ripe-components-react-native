@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Textarea support for background color and horizontal padding as props
 * Input keyboard type support
 * Input Form component
+* Date Input support for margin and border overriding as props
+* Form component
 
 ### Changed
 
