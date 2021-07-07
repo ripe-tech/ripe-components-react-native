@@ -40,8 +40,7 @@ export class InputForm extends mix(PureComponent).with(IdentifiableMixin) {
         super(props);
 
         this.state = {
-            valueData: this.props.value,
-            focused: true
+            valueData: this.props.value
         };
     }
 
@@ -58,29 +57,12 @@ export class InputForm extends mix(PureComponent).with(IdentifiableMixin) {
         }
     }
 
-    _inputStyle = () => {
-        return [
-            styles.input,
-            {
-                borderBottomColor: this.state.focused
-                    ? this.props.borderBottomActiveColor
-                    : "#c3c9cf",
-                transform: [{ translateY: this.state.inputYTransform }],
-                opacity: this.state.inputBorderOpacity
-            }
-        ];
-    };
-
     _onFocus = () => {
-        this.setState({ focused: true }, () => {
-            this.props.onFocus();
-        });
+        this.props.onFocus();
     };
 
     _onBlur = () => {
-        this.setState({ focused: false }, () => {
-            this.props.onBlur();
-        });
+        this.props.onBlur();
     };
 
     blur = () => {
