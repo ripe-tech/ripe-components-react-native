@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
-import { IdentifiableMixin } from "../../../util";
+import { IdentifiableMixin, equal } from "../../../util";
 
 import { Touchable } from "../touchable";
 
@@ -50,13 +50,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     componentDidUpdate(prevProps) {
-        if (typeof prevProps.image === "number" && prevProps.image !== this.props.image) {
-            this.setState({ imageSrc: this.props.image });
-        } else if (
-            typeof prevProps.image === "object" &&
-            typeof this.props.image === "object" &&
-            prevProps.image.uri !== this.props.image.uri
-        ) {
+        if(!equal(prevProps.image, this.props.image)) {
             this.setState({ imageSrc: this.props.image });
         }
     }
