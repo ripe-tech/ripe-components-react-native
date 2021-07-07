@@ -98,7 +98,7 @@ class Wrapper extends PureComponent {
     }
 }
 
-storiesOf("Components/Atoms/Progress Bar", module)
+storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Progress Bar", () => {
         const steps = number("Steps", 3);

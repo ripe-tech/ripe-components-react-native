@@ -5,7 +5,7 @@ import { withKnobs, text } from "@storybook/addon-knobs";
 
 import { ToastMessage } from "./toast-message";
 
-storiesOf("Components/Molecules/Toast Message", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Toast Message", () => {
         const ref = React.createRef();

@@ -4,7 +4,7 @@ import { withKnobs, boolean, number, select, text } from "@storybook/addon-knobs
 
 import { Radio } from "./radio";
 
-storiesOf("Components/Atoms/Radio", module)
+storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Radio", () => {
         const label = text("Label", "Label");

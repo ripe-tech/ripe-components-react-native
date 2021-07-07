@@ -4,7 +4,7 @@ import { withKnobs, boolean, select } from "@storybook/addon-knobs";
 
 import { ButtonGroup } from "./button-group";
 
-storiesOf("Components/Organisms/Button Group", module)
+storiesOf("Organisms", module)
     .addDecorator(withKnobs)
     .add("Button Group", () => {
         const items = [
