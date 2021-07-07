@@ -105,7 +105,7 @@ export class InputForm extends mix(PureComponent).with(IdentifiableMixin) {
                 return (
                     <Input
                         ref={el => (this.input = el)}
-                        height={40}
+                        height={45}
                         type={this.props.meta}
                         value={this.state.valueData}
                         placeholder={this.props.label}
