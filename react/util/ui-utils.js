@@ -4,11 +4,13 @@ import {
     Linking,
     PermissionsAndroid,
     Platform,
+    Vibration,
     ToastAndroid
 } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import DocumentPicker from "react-native-document-picker";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+import Clipboard from "@react-native-community/clipboard";
 
 import { getUriBasename } from "./utils";
 
@@ -142,6 +144,12 @@ export const notify = function (message) {
     Platform.OS === "android"
         ? ToastAndroid.show(message, ToastAndroid.SHORT)
         : Alert.alert(message);
+};
+
+export const toClipboard = function (value, options = { notification: true, vibrate: true }) {
+    Clipboard.setString(`${value}`);
+    if (options.notification) notify("Copied to clipboard");
+    if (options.vibrate) Vibration.vibrate();
 };
 
 export const isTabletSize = function () {
