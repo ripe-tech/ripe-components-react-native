@@ -145,9 +145,9 @@ export class Form extends PureComponent {
     };
 
     _renderSections = () => {
-        return this.props.fields.map(({ title, fields }) => {
+        return this.props.fields.map(({ title, fields }, index) => {
             return (
-                <View style={styles.section}>
+                <View key={index} style={styles.section}>
                     {title !== undefined && (
                         <View style={styles.sectionTitle}>
                             <Text style={styles.sectionTitleText}>{title}</Text>
