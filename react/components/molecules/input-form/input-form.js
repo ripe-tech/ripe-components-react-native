@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     },
     inputTextarea: {
         marginLeft: 5,
-        fontSize: 14
+        fontSize: 16
     }
 });
 
