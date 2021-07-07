@@ -38,7 +38,7 @@ export class Form extends PureComponent {
             saveMessage: values => "Changes saved!",
             error: true,
             errorMessage: error => error.message || "Something went wrong",
-            onUpdateValues: values => { },
+            onUpdateValues: values => {},
             onDiscard: undefined,
             onSave: undefined,
             style: {}
@@ -65,7 +65,7 @@ export class Form extends PureComponent {
         this.setState({ saving: true });
 
         try {
-            await this.onSave(this.values);
+            await this.props.onSave(this.values);
 
             if (this.saveNotification) {
                 notify(this.props.saveMessage(this.state.valuesData));
@@ -171,26 +171,28 @@ export class Form extends PureComponent {
         return (
             <ScrollView style={this._style()}>
                 {this._renderSections()}
-                {(this.props.onSave || this.props.onDiscard) && <View style={styles.buttons}>
-                    {this.props.onSave && (
-                        <Button
-                            style={styles.submitButton}
-                            text={"Save"}
-                            loading={this.state.saving}
-                            {...this.props.acceptButtonProps}
-                            onPress={this.onSubmit}
-                        />
-                    )}
-                    {this.props.onDiscard && (
-                        <Button
-                            text={"Discard"}
-                            backgroundColor={"#a6adb4"}
-                            disabled={this.state.saving}
-                            {...this.props.rejectButtonProps}
-                            onPress={this.onReject}
-                        />
-                    )}
-                </View>}
+                {(this.props.onSave || this.props.onDiscard) && (
+                    <View style={styles.buttons}>
+                        {this.props.onSave && (
+                            <Button
+                                style={styles.submitButton}
+                                text={"Save"}
+                                loading={this.state.saving}
+                                {...this.props.acceptButtonProps}
+                                onPress={this.onSubmit}
+                            />
+                        )}
+                        {this.props.onDiscard && (
+                            <Button
+                                text={"Discard"}
+                                backgroundColor={"#a6adb4"}
+                                disabled={this.state.saving}
+                                {...this.props.rejectButtonProps}
+                                onPress={this.onReject}
+                            />
+                        )}
+                    </View>
+                )}
             </ScrollView>
         );
     }
