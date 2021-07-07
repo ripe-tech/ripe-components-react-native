@@ -50,7 +50,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     componentDidUpdate(prevProps) {
-        if(!equal(prevProps.image, this.props.image)) {
+        if (!equal(prevProps.image, this.props.image)) {
             this.setState({ imageSrc: this.props.image });
         }
     }
