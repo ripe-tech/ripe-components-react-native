@@ -22,7 +22,7 @@ export class Search extends PureComponent {
     static get defaultProps() {
         return {
             value: undefined,
-            placeholder: undefined,
+            placeholder: "Search",
             buttonProps: {},
             onFocus: () => {},
             onValue: value => {},
