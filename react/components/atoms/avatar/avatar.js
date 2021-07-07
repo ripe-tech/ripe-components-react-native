@@ -49,6 +49,18 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
         };
     }
 
+    componentDidUpdate(prevProps) {
+        if (typeof prevProps.image === "number" && prevProps.image !== this.props.image) {
+            this.setState({ imageSrc: this.props.image });
+        } else if (
+            typeof prevProps.image === "object" &&
+            typeof this.props.image === "object" &&
+            prevProps.image.uri !== this.props.image.uri
+        ) {
+            this.setState({ imageSrc: this.props.image });
+        }
+    }
+
     onLoadingError = () => {
         this.setState({ imageSrc: require("./assets/avatar.png") });
         if (this.props.onError) this.props.onError();
