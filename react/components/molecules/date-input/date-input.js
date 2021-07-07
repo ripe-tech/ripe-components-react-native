@@ -16,6 +16,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
             header: PropTypes.string,
             disabled: PropTypes.bool,
             activeOpacity: PropTypes.number,
+            showBorders: PropTypes.bool,
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -27,6 +28,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
             header: undefined,
             disabled: false,
             activeOpacity: 0.75,
+            showBorders: true,
             onUpdateValue: () => {},
             style: {}
         };
@@ -65,11 +67,36 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _style = () => {
-        return [styles.dateInput, this.props.style];
+        return [
+            styles.dateInput,
+            {
+                borderTopWidth: this.props.showBorders ? 1 : 0,
+                borderBottomWidth: this.props.showBorders ? 1 : 0
+            },
+            this.props.style
+        ];
     };
 
     _buttonStyle = () => {
         return [styles.dateInputButton, this.props.disabled ? styles.dateInputButtonDisabled : {}];
+    };
+
+    _columnTextStyle = () => {
+        return [
+            styles.columnText,
+            {
+                marginLeft: this.props.showBorders ? 15 : 5
+            }
+        ];
+    };
+
+    _iconStyle = () => {
+        return [
+            styles.icon,
+            {
+                marginRight: this.props.showBorders ? 15 : 5
+            }
+        ];
     };
 
     _renderCalendar = () => {
@@ -119,7 +146,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
                     disabled={this.props.disabled}
                     onPress={this.onPress}
                 >
-                    <View style={styles.columnText}>
+                    <View style={this._columnTextStyle()}>
                         {Boolean(this.props.header) && (
                             <Text style={styles.headerText}>{this.props.header}</Text>
                         )}
@@ -127,7 +154,12 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
                             {dateStringUTC(this.state.valueData / 1000)}
                         </Text>
                     </View>
-                    <Icon style={styles.icon} icon={"calendar-round"} strokeWidth={0.1} size={16} />
+                    <Icon
+                        style={this._iconStyle()}
+                        icon={"calendar-round"}
+                        strokeWidth={0.1}
+                        size={16}
+                    />
                 </Touchable>
                 {this._renderCalendar()}
             </View>
@@ -140,27 +172,23 @@ const styles = StyleSheet.create({
         width: "100%",
         borderStyle: "solid",
         borderColor: "#e4e8f0",
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
         overflow: "hidden"
     },
     dateInputButton: {
-        width: "100%",
-        height: 75,
+        height: 70,
         flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center"
+        justifyContent: "space-around"
     },
     dateInputButtonDisabled: {
         opacity: 0.5
     },
     columnText: {
         flex: 1,
-        marginHorizontal: 15
+        justifyContent: "center"
     },
     icon: {
         flex: 1,
-        marginHorizontal: 15
+        alignSelf: "center"
     },
     headerText: {
         fontFamily: baseStyles.FONT,
