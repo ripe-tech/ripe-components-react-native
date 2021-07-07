@@ -35,6 +35,10 @@ export class Card extends PureComponent {
         };
     }
 
+    _style = () => {
+        return [styles.style, this.props.style];
+    };
+
     _avatarStyle() {
         return {
             ...styles.avatar,
@@ -99,7 +103,7 @@ export class Card extends PureComponent {
     render() {
         return (
             <Touchable
-                style={styles.style}
+                style={this._style()}
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
                 activeOpacity={0.6}
