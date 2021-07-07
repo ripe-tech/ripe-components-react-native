@@ -125,7 +125,7 @@ export class InputForm extends mix(PureComponent).with(IdentifiableMixin) {
                 {...this.id("input-form")}
             >
                 <Text style={styles.text}>{this.props.label}</Text>
-                {this._renderInput()}
+                {this.props.children ? this.props.children : this._renderInput()}
             </Touchable>
         );
     }
