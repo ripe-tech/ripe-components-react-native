@@ -25,9 +25,6 @@ export class Card extends PureComponent {
 
     static get defaultProps() {
         return {
-            title: undefined,
-            text: undefined,
-            subText: undefined,
             style: {},
             pressable: true,
             onPress: () => {},
