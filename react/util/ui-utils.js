@@ -146,9 +146,12 @@ export const notify = function (message) {
         : Alert.alert(message);
 };
 
-export const toClipboard = function (value, options = { notification: true, vibrate: true }) {
+export const toClipboard = function (
+    value,
+    options = { notification: true, vibrate: true, message: "Copied to clipboard" }
+) {
     Clipboard.setString(`${value}`);
-    if (options.notification) notify("Copied to clipboard");
+    if (options.notification) notify(options.message);
     if (options.vibrate) Vibration.vibrate();
 };
 
