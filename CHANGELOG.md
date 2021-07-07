@@ -24,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Added `animateScrollBottom` prop to chat
 * `onScroll` and `onScrollBottom` props in chat component
 * Radio group component
+* Textarea support for background color and horizontal padding as props
+* Input keyboard type support
+* Input Form component
 
 ### Changed
 

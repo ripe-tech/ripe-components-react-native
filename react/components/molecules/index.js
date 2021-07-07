@@ -3,6 +3,7 @@ export * from "./chat-message";
 export * from "./date-input";
 export * from "./header";
 export * from "./input-animated";
+export * from "./input-form";
 export * from "./item";
 export * from "./item-notification";
 export * from "./key-value";
