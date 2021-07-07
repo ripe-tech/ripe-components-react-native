@@ -11,6 +11,7 @@ storiesOf("Molecules", module)
         const header = text("Header", "Birth Date");
         const disabled = boolean("Disabled", false);
         const activeOpacity = number("Active Opacity", -1);
+        const showBorders = boolean("Show Borders", true);
 
         return (
             <DateInput
@@ -18,6 +19,7 @@ storiesOf("Molecules", module)
                 header={header}
                 disabled={disabled}
                 activeOpacity={activeOpacity === -1 ? undefined : activeOpacity}
+                showBorders={showBorders}
             />
         );
     });
