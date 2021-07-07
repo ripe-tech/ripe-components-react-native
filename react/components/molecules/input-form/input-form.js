@@ -12,7 +12,7 @@ export class InputForm extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             label: PropTypes.string,
             placeholder: PropTypes.string,
-            value: PropTypes.string,
+            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             meta: PropTypes.string,
             secureTextEntry: PropTypes.bool,
             onValueUpdate: PropTypes.func,

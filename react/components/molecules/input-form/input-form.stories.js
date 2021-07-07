@@ -10,30 +10,12 @@ storiesOf("Molecules", module)
     .add("Input Form", () => {
         const label = text("Label", "Name");
         const placeholder = text("Placeholder", undefined);
-        const borderBottomActiveColor = text("Border Bottom ActiveColor", "#4f7af8");
-        const placeholderTextColor = text("Placeholder Text Color", "#869aaa");
         const value = text("Value", undefined);
-        const secureTextEntry = boolean("Secure entry", false);
 
         return (
             <View style={{ flex: 1 }}>
-                <InputForm
-                    label={label}
-                    placeholder={placeholder}
-                    borderBottomActiveColor={borderBottomActiveColor}
-                    placeholderTextColor={placeholderTextColor}
-                    secureTextEntry={secureTextEntry}
-                    value={value}
-                />
-                <InputForm
-                    label={label}
-                    placeholder={placeholder}
-                    meta={"long"}
-                    borderBottomActiveColor={borderBottomActiveColor}
-                    placeholderTextColor={placeholderTextColor}
-                    secureTextEntry={secureTextEntry}
-                    value={value}
-                />
+                <InputForm label={label} placeholder={placeholder} value={value} />
+                <InputForm label={"Age"} placeholder={"age"} meta={"number"} value={18} />
             </View>
         );
     });

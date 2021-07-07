@@ -9,7 +9,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             placeholder: PropTypes.string,
-            value: PropTypes.string,
+            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             placeholderTextColor: PropTypes.string,
             height: PropTypes.number,
             type: PropTypes.string,
@@ -38,7 +38,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
         super(props);
 
         this.state = {
-            valueData: this.props.value
+            valueData: this._convertFromType(this.props.value)
         };
     }
 
@@ -51,8 +51,8 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     onChangeValue = value => {
-        this.setState({ valueData: value }, () => {
-            this.props.onValueUpdate(value);
+        this.setState({ valueData: this._convertToType(value) }, () => {
+            this.props.onValueUpdate(this.state.valueData);
         });
     };
 
@@ -62,6 +62,16 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
 
     blur = () => {
         this.textInputComponent.blur();
+    };
+
+    _convertToType = value => {
+        if (this.props.type !== "number") return value;
+        return value ? Number.parseFloat(value) : value;
+    };
+
+    _convertFromType = value => {
+        if (this.props.type !== "number") return value;
+        return value ? value.toString() : value;
     };
 
     _keyboardType = () => {
