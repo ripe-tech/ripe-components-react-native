@@ -15,6 +15,7 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
             maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             backgroundColor: PropTypes.string,
             paddingHorizontal: PropTypes.number,
+            fontSize: PropTypes.number,
             onSubmit: PropTypes.func,
             color: PropTypes.string,
             variant: PropTypes.string,
@@ -34,6 +35,7 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
             maxHeight: undefined,
             backgroundColor: "#ffffff",
             paddingHorizontal: 15,
+            fontSize: 14,
             color: undefined,
             variant: undefined,
             onSubmit: () => {},
@@ -63,7 +65,8 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
                 minHeight: this.props.minHeight,
                 maxHeight: this.props.maxHeight,
                 backgroundColor: this.props.backgroundColor,
-                paddingHorizontal: this.props.paddingHorizontal
+                paddingHorizontal: this.props.paddingHorizontal,
+                fontSize: this.props.fontSize
             },
             styles[`textArea${capitalize(this.props.color)}`],
             styles[`textArea${capitalize(this.props.variant)}`],

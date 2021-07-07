@@ -99,6 +99,7 @@ export class InputForm extends mix(PureComponent).with(IdentifiableMixin) {
                         multiline={true}
                         backgroundColor={null}
                         paddingHorizontal={0}
+                        fontSize={16}
                         onValue={this.onChangeValue}
                     />
                 );
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     },
     inputTextarea: {
         marginLeft: 5,
-        fontSize: 14
+        marginBottom: 5
     }
 });
 

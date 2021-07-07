@@ -80,6 +80,8 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
                 return "numeric";
             case "email":
                 return "email-address";
+            case "phone":
+                return "phone-pad";
             default:
                 return "default";
         }
