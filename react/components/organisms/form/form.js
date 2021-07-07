@@ -65,7 +65,7 @@ export class Form extends PureComponent {
         this.setState({ saving: true });
 
         try {
-            await this.onSave(this.values);
+            await this.props.onSave(this.values);
 
             if (this.saveNotification) {
                 notify(this.props.saveMessage(this.state.valuesData));
