@@ -122,7 +122,6 @@ export class Form extends PureComponent {
                             if (this.firstInput) return;
                             this.firstInput = el;
                         }}
-                        key={value}
                         value={this.state.valuesData[value]}
                         label={label}
                         {...args}
@@ -133,7 +132,6 @@ export class Form extends PureComponent {
                 return (
                     <DateInput
                         style={styles.input}
-                        key={value}
                         value={this.state.valuesData[value]}
                         header={label}
                         showBorders={false}
@@ -157,7 +155,10 @@ export class Form extends PureComponent {
                     )}
                     <View style={styles.sectionContent}>
                         {fields.map((field, index) => (
-                            <View style={index < fields.length - 1 ? styles.inputContainer : null}>
+                            <View
+                                key={field.value}
+                                style={index < fields.length - 1 ? styles.inputContainer : null}
+                            >
                                 {this._renderInputComponent(field)}
                             </View>
                         ))}
