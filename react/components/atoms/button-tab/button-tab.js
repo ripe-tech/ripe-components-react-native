@@ -36,6 +36,7 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
             colorSelected: PropTypes.string,
             selected: PropTypes.bool,
             disabled: PropTypes.bool,
+            iconProps: PropTypes.object,
             onPress: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -91,7 +92,12 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
         return (
             <View style={styles.container}>
                 {this.props.icon ? (
-                    <Icon icon={this.props.icon} color={this._iconColor()} strokeWidth={2.5} />
+                    <Icon
+                        icon={this.props.icon}
+                        color={this._iconColor()}
+                        strokeWidth={2.5}
+                        {...this.props.iconProps}
+                    />
                 ) : null}
                 {this.props.text ? (
                     <Text {...this.id(`button-tab-${this.props.text}`)} style={this._labelStyle()}>
