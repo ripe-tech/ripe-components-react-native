@@ -12,6 +12,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
             value: PropTypes.string,
             placeholderTextColor: PropTypes.string,
             height: PropTypes.number,
+            type: PropTypes.string,
             secureTextEntry: PropTypes.bool,
             onValueUpdate: PropTypes.func,
             onFocus: PropTypes.func,
@@ -25,6 +26,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
             value: undefined,
             placeholderTextColor: "#869aaa",
             height: 30,
+            type: undefined,
             secureTextEntry: false,
             onValueUpdate: value => {},
             onFocus: () => {},
@@ -62,6 +64,17 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
         this.textInputComponent.blur();
     };
 
+    _keyboardType = () => {
+        switch (this.props.type) {
+            case "number":
+                return "numeric";
+            case "email":
+                return "email-address";
+            default:
+                return "default";
+        }
+    };
+
     _style = () => {
         return [
             styles.input,
@@ -79,6 +92,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
                 style={this._style()}
                 secureTextEntry={this.props.secureTextEntry}
                 value={this.state.valueData}
+                keyboardType={this._keyboardType()}
                 placeholder={this.props.placeholder || this.props.header}
                 placeholderTextColor={this.props.placeholderTextColor}
                 onChangeText={this.onChangeValue}
