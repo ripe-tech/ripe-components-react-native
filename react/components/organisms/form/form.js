@@ -2,8 +2,9 @@ import React, { PureComponent } from "react";
 import { ScrollView, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, notify } from "../../../util";
 
+import { Button } from "../../atoms";
 import { DateInput, InputForm } from "../../molecules";
 
 export class Form extends PureComponent {
@@ -20,10 +21,8 @@ export class Form extends PureComponent {
             acceptButtonProps: PropTypes.object,
             saveNotification: PropTypes.bool,
             saveMessage: PropTypes.func,
-            saveNotificationProps: PropTypes.object,
             error: PropTypes.bool,
             errorMessage: PropTypes.func,
-            errorMessageProps: PropTypes.object,
             onUpdateValues: PropTypes.func,
             onDiscard: PropTypes.func,
             onSave: PropTypes.func,
@@ -37,13 +36,11 @@ export class Form extends PureComponent {
             acceptButtonProps: {},
             saveNotification: true,
             saveMessage: values => "Changes saved!",
-            saveNotificationProps: {},
             error: true,
             errorMessage: error => error.message || "Something went wrong",
-            errorMessageProps: {},
-            onUpdateValues: values => {},
-            onDiscard: () => {},
-            onSave: () => {},
+            onUpdateValues: values => { },
+            onDiscard: undefined,
+            onSave: undefined,
             style: {}
         };
     }
@@ -52,8 +49,8 @@ export class Form extends PureComponent {
         super(props);
 
         this.state = {
-            saving: false,
-            valuesData: this.props.values
+            valuesData: this.props.values,
+            saving: false
         };
 
         this.firstInput = null;
@@ -63,6 +60,37 @@ export class Form extends PureComponent {
         this.firstInput?.focus();
     }
 
+    save = async () => {
+        if (!this.props.onSave) return;
+        this.setState({ saving: true });
+
+        try {
+            await this.onSave(this.values);
+
+            if (this.saveNotification) {
+                notify(this.props.saveMessage(this.state.valuesData));
+            }
+        } catch (error) {
+            if (this.error) {
+                this.notify(this.props.errorMessage(error));
+            }
+        } finally {
+            this.setState({ saving: false });
+        }
+    };
+
+    discard = async () => {
+        if (!this.props.onDiscard) return;
+
+        try {
+            await this.props.onDiscard(this.state.valuesData);
+        } catch (error) {
+            if (this.props.error) {
+                this.notify(this.props.errorMessage(error));
+            }
+        }
+    };
+
     onValueUpdate = (name, value) => {
         this.setState(
             prevState => ({
@@ -70,6 +98,14 @@ export class Form extends PureComponent {
             }),
             () => this.props.onUpdateValues(this.state.valuesData)
         );
+    };
+
+    onSubmit = async () => {
+        await this.save();
+    };
+
+    onReject = async () => {
+        await this.discard();
     };
 
     _style = () => {
@@ -114,10 +150,12 @@ export class Form extends PureComponent {
         return this.props.fields.map(({ title, fields }) => {
             return (
                 <View style={styles.section}>
-                    <View style={styles.sectionTitle}>
-                        <Text style={styles.sectionTitleText}>{title}</Text>
-                    </View>
-                    <View>
+                    {title !== undefined && (
+                        <View style={styles.sectionTitle}>
+                            <Text style={styles.sectionTitleText}>{title}</Text>
+                        </View>
+                    )}
+                    <View style={styles.sectionContent}>
                         {fields.map((field, index) => (
                             <View style={index < fields.length - 1 ? styles.inputContainer : null}>
                                 {this._renderInputComponent(field)}
@@ -130,7 +168,31 @@ export class Form extends PureComponent {
     };
 
     render() {
-        return <ScrollView style={this._style()}>{this._renderSections()}</ScrollView>;
+        return (
+            <ScrollView style={this._style()}>
+                {this._renderSections()}
+                {(this.props.onSave || this.props.onDiscard) && <View style={styles.buttons}>
+                    {this.props.onSave && (
+                        <Button
+                            style={styles.submitButton}
+                            text={"Save"}
+                            loading={this.state.saving}
+                            {...this.props.acceptButtonProps}
+                            onPress={this.onSubmit}
+                        />
+                    )}
+                    {this.props.onDiscard && (
+                        <Button
+                            text={"Discard"}
+                            backgroundColor={"#a6adb4"}
+                            disabled={this.state.saving}
+                            {...this.props.rejectButtonProps}
+                            onPress={this.onReject}
+                        />
+                    )}
+                </View>}
+            </ScrollView>
+        );
     }
 }
 
@@ -149,6 +211,9 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderBottomWidth: 1
     },
+    sectionContent: {
+        backgroundColor: "#ffffff"
+    },
     sectionTitleText: {
         fontFamily: baseStyles.FONT
     },
@@ -165,6 +230,12 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 15,
         paddingTop: 5
+    },
+    buttons: {
+        padding: 15
+    },
+    submitButton: {
+        marginBottom: 10
     }
 });
 
