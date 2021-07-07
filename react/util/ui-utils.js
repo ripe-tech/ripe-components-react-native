@@ -146,12 +146,10 @@ export const notify = function (message) {
         : Alert.alert(message);
 };
 
-export const toClipboard = function (value, notification = true) {
+export const toClipboard = function (value, options = { notification: true, vibrate: true }) {
     Clipboard.setString(`${value}`);
-    if (!notification) return;
-
-    notify("Copied to clipboard");
-    Vibration.vibrate();
+    if (options.notification) notify("Copied to clipboard");
+    if (options.vibrate) Vibration.vibrate();
 };
 
 export const isTabletSize = function () {
