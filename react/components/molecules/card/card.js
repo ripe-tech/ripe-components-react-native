@@ -9,13 +9,13 @@ import { baseStyles } from "../../../util";
 export class Card extends PureComponent {
     static get propTypes() {
         return {
-            avatarURL: PropTypes.String,
-            icon: PropTypes.String,
-            iconColor: PropTypes.String,
-            iconFill: PropTypes.String,
-            title: PropTypes.String,
-            text: PropTypes.String,
-            subText: PropTypes.String,
+            avatarURL: PropTypes.string,
+            icon: PropTypes.string,
+            iconColor: PropTypes.string,
+            iconFill: PropTypes.string,
+            title: PropTypes.string,
+            text: PropTypes.string,
+            subText: PropTypes.string,
             style: ViewPropTypes.style,
             pressable: PropTypes.bool,
             onPress: PropTypes.func,
