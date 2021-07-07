@@ -92,6 +92,7 @@ export class InputForm extends mix(PureComponent).with(IdentifiableMixin) {
             case "long":
                 return (
                     <TextArea
+                        ref={el => (this.input = el)}
                         style={styles.inputTextarea}
                         value={this.state.valueData}
                         placeholder={this.props.label}
