@@ -14,6 +14,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             options: PropTypes.array,
             value: PropTypes.any,
             placeholder: PropTypes.string,
+            mode: PropTypes.string,
             disabled: PropTypes.bool,
             width: PropTypes.number,
             onUpdateValue: PropTypes.func,
@@ -26,6 +27,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             options: [],
             value: undefined,
             placeholder: undefined,
+            mode: undefined,
             disabled: false,
             width: undefined,
             keyTimeout: 500,
@@ -139,6 +141,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                     disabled={this.props.disabled}
                     useNativeAndroidPickerStyle={false}
                     Icon={this._icon}
+                    pickerProps={{ mode: this.props.mode }}
                     onValueChange={this.onValueChange}
                 />
             </View>
