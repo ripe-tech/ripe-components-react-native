@@ -5,7 +5,6 @@ import RNPickerSelect from "react-native-picker-select";
 import { mix } from "yonius";
 
 import { IdentifiableMixin, baseStyles, equal } from "../../../util";
-
 import { Icon } from "../../atoms";
 
 export class Select extends mix(PureComponent).with(IdentifiableMixin) {
