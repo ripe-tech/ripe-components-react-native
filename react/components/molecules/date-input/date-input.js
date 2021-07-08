@@ -193,9 +193,9 @@ const styles = StyleSheet.create({
     headerText: {
         fontFamily: baseStyles.FONT,
         color: "#4f7af8",
-        fontSize: 12,
-        lineHeight: 14,
-        marginBottom: 5
+        fontSize: 14,
+        lineHeight: 16,
+        marginBottom: 8
     },
     dateText: {
         fontFamily: baseStyles.FONT,
