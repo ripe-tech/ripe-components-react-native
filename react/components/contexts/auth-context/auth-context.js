@@ -30,55 +30,38 @@ export class AuthProvider extends Component {
             loaded: false,
             logoutMessage: null,
             account: null,
-            acl: null,
             tokens: null,
+            sid: null,
             ripeIdApi: this.ripeIdApi
         };
-
-        // registers the access token callback function to be able
-        // to update the internal async storage
-        this.ripeIdApi.bind("access_token", async accessToken => {
-            await AsyncStorage.setItem("accessToken", accessToken);
-        });
     }
 
     async login(email, password) {
-        console.log("AUTH CONTEXT LOGIN", email, password);
         const response = await this.ripeIdApi.login(email, password);
-        console.log(response);
-        return response
+        this.setState({
+            account: response.username,
+            tokens: response.tokens,
+            sid: response.sid
+        });
     }
 
-    async logout(message = null) {
+    logout(message = null) {
         // re-creates the RIPE ID API instance and invalidates the
         // current RIPE SDK instance as it's no longer going to be used
         this.ripeIdApi = new RipeIdAPI(this.props.options);
         if (this.context.ripeApi) this.context.ripeApi.unauth();
 
-        // registers the access token callback function to be able
-        // to update the internal async storage
-        this.ripeIdApi.bind("access_token", async accessToken => {
-            await AsyncStorage.setItem("accessToken", accessToken);
-        });
-
         // updates the current state, removing the complete set of
         // account related information (as expected)
         this.setState({
             account: null,
-            acl: null,
             tokens: null,
+            sid: null,
             logoutMessage: message
         });
-
-        // removes the complete set of items from the local storage
-        await AsyncStorage.removeItem("token");
-        await AsyncStorage.removeItem("account");
-        await AsyncStorage.removeItem("acl");
-        await AsyncStorage.removeItem("accessToken");
-        await AsyncStorage.removeItem("refreshToken");
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.setState({ loaded: true });
     }
 
@@ -89,12 +72,11 @@ export class AuthProvider extends Component {
                     loaded: this.state.loaded,
                     logoutMessage: this.state.logoutMessage,
                     account: this.state.account,
-                    acl: this.state.acl,
                     tokens: this.state.tokens,
                     ripeIdApi: this.state.ripeIdApi,
                     ripeApi: this.context.ripeApi,
                     logout: message => this.logout(message),
-                    login: code => this.login(code)
+                    login: async (email, password) => await this.login(email, password)
                 }}
             >
                 {this.props.children}
