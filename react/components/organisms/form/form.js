@@ -101,11 +101,11 @@ export class Form extends PureComponent {
     };
 
     onSubmit = async () => {
-        await this.save();
+        await this.save(this.state.valuesData);
     };
 
     onReject = async () => {
-        await this.discard();
+        await this.discard(this.state.valuesData);
     };
 
     _style = () => {
