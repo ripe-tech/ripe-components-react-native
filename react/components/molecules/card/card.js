@@ -16,10 +16,10 @@ export class Card extends PureComponent {
             title: PropTypes.String,
             text: PropTypes.String,
             subText: PropTypes.String,
-            style: ViewPropTypes.style,
             pressable: PropTypes.bool,
             onPress: PropTypes.func,
-            onLongPress: PropTypes.func
+            onLongPress: PropTypes.func,
+            style: ViewPropTypes.style,
         };
     }
 
@@ -28,10 +28,10 @@ export class Card extends PureComponent {
             title: undefined,
             text: undefined,
             subText: undefined,
-            style: {},
             pressable: true,
             onPress: () => {},
-            onLongPress: () => {}
+            onLongPress: () => {},
+            style: {},
         };
     }
 
@@ -89,9 +89,9 @@ export class Card extends PureComponent {
     _renderCardText() {
         return (
             <View style={styles.textContainer}>
-                {this.props.title ? <Text style={styles.title}>{this.props.title}</Text> : null}
-                {this.props.text ? <Text style={styles.text}>{this.props.text}</Text> : null}
-                {this.props.subtext ? <Text style={styles.text}>{this.props.subtext}</Text> : null}
+                {this.props.title && <Text style={styles.title}>{this.props.title}</Text>}
+                {this.props.text && <Text style={styles.text}>{this.props.text}</Text>}
+                {this.props.subtext && <Text style={styles.text}>{this.props.subtext}</Text>}
             </View>
         );
     }
@@ -100,9 +100,9 @@ export class Card extends PureComponent {
         return (
             <Touchable
                 style={styles.style}
+                activeOpacity={0.6}
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
-                activeOpacity={0.6}
             >
                 {this.props.children ? (
                     this.props.children
