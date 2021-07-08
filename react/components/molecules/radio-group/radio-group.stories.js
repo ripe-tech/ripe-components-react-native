@@ -4,7 +4,7 @@ import { withKnobs, boolean, select } from "@storybook/addon-knobs";
 
 import { RadioGroup } from "./radio-group";
 
-storiesOf("Molecules", module)
+storiesOf("Components/Molecules/Radio Group", module)
     .addDecorator(withKnobs)
     .add("Radio Group", () => {
         const items = [
