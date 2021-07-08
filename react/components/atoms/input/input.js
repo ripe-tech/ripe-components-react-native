@@ -105,6 +105,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
                 secureTextEntry={this.props.secureTextEntry}
                 value={this.state.valueData}
                 keyboardType={this._keyboardType()}
+                includeFontPadding={false}
                 placeholder={this.props.placeholder || this.props.header}
                 placeholderTextColor={this.props.placeholderTextColor}
                 onChangeText={this.onChangeValue}
@@ -122,7 +123,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         width: "100%",
         color: "#223645",
-        letterSpacing: 0.8
+        lineHeight: 18,
+        padding: 0
     }
 });
 

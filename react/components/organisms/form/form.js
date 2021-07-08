@@ -231,11 +231,14 @@ const styles = StyleSheet.create({
     },
     inputForm: {
         flex: 1,
-        paddingHorizontal: 15,
-        paddingTop: 5
+        paddingHorizontal: 15
     },
     buttons: {
-        padding: 15
+        borderColor: "#e4e8f0",
+        borderStyle: "solid",
+        borderTopWidth: 1,
+        padding: 15,
+        backgroundColor: "#f6f7f9"
     },
     discardButton: {
         marginTop: 10
