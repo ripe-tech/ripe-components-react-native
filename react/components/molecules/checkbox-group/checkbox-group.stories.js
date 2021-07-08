@@ -4,7 +4,7 @@ import { withKnobs, boolean } from "@storybook/addon-knobs";
 
 import { CheckboxGroup } from "./checkbox-group";
 
-storiesOf("Components/Molecules/Checkbox Group", module)
+storiesOf("Molecules", module)
     .addDecorator(withKnobs)
     .add("Checkbox Group", () => {
         const items = [
