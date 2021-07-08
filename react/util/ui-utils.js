@@ -4,11 +4,13 @@ import {
     Linking,
     PermissionsAndroid,
     Platform,
+    Vibration,
     ToastAndroid
 } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import DocumentPicker from "react-native-document-picker";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+import Clipboard from "@react-native-community/clipboard";
 
 import { getUriBasename } from "./utils";
 
@@ -144,10 +146,43 @@ export const notify = function (message) {
         : Alert.alert(message);
 };
 
+/**
+ * Copies the provided string value into the clipboard of the
+ * current device, using the provided options to configure
+ * the operation.
+ *
+ * @param {String} value The value that is going to be copied to
+ * the device's clipboard area.
+ * @param {Object} options The options to be used in the configuration
+ * of the copy to clipboard operation.
+ */
+export const toClipboard = function (
+    value,
+    options = { notification: true, vibrate: true, message: "Copied to clipboard" }
+) {
+    Clipboard.setString(`${value}`);
+    if (options.notification) notify(options.message);
+    if (options.vibrate) Vibration.vibrate();
+};
+
+/**
+ * Determines if the current device viewport size is
+ * considered to be tablet like.
+ *
+ * @returns {Boolean} If the current device viewport size is
+ * considered to be tablet like.
+ */
 export const isTabletSize = function () {
     return !isMobileSize();
 };
 
+/**
+ * Determines if the current device viewport size is
+ * considered to be mobile like.
+ *
+ * @returns {Boolean} If the current device viewport size is
+ * considered to be mobile like.
+ */
 export const isMobileSize = function () {
     const { height, width } = Dimensions.get("window");
     if (isLandscape()) return height <= MOBILE_WIDTH;

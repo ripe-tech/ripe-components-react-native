@@ -124,7 +124,7 @@ export class InputForm extends mix(PureComponent).with(IdentifiableMixin) {
             <View style={this._style()}>
                 <Touchable
                     style={styles.inputTouchable}
-                    activeOpacity={0}
+                    activeOpacity={0.8}
                     onPress={this.onHeaderPress}
                     {...this.id("input-form")}
                 >

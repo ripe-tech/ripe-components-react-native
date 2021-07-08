@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, boolean } from "@storybook/addon-knobs";
+import { withKnobs, boolean, number } from "@storybook/addon-knobs";
 
 import { KeyValues } from "./key-values";
 
@@ -15,6 +15,15 @@ storiesOf("Molecules", module)
             { key: "Nationality", value: "Portuguese" }
         ];
         const twoColumns = boolean("Two Columns", false);
+        const expanded = boolean("Expanded", false);
+        const nrShowingItems = number("Items showing", 3);
 
-        return <KeyValues items={items} twoColumns={twoColumns} />;
+        return (
+            <KeyValues
+                items={items}
+                nrShowingItems={nrShowingItems}
+                expanded={expanded}
+                twoColumns={twoColumns}
+            />
+        );
     });
