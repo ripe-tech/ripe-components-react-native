@@ -78,8 +78,8 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
             <Touchable
                 style={this._style()}
                 disabled={!this.props.pressable}
-                onPress={this.props.onPress}
-                onLongPress={this.props.onLongPress}
+                onPress={() => this.props.onPress(this.props._key, this.props.value)}
+                onLongPress={() => this.props.onLongPress(this.props._key, this.props.value)}
             >
                 <View style={styles.textContainer} {...this.id("key-value")}>
                     <Text style={this._keyStyle()} {...this.id("key-value-key")}>

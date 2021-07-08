@@ -1,10 +1,11 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { isTabletSize } from "../../../util";
 
 import { KeyValue } from "../key-value";
+import { Touchable } from "../../atoms/touchable";
 
 export class KeyValues extends PureComponent {
     static get propTypes() {
@@ -31,6 +32,8 @@ export class KeyValues extends PureComponent {
             ).isRequired,
             keyValueTwoColumns: PropTypes.bool,
             showUnset: PropTypes.bool,
+            nrShowingItems: PropTypes.number,
+            expanded: PropTypes.bool,
             style: ViewPropTypes.style
         };
     }
@@ -39,12 +42,59 @@ export class KeyValues extends PureComponent {
         return {
             keyValueTwoColumns: isTabletSize(),
             showUnset: true,
+            nrShowingItems: undefined,
+            expanded: false,
             style: {}
         };
     }
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            expanded: this.props.expanded ? this.props.expanded : false
+        };
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.expanded !== this.props.expanded) {
+            this.setState({ expanded: this.props.expanded });
+        }
+    }
+
+    toggleItemsListState = () => {
+        const expanded = !this.state.expanded;
+        this.setState({ expanded: expanded });
+    };
+
     _shouldShow = item => {
         return Boolean(item.value) || this.props.showUnset;
+    };
+
+    _showButton = item => {
+        return (
+            Boolean(this.props.nrShowingItems) &&
+            this.props.nrShowingItems < this.props.items.length
+        );
+    };
+
+    _getItems = () => {
+        if (this.props.nrShowingItems === 0 || this.state.expanded) return this.props.items;
+        return this.props.items.slice(0, this.props.nrShowingItems);
+    };
+
+    _renderExpandButton = () => {
+        return (
+            <Touchable
+                style={styles.butotnExpandDetails}
+                onPress={() => this.toggleItemsListState()}
+            >
+                <Text style={styles.buttonExpandDetailsText}>{this._getExpandButtonText()}</Text>
+            </Touchable>
+        );
+    };
+
+    _getExpandButtonText = () => {
+        return `View ${this.state.expanded ? "less" : "more"}`;
     };
 
     _style = () => {
@@ -62,7 +112,7 @@ export class KeyValues extends PureComponent {
     render() {
         return (
             <View style={this._style()}>
-                {this.props.items.map((item, index) => (
+                {this._getItems().map((item, index) => (
                     <View style={this._keyValueWrapperStyle()} key={item.key}>
                         {this._shouldShow(item) && (
                             <KeyValue
@@ -90,6 +140,7 @@ export class KeyValues extends PureComponent {
                         )}
                     </View>
                 ))}
+                {this._showButton() && this._renderExpandButton()}
             </View>
         );
     }
@@ -106,6 +157,15 @@ const styles = StyleSheet.create({
     },
     keyValueColumnRight: {
         marginLeft: 40
+    },
+    butotnExpandDetails: {
+        alignItems: "center",
+        height: 50,
+        justifyContent: "center"
+    },
+    buttonExpandDetailsText: {
+        color: "#4f7af8",
+        fontWeight: "500"
     }
 });
 
