@@ -60,12 +60,13 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             return;
         }
 
-        this.setState(
-            {
+        this.setState(({ valueData }) => {
+            if (valueData === value) return;
+            this.props.onUpdateValue(value);
+            return {
                 valueData: value
-            },
-            () => this.props.onUpdateValue(value)
-        );
+            };
+        });
     };
 
     _icon = () => {
