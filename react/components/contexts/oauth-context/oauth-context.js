@@ -51,6 +51,9 @@ export class OAuthProvider extends Component {
 
         if (!token) return false;
 
+        console.log("accessTok", accessToken);
+        console.log("refreshToken", refreshToken);
+
         // restores the access and refresh tokens in the RIPE ID API
         // client so that it can be used again
         this.ripeIdApi.accessToken = accessToken;
@@ -81,6 +84,8 @@ export class OAuthProvider extends Component {
         const account = await this.ripeIdApi.selfAccount();
         const acl = await this.ripeIdApi.aclAccount();
         const refreshToken = this.ripeIdApi.refreshToken;
+        console.log("accessTok", accessToken);
+        console.log("refreshToken", refreshToken);
         await AsyncStorage.setItem("token", result.token);
         await AsyncStorage.setItem("account", JSON.stringify(account));
         await AsyncStorage.setItem("acl", JSON.stringify(acl.tokens));
