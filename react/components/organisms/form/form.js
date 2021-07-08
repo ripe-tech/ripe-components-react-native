@@ -65,7 +65,7 @@ export class Form extends PureComponent {
         this.setState({ saving: true });
 
         try {
-            await this.props.onSave(this.values);
+            await this.props.onSave(this.state.valuesData);
 
             if (this.saveNotification) {
                 notify(this.props.saveMessage(this.state.valuesData));
@@ -101,11 +101,11 @@ export class Form extends PureComponent {
     };
 
     onSubmit = async () => {
-        await this.save(this.state.valuesData);
+        await this.save();
     };
 
     onReject = async () => {
-        await this.discard(this.state.valuesData);
+        await this.discard();
     };
 
     _style = () => {
