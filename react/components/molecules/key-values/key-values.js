@@ -31,7 +31,7 @@ export class KeyValues extends PureComponent {
             ).isRequired,
             keyValueTwoColumns: PropTypes.bool,
             showUnset: PropTypes.bool,
-            nrHiddenItems: PropTypes.number,
+            nrShowingItems: PropTypes.number,
             expanded: PropTypes.bool,
             style: ViewPropTypes.style
         };
@@ -41,7 +41,7 @@ export class KeyValues extends PureComponent {
         return {
             keyValueTwoColumns: isTabletSize(),
             showUnset: true,
-            nrHiddenItems: undefined,
+            nrShowingItems: undefined,
             expanded: false,
             style: {}
         };
@@ -69,9 +69,16 @@ export class KeyValues extends PureComponent {
         return Boolean(item.value) || this.props.showUnset;
     };
 
+    _showButton = item => {
+        return (
+            Boolean(this.props.nrShowingItems) &&
+            this.props.nrShowingItems < this.props.items.length
+        );
+    };
+
     _getItems = () => {
-        if (this.props.nrHiddenItems === 0 || this.state.expanded) return this.props.items;
-        return this.props.items.slice(0, -this.props.nrHiddenItems);
+        if (this.props.nrShowingItems === 0 || this.state.expanded) return this.props.items;
+        return this.props.items.slice(0, this.props.nrShowingItems);
     };
 
     _renderExpandButton = () => {
@@ -131,7 +138,7 @@ export class KeyValues extends PureComponent {
                         )}
                     </View>
                 ))}
-                {Boolean(this.props.nrHiddenItems) && this._renderExpandButton()}
+                {this._showButton() && this._renderExpandButton()}
             </View>
         );
     }

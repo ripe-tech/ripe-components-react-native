@@ -16,12 +16,12 @@ storiesOf("Molecules", module)
         ];
         const twoColumns = boolean("Two Columns", false);
         const expanded = boolean("Expanded", false);
-        const hideItems = number("Items to hide", 3);
+        const nrShowingItems = number("Items showing", 3);
 
         return (
             <KeyValues
                 items={items}
-                hideItems={hideItems}
+                nrShowingItems={nrShowingItems}
                 expanded={expanded}
                 twoColumns={twoColumns}
             />
