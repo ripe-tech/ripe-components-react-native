@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -107,7 +107,8 @@ export class InputForm extends mix(PureComponent).with(IdentifiableMixin) {
                 return (
                     <Input
                         ref={el => (this.input = el)}
-                        height={45}
+                        style={styles.input}
+                        height={20}
                         type={this.props.meta}
                         value={this.state.valueData}
                         placeholder={this.props.label}
@@ -120,33 +121,51 @@ export class InputForm extends mix(PureComponent).with(IdentifiableMixin) {
 
     render() {
         return (
-            <Touchable
-                style={this._style()}
-                activeOpacity={0}
-                onPress={this.onHeaderPress}
-                {...this.id("input-form")}
-            >
-                <Text style={styles.text}>{this.props.label}</Text>
-                {this.props.children ? this.props.children : this._renderInput()}
-            </Touchable>
+            <View style={this._style()}>
+                <Touchable
+                    style={styles.inputTouchable}
+                    activeOpacity={0}
+                    onPress={this.onHeaderPress}
+                    {...this.id("input-form")}
+                >
+                    <Text style={styles.text}>{this.props.label}</Text>
+                    {this.props.children ? this.props.children : this._renderInput()}
+                </Touchable>
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
     inputForm: {
-        flex: 1
+        flex: 1,
+        flexDirection: "row"
+    },
+    inputTouchable: {
+        flex: 1,
+        paddingVertical: 16
     },
     text: {
-        fontFamily: baseStyles.FONT,
-        fontSize: 12,
-        color: "#4f7af8",
+        marginTop: Platform.OS === "ios" ? 2 : 0,
+        marginBottom: Platform.OS === "ios" ? 6 : 5,
         marginLeft: Platform.OS === "ios" ? 0 : 5,
-        lineHeight: 20
+        fontFamily: baseStyles.FONT,
+        fontSize: 14,
+        color: "#4f7af8",
+        lineHeight: 18
+    },
+    input: {
+        margin: 0,
+        marginLeft: Platform.OS === "ios" ? 0 : 5,
+        paddingTop: 0,
+        paddingBottom: 0,
+        borderWidth: 0
     },
     inputTextarea: {
+        paddingTop: 0,
+        paddingBottom: 0,
         marginLeft: Platform.OS === "ios" ? 0 : 5,
-        marginBottom: 5
+        marginBottom: 0
     }
 });
 
