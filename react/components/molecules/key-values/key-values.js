@@ -31,7 +31,7 @@ export class KeyValues extends PureComponent {
             ).isRequired,
             keyValueTwoColumns: PropTypes.bool,
             showUnset: PropTypes.bool,
-            hideItems: PropTypes.number,
+            nrHiddenItems: PropTypes.number,
             expanded: PropTypes.bool,
             style: ViewPropTypes.style
         };
@@ -41,7 +41,7 @@ export class KeyValues extends PureComponent {
         return {
             keyValueTwoColumns: isTabletSize(),
             showUnset: true,
-            hideItems: undefined,
+            nrHiddenItems: undefined,
             expanded: false,
             style: {}
         };
@@ -70,8 +70,8 @@ export class KeyValues extends PureComponent {
     };
 
     _getItems = () => {
-        if (this.props.hideItems === 0 || this.state.expanded) return this.props.items;
-        return this.props.items.slice(0, -this.props.hideItems);
+        if (this.props.nrHiddenItems === 0 || this.state.expanded) return this.props.items;
+        return this.props.items.slice(0, -this.props.nrHiddenItems);
     };
 
     _renderExpandButton = () => {
@@ -131,7 +131,7 @@ export class KeyValues extends PureComponent {
                         )}
                     </View>
                 ))}
-                {Boolean(this.props.hideItems) && this._renderExpandButton()}
+                {Boolean(this.props.nrHiddenItems) && this._renderExpandButton()}
             </View>
         );
     }
