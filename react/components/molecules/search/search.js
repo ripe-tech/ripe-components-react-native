@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, View, ViewPropTypes } from "react-native";
+import { StyleSheet, View, ViewPropTypes, Platform } from "react-native";
 import PropTypes from "prop-types";
 
-import { ButtonIcon, TextArea } from "../../atoms";
+import { ButtonIcon, Input } from "../../atoms";
 
 export class Search extends PureComponent {
     static get propTypes() {
@@ -10,11 +10,10 @@ export class Search extends PureComponent {
             value: PropTypes.string,
             placeholder: PropTypes.string,
             buttonProps: PropTypes.object,
-            onFocus: PropTypes.func,
             onValue: PropTypes.func,
+            onFocus: PropTypes.func,
             onBlur: PropTypes.func,
             onClear: PropTypes.func,
-            onSubmit: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -24,11 +23,10 @@ export class Search extends PureComponent {
             value: undefined,
             placeholder: "Search",
             buttonProps: {},
+            onValue: () => {},
             onFocus: () => {},
-            onValue: value => {},
             onBlur: () => {},
             onClear: () => {},
-            onSubmit: () => {},
             style: {}
         };
     }
@@ -37,94 +35,83 @@ export class Search extends PureComponent {
         super(props);
 
         this.state = {
-            value: this.props.value,
+            valueData: this.props.value,
             buttonsVisible: true,
             focused: false
         };
     }
 
-    setValue = (value, callback = () => {}) => this.setState({ value: value }, callback);
-
     focus = () => {
-        this.textAreaComponent.focus();
+        this.textInputComponent.focus();
     };
 
     blur = () => {
-        this.textAreaComponent.blur();
-    };
-
-    sendMessage = () => {
-        this.props.onSendMessage(this.state.value);
+        this.textInputComponent.blur();
     };
 
     clear = () => {
-        const emptyValue = "";
-        this.setState({ value: emptyValue }, () => this.props.onValue(emptyValue));
-        this.focus();
-        this.props.onClear();
+        this.setState({ valueData: "" }, () => {
+            this.props.onValue("");
+            this.props.onClear();
+            this.focus();
+        });
     };
 
-    onTextAreaValue = value => {
-        this.setState({ value: value });
-        this.props.onValue(value);
+    _icon = () => {
+        return this.state.valueData ? "close" : "search";
     };
 
-    onTextAreaFocus = () => {
+    onInputValue = value => {
+        this.setState({ valueData: value }, () => {
+            this.props.onValue(value);
+        });
+    };
+
+    onInputFocus = () => {
         this.setState({ focused: true }, () => {
             this.props.onFocus();
         });
     };
 
-    onTextAreaBlur = () => {
+    onInputBlur = () => {
         this.setState({ focused: false }, () => {
             this.props.onBlur();
         });
     };
 
-    onTextAreaSubmit = () => {
-        this.setState({ focused: false }, () => {
-            this.props.onSubmit();
-        });
-    };
-
     onButtonPress = () => {
-        if (this.state.value) {
-            this.clear();
-        } else {
-            this.props.onSubmit();
-        }
+        if (!this.state.valueData) return;
+        this.clear();
     };
 
     _style = () => {
-        return [styles.Search, this.props.style];
+        return [styles.search, this.props.style];
     };
 
     render() {
         return (
             <View style={this._style()}>
-                <TextArea
-                    ref={el => (this.textAreaComponent = el)}
+                <Input
+                    ref={el => (this.textInputComponent = el)}
                     color={"#223645"}
                     style={styles.textArea}
-                    value={this.state.value}
+                    value={this.state.valueData}
                     placeholder={this.props.placeholder}
                     placeholderTextColor={"#223645"}
-                    minHeight={40}
-                    onValue={value => this.onTextAreaValue(value)}
-                    onSubmit={() => this.onTextAreaSubmit()}
-                    onFocus={() => this.onTextAreaFocus()}
-                    onBlur={() => this.onTextAreaBlur()}
+                    onValueUpdate={this.onInputValue}
+                    onFocus={this.onInputFocus}
+                    onBlur={this.onInputBlur}
                 />
                 <ButtonIcon
                     style={styles.button}
-                    icon={this.state.value ? "close" : "search"}
+                    icon={this._icon()}
                     size={24}
                     iconStrokeColor={"#1d2631"}
                     iconStrokeWidth={2}
                     iconHeight={24}
                     iconWidth={24}
                     {...this.props.buttonProps}
-                    onPress={() => this.onButtonPress()}
+                    onPress={this.onButtonPress}
                 />
             </View>
         );
@@ -132,7 +119,7 @@ export class Search extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    Search: {
+    search: {
         flexDirection: "row",
         alignItems: "center",
         position: "relative"
@@ -142,12 +129,13 @@ const styles = StyleSheet.create({
         paddingBottom: 0,
         paddingTop: 0,
         borderRadius: 6,
+        minHeight: 40,
         backgroundColor: "#ffffff"
     },
     button: {
         position: "absolute",
         backgroundColor: "transparent",
-        top: 13,
+        top: Platform.OS === "ios" ? 8 : 13,
         right: 18
     }
 });

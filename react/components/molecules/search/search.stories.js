@@ -1,7 +1,7 @@
 import React from "react";
+import { View } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, text } from "@storybook/addon-knobs";
-import { View } from "react-native";
 
 import { Search } from "./search";
 
