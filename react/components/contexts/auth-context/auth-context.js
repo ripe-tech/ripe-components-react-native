@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import AsyncStorage from "@react-native-community/async-storage";
-import * as Sentry from "@sentry/react-native";
 import PropTypes from "prop-types";
-import { toTokensM } from "yonius";
+import { verify } from "yonius";
 import { API as RipeIdAPI } from "ripe-id-api";
 
 import { RipeContext } from "../ripe-context";
@@ -31,17 +29,20 @@ export class AuthProvider extends Component {
             logoutMessage: null,
             account: null,
             tokens: null,
-            sid: null,
             ripeIdApi: this.ripeIdApi
         };
     }
 
     async login(email, password) {
         const response = await this.ripeIdApi.login(email, password);
+        verify(response.sessionId, "No session ID found", 404);
+        verify(response.username, "No username found", 404);
+        verify(response.tokens, "No tokens list found", 404);
+
+        this.ripeIdApi.sessionId = response.sid;
         this.setState({
             account: response.username,
-            tokens: response.tokens,
-            sid: response.sid
+            tokens: response.tokens
         });
     }
 
@@ -56,7 +57,6 @@ export class AuthProvider extends Component {
         this.setState({
             account: null,
             tokens: null,
-            sid: null,
             logoutMessage: message
         });
     }
