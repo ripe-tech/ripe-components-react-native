@@ -34,7 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* `ContainerOpenable` knob visibility controlled by props
+* `ContainerOpenable` overlay opacity controlled by props
 
 ### Fixed
 
