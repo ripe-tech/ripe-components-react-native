@@ -132,7 +132,7 @@ export class Form extends PureComponent {
                 return (
                     <DateInput
                         style={styles.input}
-                        value={this.state.valuesData[value]}
+                        value={Number(this.state.valuesData[value])}
                         header={label}
                         showBorders={false}
                         {...args}
