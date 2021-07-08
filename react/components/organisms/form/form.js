@@ -176,7 +176,6 @@ export class Form extends PureComponent {
                     <View style={styles.buttons}>
                         {this.props.onSave && (
                             <Button
-                                style={styles.submitButton}
                                 text={"Save"}
                                 loading={this.state.saving}
                                 {...this.props.acceptButtonProps}
@@ -185,6 +184,7 @@ export class Form extends PureComponent {
                         )}
                         {this.props.onDiscard && (
                             <Button
+                                style={styles.discardButton}
                                 text={"Discard"}
                                 backgroundColor={"#a6adb4"}
                                 disabled={this.state.saving}
@@ -237,8 +237,8 @@ const styles = StyleSheet.create({
     buttons: {
         padding: 15
     },
-    submitButton: {
-        marginBottom: 10
+    discardButton: {
+        marginTop: 10
     }
 });
 
