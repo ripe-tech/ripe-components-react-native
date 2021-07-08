@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         lineHeight: 20
     },
     inputTextarea: {
-        marginLeft: 5,
+        marginLeft: Platform.OS === "ios" ? 0 : 5,
         marginBottom: 5
     }
 });

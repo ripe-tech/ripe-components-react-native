@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ScrollView, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, ScrollView, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles, notify } from "../../../util";
@@ -131,7 +131,7 @@ export class Form extends PureComponent {
             case "date":
                 return (
                     <DateInput
-                        style={styles.input}
+                        style={styles.inputDate}
                         value={Number(this.state.valuesData[value])}
                         header={label}
                         showBorders={false}
@@ -225,9 +225,9 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         borderBottomWidth: 1
     },
-    input: {
+    inputDate: {
         flex: 1,
-        paddingHorizontal: 15
+        paddingHorizontal: Platform.OS === "ios" ? 10 : 15
     },
     inputForm: {
         flex: 1,
