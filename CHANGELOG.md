@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * `onScroll` and `onScrollBottom` props in chat component
 * Radio group component
 * Possibility to override icon props in `tabs` and `button-tab`
+* Checkbox group component
+* Support for `Avatar`'s image change
 
 ### Changed
 
