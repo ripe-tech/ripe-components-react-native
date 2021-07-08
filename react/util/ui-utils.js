@@ -146,6 +146,16 @@ export const notify = function (message) {
         : Alert.alert(message);
 };
 
+/**
+ * Copies the provided string value into the clipboard of the
+ * current device, using the provided options to configure
+ * the operation.
+ *
+ * @param {String} value The value that is going to be copied to
+ * the device's clipboard area.
+ * @param {Object} options The options to be used in the configuration
+ * of the copy to clipboard operation.
+ */
 export const toClipboard = function (
     value,
     options = { notification: true, vibrate: true, message: "Copied to clipboard" }
@@ -155,10 +165,24 @@ export const toClipboard = function (
     if (options.vibrate) Vibration.vibrate();
 };
 
+/**
+ * Determines if the current device viewport size is
+ * considered to be tablet like.
+ *
+ * @returns {Boolean} If the current device viewport size is
+ * considered to be tablet like.
+ */
 export const isTabletSize = function () {
     return !isMobileSize();
 };
 
+/**
+ * Determines if the current device viewport size is
+ * considered to be mobile like.
+ *
+ * @returns {Boolean} If the current device viewport size is
+ * considered to be mobile like.
+ */
 export const isMobileSize = function () {
     const { height, width } = Dimensions.get("window");
     if (isLandscape()) return height <= MOBILE_WIDTH;
