@@ -26,6 +26,7 @@ export class ContainerOpenable extends PureComponent {
             header: PropTypes.element,
             headerPressable: PropTypes.bool,
             headerProps: PropTypes.object,
+            showKnob: PropTypes.bool,
             onContentHeight: PropTypes.func,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style
@@ -40,6 +41,7 @@ export class ContainerOpenable extends PureComponent {
             header: undefined,
             headerPressable: true,
             headerProps: {},
+            showKnob: true,
             onContentHeight: height => {},
             onVisible: visible => {},
             style: {}
@@ -215,7 +217,7 @@ export class ContainerOpenable extends PureComponent {
                             onPress={this.onHeaderPress}
                             {...this.props.headerProps}
                         >
-                            <View style={styles.knob} />
+                            {this.props.showKnob ? <View style={styles.knob} /> : null}
                             {this.props.header}
                         </TouchableOpacity>
                     ) : (
@@ -223,6 +225,7 @@ export class ContainerOpenable extends PureComponent {
                             onLayout={event => this._onHeaderLayout(event)}
                             {...this.props.headerProps}
                         >
+                            {this.props.showKnob ? <View style={styles.knob} /> : null}
                             {this.props.header}
                         </View>
                     )}
