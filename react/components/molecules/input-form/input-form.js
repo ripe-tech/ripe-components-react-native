@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.FONT,
         fontSize: 12,
         color: "#4f7af8",
-        marginLeft: 5,
+        marginLeft: Platform.OS === "ios" ? 0 : 5,
         lineHeight: 20
     },
     inputTextarea: {
