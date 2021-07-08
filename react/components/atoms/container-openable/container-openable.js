@@ -221,7 +221,6 @@ export class ContainerOpenable extends PureComponent {
                             onLayout={event => this._onHeaderLayout(event)}
                             {...this.props.headerProps}
                         >
-                            <View style={styles.knob} />
                             {this.props.header}
                         </View>
                     )}
