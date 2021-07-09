@@ -66,10 +66,8 @@ export class AuthProvider extends Component {
     }
 
     async logout(message = null) {
-        // re-creates the RIPE ID API instance and invalidates the
-        // current RIPE SDK instance as it's no longer going to be used
+        // re-creates the RIPE ID API instance
         this.ripeIdApi = new RipeIdAPI(this.props.options);
-        if (this.context.ripeApi) this.context.ripeApi.unauth();
 
         // updates the current state, removing the complete set of
         // account related information (as expected)
