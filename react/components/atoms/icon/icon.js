@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
-import { ViewPropTypes } from "react-native";
-import { SvgXml } from "react-native-svg";
+import { Image, ViewPropTypes } from "react-native";
+import { SvgCssUri, SvgXml } from "react-native-svg";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -10,7 +10,7 @@ import icons from "../../../assets/icons/";
 export class Icon extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
-            icon: PropTypes.string.isRequired,
+            icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
             fill: PropTypes.oneOfType([
                 PropTypes.string,
                 PropTypes.number,
@@ -43,7 +43,30 @@ export class Icon extends mix(PureComponent).with(IdentifiableMixin) {
         throw new Error(`Unknown icon ${this.props.icon}`);
     }
 
-    render() {
+    _isUriIcon() {
+        return typeof this.props.icon === "number" || this.props.icon.startsWith("http");
+    }
+
+    _renderSvgUri() {
+        const uri =
+            typeof this.props.icon === "number"
+                ? Image.resolveAssetSource(this.props.icon).uri
+                : this.props.icon;
+        return (
+            <SvgCssUri
+                uri={uri}
+                height={this.props.height}
+                width={this.props.width}
+                fill={this.props.fill}
+                stroke={this.props.color}
+                strokeWidth={this.props.strokeWidth}
+                style={this.props.style}
+                {...this.id(`icon-${this.props.uri}`)}
+            />
+        );
+    }
+
+    _renderSvgXml() {
         return (
             <SvgXml
                 xml={this._icon()}
@@ -56,6 +79,10 @@ export class Icon extends mix(PureComponent).with(IdentifiableMixin) {
                 {...this.id(`icon-${this.props.icon}`)}
             />
         );
+    }
+
+    render() {
+        return this._isUriIcon() ? this._renderSvgUri() : this._renderSvgXml();
     }
 }
 
