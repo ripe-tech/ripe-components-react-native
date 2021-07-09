@@ -25,7 +25,7 @@ export class KeyValues extends PureComponent {
                     iconWidth: PropTypes.number,
                     iconStrokeWidth: PropTypes.number,
                     pressable: PropTypes.bool,
-                    longPressToClipboard: PropTypes.bool,
+                    longPressCopiesToClipboard: PropTypes.bool,
                     onPress: PropTypes.func,
                     onButtonIconPress: PropTypes.func,
                     onLongPress: PropTypes.func
@@ -132,7 +132,7 @@ export class KeyValues extends PureComponent {
                                 iconWidth={item.iconWidth}
                                 iconStrokeWidth={item.iconStrokeWidth}
                                 pressable={item.pressable}
-                                longPressToClipboard={item.longPressToClipboard}
+                                longPressCopiesToClipboard={item.longPressCopiesToClipboard}
                                 onPress={item.onPress}
                                 onButtonIconPress={item.onButtonIconPress}
                                 onLongPress={item.onLongPress}
