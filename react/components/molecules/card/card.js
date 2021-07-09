@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         height: 100,
         shadowColor: "#435764",
-        elevation: 10,
+        elevation: 5,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.4,
         overflow: "hidden",
