@@ -40,8 +40,7 @@ export class Icon extends mix(PureComponent).with(IdentifiableMixin) {
 
     _icon() {
         if (icons[this.props.icon]) return icons[this.props.icon];
-        else if (typeof this.props.icon === "number") Image.resolveAssetSource(this.props.icon);
-        else throw new Error(`Unknown icon ${this.props.icon}`);
+        throw new Error(`Unknown icon ${this.props.icon}`);
     }
 
     _isUriIcon() {
