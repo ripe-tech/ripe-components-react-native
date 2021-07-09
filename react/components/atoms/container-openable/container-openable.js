@@ -21,10 +21,12 @@ export class ContainerOpenable extends PureComponent {
     static get propTypes() {
         return {
             animationsDuration: PropTypes.number,
+            targetOverlayOpacity: PropTypes.number,
             modal: PropTypes.bool,
             header: PropTypes.element,
             headerPressable: PropTypes.bool,
             headerProps: PropTypes.object,
+            showKnob: PropTypes.bool,
             onContentHeight: PropTypes.func,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style
@@ -34,10 +36,12 @@ export class ContainerOpenable extends PureComponent {
     static get defaultProps() {
         return {
             animationsDuration: 300,
+            targetOverlayOpacity: 0.5,
             modal: true,
             header: undefined,
             headerPressable: true,
             headerProps: {},
+            showKnob: true,
             onContentHeight: height => {},
             onVisible: visible => {},
             style: {}
@@ -95,7 +99,7 @@ export class ContainerOpenable extends PureComponent {
                     easing: Easing.inOut(Easing.ease)
                 }),
                 Animated.timing(this.state.overlayOpacity, {
-                    toValue: 0.5,
+                    toValue: this.props.targetOverlayOpacity,
                     duration: this.props.animationsDuration,
                     useNativeDriver: true,
                     easing: Easing.inOut(Easing.ease)
@@ -213,7 +217,7 @@ export class ContainerOpenable extends PureComponent {
                             onPress={this.onHeaderPress}
                             {...this.props.headerProps}
                         >
-                            <View style={styles.knob} />
+                            {this.props.showKnob ? <View style={styles.knob} /> : null}
                             {this.props.header}
                         </TouchableOpacity>
                     ) : (
@@ -221,7 +225,7 @@ export class ContainerOpenable extends PureComponent {
                             onLayout={event => this._onHeaderLayout(event)}
                             {...this.props.headerProps}
                         >
-                            <View style={styles.knob} />
+                            {this.props.showKnob ? <View style={styles.knob} /> : null}
                             {this.props.header}
                         </View>
                     )}

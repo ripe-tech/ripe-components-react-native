@@ -10,6 +10,7 @@ export class KeyValuesPlaceholder extends PureComponent {
             colors: PropTypes.arrayOf(PropTypes.string).isRequired,
             locations: PropTypes.arrayOf(PropTypes.number).isRequired,
             numberOfItems: PropTypes.number,
+            border: PropTypes.string,
             style: ViewPropTypes.style
         };
     }
@@ -24,6 +25,7 @@ export class KeyValuesPlaceholder extends PureComponent {
                 {[...Array(this.props.numberOfItems)].map((_item, index) => (
                     <KeyValuePlaceholder
                         key={index}
+                        border={this.props.border}
                         colors={this.props.colors}
                         locations={this.props.locations}
                     />
