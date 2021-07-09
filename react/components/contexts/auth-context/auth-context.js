@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AsyncStorage from "@react-native-community/async-storage";
 import PropTypes from "prop-types";
 import { verify } from "yonius";
 import { API as RipeIdAPI } from "ripe-id-api";
@@ -33,6 +34,21 @@ export class AuthProvider extends Component {
         };
     }
 
+    async trySetAccount() {
+        const sid = await AsyncStorage.getItem("sessionId");
+        const account = await AsyncStorage.getItem("account");
+        const tokens = await AsyncStorage.getItem("tokens");
+
+        if (!sid || !account || !tokens) return false;
+
+        this.ripeIdApi.sessionId = sid;
+        this.setState({
+            account: account ? JSON.parse(account) : null,
+            tokens: tokens ? JSON.parse(tokens) : null
+        });
+        return true;
+    }
+
     async login(email, password) {
         const response = await this.ripeIdApi.login(email, password);
         verify(response.sid, "No session ID found", 404);
@@ -43,13 +59,13 @@ export class AuthProvider extends Component {
         const account = await this.ripeIdApi.selfAccount();
         verify(account, "No account found", 404);
 
-        this.setState({
-            account: account,
-            tokens: response.tokens
-        });
+        await AsyncStorage.setItem("sessionId", response.sid);
+        await AsyncStorage.setItem("account", JSON.stringify(account));
+        await AsyncStorage.setItem("tokens", JSON.stringify(response.tokens));
+        await this.trySetAccount();
     }
 
-    logout(message = null) {
+    async logout(message = null) {
         // re-creates the RIPE ID API instance and invalidates the
         // current RIPE SDK instance as it's no longer going to be used
         this.ripeIdApi = new RipeIdAPI(this.props.options);
@@ -62,9 +78,14 @@ export class AuthProvider extends Component {
             tokens: null,
             logoutMessage: message
         });
+
+        await AsyncStorage.removeItem("sessionId");
+        await AsyncStorage.removeItem("account");
+        await AsyncStorage.removeItem("tokens");
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        await this.trySetAccount();
         this.setState({ loaded: true });
     }
 
@@ -78,7 +99,7 @@ export class AuthProvider extends Component {
                     tokens: this.state.tokens,
                     ripeIdApi: this.state.ripeIdApi,
                     ripeApi: this.context.ripeApi,
-                    logout: message => this.logout(message),
+                    logout: async message => await this.logout(message),
                     login: async (email, password) => await this.login(email, password)
                 }}
             >
