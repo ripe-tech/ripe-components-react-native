@@ -13,6 +13,9 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
             multiline: PropTypes.bool,
             minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            backgroundColor: PropTypes.string,
+            paddingHorizontal: PropTypes.number,
+            fontSize: PropTypes.number,
             onSubmit: PropTypes.func,
             color: PropTypes.string,
             variant: PropTypes.string,
@@ -30,6 +33,9 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
             multiline: false,
             minHeight: undefined,
             maxHeight: undefined,
+            backgroundColor: "#ffffff",
+            paddingHorizontal: 15,
+            fontSize: 14,
             color: undefined,
             variant: undefined,
             onSubmit: () => {},
@@ -57,7 +63,10 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
             styles.textArea,
             {
                 minHeight: this.props.minHeight,
-                maxHeight: this.props.maxHeight
+                maxHeight: this.props.maxHeight,
+                backgroundColor: this.props.backgroundColor,
+                paddingHorizontal: this.props.paddingHorizontal,
+                fontSize: this.props.fontSize
             },
             styles[`textArea${capitalize(this.props.color)}`],
             styles[`textArea${capitalize(this.props.variant)}`],
@@ -88,9 +97,7 @@ const styles = StyleSheet.create({
     textArea: {
         paddingTop: Platform.OS === "ios" ? 16 : 4,
         paddingBottom: Platform.OS === "ios" ? 12 : 4,
-        paddingHorizontal: 15,
         color: "#3e566a",
-        backgroundColor: "#ffffff",
         fontFamily: baseStyles.FONT
     },
     textAreaMultiline: {

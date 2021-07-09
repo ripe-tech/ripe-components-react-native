@@ -14,6 +14,7 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
             value: PropTypes.string.isRequired,
             keyColor: PropTypes.string,
             valueColor: PropTypes.string,
+            border: PropTypes.string,
             icon: PropTypes.string,
             iconBackgroundColor: PropTypes.string,
             iconColor: PropTypes.string,
@@ -33,6 +34,7 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             keyColor: "#4f7af8",
             valueColor: "#223645",
+            border: "soft",
             icon: undefined,
             iconBackgroundColor: undefined,
             iconColor: undefined,
@@ -56,8 +58,19 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
         return [styles.value, { color: this.props.valueColor }];
     };
 
+    _borderStyle = () => {
+        switch (this.props.border) {
+            case "none":
+                return { borderBottomWidth: 0 };
+            case "hard":
+                return { borderBottomWidth: 1, borderBottomColor: "#a7abb4" };
+            case "soft":
+                return { borderBottomWidth: 1, borderBottomColor: "#e4e8f0" };
+        }
+    };
+
     _style = () => {
-        return [styles.keyValue, this.props.style];
+        return [styles.keyValue, this._borderStyle(), this.props.style];
     };
 
     render() {
@@ -104,9 +117,7 @@ const styles = StyleSheet.create({
     keyValue: {
         flexDirection: "row",
         paddingVertical: 16,
-        paddingHorizontal: 16,
-        borderBottomWidth: 1,
-        borderBottomColor: "#e4e8f0"
+        paddingHorizontal: 16
     },
     textContainer: {
         alignSelf: "flex-start",
