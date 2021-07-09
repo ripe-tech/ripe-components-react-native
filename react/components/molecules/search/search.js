@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes, Platform } from "react-native";
+import { StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { ButtonIcon, Input } from "../../atoms";
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     button: {
         position: "absolute",
         backgroundColor: "transparent",
-        top: Platform.OS === "ios" ? 8 : 13,
+        top: 8,
         right: 18
     }
 });
