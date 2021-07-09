@@ -39,6 +39,14 @@ storiesOf("Molecules", module)
             },
             undefined
         );
+        const variant = select(
+            "Variant",
+            {
+                Round: "round",
+                Square: "square"
+            },
+            "square"
+        );
         const disabled = boolean("Disabled", false);
         const width = number("Width", -1);
 
@@ -48,6 +56,7 @@ storiesOf("Molecules", module)
                 options={options}
                 value={value}
                 disabled={disabled}
+                variant={variant}
                 width={width === -1 ? undefined : width}
             />
         );

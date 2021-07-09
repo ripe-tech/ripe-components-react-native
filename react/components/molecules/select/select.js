@@ -68,6 +68,10 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
         );
     };
 
+    _inputBorderRadius = () => {
+        if (this.props.variant === "round") return 6;
+    };
+
     _icon = () => {
         return <Icon icon={"chevron-down"} color={"#1b2632"} strokeWidth={2} />;
     };
@@ -102,6 +106,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 backgroundColor: "#f6f7f9",
                 borderColor: "#e4e8f0",
                 borderWidth: 1,
+                borderRadius: this._inputBorderRadius(),
                 fontFamily: baseStyles.FONT_BOOK,
                 fontSize: 14,
                 paddingLeft: 10,
@@ -112,6 +117,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 backgroundColor: "#f6f7f9",
                 borderColor: "#e4e8f0",
                 borderWidth: 1,
+                borderRadius: this._inputBorderRadius(),
                 fontFamily: baseStyles.FONT_BOOK,
                 fontSize: 14,
                 paddingLeft: 10,
