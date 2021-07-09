@@ -4,33 +4,39 @@ import PropTypes from "prop-types";
 
 import { Avatar, Icon, Touchable } from "../../atoms";
 
-import { baseStyles } from "../../../util";
+import { baseStyles, capitalize } from "../../../util";
 
 export class Card extends PureComponent {
     static get propTypes() {
         return {
-            avatarURL: PropTypes.String,
-            icon: PropTypes.String,
-            iconColor: PropTypes.String,
-            iconFill: PropTypes.String,
-            title: PropTypes.String,
-            text: PropTypes.String,
-            subText: PropTypes.String,
-            style: ViewPropTypes.style,
+            avatarURL: PropTypes.string,
+            icon: PropTypes.string,
+            iconColor: PropTypes.string,
+            iconFill: PropTypes.string,
+            variant: PropTypes.string,
+            title: PropTypes.string,
+            text: PropTypes.string,
+            subText: PropTypes.string,
             pressable: PropTypes.bool,
             onPress: PropTypes.func,
-            onLongPress: PropTypes.func
+            onLongPress: PropTypes.func,
+            style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
-            style: {},
+            variant: "round",
             pressable: true,
             onPress: () => {},
-            onLongPress: () => {}
+            onLongPress: () => {},
+            style: {}
         };
     }
+
+    _style = () => {
+        return [styles.style, styles[`card${capitalize(this.props.variant)}`], this.props.style];
+    };
 
     _avatarStyle() {
         return {
@@ -96,7 +102,7 @@ export class Card extends PureComponent {
     render() {
         return (
             <Touchable
-                style={styles.style}
+                style={this._style()}
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
                 activeOpacity={0.6}
@@ -117,7 +123,6 @@ const styles = StyleSheet.create({
     style: {
         alignItems: "center",
         backgroundColor: "#ffffff",
-        borderRadius: 6,
         flexDirection: "row",
         height: 100,
         shadowColor: "#435764",
@@ -130,6 +135,12 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingRight: 20,
         width: "100%"
+    },
+    cardSquare: {
+        borderRadius: 0
+    },
+    cardRound: {
+        borderRadius: 6
     },
     avatar: {
         marginRight: 20
