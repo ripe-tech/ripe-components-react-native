@@ -3,6 +3,7 @@ import { StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { ButtonIcon, Input } from "../../atoms";
+import { baseStyles } from "../../../util";
 
 export class Search extends PureComponent {
     static get propTypes() {
@@ -93,8 +94,7 @@ export class Search extends PureComponent {
             <View style={this._style()}>
                 <Input
                     ref={el => (this.textInputComponent = el)}
-                    color={"#223645"}
-                    style={styles.textArea}
+                    style={styles.input}
                     value={this.state.valueData}
                     placeholder={this.props.placeholder}
                     placeholderTextColor={"#223645"}
@@ -124,9 +124,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         position: "relative"
     },
-    textArea: {
+    input: {
         flex: 1,
+        color: "#223645",
         paddingBottom: 0,
+        fontFamily: baseStyles.FONT,
         paddingTop: 0,
         borderRadius: 6,
         minHeight: 40,
