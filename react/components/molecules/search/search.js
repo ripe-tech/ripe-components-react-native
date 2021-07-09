@@ -3,7 +3,6 @@ import { StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { ButtonIcon, Input } from "../../atoms";
-import { baseStyles } from "../../../util";
 
 export class Search extends PureComponent {
     static get propTypes() {
@@ -108,8 +107,8 @@ export class Search extends PureComponent {
                     size={24}
                     iconStrokeColor={"#1d2631"}
                     iconStrokeWidth={2}
-                    iconHeight={24}
-                    iconWidth={24}
+                    iconHeight={20}
+                    iconWidth={20}
                     {...this.props.buttonProps}
                     onPress={this.onButtonPress}
                 />
@@ -128,8 +127,10 @@ const styles = StyleSheet.create({
         flex: 1,
         color: "#223645",
         paddingBottom: 0,
-        fontFamily: baseStyles.FONT,
+        fontSize: 14,
+        fontFamily: "Roboto-Medium",
         paddingTop: 0,
+        paddingLeft: 15,
         borderRadius: 6,
         minHeight: 40,
         backgroundColor: "#ffffff"
