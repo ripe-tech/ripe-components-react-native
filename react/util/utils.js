@@ -3,13 +3,19 @@ import { readFile as readFileFs } from "react-native-fs";
 import { Buffer } from "buffer";
 import ripe from "ripe-sdk";
 
-export const dateString = function (timestamp, { separator = "/", year = true } = {}) {
+export const dateString = function (
+    timestamp,
+    { separator = "/", year = true, reverse = false } = {}
+) {
     const date = new Date(timestamp * 1000);
     const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
     let month = date.getMonth() + 1;
     month = month < 10 ? `0${month}` : month;
-    const yearText = year ? `${separator}${date.getFullYear()}` : "";
-    return day + separator + month + yearText;
+    const yearText =
+        year && !reverse ? `${separator}${date.getFullYear()}` : year ? date.getFullYear() : "";
+    return reverse
+        ? yearText + separator + month + separator + day
+        : day + separator + month + yearText;
 };
 
 export const dateStringUTC = function (timestamp, { separator = "/", year = true } = {}) {
