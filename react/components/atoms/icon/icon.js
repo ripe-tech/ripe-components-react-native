@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Image, ViewPropTypes } from "react-native";
-import { SvgUri, SvgXml } from "react-native-svg";
+import { SvgCssUri, SvgXml } from "react-native-svg";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -54,7 +54,7 @@ export class Icon extends mix(PureComponent).with(IdentifiableMixin) {
                 ? Image.resolveAssetSource(this.props.icon).uri
                 : this.props.icon;
         return (
-            <SvgUri
+            <SvgCssUri
                 uri={uri}
                 height={this.props.height}
                 width={this.props.width}
