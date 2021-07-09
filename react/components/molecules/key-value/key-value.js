@@ -23,7 +23,7 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
             iconWidth: PropTypes.number,
             iconStrokeWidth: PropTypes.number,
             pressable: PropTypes.bool,
-            longPressToClipboard: PropTypes.bool,
+            longPressCopiesToClipboard: PropTypes.bool,
             onPress: PropTypes.func,
             onButtonIconPress: PropTypes.func,
             onLongPress: PropTypes.func,
@@ -44,7 +44,7 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
             iconWidth: undefined,
             iconStrokeWidth: undefined,
             pressable: false,
-            longPressToClipboard: false,
+            longPressCopiesToClipboard: false,
             onPress: () => {},
             onButtonIconPress: () => {},
             onLongPress: () => {},
@@ -76,7 +76,7 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _onLongPress = () => {
-        if (this.props.longPressToClipboard) toClipboard(this.props.value);
+        if (this.props.longPressCopiesToClipboard) toClipboard(this.props.value);
         this.props.onLongPress(this.props._key, this.props.value);
     };
 
