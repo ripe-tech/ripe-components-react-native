@@ -9,9 +9,10 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             placeholder: PropTypes.string,
-            value: PropTypes.string,
+            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             placeholderTextColor: PropTypes.string,
             height: PropTypes.number,
+            type: PropTypes.string,
             secureTextEntry: PropTypes.bool,
             onValueUpdate: PropTypes.func,
             onFocus: PropTypes.func,
@@ -25,6 +26,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
             value: undefined,
             placeholderTextColor: "#869aaa",
             height: 30,
+            type: undefined,
             secureTextEntry: false,
             onValueUpdate: value => {},
             onFocus: () => {},
@@ -36,7 +38,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
         super(props);
 
         this.state = {
-            valueData: this.props.value
+            valueData: this._convertFromType(this.props.value)
         };
     }
 
@@ -49,8 +51,8 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     onChangeValue = value => {
-        this.setState({ valueData: value }, () => {
-            this.props.onValueUpdate(value);
+        this.setState({ valueData: this._convertToType(value) }, () => {
+            this.props.onValueUpdate(this.state.valueData);
         });
     };
 
@@ -60,6 +62,29 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
 
     blur = () => {
         this.textInputComponent.blur();
+    };
+
+    _convertToType = value => {
+        if (this.props.type !== "number") return value;
+        return value ? Number.parseFloat(value) : value;
+    };
+
+    _convertFromType = value => {
+        if (this.props.type !== "number") return value;
+        return value ? value.toString() : value;
+    };
+
+    _keyboardType = () => {
+        switch (this.props.type) {
+            case "number":
+                return "numeric";
+            case "email":
+                return "email-address";
+            case "phone":
+                return "phone-pad";
+            default:
+                return "default";
+        }
     };
 
     _style = () => {
@@ -79,6 +104,8 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
                 style={this._style()}
                 secureTextEntry={this.props.secureTextEntry}
                 value={this.state.valueData}
+                keyboardType={this._keyboardType()}
+                includeFontPadding={false}
                 placeholder={this.props.placeholder || this.props.header}
                 placeholderTextColor={this.props.placeholderTextColor}
                 onChangeText={this.onChangeValue}
@@ -96,7 +123,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         width: "100%",
         color: "#223645",
-        letterSpacing: 0.8
+        lineHeight: 18,
+        padding: 0
     }
 });
 
