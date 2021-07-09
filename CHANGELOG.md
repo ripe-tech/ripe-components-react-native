@@ -24,10 +24,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Added `animateScrollBottom` prop to chat
 * `onScroll` and `onScrollBottom` props in chat component
 * Radio group component
+* Added three types of borders to key value sections: `"none"`, `"soft"` (default) or `"hard"`
+* Textarea support for background color, horizontal padding and font size as props
+* Input keyboard type support
+* Input Form component
+* Possibility to override icon props in `tabs` and `button-tab`
+* Checkbox group component
+* Support for `Avatar`'s image change
+* Support for `View more` button in key-values
 
 ### Changed
 
-*
+* `ContainerOpenable` knob visibility controlled by props
+* `ContainerOpenable` overlay opacity controlled by props
 
 ### Fixed
 
