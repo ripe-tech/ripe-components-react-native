@@ -36,12 +36,15 @@ export class AuthProvider extends Component {
     async login(email, password) {
         const response = await this.ripeIdApi.login(email, password);
         verify(response.sid, "No session ID found", 404);
-        verify(response.username, "No username found", 404);
         verify(response.tokens, "No tokens list found", 404);
 
         this.ripeIdApi.sessionId = response.sid;
+
+        const account = await this.ripeIdApi.selfAccount();
+        verify(account, "No account found", 404);
+
         this.setState({
-            account: response.username,
+            account: account,
             tokens: response.tokens
         });
     }
