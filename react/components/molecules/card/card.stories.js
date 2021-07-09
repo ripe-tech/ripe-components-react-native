@@ -19,6 +19,14 @@ storiesOf("Molecules", module)
             },
             null
         );
+        const variant = select(
+            "Variant",
+            {
+                Round: "round",
+                Square: "square"
+            },
+            "round"
+        );
         const title = text("Title", "John Doe");
         const _text = text("Text", "Software Engineer");
         const subtext = text("Text Secondary", "Portugal");
@@ -27,6 +35,7 @@ storiesOf("Molecules", module)
                 <Card
                     avatarURL={avatarUrl}
                     icon={icon}
+                    variant={variant}
                     title={title}
                     text={_text}
                     subtext={subtext}
