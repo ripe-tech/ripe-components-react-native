@@ -10,7 +10,7 @@ export class Card extends PureComponent {
     static get propTypes() {
         return {
             avatarURL: PropTypes.string,
-            icon: PropTypes.string,
+            icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             iconColor: PropTypes.string,
             iconFill: PropTypes.string,
             variant: PropTypes.string,
