@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes, baseStyles } from "react-native";
+import { StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
+
+import { baseStyles } from "../../../util";
 
 import { ButtonIcon, Input } from "../../atoms";
 
