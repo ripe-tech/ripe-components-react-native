@@ -30,8 +30,6 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             placeholder: undefined,
             shapeVariant: "round",
             colorVariant: "white",
-            backgroundColor: "#ffffff",
-            borderColor: "#e7e9ed",
             disabled: false,
             width: undefined,
             keyTimeout: 500,
