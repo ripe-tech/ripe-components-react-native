@@ -2,8 +2,9 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { Avatar, Icon } from "../../atoms";
-import { Item } from "../../molecules";
+import { Avatar } from "../../atoms/avatar";
+import { Icon } from "../../atoms";
+import { Item } from "../item";
 
 import { baseStyles, capitalize } from "../../../util";
 
