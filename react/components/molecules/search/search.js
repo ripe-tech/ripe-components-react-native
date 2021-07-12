@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { StyleSheet, View, ViewPropTypes, baseStyles } from "react-native";
 import PropTypes from "prop-types";
 
 import { ButtonIcon, Input } from "../../atoms";
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         color: "#223645",
         paddingBottom: 0,
         fontSize: 14,
-        fontFamily: "Roboto-Medium",
+        fontFamily: baseStyles.FONT,
         paddingTop: 0,
         paddingLeft: 15,
         borderRadius: 6,
