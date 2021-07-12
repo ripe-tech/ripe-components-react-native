@@ -11,6 +11,7 @@ export class Card extends PureComponent {
     static get propTypes() {
         return {
             avatarURL: PropTypes.string,
+            disabled: PropTypes.bool,
             icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             iconColor: PropTypes.string,
             iconFill: PropTypes.string,
@@ -29,6 +30,7 @@ export class Card extends PureComponent {
 
     static get defaultProps() {
         return {
+            disabled: false,
             shapeVariant: "round",
             pressable: true,
             itemProps: {},
@@ -131,7 +133,7 @@ export class Card extends PureComponent {
                 contentStyle={this._contentStyle()}
                 variant={this.props.shapeVariant}
                 onPress={this.props.onPress}
-                disabled={false}
+                disabled={this.props.disabled}
                 onLongPress={this.props.onLongPress}
                 activeOpacity={0.6}
                 {...this.props.itemProps}
