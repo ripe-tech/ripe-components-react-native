@@ -92,9 +92,21 @@ export class Card extends PureComponent {
     _renderCardText() {
         return (
             <View style={styles.textContainer}>
-                {this.props.title ? <Text style={styles.title}>{this.props.title}</Text> : null}
-                {this.props.text ? <Text style={styles.text}>{this.props.text}</Text> : null}
-                {this.props.subtext ? <Text style={styles.text}>{this.props.subtext}</Text> : null}
+                {this.props.title ? (
+                    <Text numberOfLines={1} style={styles.title}>
+                        {this.props.title}
+                    </Text>
+                ) : null}
+                {this.props.text ? (
+                    <Text numberOfLines={2} style={styles.text}>
+                        {this.props.text}
+                    </Text>
+                ) : null}
+                {this.props.subtext ? (
+                    <Text numberOfLines={1} style={styles.text}>
+                        {this.props.subtext}
+                    </Text>
+                ) : null}
             </View>
         );
     }
@@ -151,7 +163,8 @@ const styles = StyleSheet.create({
     textContainer: {
         fontFamily: baseStyles.FONT,
         height: 65,
-        justifyContent: "space-around"
+        justifyContent: "space-around",
+        flexShrink: 1
     },
     title: {
         fontSize: 18
