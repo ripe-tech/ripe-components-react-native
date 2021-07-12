@@ -2,7 +2,8 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { Avatar, Icon, Touchable } from "../../atoms";
+import { Avatar, Icon } from "../../atoms";
+import { Item } from "../../molecules";
 
 import { baseStyles, capitalize } from "../../../util";
 
@@ -13,11 +14,12 @@ export class Card extends PureComponent {
             icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             iconColor: PropTypes.string,
             iconFill: PropTypes.string,
-            variant: PropTypes.string,
+            shapeVariant: PropTypes.string,
             title: PropTypes.string,
             text: PropTypes.string,
             subText: PropTypes.string,
             pressable: PropTypes.bool,
+            itemProps: PropTypes.object,
             onPress: PropTypes.func,
             onLongPress: PropTypes.func,
             style: ViewPropTypes.style
@@ -26,8 +28,9 @@ export class Card extends PureComponent {
 
     static get defaultProps() {
         return {
-            variant: "round",
+            shapeVariant: "round",
             pressable: true,
+            itemProps: {},
             onPress: () => {},
             onLongPress: () => {},
             style: {}
@@ -35,7 +38,11 @@ export class Card extends PureComponent {
     }
 
     _style = () => {
-        return [styles.style, styles[`card${capitalize(this.props.variant)}`], this.props.style];
+        return [
+            styles.style,
+            styles[`card${capitalize(this.props.shapeVariant)}`],
+            this.props.style
+        ];
     };
 
     _avatarStyle() {
@@ -113,11 +120,14 @@ export class Card extends PureComponent {
 
     render() {
         return (
-            <Touchable
+            <Item
                 style={this._style()}
+                contentStyle={styles.contentStyle}
+                variant={this.props.shapeVariant}
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
                 activeOpacity={0.6}
+                {...this.props.itemProps}
             >
                 {this.props.children ? (
                     this.props.children
@@ -127,7 +137,7 @@ export class Card extends PureComponent {
                         {this._renderCardText()}
                     </>
                 )}
-            </Touchable>
+            </Item>
         );
     }
 }
@@ -147,6 +157,17 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingRight: 20,
         width: "100%"
+    },
+    contentStyle: {
+        flexDirection: "row",
+        overflow: "visible",
+        borderRadius: 0,
+        backgroundColor: "transparent",
+        shadowOffset: {},
+        elevation: 0,
+        shadowRadius: 0,
+        shadowColor: null,
+        shadowOpacity: null
     },
     cardSquare: {
         borderRadius: 0
