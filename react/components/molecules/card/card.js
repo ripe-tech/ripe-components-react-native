@@ -22,6 +22,7 @@ export class Card extends PureComponent {
             itemProps: PropTypes.object,
             onPress: PropTypes.func,
             onLongPress: PropTypes.func,
+            contentStyle: ViewPropTypes.style,
             style: ViewPropTypes.style
         };
     }
@@ -33,15 +34,20 @@ export class Card extends PureComponent {
             itemProps: {},
             onPress: () => {},
             onLongPress: () => {},
+            contentStyle: {},
             style: {}
         };
     }
 
     _style = () => {
+        return [styles.style, this.props.style];
+    };
+
+    _contentStyle = () => {
         return [
-            styles.style,
+            styles.contentStyle,
             styles[`card${capitalize(this.props.shapeVariant)}`],
-            this.props.style
+            this.props.contentStyle
         ];
     };
 
@@ -122,9 +128,10 @@ export class Card extends PureComponent {
         return (
             <Item
                 style={this._style()}
-                contentStyle={styles.contentStyle}
+                contentStyle={this._contentStyle()}
                 variant={this.props.shapeVariant}
                 onPress={this.props.onPress}
+                disabled={false}
                 onLongPress={this.props.onLongPress}
                 activeOpacity={0.6}
                 {...this.props.itemProps}
@@ -143,6 +150,9 @@ export class Card extends PureComponent {
 }
 const styles = StyleSheet.create({
     style: {
+        paddingHorizontal: 0
+    },
+    contentStyle: {
         alignItems: "center",
         backgroundColor: "#ffffff",
         flexDirection: "row",
@@ -157,17 +167,6 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingRight: 20,
         width: "100%"
-    },
-    contentStyle: {
-        flexDirection: "row",
-        overflow: "visible",
-        borderRadius: 0,
-        backgroundColor: "transparent",
-        shadowOffset: {},
-        elevation: 0,
-        shadowRadius: 0,
-        shadowColor: null,
-        shadowOpacity: null
     },
     cardSquare: {
         borderRadius: 0
