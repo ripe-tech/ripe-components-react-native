@@ -109,7 +109,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
             return (
                 <ContainerOpenable ref={el => (this.container = el)}>
                     <DateTimePicker
-                        value={new Date(this.state.valueData)}
+                        value={this.state.valueData ? new Date(this.state.valueData) : Date.now()}
                         mode={"date"}
                         is24Hour={false}
                         display="inline"
@@ -151,7 +151,9 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
                             <Text style={styles.headerText}>{this.props.header}</Text>
                         )}
                         <Text style={styles.dateText}>
-                            {dateStringUTC(this.state.valueData / 1000)}
+                            {this.state.valueData
+                                ? dateStringUTC(this.state.valueData / 1000)
+                                : "-"}
                         </Text>
                     </View>
                     <Icon

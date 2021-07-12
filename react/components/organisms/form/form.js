@@ -67,12 +67,12 @@ export class Form extends PureComponent {
         try {
             await this.props.onSave(this.state.valuesData);
 
-            if (this.saveNotification) {
+            if (this.props.saveNotification) {
                 notify(this.props.saveMessage(this.state.valuesData));
             }
         } catch (error) {
-            if (this.error) {
-                this.notify(this.props.errorMessage(error));
+            if (this.props.error) {
+                notify(this.props.errorMessage(error));
             }
         } finally {
             this.setState({ saving: false });
@@ -86,7 +86,7 @@ export class Form extends PureComponent {
             await this.props.onDiscard(this.state.valuesData);
         } catch (error) {
             if (this.props.error) {
-                this.notify(this.props.errorMessage(error));
+                notify(this.props.errorMessage(error));
             }
         }
     };
