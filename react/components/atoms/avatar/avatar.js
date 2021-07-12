@@ -73,15 +73,15 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _labelStyle = () => {
-        return [styles.label, { height: this.props.size / 3 }];
+        return [styles.label, { height: this.props.size / 4 }];
     };
 
     _labelTextStyle = () => {
         return [
             styles.labelText,
             {
-                lineHeight: this.props.size / 6,
-                fontSize: this.props.size / 6,
+                lineHeight: this.props.size / 8,
+                fontSize: this.props.size / 10,
                 maxWidth: this.props.size
             }
         ];
