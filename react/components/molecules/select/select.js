@@ -13,6 +13,9 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             options: PropTypes.array,
             value: PropTypes.any,
+            variant: PropTypes.string,
+            backgroundColor: PropTypes.string,
+            borderColor: PropTypes.string,
             placeholder: PropTypes.string,
             disabled: PropTypes.bool,
             width: PropTypes.number,
@@ -103,8 +106,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             inputAndroid: {
                 color: "#24425a",
-                backgroundColor: "#f6f7f9",
-                borderColor: "#e4e8f0",
+                backgroundColor: this.props.backgroundColor,
+                borderColor: this.props.borderColor,
                 borderWidth: 1,
                 borderRadius: this._inputBorderRadius(),
                 fontFamily: baseStyles.FONT_BOOK,
@@ -114,8 +117,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             },
             inputIOSContainer: {
                 color: "#24425a",
-                backgroundColor: "#f6f7f9",
-                borderColor: "#e4e8f0",
+                backgroundColor: this.props.backgroundColor,
+                borderColor: this.props.borderColor,
                 borderWidth: 1,
                 borderRadius: this._inputBorderRadius(),
                 fontFamily: baseStyles.FONT_BOOK,
