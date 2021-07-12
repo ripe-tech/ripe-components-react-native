@@ -19,8 +19,8 @@ storiesOf("Molecules", module)
             },
             null
         );
-        const variant = select(
-            "Variant",
+        const shapeVariant = select(
+            "shapeVariant",
             {
                 Round: "round",
                 Square: "square"
@@ -35,7 +35,7 @@ storiesOf("Molecules", module)
                 <Card
                     avatarURL={avatarUrl}
                     icon={icon}
-                    variant={variant}
+                    shapeVariant={shapeVariant}
                     title={title}
                     text={_text}
                     subtext={subtext}

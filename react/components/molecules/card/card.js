@@ -2,7 +2,8 @@ import React, { PureComponent } from "react";
 import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
-import { Avatar, Icon, Touchable } from "../../atoms";
+import { Avatar, Icon } from "../../atoms";
+import { Item } from "../../molecules";
 
 import { baseStyles, capitalize } from "../../../util";
 
@@ -10,32 +11,46 @@ export class Card extends PureComponent {
     static get propTypes() {
         return {
             avatarURL: PropTypes.string,
+            disabled: PropTypes.bool,
             icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             iconColor: PropTypes.string,
             iconFill: PropTypes.string,
-            variant: PropTypes.string,
+            shapeVariant: PropTypes.string,
             title: PropTypes.string,
             text: PropTypes.string,
             subText: PropTypes.string,
             pressable: PropTypes.bool,
+            itemProps: PropTypes.object,
             onPress: PropTypes.func,
             onLongPress: PropTypes.func,
+            contentStyle: ViewPropTypes.style,
             style: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
-            variant: "round",
+            disabled: false,
+            shapeVariant: "round",
             pressable: true,
+            itemProps: {},
             onPress: () => {},
             onLongPress: () => {},
+            contentStyle: {},
             style: {}
         };
     }
 
     _style = () => {
-        return [styles.style, styles[`card${capitalize(this.props.variant)}`], this.props.style];
+        return [styles.style, this.props.style];
+    };
+
+    _contentStyle = () => {
+        return [
+            styles.contentStyle,
+            styles[`card${capitalize(this.props.shapeVariant)}`],
+            this.props.contentStyle
+        ];
     };
 
     _avatarStyle() {
@@ -113,11 +128,15 @@ export class Card extends PureComponent {
 
     render() {
         return (
-            <Touchable
+            <Item
                 style={this._style()}
+                contentStyle={this._contentStyle()}
+                variant={this.props.shapeVariant}
                 onPress={this.props.onPress}
+                disabled={this.props.disabled}
                 onLongPress={this.props.onLongPress}
                 activeOpacity={0.6}
+                {...this.props.itemProps}
             >
                 {this.props.children ? (
                     this.props.children
@@ -127,12 +146,15 @@ export class Card extends PureComponent {
                         {this._renderCardText()}
                     </>
                 )}
-            </Touchable>
+            </Item>
         );
     }
 }
 const styles = StyleSheet.create({
     style: {
+        paddingHorizontal: 0
+    },
+    contentStyle: {
         alignItems: "center",
         backgroundColor: "#ffffff",
         flexDirection: "row",
