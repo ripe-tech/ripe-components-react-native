@@ -133,10 +133,10 @@ export class Card extends PureComponent {
                 style={this._style()}
                 contentStyle={this._contentStyle()}
                 variant={this.props.shapeVariant}
-                onPress={this.props.onPress}
-                disabled={this.props.disabled}
-                onLongPress={this.props.onLongPress}
                 activeOpacity={0.6}
+                disabled={this.props.disabled}
+                onPress={this.props.onPress}
+                onLongPress={this.props.onLongPress}
                 {...this.props.itemProps}
             >
                 {this.props.children ? (
