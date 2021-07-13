@@ -16,12 +16,12 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
             color: PropTypes.string,
             colorSecondary: PropTypes.string,
             value: PropTypes.bool,
-            callback: PropTypes.func,
             variant: PropTypes.string,
             align: PropTypes.string,
             direction: PropTypes.string,
             toggle: PropTypes.bool,
             buttonProps: PropTypes.object,
+            onPress: PropTypes.func,
             onUpdateActive: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -35,12 +35,12 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
             color: "#f4f5f7",
             colorSecondary: "#4a6fe9",
             value: false,
-            callback: undefined,
             variant: undefined,
             align: undefined,
             direction: undefined,
             toggle: true,
             buttonProps: {},
+            onPress: undefined,
             onUpdateActive: value => {},
             style: {}
         };
@@ -63,7 +63,7 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     onPress = event => {
-        if (this.props.callback) this.props.callback(event);
+        if (this.props.onPress) this.props.onPress(event);
         if (!this.props.toggle) return;
 
         this.setState(
