@@ -12,7 +12,7 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             _key: PropTypes.string.isRequired,
-            value: PropTypes.string.isRequired,
+            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
             keyColor: PropTypes.string,
             valueColor: PropTypes.string,
             border: PropTypes.string,
