@@ -30,6 +30,33 @@ storiesOf("Organisms", module)
             undefined
         );
         const disabled = boolean("Disabled", false);
+        const variant = select(
+            "Variant",
+            {
+                Unset: undefined,
+                Flat: "flat"
+            },
+            undefined
+        );
+        const orientation = select(
+            "Orientation",
+            {
+                Unset: undefined,
+                Horizontal: "horizontal",
+                Vertical: "vertical"
+            },
+            undefined
+        );
+        const toggle = boolean("Enable toggle", true);
 
-        return <ButtonGroup items={items} value={value} disabled={disabled} />;
+        return (
+            <ButtonGroup
+                items={items}
+                value={value}
+                disabled={disabled}
+                variant={variant}
+                orientation={orientation}
+                toggle={toggle}
+            />
+        );
     });

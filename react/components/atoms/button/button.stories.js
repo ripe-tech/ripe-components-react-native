@@ -21,6 +21,14 @@ storiesOf("Atoms", module)
         );
         const loading = boolean("Loading", false);
         const disabled = boolean("Disabled", false);
+        const variant = select(
+            "Variant",
+            {
+                Unset: undefined,
+                Flat: "flat"
+            },
+            undefined
+        );
         const iconStrokeWidth = number("Icon Stroke Width", 0.5);
         const width = number("Width", -1);
         return (
@@ -29,6 +37,7 @@ storiesOf("Atoms", module)
                 icon={icon}
                 loading={loading}
                 disabled={disabled}
+                variant={variant}
                 width={width === -1 ? undefined : width}
                 iconStrokeWidth={iconStrokeWidth || undefined}
             />
