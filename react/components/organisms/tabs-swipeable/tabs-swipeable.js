@@ -23,6 +23,7 @@ export class TabsSwipeable extends PureComponent {
                     loadMore: PropTypes.func
                 })
             ),
+            barAnimatedCoeficient: PropTypes.number,
             selectedTab: PropTypes.number,
             textVariant: PropTypes.string,
             loading: PropTypes.bool,
@@ -34,6 +35,7 @@ export class TabsSwipeable extends PureComponent {
     static get defaultProps() {
         return {
             tabs: [],
+            barAnimatedCoeficient: undefined,
             selectedTab: 0,
             textVariant: undefined,
             loading: false,
@@ -50,6 +52,7 @@ export class TabsSwipeable extends PureComponent {
         this.state = {
             selectedTab: this.props.selectedTab,
             selectedTabPosition: this.props.selectedTab * this.screenWidth,
+            animatedBarOffset: undefined,
             animating: false
         };
     }
@@ -67,7 +70,7 @@ export class TabsSwipeable extends PureComponent {
                 selectedTab: tabIndex
             },
             () => {
-                this.scrollView.scrollTo({ x: tabIndex * this.screenWidth, y: 0 });
+                this.scrollView.scrollTo({ x: tabIndex * this.screenWidth });
                 this.props.onTabChange(tabIndex);
             }
         );
@@ -75,9 +78,15 @@ export class TabsSwipeable extends PureComponent {
 
     onScroll = event => {
         if (this.state.animating) return;
-        const scroll = event.nativeEvent.contentOffset.x;
-
-        const selectedTab = Math.round(scroll / this.screenWidth);
+        const scroll =
+            this.state.selectedTab === 0
+                ? event.nativeEvent.contentOffset.x
+                : event.nativeEvent.contentOffset.x - this.screenWidth * this.state.selectedTab;
+        console.log("scroll", scroll / this.screenWidth);
+        this.setState({ animatedBarOffset: scroll / this.screenWidth });
+        // problema aqui
+        const selectedTab = Math.round(Math.abs(scroll) / this.screenWidth);
+        console.log("selectedTab", selectedTab);
         const updated = selectedTab !== this.state.selectedTab;
 
         this.setState(
@@ -85,12 +94,15 @@ export class TabsSwipeable extends PureComponent {
                 selectedTab: selectedTab
             },
             () => {
+                console.log(`mudou tab ${updated} \n\n`);
                 if (updated) this.props.onTabChange(selectedTab);
             }
         );
     };
 
     onMomentumScrollEnd = () => {
+        console.log("momentum scroll end\n\n");
+        console.log("\n\n");
         this.setState({ animating: false });
     };
 
@@ -114,6 +126,7 @@ export class TabsSwipeable extends PureComponent {
                     tabs={this.props.tabs}
                     variant={this.props.textVariant}
                     tabSelected={this.state.selectedTab}
+                    barAnimatedCoeficient={this.state.animatedBarOffset}
                     onTabChange={this.onTabChange}
                     onSelectedTabPress={this.onSelectedTabPress}
                 />
@@ -130,7 +143,9 @@ export class TabsSwipeable extends PureComponent {
                         horizontal={true}
                         pagingEnabled={true}
                         showsHorizontalScrollIndicator={false}
+                        alwaysBounceHorizontal={false}
                         onScroll={this.onScroll}
+                        scrollEventThrottle={22}
                         onMomentumScrollEnd={this.onMomentumScrollEnd}
                         ref={ref => {
                             this.scrollView = ref;

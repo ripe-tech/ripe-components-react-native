@@ -20,6 +20,7 @@ export class TabsText extends PureComponent {
             tabSelected: PropTypes.number,
             variant: PropTypes.string,
             parentWidth: PropTypes.number,
+            barAnimatedCoeficient: PropTypes.number,
             onTabChange: PropTypes.func.isRequired,
             onSelectedTabPress: PropTypes.func,
             style: ViewPropTypes.style
@@ -34,6 +35,7 @@ export class TabsText extends PureComponent {
             tabSelected: 0,
             variant: undefined,
             parentWidth: undefined,
+            barAnimatedCoeficient: undefined,
             onSelectedTabPress: () => {},
             style: {}
         };
@@ -45,8 +47,10 @@ export class TabsText extends PureComponent {
         this.state = {
             tabs: props.tabs,
             tabSelected: props.tabSelected,
+            scrollTabPress: false,
             animatedBarWidth: undefined,
-            animatedBarOffset: undefined
+            animatedBarOffset: undefined,
+            animatedBarOffsetScroll: undefined
         };
         this.tabLayouts = {};
         this.scroll = 0;
@@ -57,6 +61,29 @@ export class TabsText extends PureComponent {
         if (prevProps.tabSelected !== this.props.tabSelected) {
             this.onTabPress(this.props.tabSelected);
         }
+
+        if (
+            prevProps.barAnimatedCoeficient !== this.props.barAnimatedCoeficient &&
+            Math.abs(this.props.barAnimatedCoeficient) < 0.5 &&
+            !this.state.scrollTabPress
+        ) {
+            console.log("antes", this.state.animatedBarWidth);
+            const animatedBarOffset =
+                this.props.barAnimatedCoeficient !== 0
+                    ? this.state.animatedBarWidth * this.props.barAnimatedCoeficient +
+                      this.state.animatedBarOffset
+                    : 0;
+
+            console.log("depois", animatedBarOffset);
+            this.setState(
+                {
+                    animatedBarOffsetScroll: Math.round(animatedBarOffset)
+                },
+                () => {
+                    console.log("bar ficou a: ", this.state.animatedBarOffsetScroll);
+                }
+            );
+        }
     }
 
     onTabPress = tabSelectedIndex => {
@@ -64,10 +91,17 @@ export class TabsText extends PureComponent {
             this.props.onSelectedTabPress();
             return;
         }
-        this.setState({ tabSelected: tabSelectedIndex }, () => {
-            this._updateBar();
-            this.props.onTabChange(this.state.tabSelected);
-        });
+        this.setState(
+            {
+                tabSelected: tabSelectedIndex,
+                scrollTabPress: true,
+                animatedBarOffsetScroll: undefined
+            },
+            () => {
+                this._updateBar();
+                this.props.onTabChange(this.state.tabSelected);
+            }
+        );
         this._scrollTo(tabSelectedIndex);
     };
 
@@ -81,7 +115,11 @@ export class TabsText extends PureComponent {
         const tabLayout = this.tabLayouts[index];
 
         if (tabLayout) {
-            this.setState({ animatedBarOffset: tabLayout.x, animatedBarWidth: tabLayout.width });
+            this.setState({
+                animatedBarOffset: tabLayout.x,
+                animatedBarWidth: tabLayout.width,
+                scrollTabPress: false
+            });
         } else {
             this.setState({ animatedBarOffset: undefined, animatedBarWidth: undefined });
         }
@@ -161,7 +199,7 @@ export class TabsText extends PureComponent {
                 {this._renderTabs()}
                 {this._animatedBarEnabled() ? (
                     <BarAnimated
-                        offset={this.state.animatedBarOffset}
+                        offset={this.state.animatedBarOffsetScroll || this.state.animatedBarOffset}
                         width={this.state.animatedBarWidth}
                         style={styles.barAnimated}
                     />
