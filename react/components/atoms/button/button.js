@@ -4,7 +4,7 @@ import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
-import { IdentifiableMixin, baseStyles } from "../../../util";
+import { IdentifiableMixin, baseStyles, capitalize } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";
@@ -16,6 +16,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             icon: PropTypes.string,
             loading: PropTypes.bool,
             disabled: PropTypes.bool,
+            variant: PropTypes.string,
             iconStrokeWidth: PropTypes.number,
             iconColor: PropTypes.string,
             iconFillColor: PropTypes.string,
@@ -28,7 +29,8 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            containerStyle: ViewPropTypes.style
         };
     }
 
@@ -38,19 +40,25 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             icon: undefined,
             loading: false,
             disabled: false,
+            variant: undefined,
             iconStrokeWidth: undefined,
             iconColor: "#ffffff",
             iconFillColor: "#ffffff",
-            textColor: "#ffffff",
+            textColor: undefined,
             backgroundColor: undefined,
             gradientAngle: 62,
             gradientLocations: [0.4, 0.84],
             gradientColors: ["#4a6fe9", "#6687f6"],
             width: undefined,
             onPress: () => {},
-            style: {}
+            style: {},
+            containerStyle: {}
         };
     }
+
+    _shouldRenderView = () => {
+        return this.props.backgroundColor || this.props.variant === "flat";
+    };
 
     _style = () => {
         return [styles.button, this.props.style];
@@ -75,14 +83,20 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
     _buttonStyle = () => {
         return [
             styles.container,
+            styles[`container${capitalize(this.props.variant)}`],
             { width: this.props.width },
             { backgroundColor: this.props.backgroundColor },
-            this.props.disabled ? styles.buttonDisabled : {}
+            this.props.disabled ? styles.buttonDisabled : {},
+            this.props.containerStyle
         ];
     };
 
     _textStyle = () => {
-        return [styles.text, { color: this.props.textColor }];
+        return [
+            styles.text,
+            styles[`text${capitalize(this.props.variant)}`],
+            this.props.textColor ? { color: this.props.textColor } : {}
+        ];
     };
 
     _renderLoading() {
@@ -109,7 +123,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
     _renderButton = () => {
         const content = this.props.loading ? this._renderLoading() : this._renderNormal();
 
-        if (this.props.backgroundColor) return <View style={this._buttonStyle()}>{content}</View>;
+        if (this._shouldRenderView()) return <View style={this._buttonStyle()}>{content}</View>;
         return (
             <LinearGradient
                 style={this._linearGradientStyle()}
@@ -152,11 +166,21 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    containerFlat: {
+        backgroundColor: "#ffffff",
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "#e4e8f0"
+    },
     text: {
         fontSize: 16,
         letterSpacing: 0.25,
         marginTop: Platform.OS === "ios" ? 4 : 0,
-        fontFamily: baseStyles.FONT_BOOK
+        fontFamily: baseStyles.FONT_BOOK,
+        color: "#ffffff"
+    },
+    textFlat: {
+        color: "#4f7af8"
     }
 });
 
