@@ -13,6 +13,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             options: PropTypes.array,
             value: PropTypes.any,
+            shapeVariant: PropTypes.string,
+            colorVariant: PropTypes.string,
             placeholder: PropTypes.string,
             disabled: PropTypes.bool,
             width: PropTypes.number,
@@ -26,6 +28,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             options: [],
             value: undefined,
             placeholder: undefined,
+            shapeVariant: "round",
+            colorVariant: "white",
             disabled: false,
             width: undefined,
             keyTimeout: 500,
@@ -68,8 +72,18 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
         );
     };
 
+    _inputBorderColor = () => {
+        if (this.props.colorVariant === "white") return "#e7e9ed";
+        if (this.props.colorVariant === "gray") return "#e4e8f0";
+    };
+
+    _inputBackgroundColor = () => {
+        if (this.props.colorVariant === "white") return "#ffffff";
+        if (this.props.colorVariant === "gray") return "#f6f7f9";
+    };
+
     _inputBorderRadius = () => {
-        if (this.props.variant === "round") return 6;
+        if (this.props.shapeVariant === "round") return 6;
     };
 
     _icon = () => {
@@ -103,8 +117,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             inputAndroid: {
                 color: "#24425a",
-                backgroundColor: "#f6f7f9",
-                borderColor: "#e4e8f0",
+                backgroundColor: this._inputBackgroundColor(),
+                borderColor: this._inputBorderColor(),
                 borderWidth: 1,
                 borderRadius: this._inputBorderRadius(),
                 fontFamily: baseStyles.FONT_BOOK,
@@ -114,8 +128,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             },
             inputIOSContainer: {
                 color: "#24425a",
-                backgroundColor: "#f6f7f9",
-                borderColor: "#e4e8f0",
+                backgroundColor: this._inputBackgroundColor(),
+                borderColor: this._inputBorderColor(),
                 borderWidth: 1,
                 borderRadius: this._inputBorderRadius(),
                 fontFamily: baseStyles.FONT_BOOK,
