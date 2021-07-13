@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react";
 import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
+import { capitalize } from "ripe-commons-native";
 import { mix } from "yonius";
 
-import { IdentifiableMixin, baseStyles, capitalize } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { Touchable } from "../touchable";
 

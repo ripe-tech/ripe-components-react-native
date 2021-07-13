@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
-
-import { isTabletSize } from "../../../util";
+import { isTabletSize } from "ripe-commons-native";
 
 import { KeyValue } from "../key-value";
 import { Touchable } from "../../atoms/touchable";

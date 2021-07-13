@@ -2,8 +2,9 @@ import React, { PureComponent } from "react";
 import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
+import { toClipboard } from "ripe-commons-native";
 
-import { IdentifiableMixin, baseStyles, toClipboard } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { ButtonIcon, Touchable } from "../../atoms";
 

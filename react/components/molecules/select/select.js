@@ -2,9 +2,9 @@ import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes, View } from "react-native";
 import PropTypes from "prop-types";
 import RNPickerSelect from "react-native-picker-select";
-import { mix } from "yonius";
+import { equal, mix } from "yonius";
 
-import { IdentifiableMixin, baseStyles, equal } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { Icon } from "../../atoms";
 

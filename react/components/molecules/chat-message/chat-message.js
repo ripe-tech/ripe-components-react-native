@@ -1,8 +1,9 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, Text as RNText, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
+import { dateTimeString, isImage } from "ripe-commons-native";
 
-import { baseStyles, dateTimeString, isImage } from "../../../util";
+import { baseStyles } from "../../../util";
 
 import { Avatar, Lightbox, Link, Text } from "../../atoms";
 
