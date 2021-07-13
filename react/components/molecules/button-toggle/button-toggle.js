@@ -18,6 +18,7 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
             value: PropTypes.bool,
             callback: PropTypes.func,
             variant: PropTypes.string,
+            align: PropTypes.string,
             direction: PropTypes.string,
             toggle: PropTypes.bool,
             buttonProps: PropTypes.object,
@@ -36,6 +37,7 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
             value: false,
             callback: undefined,
             variant: undefined,
+            align: undefined,
             direction: undefined,
             toggle: true,
             buttonProps: {},
@@ -131,6 +133,7 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
                 iconFillColor={this._contentColor()}
                 textColor={this._contentColor()}
                 variant={this.props.variant}
+                align={this.props.align}
                 {...this.props.buttonProps}
                 onPress={this.onPress}
                 {...this.id("toggle-button")}
