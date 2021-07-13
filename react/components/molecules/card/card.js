@@ -101,11 +101,15 @@ export class Card extends PureComponent {
     }
 
     _renderCardImage() {
+        if (!this.props.icon && !this.props.avatarURL) return null;
+
         if (this.props.icon) return this._renderCardImageIcon();
         if (this.props.avatarURL) return this._renderCardImageAvatar();
     }
 
     _renderCardText() {
+        if (!this.props.title && !this.props.text && !this.props.subtext) return null;
+
         return (
             <View style={styles.textContainer}>
                 {this.props.title ? (
