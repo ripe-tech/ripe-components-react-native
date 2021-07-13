@@ -20,6 +20,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             iconStrokeWidth: PropTypes.number,
             iconColor: PropTypes.string,
             iconFillColor: PropTypes.string,
+            align: PropTypes.string,
             textColor: PropTypes.string,
             backgroundColor: PropTypes.string,
             gradientAngle: PropTypes.number,
@@ -44,6 +45,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             iconStrokeWidth: undefined,
             iconColor: "#ffffff",
             iconFillColor: "#ffffff",
+            align: "center",
             textColor: undefined,
             backgroundColor: undefined,
             gradientAngle: 62,
@@ -85,7 +87,8 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             styles.container,
             styles[`container${capitalize(this.props.variant)}`],
             { width: this.props.width },
-            { backgroundColor: this.props.backgroundColor },
+            { justifyContent: this.props.align },
+            this.props.backgroundColor ? { backgroundColor: this.props.backgroundColor } : {},
             this.props.disabled ? styles.buttonDisabled : {},
             this.props.containerStyle
         ];
@@ -164,7 +167,8 @@ const styles = StyleSheet.create({
         height: 48,
         flexDirection: "row",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        paddingHorizontal: 8
     },
     containerFlat: {
         backgroundColor: "#ffffff",
