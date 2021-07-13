@@ -15,6 +15,7 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             loading: PropTypes.bool,
             disabled: PropTypes.bool,
             variant: PropTypes.string,
+            align: PropTypes.string,
             toggle: PropTypes.bool,
             orientation: PropTypes.string,
             onUpdateValue: PropTypes.func,
@@ -29,6 +30,7 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             loading: false,
             disabled: false,
             variant: undefined,
+            align: undefined,
             toggle: true,
             orientation: "horizontal",
             onUpdateValue: value => {},
@@ -101,6 +103,7 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
                 }}
                 variant={this.props.variant}
                 direction={this._direction(index)}
+                align={this.props.align}
                 toggle={this.props.toggle}
                 onUpdateActive={() => this.onUpdateActive(item.value)}
                 {...item.buttonProps}
