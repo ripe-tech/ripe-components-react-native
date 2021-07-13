@@ -104,7 +104,7 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
                 direction={this._direction(index)}
                 align={this.props.align}
                 toggle={this.props.toggle}
-                onPress={item.callback}
+                onPress={item.onPress}
                 onUpdateActive={() => this.onUpdateActive(item.value)}
                 {...item.buttonProps}
             />
