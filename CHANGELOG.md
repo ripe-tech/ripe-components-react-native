@@ -32,6 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Checkbox group component
 * Support for `Avatar`'s image change
 * Support for `View more` button in key-values
+* Date Input support for margin and border overriding as props
+* Form component
 
 ### Changed
 

@@ -12,7 +12,7 @@ export class KeyValues extends PureComponent {
             items: PropTypes.arrayOf(
                 PropTypes.shape({
                     key: PropTypes.string.isRequired,
-                    value: PropTypes.string.isRequired,
+                    value: PropTypes.string,
                     keyColor: PropTypes.string,
                     valueColor: PropTypes.string,
                     border: PropTypes.string,
