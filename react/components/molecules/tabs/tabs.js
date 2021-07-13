@@ -15,7 +15,8 @@ export class Tabs extends PureComponent {
                     icon: PropTypes.string.isRequired,
                     selected: PropTypes.bool,
                     disabled: PropTypes.bool,
-                    hidden: PropTypes.bool
+                    hidden: PropTypes.bool,
+                    props: PropTypes.object
                 })
             ),
             style: ViewPropTypes.style
@@ -66,6 +67,7 @@ export class Tabs extends PureComponent {
                             badgeCountThreshold={tab.badgeCountThreshold}
                             badgeHasAnimation={tab.badgeHasAnimation}
                             icon={tab.icon}
+                            {...tab.props}
                             onPress={() => this.onPressTab(tab.id)}
                             selected={this._isSelected(tab.id)}
                         />

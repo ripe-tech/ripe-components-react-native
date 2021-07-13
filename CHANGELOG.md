@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Fallback image on loading error in avatar component
 * Checkbox component
+* Input component
 * Select component
 * Radio button component
 * Snackbar component
@@ -19,15 +20,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Multiple files selection with image picker
 * Date input component
 * Switcher component
-* Radio group component 
+* Input animated component
+* Added `animateScrollBottom` prop to chat
+* `onScroll` and `onScrollBottom` props in chat component
+* Radio group component
+* Textarea support for background color, horizontal padding and font size as props
+* Input keyboard type support
+* Input Form component
+* Possibility to override icon props in `tabs` and `button-tab`
+* Checkbox group component
+* Support for `Avatar`'s image change
+* Support for `View more` button in key-values
 
 ### Changed
 
-*
+* `ContainerOpenable` knob visibility controlled by props
+* `ContainerOpenable` overlay opacity controlled by props
 
 ### Fixed
 
 * `normalizeImages` function handling of images coming from camera
+* `onRichTextInputPhotoAdded` function in chat component as from the time the `react-native-image-picker` was bumped to v4.0, there is no need to force an array in attachment property
 
 ## [0.4.0] - 2021-04-07
 
