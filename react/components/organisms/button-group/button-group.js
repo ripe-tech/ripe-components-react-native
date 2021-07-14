@@ -14,6 +14,10 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             value: PropTypes.any,
             loading: PropTypes.bool,
             disabled: PropTypes.bool,
+            variant: PropTypes.string,
+            align: PropTypes.string,
+            toggle: PropTypes.bool,
+            orientation: PropTypes.string,
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style
         };
@@ -25,6 +29,10 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             value: undefined,
             loading: false,
             disabled: false,
+            variant: undefined,
+            align: undefined,
+            toggle: true,
+            orientation: "horizontal",
             onUpdateValue: value => {},
             style: {}
         };
@@ -47,6 +55,8 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     onUpdateActive = value => {
+        if (!this.props.toggle) return;
+
         this.setState(
             {
                 valueData: value
@@ -55,17 +65,34 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
         );
     };
 
-    _orientation = index => {
+    _direction = index => {
+        if (index === 0 && this.props.orientation === "vertical") return "top";
         if (index === 0) return "left";
-        if (index === this.props.items.length - 1) return "right";
-        return "middle";
+        if (index === this.props.items.length - 1 && this.props.orientation === "vertical") {
+            return "bottom";
+        }
+        if (index === this.props.items.length - 1) {
+            return "right";
+        }
+        if (this.props.orientation === "vertical") {
+            return "middle-vertical";
+        }
+        return "middle-horizontal";
+    };
+
+    _style = () => {
+        return [
+            styles.buttonGroup,
+            this.props.orientation === "horizontal" ? { flexDirection: "row" } : {},
+            this.props.orientation === "vertical" ? { flexDirection: "column" } : {}
+        ];
     };
 
     _renderButtons = () => {
         return this.props.items.map((item, index) => (
             <ButtonToggle
                 key={item.value}
-                style={styles.ButtonToggle}
+                style={styles.buttonToggle}
                 text={item.label || item.value}
                 value={this.state.valueData === item.value}
                 buttonProps={{
@@ -73,7 +100,11 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
                     loading: item.loading || this.props.loading,
                     disabled: item.disabled || this.props.disabled
                 }}
-                orientation={this._orientation(index)}
+                variant={this.props.variant}
+                direction={this._direction(index)}
+                align={this.props.align}
+                toggle={this.props.toggle}
+                onPress={item.onPress}
                 onUpdateActive={() => this.onUpdateActive(item.value)}
                 {...item.buttonProps}
             />
@@ -81,16 +112,15 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     render() {
-        return <View style={styles.buttonGroup}>{this._renderButtons()}</View>;
+        return <View style={this._style()}>{this._renderButtons()}</View>;
     }
 }
 
 const styles = StyleSheet.create({
     buttonGroup: {
-        flexDirection: "row",
         overflow: "hidden"
     },
-    ButtonToggle: {
+    buttonToggle: {
         marginRight: 5
     }
 });
