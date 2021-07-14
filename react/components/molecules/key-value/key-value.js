@@ -2,8 +2,9 @@ import React, { PureComponent } from "react";
 import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
+import { toClipboard } from "ripe-commons-native";
 
-import { IdentifiableMixin, baseStyles, toClipboard } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { ButtonIcon, Touchable } from "../../atoms";
 
@@ -11,7 +12,7 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             _key: PropTypes.string.isRequired,
-            value: PropTypes.string.isRequired,
+            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
             keyColor: PropTypes.string,
             valueColor: PropTypes.string,
             border: PropTypes.string,

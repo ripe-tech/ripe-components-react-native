@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
-
-import { isTabletSize } from "../../../util";
+import { isTabletSize } from "ripe-commons-native";
 
 import { KeyValue } from "../key-value";
 import { Touchable } from "../../atoms/touchable";
@@ -13,7 +12,7 @@ export class KeyValues extends PureComponent {
             items: PropTypes.arrayOf(
                 PropTypes.shape({
                     key: PropTypes.string.isRequired,
-                    value: PropTypes.string,
+                    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
                     keyColor: PropTypes.string,
                     valueColor: PropTypes.string,
                     border: PropTypes.string,
