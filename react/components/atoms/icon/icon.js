@@ -39,12 +39,17 @@ export class Icon extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     _icon() {
+        if (this._isSvgIcon()) return this.props.icon;
         if (icons[this.props.icon]) return icons[this.props.icon];
         throw new Error(`Unknown icon ${this.props.icon}`);
     }
 
     _isUriIcon() {
         return typeof this.props.icon === "number" || this.props.icon.startsWith("http");
+    }
+
+    _isSvgIcon() {
+        return typeof this.props.icon === "string" && this.props.icon.startsWith("<svg");
     }
 
     _renderSvgUri() {
