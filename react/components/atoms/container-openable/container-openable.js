@@ -27,6 +27,7 @@ export class ContainerOpenable extends PureComponent {
             headerPressable: PropTypes.bool,
             headerProps: PropTypes.object,
             showKnob: PropTypes.bool,
+            overlayPress: PropTypes.bool,
             onContentHeight: PropTypes.func,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style
@@ -42,6 +43,7 @@ export class ContainerOpenable extends PureComponent {
             headerPressable: true,
             headerProps: {},
             showKnob: true,
+            overlayPress: true,
             onContentHeight: height => {},
             onVisible: visible => {},
             style: {}
@@ -142,7 +144,7 @@ export class ContainerOpenable extends PureComponent {
     }
 
     onOverlayPress = () => {
-        this.close();
+        if (this.props.overlayPress) this.close();
     };
 
     onModalRequestClose = () => {
