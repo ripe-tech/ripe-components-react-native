@@ -94,8 +94,8 @@ export class Card extends PureComponent {
                 icon={this.props.icon}
                 color={this.props.iconColor}
                 fill={this.props.iconFill}
-                height={60}
-                width={60}
+                height={45}
+                width={45}
             />
         );
     }
