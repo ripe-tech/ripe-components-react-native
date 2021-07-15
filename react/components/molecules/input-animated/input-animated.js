@@ -61,8 +61,8 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
         this.inputBorderOpacityBlur = 0;
         this.inputBorderOpacityFocus = 1;
 
-        this.inputYTransformBlur = 0;
-        this.inputYTransformFocus = -35;
+        this.inputYMarginTopBlur = 0;
+        this.inputYMarginTopFocus = -35;
 
         this.state = {
             valueData: this.props.value,
@@ -73,7 +73,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
             underlineOpacity: new Animated.Value(this.underlineOpacityBlur),
             underlineYTransform: new Animated.Value(this.underlineYTransformBlur),
             inputBorderOpacity: new Animated.Value(this.inputBorderOpacityBlur),
-            inputYTransform: new Animated.Value(this.inputYTransformBlur)
+            inputYMarginTop: new Animated.Value(this.inputYMarginTopBlur)
         };
     }
 
@@ -128,7 +128,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
                 borderBottomColor: this.state.focused
                     ? this.props.borderBottomActiveColor
                     : "#c3c9cf",
-                transform: [{ translateY: this.state.inputYTransform }],
+                marginTop: this.state.inputYMarginTop,
                 opacity: this.state.inputBorderOpacity
             }
         ];
@@ -187,8 +187,8 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
                 duration: this.animationDuration,
                 useNativeDriver: false
             }),
-            Animated.timing(this.state.inputYTransform, {
-                toValue: blur ? this.inputYTransformBlur : this.inputYTransformFocus,
+            Animated.timing(this.state.inputYMarginTop, {
+                toValue: blur ? this.inputYMarginTopBlur : this.inputYMarginTopFocus,
                 duration: this.animationDuration,
                 useNativeDriver: false
             })
@@ -235,6 +235,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
                 <Animated.View style={this._underlineStyle()} />
                 <Animated.View style={this._inputStyle()}>
                     <Input
+                        style={styles.inputComponent}
                         ref={el => (this.input = el)}
                         value={this.state.valueData}
                         placeholder={this.props.placeholder || this.props.label}
@@ -270,6 +271,9 @@ const styles = StyleSheet.create({
     },
     input: {
         borderBottomWidth: 1
+    },
+    inputComponent: {
+        paddingVertical: 10
     }
 });
 
