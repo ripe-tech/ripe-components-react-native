@@ -200,9 +200,7 @@ export class Form extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    form: {
-        flex: 1
-    },
+    form: {},
     section: {
         flex: 1
     },
