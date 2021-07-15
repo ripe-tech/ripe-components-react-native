@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Support for `View more` button in key-values
 * Date Input support for margin and border overriding as props
 * Form component
+* Support for URI and SVG direct import option for `Icon`
 
 ### Changed
 

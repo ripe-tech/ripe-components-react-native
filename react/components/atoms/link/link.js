@@ -8,7 +8,7 @@ export class Link extends PureComponent {
     static get propTypes() {
         return {
             text: PropTypes.string,
-            url: PropTypes.string.isRequired,
+            url: PropTypes.string,
             onPress: PropTypes.func,
             color: PropTypes.string,
             styleText: Text.propTypes.style,
