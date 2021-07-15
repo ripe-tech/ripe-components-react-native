@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text } from "react-native";
+import { Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import SafeAreaView from "react-native-safe-area-view";
 import { mix } from "yonius";
@@ -24,7 +24,8 @@ export class Header extends mix(PureComponent).with(IdentifiableMixin) {
                 bottom: PropTypes.number.isRequired
             }),
             onButtonLeftPress: PropTypes.func,
-            onButtonRightPress: PropTypes.func
+            onButtonRightPress: PropTypes.func,
+            style: ViewPropTypes.style
         };
     }
 
@@ -38,16 +39,21 @@ export class Header extends mix(PureComponent).with(IdentifiableMixin) {
             buttonRightVisible: false,
             hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
             onButtonLeftPress: undefined,
-            onButtonRightPress: undefined
+            onButtonRightPress: undefined,
+            style: {}
         };
     }
 
     goBack = () =>
         this.props.navigation && this.props.navigation.canGoBack() && this.props.navigation.pop(1);
 
+    _style = () => {
+        return [styles.header, this.props.style];
+    };
+
     render() {
         return (
-            <SafeAreaView style={styles.header}>
+            <SafeAreaView style={this._style()}>
                 {this.props.buttonLeftVisible && this.props.buttonLeftIcon ? (
                     <Touchable
                         hitSlop={this.props.hitSlop}
