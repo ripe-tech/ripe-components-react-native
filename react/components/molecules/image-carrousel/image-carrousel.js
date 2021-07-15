@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
         flex: 1
     },
     imageFullscreen: {
-        borderWidth: 1,
         resizeMode: "contain"
     },
     fullscreenContainer: {

@@ -33,9 +33,7 @@ class Wrapper extends PureComponent {
                             style={{
                                 width: 80,
                                 height: 80,
-                                borderWidth: 1,
                                 marginLeft: 5,
-                                borderColor: "red",
                                 resizeMode: "contain"
                             }}
                             key={index}
