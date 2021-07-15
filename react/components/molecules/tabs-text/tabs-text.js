@@ -47,7 +47,6 @@ export class TabsText extends PureComponent {
         this.state = {
             tabs: props.tabs,
             tabSelected: props.tabSelected,
-            scrollTabPress: false,
             animatedBarWidth: undefined,
             animatedBarOffset: undefined,
             animatedBarOffsetScroll: undefined
@@ -64,25 +63,17 @@ export class TabsText extends PureComponent {
 
         if (
             prevProps.barAnimatedCoeficient !== this.props.barAnimatedCoeficient &&
-            Math.abs(this.props.barAnimatedCoeficient) < 0.5 &&
-            !this.state.scrollTabPress
+            Math.abs(this.props.barAnimatedCoeficient) < 0.5
         ) {
-            console.log("antes", this.state.animatedBarWidth);
             const animatedBarOffset =
                 this.props.barAnimatedCoeficient !== 0
                     ? this.state.animatedBarWidth * this.props.barAnimatedCoeficient +
                       this.state.animatedBarOffset
                     : 0;
 
-            console.log("depois", animatedBarOffset);
-            this.setState(
-                {
-                    animatedBarOffsetScroll: Math.round(animatedBarOffset)
-                },
-                () => {
-                    console.log("bar ficou a: ", this.state.animatedBarOffsetScroll);
-                }
-            );
+            this.setState({
+                animatedBarOffsetScroll: Math.round(animatedBarOffset)
+            });
         }
     }
 
@@ -94,7 +85,6 @@ export class TabsText extends PureComponent {
         this.setState(
             {
                 tabSelected: tabSelectedIndex,
-                scrollTabPress: true,
                 animatedBarOffsetScroll: undefined
             },
             () => {
@@ -117,8 +107,7 @@ export class TabsText extends PureComponent {
         if (tabLayout) {
             this.setState({
                 animatedBarOffset: tabLayout.x,
-                animatedBarWidth: tabLayout.width,
-                scrollTabPress: false
+                animatedBarWidth: tabLayout.width
             });
         } else {
             this.setState({ animatedBarOffset: undefined, animatedBarWidth: undefined });

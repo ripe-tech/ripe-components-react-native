@@ -50,11 +50,15 @@ export class TabsSwipeable extends PureComponent {
         this.screenWidth = Dimensions.get("screen").width;
 
         this.state = {
+            momentumScrolling: false,
             selectedTab: this.props.selectedTab,
             selectedTabPosition: this.props.selectedTab * this.screenWidth,
             animatedBarOffset: undefined,
             animating: false
         };
+
+        this.scrollEventThrottleMomentum = 400;
+        this.scrollEventThrottle = 70;
     }
 
     componentDidUpdate(prevProps) {
@@ -78,15 +82,26 @@ export class TabsSwipeable extends PureComponent {
 
     onScroll = event => {
         if (this.state.animating) return;
-        const scroll =
-            this.state.selectedTab === 0
-                ? event.nativeEvent.contentOffset.x
-                : event.nativeEvent.contentOffset.x - this.screenWidth * this.state.selectedTab;
-        console.log("scroll", scroll / this.screenWidth);
-        this.setState({ animatedBarOffset: scroll / this.screenWidth });
-        // problema aqui
-        const selectedTab = Math.round(Math.abs(scroll) / this.screenWidth);
-        console.log("selectedTab", selectedTab);
+
+        const scroll = event.nativeEvent.contentOffset.x;
+        const animateBarScrollRatio = scroll / this.screenWidth;
+        const animateBarScrollRatioDecimal =
+            animateBarScrollRatio < 1
+                ? animateBarScrollRatio
+                : animateBarScrollRatio - Math.trunc(animateBarScrollRatio);
+
+        const scrollValue = this.screenWidth * this.state.selectedTab;
+
+        // the value representing how much was scrolled into the other tab
+        // if its scrolling back turns it in a negative value
+        const animateBar =
+            scroll < scrollValue
+                ? -1 * (1 - animateBarScrollRatioDecimal)
+                : animateBarScrollRatioDecimal;
+
+        this.setState({ animatedBarOffset: animateBar });
+
+        const selectedTab = Math.round(animateBarScrollRatio);
         const updated = selectedTab !== this.state.selectedTab;
 
         this.setState(
@@ -94,16 +109,19 @@ export class TabsSwipeable extends PureComponent {
                 selectedTab: selectedTab
             },
             () => {
-                console.log(`mudou tab ${updated} \n\n`);
-                if (updated) this.props.onTabChange(selectedTab);
+                if (updated) {
+                    this.props.onTabChange(selectedTab);
+                }
             }
         );
     };
 
+    onMomentumScrollBegin = () => {
+        this.setState({ momentumScrolling: true });
+    };
+
     onMomentumScrollEnd = () => {
-        console.log("momentum scroll end\n\n");
-        console.log("\n\n");
-        this.setState({ animating: false });
+        this.setState({ animating: false, momentumScrolling: false });
     };
 
     onSelectedTabPress = () => {
@@ -140,12 +158,17 @@ export class TabsSwipeable extends PureComponent {
                     <ScrollView
                         style={{ flex: 1 }}
                         contentContainerStyle={{ flexGrow: 1 }}
+                        scrollEventThrottle={
+                            this.state.momentumScrolling
+                                ? this.scrollEventThrottleMomentum
+                                : this.scrollEventThrottle
+                        }
                         horizontal={true}
                         pagingEnabled={true}
                         showsHorizontalScrollIndicator={false}
                         alwaysBounceHorizontal={false}
                         onScroll={this.onScroll}
-                        scrollEventThrottle={22}
+                        onMomentumScrollBegin={this.onMomentumScrollBegin}
                         onMomentumScrollEnd={this.onMomentumScrollEnd}
                         ref={ref => {
                             this.scrollView = ref;
