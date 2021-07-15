@@ -72,6 +72,7 @@ export class Card extends PureComponent {
     _textStyle() {
         return {
             ...styles.text,
+            height: this.props.subtext ? undefined : 35,
             ...this.props.style?.text
         };
     }
@@ -120,12 +121,12 @@ export class Card extends PureComponent {
                     </Text>
                 ) : null}
                 {this.props.text ? (
-                    <Text numberOfLines={2} style={styles.text}>
+                    <Text numberOfLines={2} style={this._textStyle()}>
                         {this.props.text}
                     </Text>
                 ) : null}
                 {this.props.subtext ? (
-                    <Text numberOfLines={1} style={styles.text}>
+                    <Text numberOfLines={1} style={this._textStyle()}>
                         {this.props.subtext}
                     </Text>
                 ) : null}
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     text: {
-        fontSize: 14,
-        color: "#c3c9cf"
+        color: "#c3c9cf",
+        fontSize: 14
     }
 });
