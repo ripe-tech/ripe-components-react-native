@@ -254,10 +254,10 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
 
 const styles = StyleSheet.create({
     inputAnimated: {
-        fontFamily: baseStyles.FONT_BOLD,
         maxHeight: 50
     },
     header: {
+        fontFamily: baseStyles.FONT_BOLD,
         height: 50,
         alignContent: "flex-end"
     },
@@ -270,6 +270,7 @@ const styles = StyleSheet.create({
         position: "absolute"
     },
     input: {
+        fontFamily: baseStyles.FONT_BOLD,
         borderBottomWidth: 1
     },
     inputComponent: {
