@@ -23,6 +23,7 @@ export class Icon extends mix(PureComponent).with(IdentifiableMixin) {
             ]),
             height: PropTypes.number,
             width: PropTypes.number,
+            strokeWidth: PropTypes.number,
             style: ViewPropTypes.style
         };
     }
