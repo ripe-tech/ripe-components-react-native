@@ -16,6 +16,7 @@ export class Card extends PureComponent {
             icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             iconColor: PropTypes.string,
             iconFill: PropTypes.string,
+            iconStrokeWidth: PropTypes.number,
             shapeVariant: PropTypes.string,
             title: PropTypes.string,
             text: PropTypes.string,
@@ -92,6 +93,7 @@ export class Card extends PureComponent {
             <Icon
                 style={this._iconStyle()}
                 icon={this.props.icon}
+                strokeWidth={this.props.iconStrokeWidth}
                 color={this.props.iconColor}
                 fill={this.props.iconFill}
                 height={45}
