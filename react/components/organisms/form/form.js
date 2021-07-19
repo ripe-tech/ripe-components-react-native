@@ -108,10 +108,6 @@ export class Form extends PureComponent {
         await this.discard();
     };
 
-    _style = () => {
-        return [styles.form, this.props.style];
-    };
-
     _renderInputComponent = ({ value, type, label, ...args }) => {
         switch (type) {
             case "text":
@@ -170,7 +166,7 @@ export class Form extends PureComponent {
 
     render() {
         return (
-            <ScrollView style={this._style()}>
+            <ScrollView style={this.props.style}>
                 {this._renderSections()}
                 {(this.props.onSave || this.props.onDiscard) && (
                     <View style={styles.buttons}>
@@ -200,7 +196,6 @@ export class Form extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    form: {},
     section: {
         flex: 1
     },
