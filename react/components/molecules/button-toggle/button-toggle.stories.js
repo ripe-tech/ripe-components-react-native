@@ -30,16 +30,27 @@ storiesOf("Molecules", module)
         );
         const color = text("Color", undefined);
         const colorSecondary = text("Active Color", undefined);
-        const orientation = select(
-            "Orientation",
+        const direction = select(
+            "Direction",
             {
                 Unset: undefined,
                 Left: "left",
                 Middle: "middle",
-                Right: "right"
+                Right: "right",
+                Top: "top",
+                Bottom: "bottom"
             },
             undefined
         );
+        const variant = select(
+            "Variant",
+            {
+                Unset: undefined,
+                Flat: "flat"
+            },
+            undefined
+        );
+        const toggle = boolean("Enable toggle", true);
         const value = boolean("Value", false);
 
         return (
@@ -49,7 +60,9 @@ storiesOf("Molecules", module)
                 iconSecondary={iconSecondary}
                 color={color}
                 colorSecondary={colorSecondary}
-                orientation={orientation}
+                variant={variant}
+                direction={direction}
+                toggle={toggle}
                 value={value}
             />
         );

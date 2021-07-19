@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
 import { Animated, LayoutAnimation, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
-
-import { pickDocuments, pickImageCamera } from "../../../util";
+import { pickDocuments, pickImageCamera } from "ripe-commons-native";
 
 import { ButtonIcon, TextArea } from "../../atoms";
 

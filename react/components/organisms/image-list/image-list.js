@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
 import { Dimensions, LayoutAnimation, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
-
-import { pickImageCamera } from "../../../util";
+import { pickImageCamera } from "ripe-commons-native";
 
 import { ImageListItem } from "./image-list-item";
 import { ImageListItemAdd } from "./image-list-item-add";
