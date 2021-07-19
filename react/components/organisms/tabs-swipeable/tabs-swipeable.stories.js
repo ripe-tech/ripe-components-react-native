@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, select } from "@storybook/addon-knobs";
+import { withKnobs, boolean, select } from "@storybook/addon-knobs";
 
 import { TabsSwipeable } from "../tabs-swipeable";
 
@@ -70,6 +70,7 @@ storiesOf("Components/Organisms/Tabs Swipeable", module)
             },
             undefined
         );
+        const lazyRender = boolean("Lazy Render", false);
 
-        return <TabsSwipeable tabs={tabs} currentTab={currentTab} />;
+        return <TabsSwipeable tabs={tabs} currentTab={currentTab} lazyRender={lazyRender} />;
     });

@@ -23,6 +23,7 @@ export class TabsSwipeable extends PureComponent {
                     loadMore: PropTypes.func
                 })
             ),
+            lazyRender: PropTypes.bool,
             barAnimatedCoeficient: PropTypes.number,
             selectedTab: PropTypes.number,
             textVariant: PropTypes.string,
@@ -35,6 +36,7 @@ export class TabsSwipeable extends PureComponent {
     static get defaultProps() {
         return {
             tabs: [],
+            lazilyRendered: false,
             barAnimatedCoeficient: undefined,
             selectedTab: 0,
             textVariant: undefined,
@@ -54,7 +56,8 @@ export class TabsSwipeable extends PureComponent {
             selectedTab: this.props.selectedTab,
             selectedTabPosition: this.props.selectedTab * this.screenWidth,
             animatedBarOffset: undefined,
-            animating: false
+            animating: false,
+            lazyRenderTabs: {}
         };
 
         this.scrollEventThrottleMomentum = 400;
@@ -129,6 +132,21 @@ export class TabsSwipeable extends PureComponent {
         this.props.tabs[this.state.selectedTab].scrollToTop();
     };
 
+    _shouldRender = tabIndex => {
+        if (!this.props.lazyRender) return true;
+        const shouldRender =
+            this.state.selectedTab === tabIndex || this.state.lazyRenderTabs[tabIndex];
+
+        // to avoid tabs being rendered more than once
+        // the component keeps a state to log every tab rendered
+        if (shouldRender) {
+            const lazilyRendered = this.state.lazilyRendered;
+            lazilyRendered[tabIndex] = shouldRender;
+            this.setState({ lazyRenderTabs: lazilyRendered });
+        }
+        return shouldRender;
+    };
+
     _style() {
         return [styles.tabs, this.props.style];
     }
@@ -176,7 +194,7 @@ export class TabsSwipeable extends PureComponent {
                     >
                         {Object.values(this.props.tabs).map((tab, i) => (
                             <View key={i} style={this._tabStyle()}>
-                                {tab.render()}
+                                {this._shouldRender(i) ? tab.render() : null}
                             </View>
                         ))}
                     </ScrollView>
