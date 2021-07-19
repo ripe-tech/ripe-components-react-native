@@ -159,7 +159,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
                     <Icon
                         style={this._iconStyle()}
                         icon={"calendar-round"}
-                        strokeWidth={0.1}
+                        strokeWidth={1.5}
                         size={16}
                     />
                 </Touchable>
