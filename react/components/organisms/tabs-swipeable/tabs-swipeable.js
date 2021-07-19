@@ -36,7 +36,7 @@ export class TabsSwipeable extends PureComponent {
     static get defaultProps() {
         return {
             tabs: [],
-            lazilyRendered: false,
+            lazyRender: false,
             barAnimatedCoeficient: undefined,
             selectedTab: 0,
             textVariant: undefined,
@@ -57,7 +57,7 @@ export class TabsSwipeable extends PureComponent {
             selectedTabPosition: this.props.selectedTab * this.screenWidth,
             animatedBarOffset: undefined,
             animating: false,
-            lazyRenderTabs: {}
+            lazilyRendered: {}
         };
 
         this.scrollEventThrottleMomentum = 400;
