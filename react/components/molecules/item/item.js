@@ -44,7 +44,11 @@ export class Item extends PureComponent {
     }
 
     _contentStyle = () => {
-        return [styles.itemContent, styles[`itemContent${capitalize(this.props.variant)}`]];
+        return [
+            styles.itemContent,
+            styles[`itemContent${capitalize(this.props.variant)}`],
+            this.props.contentStyle
+        ];
     };
 
     _style = () => {
