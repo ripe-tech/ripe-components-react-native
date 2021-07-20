@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
 import { Dimensions, ScrollView, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
-
-import { capitalize } from "../../../util";
+import { capitalize } from "ripe-commons-native";
 
 import { ButtonTabText, BarAnimated } from "../../atoms";
 

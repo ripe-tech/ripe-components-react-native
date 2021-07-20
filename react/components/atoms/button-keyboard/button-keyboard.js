@@ -2,8 +2,9 @@ import React, { PureComponent } from "react";
 import { Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
+import { capitalize, isTabletSize } from "ripe-commons-native";
 
-import { IdentifiableMixin, baseStyles, capitalize, isTabletSize } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";

@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
 import { Image, Modal, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
-
-import { isTabletSize } from "../../../util";
+import { isTabletSize } from "ripe-commons-native";
 
 import { ButtonIcon } from "../button-icon";
 import { Touchable } from "../touchable";

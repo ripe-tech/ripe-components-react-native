@@ -3,8 +3,9 @@ import { ActivityIndicator, Platform, StyleSheet, Text, View, ViewPropTypes } fr
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
+import { capitalize } from "ripe-commons-native";
 
-import { IdentifiableMixin, baseStyles, capitalize } from "../../../util";
+import { IdentifiableMixin, baseStyles } from "../../../util";
 
 import { Icon } from "../icon";
 import { Touchable } from "../touchable";

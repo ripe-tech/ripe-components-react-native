@@ -2,8 +2,9 @@ import React, { PureComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
+import { isTabletSize } from "ripe-commons-native";
 
-import { IdentifiableMixin, isTabletSize } from "../../../util";
+import { IdentifiableMixin } from "../../../util";
 
 import { ButtonKeyboard } from "../../atoms";
 

@@ -2,8 +2,9 @@ import React, { PureComponent } from "react";
 import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
+import { capitalize, dateTimeString } from "ripe-commons-native";
 
-import { baseStyles, capitalize, dateTimeString } from "../../../util";
+import { baseStyles } from "../../../util";
 
 import { Icon, Touchable } from "../../atoms";
 
