@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+*
+
+### Changed
+
+*
+
+### Fixed
+
+*
+
+## [0.5.0] - 2021-07-20
+
+### Added
+
 * Fallback image on loading error in avatar component
 * Checkbox component
 * Input component
