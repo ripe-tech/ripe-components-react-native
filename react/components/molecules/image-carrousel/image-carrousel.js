@@ -39,11 +39,11 @@ export class ImageCarrousel extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.scrollCoefficient = Dimensions.get("window").width;
+        this.screenWidth = Dimensions.get("window").width;
 
         this.state = {
             visible: false,
-            selectedImageData: this.props.selectedImage
+            selectedImage: this.props.selectedImage
         };
     }
 
@@ -57,14 +57,13 @@ export class ImageCarrousel extends PureComponent {
     }
 
     open(imageIndex = 0) {
-        if (imageIndex === this.state.selectedImageData) {
+        if (imageIndex === this.state.selectedImage) {
             this.setVisibility(true);
             return;
         }
         const currentPagePosition = imageIndex * Dimensions.get("window").width;
-        this.setState(
-            { currentPagePosition: currentPagePosition, selectedImageData: imageIndex },
-            () => this.setVisibility(true)
+        this.setState({ currentPagePosition: currentPagePosition, selectedImage: imageIndex }, () =>
+            this.setVisibility(true)
         );
     }
 
@@ -75,8 +74,8 @@ export class ImageCarrousel extends PureComponent {
     onScroll = event => {
         const scroll = event.nativeEvent.contentOffset.x;
 
-        const currentPage = Math.round(scroll / this.scrollCoefficient);
-        this.setState({ selectedImageData: currentPage });
+        const currentPage = Math.round(scroll / this.screenWidth);
+        this.setState({ selectedImage: currentPage });
     };
 
     onBackButtonPress = () => {
@@ -100,7 +99,7 @@ export class ImageCarrousel extends PureComponent {
             styles.imageFullscreen,
             {
                 resizeMode: this.props.resizeModeFullScreen,
-                width: this.scrollCoefficient
+                width: this.screenWidth
             },
             image?.style
         ];
@@ -145,7 +144,7 @@ export class ImageCarrousel extends PureComponent {
                             onPress={this.onClosePress}
                         />
                         <Text style={styles.title}>
-                            {`${this.state.selectedImageData + 1} / ${this.props.images.length}`}
+                            {`${this.state.selectedImage + 1} / ${this.props.images.length}`}
                         </Text>
                     </View>
                 </Modal>
