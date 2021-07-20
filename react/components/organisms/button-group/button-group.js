@@ -19,7 +19,8 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             toggle: PropTypes.bool,
             orientation: PropTypes.string,
             onUpdateValue: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            buttonStyle: ViewPropTypes.style
         };
     }
 
@@ -34,7 +35,8 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             toggle: true,
             orientation: "horizontal",
             onUpdateValue: value => {},
-            style: {}
+            style: {},
+            buttonStyle: {}
         };
     }
 
@@ -88,11 +90,15 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
         ];
     };
 
+    buttonStyle = () => {
+        return [styles.buttonToggle, this.props.buttonStyle];
+    };
+
     _renderButtons = () => {
         return this.props.items.map((item, index) => (
             <ButtonToggle
                 key={item.value}
-                style={styles.buttonToggle}
+                style={this.buttonStyle()}
                 text={item.label || item.value}
                 value={this.state.valueData === item.value}
                 buttonProps={{
