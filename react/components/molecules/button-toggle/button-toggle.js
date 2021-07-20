@@ -147,7 +147,9 @@ const styles = StyleSheet.create({
     buttonToggle: {
         overflow: "hidden",
         minWidth: 60,
-        borderRadius: 0
+        borderRadius: 0,
+        flex: 1,
+        width: "100%"
     },
     buttonToggleLeft: {
         borderRadius: 0,
