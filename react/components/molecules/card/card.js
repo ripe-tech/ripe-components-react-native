@@ -73,7 +73,6 @@ export class Card extends PureComponent {
     _textStyle() {
         return {
             ...styles.text,
-            height: this.props.subtext ? undefined : 35,
             ...this.props.style?.text
         };
     }
@@ -192,12 +191,12 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         fontFamily: baseStyles.FONT,
-        height: 65,
-        justifyContent: "space-around",
         flexShrink: 1
     },
     title: {
-        fontSize: 18
+        fontSize: 18,
+        marginBottom: 3,
+        lineHeight: 20
     },
     text: {
         color: "#c3c9cf",
