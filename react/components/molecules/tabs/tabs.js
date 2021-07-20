@@ -16,6 +16,7 @@ export class Tabs extends PureComponent {
                     selected: PropTypes.bool,
                     disabled: PropTypes.bool,
                     hidden: PropTypes.bool,
+                    fill: PropTypes.bool,
                     props: PropTypes.object
                 })
             ),
@@ -60,6 +61,7 @@ export class Tabs extends PureComponent {
                             color={tab.color}
                             colorSelected={tab.colorSelected}
                             disabled={tab.disabled}
+                            fill={tab.fill}
                             badgeAnimationDuration={tab.badgeAnimationDuration}
                             badgeBackgroundColor={tab.badgeBackgroundColor}
                             badgeColor={tab.badgeColor}
