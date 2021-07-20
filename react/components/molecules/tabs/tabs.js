@@ -62,6 +62,7 @@ export class Tabs extends PureComponent {
                             colorSelected={tab.colorSelected}
                             disabled={tab.disabled}
                             fill={tab.fill}
+                            fillSelected={tab.fillSelected}
                             badgeAnimationDuration={tab.badgeAnimationDuration}
                             badgeBackgroundColor={tab.badgeBackgroundColor}
                             badgeColor={tab.badgeColor}
