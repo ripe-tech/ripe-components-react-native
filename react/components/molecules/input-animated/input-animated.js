@@ -19,7 +19,8 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
             style: ViewPropTypes.style,
             onValueUpdate: PropTypes.func,
             onBlur: PropTypes.func,
-            onFocus: PropTypes.func
+            onFocus: PropTypes.func,
+            onSubmitEditing: PropTypes.func
         };
     }
 
@@ -34,7 +35,8 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
             style: {},
             onValueUpdate: value => {},
             onFocus: () => {},
-            onBlur: () => {}
+            onBlur: () => {},
+            onSubmitEditing: event => {}
         };
     }
 
@@ -245,6 +247,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
                         onValueUpdate={this.onChangeValue}
                         onFocus={this._onFocus}
                         onBlur={this._onBlur}
+                        onSubmitEditing={this.props.onSubmitEditing}
                     />
                 </Animated.View>
             </Touchable>
