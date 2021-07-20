@@ -117,7 +117,8 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
             this.props.direction === "left" ? styles[this._styleName("buttonToggleLeft")] : {},
             this.props.direction === "right" ? styles[this._styleName("buttonToggleRight")] : {},
             this.props.direction === "top" ? styles[this._styleName("buttonToggleTop")] : {},
-            this.props.direction === "bottom" ? styles[this._styleName("buttonToggleBottom")] : {}
+            this.props.direction === "bottom" ? styles[this._styleName("buttonToggleBottom")] : {},
+            this.props.style
         ];
     };
 
