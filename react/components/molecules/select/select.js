@@ -123,7 +123,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 borderRadius: this._inputBorderRadius(),
                 fontFamily: baseStyles.FONT_BOOK,
                 fontSize: 14,
-                paddingLeft: 10,
+                paddingLeft: 15,
                 height: 40
             },
             inputIOSContainer: {
@@ -134,7 +134,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 borderRadius: this._inputBorderRadius(),
                 fontFamily: baseStyles.FONT_BOOK,
                 fontSize: 14,
-                paddingLeft: 10,
+                paddingLeft: 15,
                 height: 40,
                 justifyContent: "center"
             },
