@@ -4,6 +4,7 @@ export * from "./chat-message";
 export * from "./checkbox-group";
 export * from "./date-input";
 export * from "./header";
+export * from "./image-carrousel";
 export * from "./input-animated";
 export * from "./input-form";
 export * from "./item";

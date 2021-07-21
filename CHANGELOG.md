@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Multiple files selection with image picker
 * Date input component
 * Switcher component
+* Image carrousel component
 * Input animated component
 * Added `animateScrollBottom` prop to chat
 * `onScroll` and `onScrollBottom` props in chat component
