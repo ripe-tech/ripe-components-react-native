@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
+import { capitalize } from "ripe-commons-native";
 
 import { Avatar } from "../../atoms/avatar";
 import { Icon } from "../../atoms";
 import { Item } from "../item";
 
-import { baseStyles, capitalize } from "../../../util";
+import { baseStyles } from "../../../util";
 
 export class Card extends PureComponent {
     static get propTypes() {
@@ -72,7 +73,6 @@ export class Card extends PureComponent {
     _textStyle() {
         return {
             ...styles.text,
-            height: this.props.subtext ? undefined : 35,
             ...this.props.style?.text
         };
     }
@@ -191,12 +191,12 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         fontFamily: baseStyles.FONT,
-        height: 65,
-        justifyContent: "space-around",
         flexShrink: 1
     },
     title: {
-        fontSize: 18
+        fontSize: 18,
+        marginBottom: 3,
+        lineHeight: 20
     },
     text: {
         color: "#c3c9cf",

@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
+import { capitalize } from "ripe-commons-native";
 import { mix } from "yonius";
 
-import { IdentifiableMixin, capitalize } from "../../../util";
+import { IdentifiableMixin } from "../../../util";
 
 import { Button } from "../../atoms";
 
@@ -117,7 +118,8 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
             this.props.direction === "left" ? styles[this._styleName("buttonToggleLeft")] : {},
             this.props.direction === "right" ? styles[this._styleName("buttonToggleRight")] : {},
             this.props.direction === "top" ? styles[this._styleName("buttonToggleTop")] : {},
-            this.props.direction === "bottom" ? styles[this._styleName("buttonToggleBottom")] : {}
+            this.props.direction === "bottom" ? styles[this._styleName("buttonToggleBottom")] : {},
+            this.props.style
         ];
     };
 
@@ -146,7 +148,9 @@ const styles = StyleSheet.create({
     buttonToggle: {
         overflow: "hidden",
         minWidth: 60,
-        borderRadius: 0
+        borderRadius: 0,
+        flex: 1,
+        width: "100%"
     },
     buttonToggleLeft: {
         borderRadius: 0,
