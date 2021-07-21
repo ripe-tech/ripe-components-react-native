@@ -77,6 +77,6 @@
         "react-native-safe-area-view": "^1.1.1",
         "react-native-svg": "^12.1.0",
         "ripe-commons": "^0.4.0",
-        "ripe-commons-native": "^0.1.0"
+        "ripe-commons-native": "^0.2.0"
     }
 }
