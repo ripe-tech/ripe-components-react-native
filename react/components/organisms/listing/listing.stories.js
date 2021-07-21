@@ -66,7 +66,6 @@ storiesOf("Organisms", module)
                 ]
             }
         ];
-        const filtersValue = { role: null, company: null, nationality: null };
         const renderItem = (item, index) => {
             return (
                 <Card
@@ -80,12 +79,7 @@ storiesOf("Organisms", module)
 
         return (
             <View style={{ flex: 1, paddingVertical: 15, backgroundColor: "#f6f7f9" }}>
-                <Listing
-                    items={items}
-                    renderItem={renderItem}
-                    filters={filters}
-                    filtersValue={filtersValue}
-                />
+                <Listing items={items} renderItem={renderItem} filters={filters} />
             </View>
         );
     });

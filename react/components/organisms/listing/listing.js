@@ -25,7 +25,6 @@ export class Listing extends Component {
     static get defaultProps() {
         return {
             items: [],
-            renderItem: () => {},
             filters: [],
             filtersValue: {},
             emptyItemsText: "No items",
