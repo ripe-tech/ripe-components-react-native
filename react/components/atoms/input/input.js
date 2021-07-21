@@ -16,7 +16,8 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
             secureTextEntry: PropTypes.bool,
             onValueUpdate: PropTypes.func,
             onFocus: PropTypes.func,
-            onBlur: PropTypes.func
+            onBlur: PropTypes.func,
+            onSubmitEditing: PropTypes.func
         };
     }
 
@@ -111,6 +112,7 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
                 onChangeText={this.onChangeValue}
                 onBlur={this.props.onBlur}
                 onFocus={this.props.onFocus}
+                onSubmitEditing={this.props.onSubmitEditing}
                 {...this.id("input-ripe")}
             />
         );
