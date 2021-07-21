@@ -8,6 +8,7 @@ export class Listing extends Component {
     static get propTypes() {
         return {
             items: PropTypes.array.isRequired,
+            getItems: PropTypes.func,
             renderItem: PropTypes.func.isRequired,
             filters: PropTypes.array,
             filtersValue: PropTypes.object,
@@ -24,6 +25,12 @@ export class Listing extends Component {
 
     static get defaultProps() {
         return {
+            itemsOffset: 0,
+            itemsRequestLimit: 15,
+            loading: false,
+            itemsSortField: "meta.nameeeeee",
+            end: false,
+            searchText: "",
             items: [],
             filters: [],
             filtersValue: {},
@@ -45,11 +52,65 @@ export class Listing extends Component {
         };
     }
 
-    onSelectUpdateValue = (key, value) => {
+    async componentDidMount() {
+        await this.refresh();
+    }
+
+    async refresh() {
+        if (!this.props.getItems) return;
+
+        this.setState({ loading: true, itemsOffset: 0 }, async () => {
+            const items = await this._getItems();
+            this.setState({
+                items: items,
+                loading: false,
+                itemsOffset: items.length
+            });
+        });
+    }
+
+    _getItems = async (options = {}) => {
+        const items = await this.props.getItems(
+            {
+                start: this.state.itemsOffset,
+                limit: this.state.itemsRequestLimit,
+                filter: this.state.searchText,
+                sort: this.state.itemsSortField,
+                ...options
+            },
+            { extraFilters: this._buildExtraFilters() }
+        );
+        return items;
+    };
+
+    _buildExtraFilters() {
+        return Object.values(this.state.filters).filter(f => Boolean(f));
+    }
+
+    onSelectUpdateValue(key, value) {
         this.setState(
             ({ filters }) => ({ filters: { ...filters, [key]: value } }),
-            this.props.onFilter(this.state.filters)
+            this.onFilter(this.state.filters)
         );
+    }
+
+    onSearch(value) {
+        this.setState({ searchText: value }, async () => await this.refresh());
+        this.props.onSearch(value);
+    }
+
+    onFilter(value) {
+        this.props.onFilter(value);
+        this.setState({ filters: value }, async () => await this.refresh());
+    }
+
+    async onRefresh() {
+        this.props.onRefresh();
+        await this.refresh();
+    }
+
+    onEndReached = () => {
+        this.props.onEndReached();
     };
 
     _style() {
@@ -100,15 +161,15 @@ export class Listing extends Component {
     render() {
         return (
             <View style={this._style()}>
-                <Search style={styles.search} onValue={this.props.onSearch} />
+                <Search style={styles.search} onValue={this.onSearch} />
                 {this._renderFilters()}
                 <FlatList
-                    key={"accounts"}
+                    key={"items"}
                     style={styles.flatList}
                     data={this.props.items}
                     refreshing={this.props.loading}
-                    onRefresh={this.props.onRefresh}
-                    onEndReached={this.props.onEndReached}
+                    onRefresh={this.onRefresh}
+                    onEndReached={this.onEndReached}
                     renderItem={({ item, index }) => this.props.renderItem(item, index)}
                     keyExtractor={item => String(item.id)}
                     ListEmptyComponent={this._renderEmptyList()}
