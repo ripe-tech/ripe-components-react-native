@@ -81,6 +81,7 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
                 ref={el => (this.textInputComponent = el)}
                 style={this._style()}
                 placeholder={this.props.placeholder}
+                scrollEnabled={false}
                 multiline={this.props.multiline}
                 onSubmitEditing={this.onSubmit}
                 onChangeText={this.props.onValue}
