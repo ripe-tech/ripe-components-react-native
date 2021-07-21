@@ -172,6 +172,7 @@ export class Form extends PureComponent {
         return (
             <ScrollView style={this._style()}>
                 {this._renderSections()}
+                <View style={styles.sectionPadding} />
                 {(this.props.onSave || this.props.onDiscard) && (
                     <View style={styles.buttons}>
                         {this.props.onSave && (
@@ -219,6 +220,13 @@ const styles = StyleSheet.create({
     },
     sectionTitleText: {
         fontFamily: baseStyles.FONT
+    },
+    sectionPadding: {
+        backgroundColor: "#f6f7f9",
+        padding: 14,
+        borderColor: "#e4e8f0",
+        borderStyle: "solid",
+        borderTopWidth: 1
     },
     inputContainer: {
         borderColor: "#e4e8f0",
