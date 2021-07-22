@@ -21,7 +21,9 @@ export class Listing extends Component {
             onFilter: PropTypes.func,
             onRefresh: PropTypes.func,
             onEndReached: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            scrollViewStyle: ViewPropTypes.style,
+            scrollViewContainerStyle: ViewPropTypes.style
         };
     }
 
@@ -39,7 +41,9 @@ export class Listing extends Component {
             onFilter: async () => {},
             onRefresh: async () => {},
             onEndReached: async () => {},
-            style: {}
+            style: {},
+            scrollViewStyle: {},
+            scrollViewContainerStyle: {}
         };
     }
 
@@ -149,6 +153,14 @@ export class Listing extends Component {
         );
     };
 
+    _scrollViewStyle = () => {
+        return [styles.scrollView, this.props.scrollViewStyle];
+    };
+
+    _scrollViewContainerStyle = () => {
+        return [styles.scrollViewContainer, this.props.scrollViewContainerStyle];
+    };
+
     _style() {
         return [styles.listing, this.props.style];
     }
@@ -164,8 +176,8 @@ export class Listing extends Component {
 
         return (
             <ScrollView
-                style={styles.scrollView}
-                contentContainerStyle={styles.scrollViewContainer}
+                style={this._scrollViewStyle()}
+                contentContainerStyle={this._scrollViewContainerStyle()}
                 horizontal={true}
                 directionalLockEnabled={true}
                 showsHorizontalScrollIndicator={false}
