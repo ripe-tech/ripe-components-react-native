@@ -14,6 +14,7 @@ export class Listing extends Component {
             filters: PropTypes.array,
             filtersValue: PropTypes.object,
             emptyItemsText: PropTypes.string,
+            search: PropTypes.bool,
             loading: PropTypes.bool,
             flatListProps: PropTypes.object,
             onSearch: PropTypes.func,
@@ -31,6 +32,7 @@ export class Listing extends Component {
             filters: [],
             filtersValue: {},
             emptyItemsText: "No items",
+            search: true,
             loading: false,
             flatListProps: {},
             onSearch: async () => {},
@@ -151,6 +153,12 @@ export class Listing extends Component {
         return [styles.listing, this.props.style];
     }
 
+    _renderSearch() {
+        if (!this.props.search) return;
+
+        return <Search style={styles.search} onValue={this.onSearch} />;
+    }
+
     _renderFilters() {
         if (this.props.filters.length === 0) return;
 
@@ -195,7 +203,7 @@ export class Listing extends Component {
     render() {
         return (
             <View style={this._style()}>
-                <Search style={styles.search} onValue={this.onSearch} />
+                {this._renderSearch()}
                 {this._renderFilters()}
                 <FlatList
                     ref={el => (this.flatListRef = el)}
