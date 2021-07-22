@@ -48,6 +48,7 @@ export class Listing extends Component {
         this.state = {
             itemsOffset: 0,
             filters: this.props.filtersValue,
+            loading: false,
             items: this.props.items
         };
     }
@@ -200,7 +201,7 @@ export class Listing extends Component {
                     key={"items"}
                     style={styles.flatList}
                     data={this.state.items}
-                    refreshing={this.props.loading}
+                    refreshing={this.props.loading || this.state.loading}
                     onRefresh={this.onRefresh}
                     onEndReached={this.onEndReached}
                     renderItem={({ item, index }) => this.props.renderItem(item, index)}
