@@ -25,10 +25,8 @@ export class Listing extends Component {
 
     static get defaultProps() {
         return {
-            itemsOffset: 0,
             itemsRequestLimit: 15,
             loading: false,
-            itemsSortField: "meta.nameeeeee",
             end: false,
             searchText: "",
             items: [],
@@ -36,9 +34,10 @@ export class Listing extends Component {
             filtersValue: {},
             emptyItemsText: "No items",
             flatListProps: {},
-            onSearch: () => {},
-            onFilter: () => {},
-            onEndReached: () => {},
+            onSearch: async () => {},
+            onFilter: async () => {},
+            onRefresh: async () => {},
+            onEndReached: async () => {},
             style: {}
         };
     }
@@ -47,6 +46,7 @@ export class Listing extends Component {
         super(props);
 
         this.state = {
+            itemsOffset: 0,
             filters: this.props.filtersValue,
             items: this.props.items
         };
@@ -59,12 +59,12 @@ export class Listing extends Component {
     async refresh() {
         if (!this.props.getItems) return;
 
+        this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
         this.setState({ loading: true, itemsOffset: 0 }, async () => {
             const items = await this._getItems();
             this.setState({
                 items: items,
-                loading: false,
-                itemsOffset: items.length
+                loading: false
             });
         });
     }
@@ -73,9 +73,9 @@ export class Listing extends Component {
         const items = await this.props.getItems(
             {
                 start: this.state.itemsOffset,
-                limit: this.state.itemsRequestLimit,
+                limit: this.props.itemsRequestLimit,
                 filter: this.state.searchText,
-                sort: this.state.itemsSortField,
+                sort: this.props.itemsSortField,
                 ...options
             },
             { extraFilters: this._buildExtraFilters() }
@@ -90,27 +90,60 @@ export class Listing extends Component {
     onSelectUpdateValue(key, value) {
         this.setState(
             ({ filters }) => ({ filters: { ...filters, [key]: value } }),
-            this.onFilter(this.state.filters)
+            async () => await this.onFilter(this.state.filters)
         );
     }
 
-    onSearch(value) {
+    onSearch = async value => {
         this.setState({ searchText: value }, async () => await this.refresh());
-        this.props.onSearch(value);
-    }
+        await this.props.onSearch(value);
+    };
 
-    onFilter(value) {
-        this.props.onFilter(value);
+    onFilter = async value => {
+        await this.props.onFilter(value);
         this.setState({ filters: value }, async () => await this.refresh());
-    }
+    };
 
-    async onRefresh() {
-        this.props.onRefresh();
+    onRefresh = async () => {
+        await this.props.onRefresh();
         await this.refresh();
-    }
+    };
 
-    onEndReached = () => {
-        this.props.onEndReached();
+    onEndReached = async () => {
+        await this.props.onEndReached();
+
+        // in case the end of the lazy loading of the elements has
+        // been reached then there's nothing to be loaded
+        if (!this.props.getItems || this.state.end) return;
+
+        this.setState(
+            ({ itemsOffset }) => ({
+                itemsOffset: itemsOffset + this.props.itemsRequestLimit,
+                loading: true
+            }),
+            async () => {
+                try {
+                    // gathers the new orders from the server side using the
+                    // current base offset and base start order ID as the
+                    // reference for the retrieval of new orders
+                    const newItems = await this._getItems();
+
+                    // in case no more orders are found then marks the end
+                    // of the list paging and returns the control flow, as
+                    // there's nothing remaining to be done
+                    if (newItems.length === 0) {
+                        this.setState({ end: true });
+                        return;
+                    }
+
+                    this.setState(({ items }) => ({
+                        items: items.concat(newItems)
+                    }));
+                } finally {
+                    this.setState({ loading: false });
+                }
+            }
+        );
     };
 
     _style() {
@@ -164,9 +197,10 @@ export class Listing extends Component {
                 <Search style={styles.search} onValue={this.onSearch} />
                 {this._renderFilters()}
                 <FlatList
+                    ref={el => (this.flatListRef = el)}
                     key={"items"}
                     style={styles.flatList}
-                    data={this.props.items}
+                    data={this.state.items}
                     refreshing={this.props.loading}
                     onRefresh={this.onRefresh}
                     onEndReached={this.onEndReached}
