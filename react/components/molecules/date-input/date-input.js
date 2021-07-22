@@ -177,9 +177,9 @@ const styles = StyleSheet.create({
         overflow: "hidden"
     },
     dateInputButton: {
-        height: 70,
         flexDirection: "row",
-        justifyContent: "space-around"
+        justifyContent: "space-around",
+        paddingVertical: 16
     },
     dateInputButtonDisabled: {
         opacity: 0.5
@@ -196,14 +196,15 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.FONT,
         color: "#4f7af8",
         fontSize: 14,
-        lineHeight: 16,
-        marginBottom: 8
+        lineHeight: 18,
+        marginTop: Platform.OS === "ios" ? 2 : 0,
+        marginBottom: Platform.OS === "ios" ? 6 : 5
     },
     dateText: {
         fontFamily: baseStyles.FONT,
         color: "#223645",
         fontSize: 16,
-        lineHeight: 18
+        lineHeight: 20
     }
 });
 
