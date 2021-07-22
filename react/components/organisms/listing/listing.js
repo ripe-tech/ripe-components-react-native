@@ -95,8 +95,8 @@ export class Listing extends Component {
     }
 
     onSearch = async value => {
-        this.setState({ searchText: value }, async () => await this.refresh());
         await this.props.onSearch(value);
+        this.setState({ searchText: value }, async () => await this.refresh());
     };
 
     onFilter = async value => {
@@ -111,7 +111,6 @@ export class Listing extends Component {
 
     onEndReached = async () => {
         await this.props.onEndReached();
-
         // in case the end of the lazy loading of the elements has
         // been reached then there's nothing to be loaded
         if (!this.props.getItems || this.state.end) return;
