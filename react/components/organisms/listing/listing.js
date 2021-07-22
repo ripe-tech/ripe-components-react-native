@@ -25,14 +25,13 @@ export class Listing extends Component {
 
     static get defaultProps() {
         return {
-            itemsRequestLimit: 15,
-            loading: false,
-            end: false,
-            searchText: "",
             items: [],
+            itemsRequestLimit: 15,
+            end: false,
             filters: [],
             filtersValue: {},
             emptyItemsText: "No items",
+            loading: false,
             flatListProps: {},
             onSearch: async () => {},
             onFilter: async () => {},
@@ -46,6 +45,7 @@ export class Listing extends Component {
         super(props);
 
         this.state = {
+            searchText: "",
             itemsOffset: 0,
             filters: this.props.filtersValue,
             loading: false,
