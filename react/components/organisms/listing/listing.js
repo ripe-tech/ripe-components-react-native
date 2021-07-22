@@ -7,7 +7,7 @@ import { Search, Select } from "../../molecules";
 export class Listing extends Component {
     static get propTypes() {
         return {
-            items: PropTypes.array.isRequired,
+            items: PropTypes.array,
             getItems: PropTypes.func,
             renderItem: PropTypes.func.isRequired,
             filters: PropTypes.array,
