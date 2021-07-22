@@ -9,6 +9,7 @@ export class Listing extends Component {
         return {
             items: PropTypes.array,
             getItems: PropTypes.func,
+            itemsRequestLimit: PropTypes.number,
             renderItem: PropTypes.func.isRequired,
             filters: PropTypes.array,
             filtersValue: PropTypes.object,
@@ -27,7 +28,6 @@ export class Listing extends Component {
         return {
             items: [],
             itemsRequestLimit: 15,
-            end: false,
             filters: [],
             filtersValue: {},
             emptyItemsText: "No items",
@@ -49,6 +49,7 @@ export class Listing extends Component {
             itemsOffset: 0,
             filters: this.props.filtersValue,
             loading: false,
+            end: false,
             items: this.props.items
         };
     }
