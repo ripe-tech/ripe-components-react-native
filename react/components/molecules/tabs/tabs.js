@@ -13,10 +13,13 @@ export class Tabs extends PureComponent {
                 PropTypes.shape({
                     text: PropTypes.string,
                     icon: PropTypes.string.isRequired,
+                    color: PropTypes.string,
+                    colorSelected: PropTypes.string,
+                    fill: PropTypes.string,
+                    fillSelected: PropTypes.string,
                     selected: PropTypes.bool,
                     disabled: PropTypes.bool,
                     hidden: PropTypes.bool,
-                    fill: PropTypes.bool,
                     props: PropTypes.object
                 })
             ),
