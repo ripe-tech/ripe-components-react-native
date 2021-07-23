@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import {
+    ActivityIndicator,
+    FlatList,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+    ViewPropTypes
+} from "react-native";
 import PropTypes from "prop-types";
 
 import { Search, Select } from "../../molecules";
@@ -7,32 +15,43 @@ import { Search, Select } from "../../molecules";
 export class Listing extends Component {
     static get propTypes() {
         return {
-            items: PropTypes.array.isRequired,
+            items: PropTypes.array,
+            getItems: PropTypes.func,
+            itemsRequestLimit: PropTypes.number,
             renderItem: PropTypes.func.isRequired,
             filters: PropTypes.array,
             filtersValue: PropTypes.object,
             emptyItemsText: PropTypes.string,
+            search: PropTypes.bool,
             loading: PropTypes.bool,
             flatListProps: PropTypes.object,
             onSearch: PropTypes.func,
             onFilter: PropTypes.func,
             onRefresh: PropTypes.func,
             onEndReached: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            scrollViewStyle: ViewPropTypes.style,
+            scrollViewContainerStyle: ViewPropTypes.style
         };
     }
 
     static get defaultProps() {
         return {
             items: [],
+            itemsRequestLimit: 15,
             filters: [],
             filtersValue: {},
             emptyItemsText: "No items",
+            search: true,
+            loading: false,
             flatListProps: {},
-            onSearch: () => {},
-            onFilter: () => {},
-            onEndReached: () => {},
-            style: {}
+            onSearch: async () => {},
+            onFilter: async () => {},
+            onRefresh: async () => {},
+            onEndReached: async () => {},
+            style: {},
+            scrollViewStyle: {},
+            scrollViewContainerStyle: {}
         };
     }
 
@@ -40,20 +59,125 @@ export class Listing extends Component {
         super(props);
 
         this.state = {
+            searchText: "",
+            itemsOffset: 0,
             filters: this.props.filtersValue,
+            loading: false,
+            refreshing: false,
+            end: false,
             items: this.props.items
         };
     }
 
-    onSelectUpdateValue = (key, value) => {
+    async componentDidMount() {
+        await this.refresh();
+    }
+
+    async refresh() {
+        if (!this.props.getItems) return;
+
+        this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
+        this.setState({ refreshing: true, itemsOffset: 0, end: false }, async () => {
+            const items = await this._getItems();
+            this.setState({
+                items: items,
+                refreshing: false
+            });
+        });
+    }
+
+    _getItems = async (options = {}) => {
+        const items = await this.props.getItems(
+            {
+                start: this.state.itemsOffset,
+                limit: this.props.itemsRequestLimit,
+                filter: this.state.searchText,
+                sort: this.props.itemsSortField,
+                ...options
+            },
+            { extraFilters: this._buildExtraFilters() }
+        );
+        return items;
+    };
+
+    _buildExtraFilters() {
+        return Object.values(this.state.filters).filter(f => Boolean(f));
+    }
+
+    onSelectUpdateValue(key, value) {
         this.setState(
             ({ filters }) => ({ filters: { ...filters, [key]: value } }),
-            this.props.onFilter(this.state.filters)
+            async () => await this.onFilter(this.state.filters)
         );
+    }
+
+    onSearch = async value => {
+        await this.props.onSearch(value);
+        this.setState({ searchText: value }, async () => await this.refresh());
+    };
+
+    onFilter = async value => {
+        await this.props.onFilter(value);
+        this.setState({ filters: value }, async () => await this.refresh());
+    };
+
+    onRefresh = async () => {
+        await this.props.onRefresh();
+        await this.refresh();
+    };
+
+    onEndReached = async () => {
+        await this.props.onEndReached();
+        // in case the end of the lazy loading of the elements has
+        // been reached then there's nothing to be loaded
+        if (!this.props.getItems || this.state.end) return;
+
+        this.setState(
+            ({ itemsOffset }) => ({
+                itemsOffset: itemsOffset + this.props.itemsRequestLimit,
+                loading: true
+            }),
+            async () => {
+                try {
+                    // gathers the new orders from the server side using the
+                    // current base offset and base start order ID as the
+                    // reference for the retrieval of new orders
+                    const newItems = await this._getItems();
+
+                    // in case no more orders are found then marks the end
+                    // of the list paging and returns the control flow, as
+                    // there's nothing remaining to be done
+                    if (newItems.length === 0) {
+                        this.setState({ end: true });
+                        return;
+                    }
+
+                    this.setState(({ items }) => ({
+                        items: items.concat(newItems)
+                    }));
+                } finally {
+                    this.setState({ loading: false });
+                }
+            }
+        );
+    };
+
+    _scrollViewStyle = () => {
+        return [styles.scrollView, this.props.scrollViewStyle];
+    };
+
+    _scrollViewContainerStyle = () => {
+        return [styles.scrollViewContainer, this.props.scrollViewContainerStyle];
     };
 
     _style() {
         return [styles.listing, this.props.style];
+    }
+
+    _renderSearch() {
+        if (!this.props.search) return;
+
+        return <Search style={styles.search} onValue={this.onSearch} />;
     }
 
     _renderFilters() {
@@ -61,8 +185,8 @@ export class Listing extends Component {
 
         return (
             <ScrollView
-                style={styles.scrollView}
-                contentContainerStyle={styles.scrollViewContainer}
+                style={this._scrollViewStyle()}
+                contentContainerStyle={this._scrollViewContainerStyle()}
                 horizontal={true}
                 directionalLockEnabled={true}
                 showsHorizontalScrollIndicator={false}
@@ -100,21 +224,30 @@ export class Listing extends Component {
     render() {
         return (
             <View style={this._style()}>
-                <Search style={styles.search} onValue={this.props.onSearch} />
+                {this._renderSearch()}
                 {this._renderFilters()}
                 <FlatList
-                    key={"accounts"}
+                    ref={el => (this.flatListRef = el)}
+                    key={"items"}
                     style={styles.flatList}
-                    data={this.props.items}
-                    refreshing={this.props.loading}
-                    onRefresh={this.props.onRefresh}
-                    onEndReached={this.props.onEndReached}
+                    data={this.state.items}
+                    refreshing={false}
+                    onRefresh={this.onRefresh}
+                    onEndReached={this.onEndReached}
+                    onEndReachedThreshold={0.6}
                     renderItem={({ item, index }) => this.props.renderItem(item, index)}
                     keyExtractor={item => String(item.id)}
                     ListEmptyComponent={this._renderEmptyList()}
                     ListFooterComponent={<View style={styles.flatListBottom} />}
                     {...this.props.flatListProps}
                 />
+                {this.state.loading && (
+                    <ActivityIndicator
+                        style={styles.loadingIndicator}
+                        size="large"
+                        color="#6687f6"
+                    />
+                )}
             </View>
         );
     }
@@ -142,6 +275,12 @@ const styles = StyleSheet.create({
     },
     select: {
         marginRight: 5
+    },
+    loadingIndicator: {
+        position: "absolute",
+        bottom: 20,
+        left: 0,
+        right: 0
     },
     emptyList: {
         alignItems: "center",
