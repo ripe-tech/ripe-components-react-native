@@ -17,7 +17,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
             disabled: PropTypes.bool,
             activeOpacity: PropTypes.number,
             showBorders: PropTypes.bool,
-            onUpdateValue: PropTypes.func,
+            onValueUpdate: PropTypes.func,
             style: ViewPropTypes.style
         };
     }
@@ -29,7 +29,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
             disabled: false,
             activeOpacity: 0.75,
             showBorders: true,
-            onUpdateValue: () => {},
+            onValueUpdate: () => {},
             style: {}
         };
     }
@@ -62,7 +62,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
                 valueData: value || prevState.valueData,
                 visible: false
             }),
-            () => this.props.onUpdateValue(value)
+            () => this.props.onValueUpdate(value)
         );
     };
 
@@ -177,9 +177,9 @@ const styles = StyleSheet.create({
         overflow: "hidden"
     },
     dateInputButton: {
-        height: 70,
         flexDirection: "row",
-        justifyContent: "space-around"
+        justifyContent: "space-around",
+        paddingVertical: 16
     },
     dateInputButtonDisabled: {
         opacity: 0.5
@@ -196,14 +196,15 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.FONT,
         color: "#4f7af8",
         fontSize: 14,
-        lineHeight: 16,
-        marginBottom: 8
+        lineHeight: 18,
+        marginTop: Platform.OS === "ios" ? 2 : 0,
+        marginBottom: Platform.OS === "ios" ? 6 : 5
     },
     dateText: {
         fontFamily: baseStyles.FONT,
         color: "#223645",
         fontSize: 16,
-        lineHeight: 18
+        lineHeight: 20
     }
 });
 
