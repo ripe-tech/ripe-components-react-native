@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import {
+    ActivityIndicator,
+    FlatList,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+    ViewPropTypes
+} from "react-native";
 import PropTypes from "prop-types";
 
 import { Search, Select } from "../../molecules";
@@ -222,7 +230,7 @@ export class Listing extends Component {
                     key={"items"}
                     style={styles.flatList}
                     data={this.state.items}
-                    refreshing={this.props.loading || this.state.loading}
+                    refreshing={false}
                     onRefresh={this.onRefresh}
                     onEndReached={this.onEndReached}
                     renderItem={({ item, index }) => this.props.renderItem(item, index)}
@@ -231,6 +239,13 @@ export class Listing extends Component {
                     ListFooterComponent={<View style={styles.flatListBottom} />}
                     {...this.props.flatListProps}
                 />
+                {this.state.loading && (
+                    <ActivityIndicator
+                        style={styles.loadingIndicator}
+                        size="large"
+                        color="#6687f6"
+                    />
+                )}
             </View>
         );
     }
@@ -258,6 +273,12 @@ const styles = StyleSheet.create({
     },
     select: {
         marginRight: 5
+    },
+    loadingIndicator: {
+        position: "absolute",
+        bottom: 20,
+        left: 0,
+        right: 0
     },
     emptyList: {
         alignItems: "center",
