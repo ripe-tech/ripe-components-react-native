@@ -76,7 +76,7 @@ export class Listing extends Component {
     async refresh() {
         if (!this.props.getItems) return;
 
-        this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
+        this.scrollToTop();
         this.setState({ refreshing: true, itemsOffset: 0, end: false }, async () => {
             const items = await this._getItems();
             this.setState({
@@ -85,6 +85,10 @@ export class Listing extends Component {
             });
         });
     }
+
+    scrollToTop = () => {
+        this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
+    };
 
     _getItems = async (options = {}) => {
         const items = await this.props.getItems(
