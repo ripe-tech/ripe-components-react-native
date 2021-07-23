@@ -234,6 +234,7 @@ export class Listing extends Component {
                     refreshing={false}
                     onRefresh={this.onRefresh}
                     onEndReached={this.onEndReached}
+                    onEndReachedThreshold={0.6}
                     renderItem={({ item, index }) => this.props.renderItem(item, index)}
                     keyExtractor={item => String(item.id)}
                     ListEmptyComponent={this._renderEmptyList()}
