@@ -13,11 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* Adapt select left padding to be consistent among other components
+*
 
 ### Fixed
 
 *
+
+## [0.5.1] - 2021-07-26
+
+### Changed
+
+* Adapt select left padding to be consistent among other components
 
 ## [0.5.0] - 2021-07-20
 
