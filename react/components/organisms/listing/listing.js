@@ -226,7 +226,7 @@ export class Listing extends Component {
                     key={"items"}
                     style={styles.flatList}
                     data={this.state.items}
-                    refreshing={false}
+                    refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
                     onEndReached={this.onEndReached}
                     onEndReachedThreshold={0.6}
