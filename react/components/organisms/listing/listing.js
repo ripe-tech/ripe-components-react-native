@@ -85,24 +85,6 @@ export class Listing extends Component {
         this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
     };
 
-    _getItems = async (options = {}) => {
-        const items = await this.props.getItems(
-            {
-                start: this.state.itemsOffset,
-                limit: this.props.itemsRequestLimit,
-                filter: this.state.searchText,
-                sort: this.props.itemsSortField,
-                ...options
-            },
-            { extraFilters: this._buildExtraFilters() }
-        );
-        return items;
-    };
-
-    _buildExtraFilters() {
-        return Object.values(this.state.filters).filter(f => Boolean(f));
-    }
-
     onSelectUpdateValue(key, value) {
         this.setState(
             ({ filters }) => ({ filters: { ...filters, [key]: value } }),
@@ -164,6 +146,24 @@ export class Listing extends Component {
     _scrollViewContainerStyle = () => {
         return [styles.scrollViewContainer, this.props.scrollViewContainerStyle];
     };
+
+    _getItems = async (options = {}) => {
+        const items = await this.props.getItems(
+            {
+                start: this.state.itemsOffset,
+                limit: this.props.itemsRequestLimit,
+                filter: this.state.searchText,
+                sort: this.props.itemsSortField,
+                ...options
+            },
+            { extraFilters: this._buildExtraFilters() }
+        );
+        return items;
+    };
+
+    _buildExtraFilters() {
+        return Object.values(this.state.filters).filter(f => Boolean(f));
+    }
 
     _style() {
         return [styles.listing, this.props.style];
