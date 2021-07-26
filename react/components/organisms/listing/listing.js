@@ -15,7 +15,6 @@ import { Search, Select } from "../../molecules";
 export class Listing extends Component {
     static get propTypes() {
         return {
-            items: PropTypes.array,
             getItems: PropTypes.func,
             itemsRequestLimit: PropTypes.number,
             renderItem: PropTypes.func.isRequired,
@@ -25,10 +24,6 @@ export class Listing extends Component {
             search: PropTypes.bool,
             loading: PropTypes.bool,
             flatListProps: PropTypes.object,
-            onSearch: PropTypes.func,
-            onFilter: PropTypes.func,
-            onRefresh: PropTypes.func,
-            onEndReached: PropTypes.func,
             style: ViewPropTypes.style,
             scrollViewStyle: ViewPropTypes.style,
             scrollViewContainerStyle: ViewPropTypes.style
@@ -65,7 +60,7 @@ export class Listing extends Component {
             loading: false,
             refreshing: false,
             end: false,
-            items: this.props.items
+            items: []
         };
     }
 
@@ -116,22 +111,18 @@ export class Listing extends Component {
     }
 
     onSearch = async value => {
-        await this.props.onSearch(value);
         this.setState({ searchText: value }, async () => await this.refresh());
     };
 
     onFilter = async value => {
-        await this.props.onFilter(value);
         this.setState({ filters: value }, async () => await this.refresh());
     };
 
     onRefresh = async () => {
-        await this.props.onRefresh();
         await this.refresh();
     };
 
     onEndReached = async () => {
-        await this.props.onEndReached();
         // in case the end of the lazy loading of the elements has
         // been reached then there's nothing to be loaded
         if (!this.props.getItems || this.state.end) return;

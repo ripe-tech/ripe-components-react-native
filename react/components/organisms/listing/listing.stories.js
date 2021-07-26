@@ -10,7 +10,7 @@ import { Card } from "../../molecules";
 storiesOf("Organisms", module)
     .addDecorator(withKnobs)
     .add("Listing", () => {
-        const items = [
+        const getItems = () => [
             {
                 id: 1,
                 avatar_url: "http://i.pravatar.cc",
@@ -79,7 +79,7 @@ storiesOf("Organisms", module)
 
         return (
             <View style={{ flex: 1, paddingVertical: 15, backgroundColor: "#f6f7f9" }}>
-                <Listing items={items} renderItem={renderItem} filters={filters} />
+                <Listing items={() => getItems()} renderItem={renderItem} filters={filters} />
             </View>
         );
     });
