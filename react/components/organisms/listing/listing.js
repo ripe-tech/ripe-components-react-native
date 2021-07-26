@@ -20,6 +20,8 @@ export class Listing extends Component {
             renderItem: PropTypes.func.isRequired,
             filters: PropTypes.array,
             filtersValue: PropTypes.object,
+            itemsSortField: PropTypes.string,
+            itemsSortReverse: PropTypes.bool,
             emptyItemsText: PropTypes.string,
             search: PropTypes.bool,
             loading: PropTypes.bool,
@@ -154,6 +156,7 @@ export class Listing extends Component {
                 limit: this.props.itemsRequestLimit,
                 filter: this.state.searchText,
                 sort: this.props.itemsSortField,
+                reverse: this.props.itemsSortReverse,
                 ...options
             },
             { extraFilters: this._buildExtraFilters() }
