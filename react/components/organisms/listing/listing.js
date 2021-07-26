@@ -20,6 +20,8 @@ export class Listing extends Component {
             renderItem: PropTypes.func.isRequired,
             filters: PropTypes.array,
             filtersValue: PropTypes.object,
+            itemsSortField: PropTypes.string,
+            itemsSortReverse: PropTypes.bool,
             emptyItemsText: PropTypes.string,
             search: PropTypes.bool,
             loading: PropTypes.bool,
@@ -154,6 +156,7 @@ export class Listing extends Component {
                 limit: this.props.itemsRequestLimit,
                 filter: this.state.searchText,
                 sort: this.props.itemsSortField,
+                reverse: this.props.itemsSortReverse,
                 ...options
             },
             { extraFilters: this._buildExtraFilters() }
@@ -209,6 +212,8 @@ export class Listing extends Component {
     };
 
     _renderEmptyList = () => {
+        if (this.state.loading || this.state.refreshing) return null;
+
         return (
             <View style={styles.emptyList}>
                 <Text style={styles.emptyListText}>{this.props.emptyItemsText}</Text>
@@ -226,7 +231,7 @@ export class Listing extends Component {
                     key={"items"}
                     style={styles.flatList}
                     data={this.state.items}
-                    refreshing={false}
+                    refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
                     onEndReached={this.onEndReached}
                     onEndReachedThreshold={0.6}
@@ -265,7 +270,6 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     flatList: {
-        paddingTop: 5,
         height: "100%"
     },
     select: {
