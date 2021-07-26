@@ -146,8 +146,18 @@ export class Listing extends Component {
     };
 
     _scrollViewContainerStyle = () => {
-        return [styles.scrollViewContainer, this.props.scrollViewContainerStyle];
+        return [
+            styles.scrollViewContainer,
+            {
+                width: this._isSelectFullWidth() ? "100%" : undefined
+            },
+            this.props.scrollViewContainerStyle
+        ];
     };
+
+    _isSelectFullWidth() {
+        return this.props.filters?.length === 1;
+    }
 
     _getItems = async (options = {}) => {
         const items = await this.props.getItems(
@@ -204,7 +214,7 @@ export class Listing extends Component {
                     options={item.options}
                     value={this.state.filters[item.value]}
                     onUpdateValue={value => this.onSelectUpdateValue(item.value, value)}
-                    width={item.width}
+                    width={this._isSelectFullWidth() ? "100%" : item.width}
                     key={item.value}
                 />
             );
