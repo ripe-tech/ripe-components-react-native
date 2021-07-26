@@ -212,6 +212,8 @@ export class Listing extends Component {
     };
 
     _renderEmptyList = () => {
+        if (this.state.loading || this.state.refreshing) return null;
+
         return (
             <View style={styles.emptyList}>
                 <Text style={styles.emptyListText}>{this.props.emptyItemsText}</Text>
