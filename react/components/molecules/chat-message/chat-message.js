@@ -51,7 +51,9 @@ export class ChatMessage extends PureComponent {
                 <View style={styles.content}>
                     <View style={styles.header}>
                         <RNText style={styles.username}>{this.props.username}</RNText>
-                        <RNText style={styles.date}>{dateTimeString(this.props.date)}</RNText>
+                        <RNText style={styles.date}>
+                            {dateTimeString(this.props.date, { seconds: false })}
+                        </RNText>
                     </View>
                     {this.props.message ? <Text>{this.props.message}</Text> : null}
                     {this.props.attachments.map((attachment, index) => (

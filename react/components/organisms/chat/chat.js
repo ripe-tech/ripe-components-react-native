@@ -26,6 +26,7 @@ export class Chat extends PureComponent {
                     )
                 })
             ),
+            aggregationThreshold: PropTypes.number,
             animateScrollBottom: PropTypes.bool,
             onNewMessage: PropTypes.func,
             onScrollBottom: PropTypes.func,
@@ -39,6 +40,7 @@ export class Chat extends PureComponent {
             avatarUrl: undefined,
             username: undefined,
             messages: [],
+            aggregationThreshold: 120,
             animateScrollBottom: true,
             onNewMessage: () => {},
             onScrollBottom: () => {},
@@ -79,6 +81,28 @@ export class Chat extends PureComponent {
             this.props.onScrollBottom();
         }
     };
+
+    _aggregatedMessages() {
+        const messages = [];
+        let previousMessage = null;
+        let previousDate = null;
+        for (const message of this.props.messages) {
+            if (
+                previousMessage &&
+                previousMessage.message &&
+                message.message &&
+                message.username === previousMessage.username &&
+                message.date - previousDate < this.props.aggregationThreshold
+            ) {
+                previousMessage.message += `\n${message.message}`;
+            } else {
+                messages.push(message);
+                previousMessage = message;
+            }
+            previousDate = message.date;
+        }
+        return messages;
+    }
 
     async _onNewMessage(message) {
         this.setState({ sendingMessage: true }, () => {
@@ -142,7 +166,7 @@ export class Chat extends PureComponent {
                     onScroll={this.onScroll}
                 >
                     <View style={styles.chatMessagesContent}>
-                        {this.props.messages.map((message, index) => {
+                        {this._aggregatedMessages().map((message, index) => {
                             return (
                                 <ChatMessage
                                     style={index !== 0 && styles.chatMessage}
