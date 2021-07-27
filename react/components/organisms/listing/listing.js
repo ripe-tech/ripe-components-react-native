@@ -205,6 +205,7 @@ export class Listing extends Component {
                     options={item.options}
                     value={this.state.filters[item.value]}
                     onUpdateValue={value => this.onSelectUpdateValue(item.value, value)}
+                    width={item.width}
                     key={item.value}
                 />
             );
