@@ -50,27 +50,27 @@ export class Profile extends Component {
             },
             {
                 key: "Phone",
-                value: this.props.account.meta.phone_number
+                value: this.props.account.meta?.phone_number
             },
             {
                 key: "Company",
-                value: this.props.account.meta.company
+                value: this.props.account.meta?.company
             },
             {
                 key: "Company URL",
-                value: this.props.account.meta.company_url
+                value: this.props.account.meta?.company_url
             },
             {
                 key: "Position",
-                value: this.props.account.meta.position
+                value: this.props.account.meta?.position
             },
             {
                 key: "Birth Date",
-                value: this.props.account.meta.birth_date
+                value: this.props.account.meta?.birth_date
             },
             {
                 key: "Nationality",
-                value: this.props.account.meta.nationality
+                value: this.props.account.meta?.nationality
             },
             {
                 key: "Roles",
@@ -78,19 +78,19 @@ export class Profile extends Component {
             },
             {
                 key: "Start Date",
-                value: this.props.account.meta.start_date
+                value: this.props.account.meta?.start_date
             },
             {
                 key: "Github",
-                value: this.props.account.meta.github_username
+                value: this.props.account.meta?.github_username
             },
             {
                 key: "Twitter",
-                value: this.props.account.meta.twitter_username
+                value: this.props.account.meta?.twitter_username
             },
             {
                 key: "Linkedin",
-                value: this.props.account.meta.linkedin_username
+                value: this.props.account.meta?.linkedin_username
             }
         ].filter(v => Boolean(v));
     };
@@ -133,7 +133,7 @@ export class Profile extends Component {
                     }}
                     size={96}
                 />
-                <Text style={styles.username}>{this.props.account?.meta.name || ""}</Text>
+                <Text style={styles.username}>{this.props.account?.meta?.name || ""}</Text>
                 {this.props.account && this.props.account.description ? (
                     <Text style={styles.description}>
                         {this.props.account?.description.trim() || ""}
