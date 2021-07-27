@@ -124,6 +124,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 fontFamily: baseStyles.FONT_BOOK,
                 fontSize: 14,
                 paddingLeft: 15,
+                paddingRight: 35,
                 height: 40
             },
             inputIOSContainer: {
