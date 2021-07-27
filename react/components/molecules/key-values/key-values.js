@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { isTabletSize } from "ripe-commons-native";
 
+import { baseStyles } from "../../../util";
+
 import { KeyValue } from "../key-value";
 import { Touchable } from "../../atoms/touchable";
 
@@ -85,7 +87,7 @@ export class KeyValues extends PureComponent {
     _renderExpandButton = () => {
         return (
             <Touchable
-                style={styles.butotnExpandDetails}
+                style={styles.buttonExpandDetails}
                 onPress={() => this.toggleItemsListState()}
             >
                 <Text style={styles.buttonExpandDetailsText}>{this._getExpandButtonText()}</Text>
@@ -159,14 +161,14 @@ const styles = StyleSheet.create({
     keyValueColumnRight: {
         marginLeft: 40
     },
-    butotnExpandDetails: {
+    buttonExpandDetails: {
         alignItems: "center",
         height: 50,
         justifyContent: "center"
     },
     buttonExpandDetailsText: {
         color: "#4f7af8",
-        fontWeight: "500"
+        fontFamily: baseStyles.FONT_BOOK
     }
 });
 
