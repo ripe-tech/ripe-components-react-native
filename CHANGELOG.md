@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Better color for the tabs text, removed the bold font on selected
 * Add right padding in select to account for the arrow icon space.
+* Improve listing filter selects to adapt available space.
 
 ### Fixed
 
