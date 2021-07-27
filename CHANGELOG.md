@@ -19,6 +19,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
+## [0.5.2] - 2021-07-27
+
+### Changed
+
+* Adapt `listing` to reacting to refresh state
+* Add reverse and sort field props to `listing`
+* Adapt default style to not include top padding in `listing`
+* Only render the empty list if state is not loading or freshing in `listing`
+
 ## [0.5.1] - 2021-07-26
 
 ### Changed
