@@ -190,21 +190,21 @@ export class Listing extends Component {
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
             >
-                {this._renderSelects()}
+                <View style={styles.selectContainer}>{this._renderSelects()}</View>
             </ScrollView>
         );
     }
 
     _renderSelects = () => {
-        return this.props.filters.map(item => {
+        return this.props.filters.map((item, index) => {
+            const isLastChild = index === this.props.filters.length - 1;
             return (
                 <Select
-                    style={styles.select}
+                    style={isLastChild ? styles.selectLastChild : styles.select}
                     placeholder={item.placeholder}
                     options={item.options}
                     value={this.state.filters[item.value]}
                     onUpdateValue={value => this.onSelectUpdateValue(item.value, value)}
-                    width={item.width}
                     key={item.value}
                 />
             );
@@ -269,11 +269,19 @@ const styles = StyleSheet.create({
         height: 46,
         marginBottom: 10
     },
-    flatList: {
-        height: "100%"
+    selectContainer: {
+        flexDirection: "row",
+        minWidth: "100%"
     },
     select: {
+        flex: 1,
         marginRight: 5
+    },
+    selectLastChild: {
+        flex: 1
+    },
+    flatList: {
+        height: "100%"
     },
     loadingIndicator: {
         position: "absolute",
