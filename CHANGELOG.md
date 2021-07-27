@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* Better color for the tabs text, removed the bold font on selected
 
 ### Fixed
 
