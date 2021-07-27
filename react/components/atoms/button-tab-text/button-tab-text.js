@@ -14,6 +14,7 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
             active: PropTypes.bool,
             backgroundColor: PropTypes.string,
             color: PropTypes.string,
+            colorSelected: PropTypes.string,
             text: PropTypes.string,
             disabled: PropTypes.bool,
             activeOpacity: PropTypes.number,
@@ -27,7 +28,8 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             active: false,
             backgroundColor: "#f6f7f9",
-            color: "#162633",
+            color: "#c8cdd2",
+            colorSelected: "#00435e",
             text: undefined,
             disabled: false,
             activeOpacity: 0.5,
@@ -54,7 +56,7 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
                 color: this.props.color
             },
             this.props.disabled ? styles.textDisabled : {},
-            this.props.active ? {} : styles.textUnselected
+            this.props.active ? { ...styles.textSelected, color: this.props.colorSelected } : {}
         ];
     }
 
@@ -92,15 +94,11 @@ const styles = StyleSheet.create({
         letterSpacing: 0.25
     },
     textCompact: {
-        fontFamily: baseStyles.FONT_BOLD,
         fontSize: 14,
         lineHeight: 18
     },
     textDisabled: {
         opacity: 0.4
     },
-    textUnselected: {
-        color: "#a4adb5",
-        fontFamily: baseStyles.FONT_BOOK
-    }
+    textSelected: {}
 });

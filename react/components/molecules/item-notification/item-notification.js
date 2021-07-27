@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
-import { dateTimeString, isImage } from "ripe-commons-native";
+import { dateTimeString } from "ripe-commons-native";
 
 import { Avatar, Touchable } from "../../atoms";
 

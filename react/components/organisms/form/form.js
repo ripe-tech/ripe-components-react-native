@@ -150,10 +150,10 @@ export class Form extends PureComponent {
                         </View>
                     )}
                     <View style={styles.sectionContent}>
-                        {fields.map((field, index) => (
+                        {fields.map((field, _index) => (
                             <View
                                 key={field.value}
-                                style={index < fields.length - 1 ? styles.inputContainer : null}
+                                style={_index < fields.length - 1 ? styles.inputContainer : null}
                             >
                                 {this._renderInputComponent(field)}
                             </View>
