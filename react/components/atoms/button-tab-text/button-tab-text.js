@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     },
     text: {
         marginTop: Platform.OS === "ios" ? 4 : 0,
-        fontFamily: baseStyles.FONT,
+        fontFamily: baseStyles.FONT_BOOK,
         fontSize: 16,
         letterSpacing: 0.25
     },
