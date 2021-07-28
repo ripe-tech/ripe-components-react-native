@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Alert, ScrollView, Share, StyleSheet, View } from "react-native";
-import { AuthContext } from "ripe-commons-native";
+import { ScrollView, Share, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -10,19 +9,21 @@ import { KeyValues } from "../../molecules";
 import { ButtonGroup } from "../button-group";
 
 export class Profile extends Component {
-    static contextType = AuthContext;
-
     static get propTypes() {
         return {
             account: PropTypes.object.isRequired,
             editButton: PropTypes.bool,
-            onEditPress: PropTypes.func
+            onEditPress: PropTypes.func,
+            onAvatarPress: PropTypes.func,
+            onLogoutPress: PropTypes.func,
+            onShareContactPress: PropTypes.func
         };
     }
 
     static get defaultProps() {
         return {
-            editButton: false
+            editButton: false,
+            onAvatarPress: () => {}
         };
     }
 
@@ -102,13 +103,13 @@ export class Profile extends Component {
             buttons.push({
                 label: "Share contact",
                 value: "share",
-                onPress: this.onShareContactPress
+                onPress: this.props.onShareContactPress
             });
         }
         buttons.push({
             label: "Sign out",
             value: "signout",
-            onPress: this.onSignOutPress,
+            onPress: this.props.onLogoutPress,
             buttonProps: {
                 textColor: "#f86a6a"
             }
@@ -131,20 +132,6 @@ export class Profile extends Component {
         });
     };
 
-    onSignOutPress = () => {
-        Alert.alert(
-            "Sign out",
-            "Are you sure you want to sign out?",
-            [
-                {
-                    text: "Cancel"
-                },
-                { text: "Confirm", onPress: () => this.context.logout() }
-            ],
-            { cancelable: false }
-        );
-    };
-
     _renderHeader = () => {
         return (
             <>
@@ -153,6 +140,7 @@ export class Profile extends Component {
                         uri: `${this.props.account?.avatar_url}`
                     }}
                     size={96}
+                    onPress={this.props.onAvatarPress}
                 />
                 <Text style={styles.username}>{this.props.account?.meta?.name || ""}</Text>
                 {this.props.account && this.props.account.description ? (
