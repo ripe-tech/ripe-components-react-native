@@ -15,7 +15,7 @@ export class Profile extends Component {
             editButton: PropTypes.bool,
             onEditPress: PropTypes.func,
             onAvatarPress: PropTypes.func,
-            onLogoutPress: PropTypes.func
+            onLogoutTouch: PropTypes.func
         };
     }
 
@@ -108,7 +108,7 @@ export class Profile extends Component {
         buttons.push({
             label: "Sign out",
             value: "signout",
-            onPress: this.props.onLogoutPress,
+            onPress: this.props.onLogoutTouch,
             buttonProps: {
                 textColor: "#f86a6a"
             }
