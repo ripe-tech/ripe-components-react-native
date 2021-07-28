@@ -178,13 +178,7 @@ export class Listing extends Component {
     _renderSearch() {
         if (!this.props.search) return;
 
-        return (
-            <Search
-                onLayout={event => this._onSearchLayout(event)}
-                style={styles.search}
-                onValue={this.onSearch}
-            />
-        );
+        return <Search style={styles.search} onValue={this.onSearch} />;
     }
 
     _onSearchLayout(event) {
@@ -200,6 +194,7 @@ export class Listing extends Component {
 
         return (
             <ScrollView
+                onLayout={event => this._onSearchLayout(event)}
                 style={this._scrollViewStyle()}
                 contentContainerStyle={this._scrollViewContainerStyle()}
                 horizontal={true}
@@ -207,11 +202,7 @@ export class Listing extends Component {
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
             >
-                <View
-                    onLayout={event => this._onSearchLayout(event)}
-                    ref={el => (this.selectContainerRef = el)}
-                    style={styles.selectContainer}
-                >
+                <View ref={el => (this.selectContainerRef = el)} style={styles.selectContainer}>
                     {this._renderSelects()}
                 </View>
             </ScrollView>
@@ -223,6 +214,7 @@ export class Listing extends Component {
             const isLastChild = index === this.props.filters.length - 1;
             const staticSize =
                 this.props.filters.length > 3 ? this.searchWidth / 3 - 10 / 3 : undefined;
+            console.log("searchWidth", this.searchWidth);
             return (
                 <Select
                     style={isLastChild ? styles.selectLastChild : styles.select}
