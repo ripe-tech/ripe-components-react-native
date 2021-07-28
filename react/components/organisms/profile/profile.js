@@ -15,8 +15,7 @@ export class Profile extends Component {
             editButton: PropTypes.bool,
             onEditPress: PropTypes.func,
             onAvatarPress: PropTypes.func,
-            onLogoutPress: PropTypes.func,
-            onShareContactPress: PropTypes.func
+            onLogoutPress: PropTypes.func
         };
     }
 
@@ -103,7 +102,7 @@ export class Profile extends Component {
             buttons.push({
                 label: "Share contact",
                 value: "share",
-                onPress: this.props.onShareContactPress
+                onPress: this.onShareContactPress
             });
         }
         buttons.push({
