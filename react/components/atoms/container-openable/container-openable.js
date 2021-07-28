@@ -70,6 +70,7 @@ export class ContainerOpenable extends PureComponent {
         this.headerHeight = 0;
         this.containerHeight = 0;
         this.containerPosY = 0;
+        this.overlayOpacityClosed = 0;
         this.animating = false;
     }
 
@@ -101,7 +102,7 @@ export class ContainerOpenable extends PureComponent {
 
             Animated.parallel([
                 Animated.timing(this.state.contentHeight, {
-                    toValue: 1,
+                    toValue: this.containerHeight,
                     duration: this.props.animationsDuration,
                     useNativeDriver: false,
                     easing: Easing.inOut(Easing.ease)
@@ -125,13 +126,13 @@ export class ContainerOpenable extends PureComponent {
 
         Animated.parallel([
             Animated.timing(this.state.contentHeight, {
-                toValue: 0,
+                toValue: this.headerHeight,
                 duration: this.props.animationsDuration,
                 useNativeDriver: false,
                 easing: Easing.inOut(Easing.ease)
             }),
             Animated.timing(this.state.overlayOpacity, {
-                toValue: 0,
+                toValue: this.overlayOpacityClosed,
                 duration: this.props.animationsDuration,
                 useNativeDriver: true,
                 easing: Easing.inOut(Easing.ease)
