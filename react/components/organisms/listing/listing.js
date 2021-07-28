@@ -193,19 +193,21 @@ export class Listing extends Component {
         if (this.props.filters.length === 0) return;
 
         return (
-            <ScrollView
-                onLayout={event => this._onSearchLayout(event)}
-                style={this._scrollViewStyle()}
-                contentContainerStyle={this._scrollViewContainerStyle()}
-                horizontal={true}
-                directionalLockEnabled={true}
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-            >
-                <View ref={el => (this.selectContainerRef = el)} style={styles.selectContainer}>
-                    {this._renderSelects()}
-                </View>
-            </ScrollView>
+            <View style={styles.filters}>
+                <ScrollView
+                    onLayout={event => this._onSearchLayout(event)}
+                    style={this._scrollViewStyle()}
+                    contentContainerStyle={this._scrollViewContainerStyle()}
+                    horizontal={true}
+                    directionalLockEnabled={true}
+                    showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View ref={el => (this.selectContainerRef = el)} style={styles.selectContainer}>
+                        {this._renderSelects()}
+                    </View>
+                </ScrollView>
+            </View>
         );
     }
 
@@ -280,18 +282,20 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginHorizontal: 15
     },
-    scrollView: {
+    filters: {
         marginHorizontal: 15
     },
     scrollViewContainer: {
         height: 46,
-        marginBottom: 10
+        marginBottom: 10,
+        minWidth: "100%"
     },
     selectContainer: {
         flexDirection: "row",
         minWidth: "100%"
     },
     select: {
+        flex: 1,
         marginRight: 5
     },
     selectLastChild: {
