@@ -44,12 +44,20 @@ export class ContainerDraggable extends PureComponent {
 
         this.dragging = true;
 
-        const movePercentage = gestureState.dy / this.child.contentHeight();
+        const contentHeight = this.child.contentHeight();
+        const headerHeight = this.child.headerHeight;
+        const height = this.child.containerHeight;
+
+        const movePercentage = gestureState.dy / contentHeight;
         this.contentHeightPercentage = this.opening ? -1 * movePercentage : 1 - movePercentage;
         this.contentHeightPercentage = Math.min(1, Math.max(this.contentHeightPercentage, 0));
 
         this.child.setOverlayOpacity(0.5 * this.contentHeightPercentage);
-        this.child.setContentHeight(this.contentHeightPercentage);
+
+        const newHeight = this.opening
+            ? Math.min(headerHeight + height * this.contentHeightPercentage, height)
+            : height * this.contentHeightPercentage;
+        this.child.setContentHeight(newHeight);
     };
 
     onPanResponderRelease = (event, gestureState) => {

@@ -36,7 +36,7 @@ export class ContainerOpenable extends PureComponent {
 
     static get defaultProps() {
         return {
-            animationsDuration: 300,
+            animationsDuration: 150,
             targetOverlayOpacity: 0.5,
             modal: true,
             header: undefined,
@@ -62,7 +62,10 @@ export class ContainerOpenable extends PureComponent {
             contentHeight: new Animated.Value(0)
         };
 
-        this.state.contentHeight.addListener(h => this.props.onContentHeight(h.value));
+        this.state.contentHeight.addListener(h => {
+            const correctHeight = h.value - this.headerHeight;
+            this.props.onContentHeight(correctHeight);
+        });
 
         this.headerHeight = 0;
         this.containerHeight = 0;
@@ -74,7 +77,10 @@ export class ContainerOpenable extends PureComponent {
 
     contentHeight = () => this.containerHeight - this.headerHeight;
 
-    setContentHeight = height => this.state.contentHeight.setValue(height);
+    setContentHeight = height => {
+        const newHeight = Math.max(height, this.headerHeight);
+        this.state.contentHeight.setValue(newHeight);
+    };
 
     setOverlayOpacity = opacity => {
         this.state.overlayOpacity.setValue(opacity);
@@ -168,6 +174,8 @@ export class ContainerOpenable extends PureComponent {
         if (this.state.headerHeightLoaded) return;
 
         this.headerHeight = event.nativeEvent.layout.height;
+        this.state.contentHeight.setValue(this.headerHeight);
+
         this.setState({ headerHeightLoaded: true });
     };
 
@@ -190,10 +198,7 @@ export class ContainerOpenable extends PureComponent {
             styles.contentContainer,
             this.props.style,
             {
-                height: this.state.contentHeight.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [this.headerHeight, this.containerHeight]
-                })
+                height: this.state.contentHeight
             }
         ];
     };
