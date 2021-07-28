@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, Share, StyleSheet, View } from "react-native";
+import { AuthContext } from "ripe-commons-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -9,13 +10,13 @@ import { KeyValues } from "../../molecules";
 import { ButtonGroup } from "../button-group";
 
 export class Profile extends Component {
+    static contextType = AuthContext;
+
     static get propTypes() {
         return {
             account: PropTypes.object.isRequired,
             editButton: PropTypes.bool,
-            onEditPress: PropTypes.func,
-            onSignOutPress: PropTypes.func,
-            onShareContactPress: PropTypes.func
+            onEditPress: PropTypes.func
         };
     }
 
@@ -101,13 +102,13 @@ export class Profile extends Component {
             buttons.push({
                 label: "Share contact",
                 value: "share",
-                onPress: this.props.onShareContactPress
+                onPress: this.onShareContactPress
             });
         }
         buttons.push({
             label: "Sign out",
             value: "signout",
-            onPress: this.props.onSignOutPress,
+            onPress: this.onSignOutPress,
             buttonProps: {
                 textColor: "#f86a6a"
             }
@@ -122,6 +123,26 @@ export class Profile extends Component {
             borderTopLeftRadius: 0,
             borderTopRightRadius: 0
         };
+    };
+
+    onShareContactPress = async () => {
+        await Share.share({
+            message: this.props.account.meta?.phone_number
+        });
+    };
+
+    onSignOutPress = () => {
+        Alert.alert(
+            "Sign out",
+            "Are you sure you want to sign out?",
+            [
+                {
+                    text: "Cancel"
+                },
+                { text: "Confirm", onPress: () => this.context.logout() }
+            ],
+            { cancelable: false }
+        );
     };
 
     _renderHeader = () => {
