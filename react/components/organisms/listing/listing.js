@@ -216,7 +216,6 @@ export class Listing extends Component {
             const isLastChild = index === this.props.filters.length - 1;
             const staticSize =
                 this.props.filters.length > 3 ? this.searchWidth / 3 - 10 / 3 : undefined;
-            console.log("searchWidth", this.searchWidth);
             return (
                 <Select
                     style={isLastChild ? styles.selectLastChild : styles.select}
