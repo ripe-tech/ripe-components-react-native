@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * Add new profile component
+* Add `onEndReachedThreshold`, `refreshing`, `loading` and `onFilter` props to listing.
 
 ### Changed
 
