@@ -66,7 +66,7 @@ export class Listing extends Component {
             items: []
         };
 
-        this.searchWidth = 0;
+        this.scrollViewWidth = 0;
     }
 
     async componentDidMount() {
@@ -181,10 +181,10 @@ export class Listing extends Component {
         return <Search style={styles.search} onValue={this.onSearch} />;
     }
 
-    _onSearchLayout(event) {
+    _onScrollViewLayout(event) {
         if (this.state.searchLoaded) return;
 
-        this.searchWidth = event.nativeEvent.layout.width;
+        this.scrollViewWidth = event.nativeEvent.layout.width;
 
         this.setState({ searchLoaded: true });
     }
@@ -195,7 +195,7 @@ export class Listing extends Component {
         return (
             <View style={styles.filters}>
                 <ScrollView
-                    onLayout={event => this._onSearchLayout(event)}
+                    onLayout={event => this._onScrollViewLayout(event)}
                     style={this._scrollViewStyle()}
                     contentContainerStyle={this._scrollViewContainerStyle()}
                     horizontal={true}
@@ -215,7 +215,7 @@ export class Listing extends Component {
         return this.props.filters.map((item, index) => {
             const isLastChild = index === this.props.filters.length - 1;
             const staticSize =
-                this.props.filters.length > 3 ? this.searchWidth / 3 - 10 / 3 : undefined;
+                this.props.filters.length > 3 ? this.scrollViewWidth / 3 - 10 / 3 : undefined;
             return (
                 <Select
                     style={isLastChild ? styles.selectLastChild : styles.select}
