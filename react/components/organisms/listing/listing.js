@@ -42,10 +42,7 @@ export class Listing extends Component {
             search: true,
             loading: false,
             flatListProps: {},
-            onSearch: async () => {},
             onFilter: async () => {},
-            onRefresh: async () => {},
-            onEndReached: async () => {},
             style: {},
             scrollViewStyle: {},
             scrollViewContainerStyle: {}
