@@ -160,6 +160,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                     placeholder={{ label: this.props.placeholder, value: null }}
                     disabled={this.props.disabled}
                     useNativeAndroidPickerStyle={false}
+                    fixAndroidTouchableBug={true}
                     Icon={this._icon}
                     onValueChange={this.onValueChange}
                 />
