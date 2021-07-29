@@ -25,7 +25,10 @@ export class Listing extends Component {
             emptyItemsText: PropTypes.string,
             search: PropTypes.bool,
             loading: PropTypes.bool,
+            refreshing: PropTypes.bool,
             flatListProps: PropTypes.object,
+            onEndReachedThreshold: PropTypes.number,
+            onFilter: PropTypes.func,
             style: ViewPropTypes.style,
             scrollViewStyle: ViewPropTypes.style,
             scrollViewContainerStyle: ViewPropTypes.style
@@ -41,6 +44,7 @@ export class Listing extends Component {
             emptyItemsText: "No items",
             search: true,
             loading: false,
+            refreshing: false,
             flatListProps: {},
             onFilter: async () => {},
             style: {},
@@ -228,17 +232,17 @@ export class Listing extends Component {
                     key={"items"}
                     style={styles.flatList}
                     data={this.state.items}
-                    refreshing={this.state.refreshing}
+                    refreshing={this.props.refreshing && this.state.refreshing}
                     onRefresh={this.onRefresh}
                     onEndReached={this.onEndReached}
-                    onEndReachedThreshold={0.6}
+                    onEndReachedThreshold={this.props.onEndReachedThreshold}
                     renderItem={({ item, index }) => this.props.renderItem(item, index)}
                     keyExtractor={item => String(item.id)}
                     ListEmptyComponent={this._renderEmptyList()}
                     ListFooterComponent={<View style={styles.flatListBottom} />}
                     {...this.props.flatListProps}
                 />
-                {this.state.loading && (
+                {this.props.loading && this.state.loading && (
                     <ActivityIndicator
                         style={styles.loadingIndicator}
                         size="large"
