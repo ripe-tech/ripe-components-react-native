@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* Touchable area not being fully covered on select.
 
 ## [0.5.1] - 2021-07-26
 
