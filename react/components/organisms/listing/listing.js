@@ -215,7 +215,7 @@ export class Listing extends Component {
         return this.props.filters.map((item, index) => {
             const isLastChild = index === this.props.filters.length - 1;
             const staticSize =
-                this.props.filters.length > 3 ? this.scrollViewWidth / 3 - 10 / 3 : undefined;
+                this.props.filters.length > 3 ? (this.scrollViewWidth - 10) / 3 : undefined;
             return (
                 <Select
                     style={isLastChild ? styles.selectLastChild : styles.select}
