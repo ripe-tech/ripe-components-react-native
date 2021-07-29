@@ -100,6 +100,7 @@ export class Listing extends Component {
     };
 
     onFilter = async value => {
+        await this.props.onFilter(value);
         this.setState({ filters: value }, async () => await this.refresh());
     };
 
