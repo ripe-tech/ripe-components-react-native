@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
         height: 150
     },
     noMessagesText: {
-        color: "#57626E",
+        color: "#57626e",
         fontFamily: baseStyles.FONT_BOOK
     }
 });
