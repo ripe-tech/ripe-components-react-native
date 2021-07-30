@@ -106,7 +106,6 @@ export class Chat extends PureComponent {
     }
 
     async _onNewMessage(message) {
-        debugger;
         this.setState({ sendingMessage: true }, () => {
             let result = true;
             try {
