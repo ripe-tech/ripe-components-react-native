@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ScrollView, StyleSheet, View, ViewPropTypes } from "react-native";
+import { ScrollView, StyleSheet, Image, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -157,6 +157,18 @@ export class Chat extends PureComponent {
         await this._onNewMessage(message);
     };
 
+    _renderNoMessages = () => {
+        return (
+            <View style={styles.noMessages}>
+                <Image
+                    style={styles.noMessagesImage}
+                    source={require("./assets/no-messages.png")}
+                />
+                <Text style={styles.noMessagesText}>No messages, yet</Text>
+            </View>
+        );
+    };
+
     render() {
         return (
             <View style={[styles.chat, this.props.style]}>
@@ -166,21 +178,25 @@ export class Chat extends PureComponent {
                     onContentSizeChange={() => this.scrollToEnd(false)}
                     onScroll={this.onScroll}
                 >
-                    <View style={styles.chatMessagesContent}>
-                        {this._aggregatedMessages().map((message, index) => {
-                            return (
-                                <ChatMessage
-                                    style={index !== 0 && styles.chatMessage}
-                                    avatarUrl={message.avatarUrl}
-                                    username={message.username}
-                                    message={message.message}
-                                    date={message.date}
-                                    attachments={message.attachments}
-                                    key={index}
-                                />
-                            );
-                        })}
-                    </View>
+                    {this.props.messages.length === 0 ? (
+                        this._renderNoMessages()
+                    ) : (
+                        <View style={styles.chatMessagesContent}>
+                            {this._aggregatedMessages().map((message, index) => {
+                                return (
+                                    <ChatMessage
+                                        style={index !== 0 && styles.chatMessage}
+                                        avatarUrl={message.avatarUrl}
+                                        username={message.username}
+                                        message={message.message}
+                                        date={message.date}
+                                        attachments={message.attachments}
+                                        key={index}
+                                    />
+                                );
+                            })}
+                        </View>
+                    )}
                 </ScrollView>
                 <RichTextInput
                     ref={el => (this.input = el)}
@@ -213,6 +229,18 @@ const styles = StyleSheet.create({
     },
     chatMessage: {
         marginTop: 16
+    },
+    noMessages: {
+        alignItems: "center",
+        marginTop: "10%"
+    },
+    noMessagesImage: {
+        width: 150,
+        height: 150
+    },
+    noMessagesText: {
+        color: "#57626E",
+        fontFamily: baseStyles.FONT_BOOK
     }
 });
 

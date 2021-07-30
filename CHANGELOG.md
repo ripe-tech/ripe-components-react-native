@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Add new profile component
 * Add `onEndReachedThreshold`, `refreshing`, `loading` and `onFilter` props to listing
+* Add message info in chat when there is no messages to display
 
 ### Changed
 
