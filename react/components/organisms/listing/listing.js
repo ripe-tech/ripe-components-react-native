@@ -61,10 +61,13 @@ export class Listing extends Component {
             itemsOffset: 0,
             filters: this.props.filtersValue,
             loading: false,
+            searchLoaded: false,
             refreshing: false,
             end: false,
             items: []
         };
+
+        this.scrollViewWidth = 0;
     }
 
     async componentDidMount() {
@@ -180,33 +183,47 @@ export class Listing extends Component {
         return <Search style={styles.search} onValue={this.onSearch} />;
     }
 
+    _onScrollViewLayout(event) {
+        if (this.state.searchLoaded) return;
+        this.scrollViewWidth = event.nativeEvent.layout.width;
+        this.setState({ searchLoaded: true });
+    }
+
     _renderFilters() {
         if (this.props.filters.length === 0) return;
 
         return (
-            <ScrollView
-                style={this._scrollViewStyle()}
-                contentContainerStyle={this._scrollViewContainerStyle()}
-                horizontal={true}
-                directionalLockEnabled={true}
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-            >
-                {this._renderSelects()}
-            </ScrollView>
+            <View style={styles.filters}>
+                <ScrollView
+                    onLayout={event => this._onScrollViewLayout(event)}
+                    style={this._scrollViewStyle()}
+                    contentContainerStyle={this._scrollViewContainerStyle()}
+                    horizontal={true}
+                    directionalLockEnabled={true}
+                    showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View ref={el => (this.selectContainerRef = el)} style={styles.selectContainer}>
+                        {this._renderSelects()}
+                    </View>
+                </ScrollView>
+            </View>
         );
     }
 
     _renderSelects = () => {
-        return this.props.filters.map(item => {
+        return this.props.filters.map((item, index) => {
+            const isLastChild = index === this.props.filters.length - 1;
+            const staticSize =
+                this.props.filters.length > 3 ? (this.scrollViewWidth - 10) / 3 : undefined;
             return (
                 <Select
-                    style={styles.select}
+                    style={isLastChild ? styles.selectLastChild : styles.select}
                     placeholder={item.placeholder}
                     options={item.options}
                     value={this.state.filters[item.value]}
                     onUpdateValue={value => this.onSelectUpdateValue(item.value, value)}
-                    width={item.width}
+                    width={staticSize || item.width}
                     key={item.value}
                 />
             );
@@ -264,18 +281,27 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginHorizontal: 15
     },
-    scrollView: {
+    filters: {
         marginHorizontal: 15
     },
     scrollViewContainer: {
         height: 46,
-        marginBottom: 10
+        marginBottom: 10,
+        minWidth: "100%"
+    },
+    selectContainer: {
+        flexDirection: "row",
+        minWidth: "100%"
+    },
+    select: {
+        flex: 1,
+        marginRight: 5
+    },
+    selectLastChild: {
+        flex: 1
     },
     flatList: {
         height: "100%"
-    },
-    select: {
-        marginRight: 5
     },
     loadingIndicator: {
         position: "absolute",
