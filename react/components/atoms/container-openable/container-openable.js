@@ -36,7 +36,7 @@ export class ContainerOpenable extends PureComponent {
 
     static get defaultProps() {
         return {
-            animationsDuration: 300,
+            animationsDuration: 150,
             targetOverlayOpacity: 0.5,
             modal: true,
             header: undefined,
@@ -98,13 +98,13 @@ export class ContainerOpenable extends PureComponent {
                     toValue: 1,
                     duration: this.props.animationsDuration,
                     useNativeDriver: false,
-                    easing: Easing.inOut(Easing.ease)
+                    easing: Easing.linear()
                 }),
                 Animated.timing(this.state.overlayOpacity, {
                     toValue: this.props.targetOverlayOpacity,
                     duration: this.props.animationsDuration,
                     useNativeDriver: true,
-                    easing: Easing.inOut(Easing.ease)
+                    easing: Easing.linear()
                 })
             ]).start(() => {
                 this.animating = false;
@@ -122,13 +122,13 @@ export class ContainerOpenable extends PureComponent {
                 toValue: 0,
                 duration: this.props.animationsDuration,
                 useNativeDriver: false,
-                easing: Easing.inOut(Easing.ease)
+                easing: Easing.linear()
             }),
             Animated.timing(this.state.overlayOpacity, {
                 toValue: 0,
                 duration: this.props.animationsDuration,
                 useNativeDriver: true,
-                easing: Easing.inOut(Easing.ease)
+                easing: Easing.linear()
             })
         ]).start(() => {
             this.animating = false;
