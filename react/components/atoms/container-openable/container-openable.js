@@ -36,7 +36,7 @@ export class ContainerOpenable extends PureComponent {
 
     static get defaultProps() {
         return {
-            animationsDuration: 300,
+            animationsDuration: 175,
             targetOverlayOpacity: 0.5,
             modal: true,
             header: undefined,
