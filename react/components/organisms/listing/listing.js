@@ -185,9 +185,7 @@ export class Listing extends Component {
 
     _onScrollViewLayout(event) {
         if (this.state.searchLoaded) return;
-
         this.scrollViewWidth = event.nativeEvent.layout.width;
-
         this.setState({ searchLoaded: true });
     }
 
