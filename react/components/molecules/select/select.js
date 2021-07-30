@@ -17,6 +17,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             colorVariant: PropTypes.string,
             placeholder: PropTypes.string,
             disabled: PropTypes.bool,
+            fixAndroidTouchableBug: PropTypes.bool,
             width: PropTypes.number,
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style
@@ -31,6 +32,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             shapeVariant: "round",
             colorVariant: "white",
             disabled: false,
+            fixAndroidTouchableBug: true,
             width: undefined,
             keyTimeout: 500,
             onUpdateValue: () => {},
@@ -160,6 +162,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                     placeholder={{ label: this.props.placeholder, value: null }}
                     disabled={this.props.disabled}
                     useNativeAndroidPickerStyle={false}
+                    fixAndroidTouchableBug={this.props.fixAndroidTouchableBug}
                     Icon={this._icon}
                     onValueChange={this.onValueChange}
                 />

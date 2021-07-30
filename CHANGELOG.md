@@ -10,16 +10,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * Add new profile component
+* Add `onEndReachedThreshold`, `refreshing`, `loading` and `onFilter` props to listing
 
 ### Changed
 
 * Better color for the tabs text, removed the bold font on selected
-* Add right padding in select to account for the arrow icon space.
-* Listing filter selects adapting for the available space.
+* Add right padding in select to account for the arrow icon space
+* Listing filter selects adapting for the available space
+* Add right padding in select to account for the arrow icon space
 
 ### Fixed
 
-*
+* Touchable area not being fully covered on select
+* Avoid chat scrolling when being opened for the first time
 
 ## [0.5.1] - 2021-07-26
 
