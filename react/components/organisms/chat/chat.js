@@ -66,8 +66,9 @@ export class Chat extends PureComponent {
         this.input.blur();
     };
 
-    scrollToEnd = () => {
-        this.scrollViewComponent.scrollToEnd({ animated: this.props.animateScrollBottom });
+    scrollToEnd = (animated = null) => {
+        animated = animated === undefined ? this.props.animateScrollBottom : animated;
+        this.scrollViewComponent.scrollToEnd({ animated: animated });
     };
 
     getInputValue = () => (this.input ? this.input.state.value || null : null);
@@ -105,6 +106,7 @@ export class Chat extends PureComponent {
     }
 
     async _onNewMessage(message) {
+        debugger;
         this.setState({ sendingMessage: true }, () => {
             let result = true;
             try {
@@ -162,7 +164,7 @@ export class Chat extends PureComponent {
                 <ScrollView
                     style={styles.chatMessagesContainer}
                     ref={ref => (this.scrollViewComponent = ref)}
-                    onContentSizeChange={this.scrollToEnd}
+                    onContentSizeChange={() => this.scrollToEnd(false)}
                     onScroll={this.onScroll}
                 >
                     <View style={styles.chatMessagesContent}>
