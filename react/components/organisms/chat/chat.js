@@ -66,7 +66,7 @@ export class Chat extends PureComponent {
         this.input.blur();
     };
 
-    scrollToEnd = (animated = null) => {
+    scrollToEnd = animated => {
         animated = animated === undefined ? this.props.animateScrollBottom : animated;
         this.scrollViewComponent.scrollToEnd({ animated: animated });
     };
