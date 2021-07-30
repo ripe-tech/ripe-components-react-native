@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     },
     noMessagesText: {
         color: "#57626E",
-        fontFamily: baseStyles.FONT_BOLD
+        fontFamily: baseStyles.FONT_BOOK
     }
 });
 
