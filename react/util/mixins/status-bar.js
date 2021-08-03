@@ -7,7 +7,7 @@ import { Platform, StatusBar } from "react-native";
  * this mixin.
  * @returns {Class} The new class with the added screen functionality.
  */
-export const ScreenMixin = superclass =>
+export const StatusBarMixin = superclass =>
     class extends superclass {
         setupScreen() {
             this.props.navigation?.addListener("focus", this.onNavigationFocus.bind(this));

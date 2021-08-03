@@ -1,2 +1,2 @@
 export * from "./identifiable";
-export * from "./screen";
+export * from "./status-bar";
