@@ -9,12 +9,12 @@ import { Platform, StatusBar } from "react-native";
  */
 export const StatusBarMixin = superclass =>
     class extends superclass {
-        setupScreen() {
+        initStatusBar() {
             this.props.navigation?.addListener("focus", this.onNavigationFocus.bind(this));
             this.setStatusBar();
         }
 
-        destroyScreen() {
+        destroyStatusBar() {
             this.props.navigation?.removeListener("focus", this.onNavigationFocus);
         }
 
