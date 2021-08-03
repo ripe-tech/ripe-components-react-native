@@ -9,12 +9,25 @@ import { Platform, StatusBar } from "react-native";
  */
 export const ScreenMixin = superclass =>
     class extends superclass {
+        setupScreen() {
+            this.props.navigation?.addListener("focus", this.onNavigationFocus.bind(this));
+            this.setStatusBar();
+        }
+
+        destroyScreen() {
+            this.props.navigation?.removeListener("focus", this.onNavigationFocus);
+        }
+
         /**
          * Sets the status bar color in Android platforms.
          */
         setStatusBar() {
-            if (Platform.OS === "android") {
-                StatusBar.setBackgroundColor(this.props.statusBarColor || "#f5f7f9");
+            if (Platform.OS === "android" && this.props.statusBarColor) {
+                StatusBar.setBackgroundColor(this.props.statusBarColor);
             }
+        }
+
+        onNavigationFocus() {
+            this.setStatusBar();
         }
     };
