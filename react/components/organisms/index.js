@@ -1,3 +1,4 @@
+export * from "./applications-list";
 export * from "./button-group";
 export * from "./chat";
 export * from "./form";
