@@ -47,7 +47,6 @@ export class Link extends PureComponent {
     };
 
     _textStyle = () => {
-        console.log(this.props.styles);
         return [
             this.props.styles.text,
             { color: this._colorToHex(this.props.color) },
