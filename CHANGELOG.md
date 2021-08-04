@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Applications list component
+* Applications list component responsible for listing all mobile applications and allows navigation to them
 
 ### Changed
 
