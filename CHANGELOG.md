@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Screen mixin responsible for changing the StatusBar color
+*
 
 ### Changed
 
@@ -18,6 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *
+
+## [0.7.0] - 2021-08-04
+
+### Added
+
+* Screen mixin responsible for changing the StatusBar color - [#259](https://github.com/ripe-tech/ripe-components-react-native/pull/259)
+* Chat displays an icon when it has no messages - [#258](https://github.com/ripe-tech/ripe-components-react-native/pull/258)
 
 ## [0.6.0] - 2021-07-30
 
