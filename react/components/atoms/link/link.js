@@ -77,6 +77,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export const linkStyles = styles;
-
 export default Link;
