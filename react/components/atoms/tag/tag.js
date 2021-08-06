@@ -21,7 +21,8 @@ export class Tag extends mix(PureComponent).with(IdentifiableMixin) {
             iconHeight: PropTypes.number,
             size: PropTypes.string,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -36,7 +37,8 @@ export class Tag extends mix(PureComponent).with(IdentifiableMixin) {
             iconHeight: undefined,
             size: "normal",
             onPress: undefined,
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

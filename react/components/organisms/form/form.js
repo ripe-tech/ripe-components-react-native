@@ -26,7 +26,8 @@ export class Form extends PureComponent {
             onUpdateValues: PropTypes.func,
             onDiscard: PropTypes.func,
             onSave: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -41,7 +42,8 @@ export class Form extends PureComponent {
             onUpdateValues: values => {},
             onDiscard: undefined,
             onSave: undefined,
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

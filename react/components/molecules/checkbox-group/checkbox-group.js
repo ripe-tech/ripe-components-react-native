@@ -24,7 +24,8 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
             beforeItem: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
             afterItem: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
             onUpdateValues: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -37,7 +38,8 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
             beforeItem: undefined,
             afterItem: undefined,
             onUpdateValues: value => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

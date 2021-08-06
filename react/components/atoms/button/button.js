@@ -32,7 +32,8 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onPress: PropTypes.func,
             style: ViewPropTypes.style,
-            containerStyle: ViewPropTypes.style
+            containerStyle: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -55,7 +56,8 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             width: undefined,
             onPress: () => {},
             style: {},
-            containerStyle: {}
+            containerStyle: {},
+            styles: styles
         };
     }
 

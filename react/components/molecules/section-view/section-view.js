@@ -8,13 +8,15 @@ export class SectionView extends PureComponent {
     static get propTypes() {
         return {
             text: PropTypes.string.isRequired,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
     static get defaultProps() {
         return {
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

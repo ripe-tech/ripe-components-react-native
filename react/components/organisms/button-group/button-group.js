@@ -20,7 +20,8 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             orientation: PropTypes.string,
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style,
-            buttonStyle: ViewPropTypes.style
+            buttonStyle: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -36,7 +37,8 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             orientation: "horizontal",
             onUpdateValue: value => {},
             style: {},
-            buttonStyle: {}
+            buttonStyle: {},
+            styles: styles
         };
     }
 

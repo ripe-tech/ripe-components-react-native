@@ -23,7 +23,8 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
             onValue: PropTypes.func,
             onFocus: PropTypes.func,
             onBlur: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -43,7 +44,8 @@ export class TextArea extends mix(PureComponent).with(IdentifiableMixin) {
             onValue: () => {},
             onFocus: () => {},
             onBlur: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

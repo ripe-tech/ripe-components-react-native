@@ -18,7 +18,8 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
             activeOpacity: PropTypes.number,
             showBorders: PropTypes.bool,
             onValueUpdate: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -30,7 +31,8 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
             activeOpacity: 0.75,
             showBorders: true,
             onValueUpdate: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

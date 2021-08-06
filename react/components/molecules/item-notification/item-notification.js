@@ -14,7 +14,8 @@ export class ItemNotification extends PureComponent {
             onPress: PropTypes.func,
             text: PropTypes.string,
             timestamp: PropTypes.number,
-            unread: PropTypes.bool
+            unread: PropTypes.bool,
+            styles: PropTypes.any
         };
     }
 
@@ -22,7 +23,8 @@ export class ItemNotification extends PureComponent {
         return {
             text: undefined,
             unread: false,
-            onPress: () => {}
+            onPress: () => {},
+            styles: styles
         };
     }
 

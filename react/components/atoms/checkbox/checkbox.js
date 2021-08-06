@@ -19,7 +19,8 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
             size: PropTypes.number,
             variant: PropTypes.string,
             onUpdateChecked: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -31,7 +32,8 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
             size: 20,
             variant: undefined,
             onUpdateChecked: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

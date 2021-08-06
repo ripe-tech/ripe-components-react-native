@@ -27,7 +27,8 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
                 left: PropTypes.number
             }),
             onPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -49,7 +50,8 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
                 left: 20
             },
             onPress: undefined,
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

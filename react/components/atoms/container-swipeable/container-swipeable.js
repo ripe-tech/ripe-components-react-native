@@ -26,7 +26,8 @@ export class ContainerSwipeable extends PureComponent {
             rightOptionGradientLocations: PropTypes.arrayOf(PropTypes.number),
             onLeftOptionTrigger: PropTypes.func,
             onRightOptionTrigger: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -44,7 +45,8 @@ export class ContainerSwipeable extends PureComponent {
             rightOptionGradientLocations: [0.84, 0.4],
             onLeftOptionTrigger: () => null,
             onRightOptionTrigger: () => null,
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 
