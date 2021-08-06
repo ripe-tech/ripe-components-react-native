@@ -18,7 +18,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             placeholder: PropTypes.string,
             disabled: PropTypes.bool,
             fixAndroidTouchableBug: PropTypes.bool,
-            width: PropTypes.number,
+            width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style
         };
