@@ -3,24 +3,28 @@ import { ActivityIndicator, Platform, StyleSheet, Text, View, ViewPropTypes } fr
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
+import { Icon, Touchable } from "ripe-components-react-native";
 import { capitalize } from "ripe-commons-native";
 
 import { IdentifiableMixin, baseStyles } from "../../../util";
-
-import { Icon } from "../icon";
-import { Touchable } from "../touchable";
 
 export class Button extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             text: PropTypes.string,
-            icon: PropTypes.string,
+            leftIcon: PropTypes.string,
+            rightIcon: PropTypes.string,
+            leftSlot: PropTypes.any,
+            rightSlot: PropTypes.any,
             loading: PropTypes.bool,
             disabled: PropTypes.bool,
             variant: PropTypes.string,
-            iconStrokeWidth: PropTypes.number,
-            iconColor: PropTypes.string,
-            iconFillColor: PropTypes.string,
+            leftIconStrokeWidth: PropTypes.number,
+            rightIconStrokeWidth: PropTypes.number,
+            leftIconColor: PropTypes.string,
+            leftIconFillColor: PropTypes.string,
+            rightIconColor: PropTypes.string,
+            rightIconFillColor: PropTypes.string,
             align: PropTypes.string,
             textColor: PropTypes.string,
             backgroundColor: PropTypes.string,
@@ -32,20 +36,27 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onPress: PropTypes.func,
             style: ViewPropTypes.style,
-            containerStyle: ViewPropTypes.style
+            containerStyle: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
     static get defaultProps() {
         return {
             text: undefined,
-            icon: undefined,
+            lefticon: undefined,
+            rightIcon: undefined,
+            leftSlot: undefined,
+            rightSlot: undefined,
             loading: false,
             disabled: false,
             variant: undefined,
-            iconStrokeWidth: undefined,
-            iconColor: "#ffffff",
-            iconFillColor: "#ffffff",
+            leftIconStrokeWidth: undefined,
+            leftIconColor: "#ffffff",
+            leftIconFillColor: "#ffffff",
+            rightIconStrokeWidth: undefined,
+            rightIconColor: "#ffffff",
+            rightIconFillColor: "#ffffff",
             align: "center",
             textColor: undefined,
             backgroundColor: undefined,
@@ -55,19 +66,38 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             width: undefined,
             onPress: () => {},
             style: {},
-            containerStyle: {}
+            containerStyle: {},
+            styles: styles
         };
     }
+
+    _align = () => {
+        switch (this.props.align) {
+            case "left":
+                return "flex-start";
+            case "right":
+                return "flex-end";
+            case "spacing":
+                return "space-between";
+            default:
+                return "center";
+        }
+    };
 
     _shouldRenderView = () => {
         return this.props.backgroundColor || this.props.variant === "flat";
     };
 
     _style = () => {
-        return [styles.button, this.props.style];
+        return [
+            this.props.styles.button,
+            { width: this.props.width },
+            this.props.backgroundColor ? { backgroundColor: this.props.backgroundColor } : {},
+            this.props.style
+        ];
     };
 
-    _iconStyle = () => {
+    _iconLeftStyle = () => {
         return [
             {
                 marginRight: this.props.text ? 15 : 0
@@ -75,52 +105,81 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
         ];
     };
 
+    _iconRightStyle = () => {
+        return [
+            {
+                marginLeft: this.props.text ? 15 : 0
+            }
+        ];
+    };
+
     _linearGradientStyle = () => {
         return [
-            styles.container,
+            this.props.styles.container,
             { width: this.props.width },
-            this.props.disabled ? styles.buttonDisabled : {}
+            this.props.disabled ? this.props.styles.buttonDisabled : {}
         ];
     };
 
     _buttonStyle = () => {
         return [
-            styles.container,
-            styles[`container${capitalize(this.props.variant)}`],
+            this.props.styles.container,
+            this.props.styles[`container${capitalize(this.props.variant)}`],
             { width: this.props.width },
-            { justifyContent: this.props.align },
+            { justifyContent: this._align() },
             this.props.backgroundColor ? { backgroundColor: this.props.backgroundColor } : {},
-            this.props.disabled ? styles.buttonDisabled : {},
+            this.props.disabled ? this.props.styles.buttonDisabled : {},
             this.props.containerStyle
         ];
     };
 
     _textStyle = () => {
         return [
-            styles.text,
-            styles[`text${capitalize(this.props.variant)}`],
+            this.props.styles.text,
+            this.props.styles[`text${capitalize(this.props.variant)}`],
             this.props.textColor ? { color: this.props.textColor } : {}
         ];
     };
 
     _renderLoading() {
-        return <ActivityIndicator style={styles.container} color="#ffffff" />;
+        return <ActivityIndicator style={this.props.styles.container} color="#ffffff" />;
+    }
+
+    _renderLeft() {
+        if (this.props.leftSlot) return this.props.leftSlot;
+        if (this.props.leftIcon)
+            return (
+                <Icon
+                    style={this._iconLeftStyle()}
+                    icon={this.props.leftIcon}
+                    color={this.props.leftIconColor}
+                    fill={this.props.leftIconFillColor}
+                    strokeWidth={this.props.leftIconStrokeWidth}
+                />
+            );
+    }
+
+    _renderRight() {
+        if (this.props.rightSlot) return this.props.rightSlot;
+        if (this.props.rightIcon)
+            return (
+                <Icon
+                    style={this._iconRightStyle()}
+                    icon={this.props.rightIcon}
+                    color={this.props.rightIconColor}
+                    fill={this.props.rightIconFillColor}
+                    strokeWidth={this.props.rightIconStrokeWidth}
+                />
+            );
     }
 
     _renderNormal() {
         return (
-            <View style={styles.container} {...this.id(`button-${this.props.text}`)}>
-                {this.props.icon ? (
-                    <Icon
-                        style={this._iconStyle()}
-                        icon={this.props.icon}
-                        color={this.props.iconColor}
-                        fill={this.props.iconFillColor}
-                        strokeWidth={this.props.iconStrokeWidth}
-                    />
-                ) : null}
+            <>
+                {this._renderLeft()}
                 <Text style={this._textStyle()}>{this.props.text}</Text>
-            </View>
+                {this._renderRight()}
+            </>
         );
     }
 
@@ -148,6 +207,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
                 activeOpacity={0.8}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
+                {...this.id(`button-${this.props.text}`)}
             >
                 {this._renderButton()}
             </Touchable>
