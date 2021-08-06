@@ -20,7 +20,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             fixAndroidTouchableBug: PropTypes.bool,
             width: PropTypes.number,
             onUpdateValue: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -36,7 +37,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             width: undefined,
             keyTimeout: 500,
             onUpdateValue: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

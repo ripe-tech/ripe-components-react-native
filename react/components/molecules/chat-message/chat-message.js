@@ -21,7 +21,8 @@ export class ChatMessage extends PureComponent {
                     path: PropTypes.string.isRequired
                 })
             ),
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -32,7 +33,8 @@ export class ChatMessage extends PureComponent {
             message: undefined,
             date: undefined,
             attachments: [],
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

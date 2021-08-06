@@ -24,7 +24,8 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
             }),
             onPress: PropTypes.func,
             onError: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -38,7 +39,8 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
             hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
             onPress: undefined,
             onError: undefined,
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

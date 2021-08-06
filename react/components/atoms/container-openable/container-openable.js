@@ -30,7 +30,8 @@ export class ContainerOpenable extends PureComponent {
             overlayPress: PropTypes.bool,
             onContentHeight: PropTypes.func,
             onVisible: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -46,7 +47,8 @@ export class ContainerOpenable extends PureComponent {
             overlayPress: true,
             onContentHeight: height => {},
             onVisible: visible => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

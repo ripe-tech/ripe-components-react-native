@@ -1,18 +1,21 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, Text as RNText } from "react-native";
+import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
 
 export class Text extends PureComponent {
     static get propTypes() {
         return {
-            style: RNText.propTypes.style
+            style: RNText.propTypes.style,
+            styles: PropTypes.any
         };
     }
 
     static get defaultProps() {
         return {
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

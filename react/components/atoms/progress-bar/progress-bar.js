@@ -14,7 +14,8 @@ export class ProgressBar extends mix(PureComponent).with(IdentifiableMixin) {
             showLabel: PropTypes.bool,
             fillTransitionTime: PropTypes.number,
             fillTransitionMode: PropTypes.string,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -26,7 +27,8 @@ export class ProgressBar extends mix(PureComponent).with(IdentifiableMixin) {
             showLabel: false,
             fillTransitionTime: 500,
             fillTransitionMode: "ease",
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

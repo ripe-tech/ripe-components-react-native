@@ -27,7 +27,8 @@ export class Card extends PureComponent {
             onPress: PropTypes.func,
             onLongPress: PropTypes.func,
             contentStyle: ViewPropTypes.style,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -40,7 +41,8 @@ export class Card extends PureComponent {
             onPress: () => {},
             onLongPress: () => {},
             contentStyle: {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

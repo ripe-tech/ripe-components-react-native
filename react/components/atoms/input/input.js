@@ -17,7 +17,8 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
             onValueUpdate: PropTypes.func,
             onFocus: PropTypes.func,
             onBlur: PropTypes.func,
-            onSubmitEditing: PropTypes.func
+            onSubmitEditing: PropTypes.func,
+            styles: PropTypes.any
         };
     }
 
@@ -31,7 +32,8 @@ export class Input extends mix(PureComponent).with(IdentifiableMixin) {
             secureTextEntry: false,
             onValueUpdate: value => {},
             onFocus: () => {},
-            onBlur: () => {}
+            onBlur: () => {},
+            styles: styles
         };
     }
 

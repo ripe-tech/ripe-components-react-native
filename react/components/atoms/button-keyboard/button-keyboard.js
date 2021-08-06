@@ -19,7 +19,8 @@ export class ButtonKeyboard extends mix(PureComponent).with(IdentifiableMixin) {
             variant: PropTypes.string,
             onPress: PropTypes.func,
             onLongPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -32,7 +33,8 @@ export class ButtonKeyboard extends mix(PureComponent).with(IdentifiableMixin) {
             variant: undefined,
             onPress: () => {},
             onLongPress: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

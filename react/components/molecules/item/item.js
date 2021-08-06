@@ -22,7 +22,8 @@ export class Item extends PureComponent {
             variant: PropTypes.string,
             activeOpacity: PropTypes.number,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -39,7 +40,8 @@ export class Item extends PureComponent {
             variant: undefined,
             activeOpacity: 0.75,
             onPress: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

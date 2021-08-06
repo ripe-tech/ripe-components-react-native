@@ -31,7 +31,8 @@ export class Chat extends PureComponent {
             onNewMessage: PropTypes.func,
             onScrollBottom: PropTypes.func,
             onScroll: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -45,7 +46,8 @@ export class Chat extends PureComponent {
             onNewMessage: () => {},
             onScrollBottom: () => {},
             onScroll: event => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

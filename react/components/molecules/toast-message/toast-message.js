@@ -14,7 +14,8 @@ export class ToastMessage extends PureComponent {
             linkUrl: PropTypes.string,
             duration: PropTypes.number,
             animationDuration: PropTypes.number,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -25,7 +26,8 @@ export class ToastMessage extends PureComponent {
             linkUrl: undefined,
             duration: 5000,
             animationDuration: 300,
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

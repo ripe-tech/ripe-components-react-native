@@ -36,7 +36,8 @@ export class KeyValues extends PureComponent {
             showUnset: PropTypes.bool,
             nrShowingItems: PropTypes.number,
             expanded: PropTypes.bool,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -46,7 +47,8 @@ export class KeyValues extends PureComponent {
             showUnset: true,
             nrShowingItems: undefined,
             expanded: false,
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

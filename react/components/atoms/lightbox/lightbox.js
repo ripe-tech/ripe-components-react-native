@@ -17,7 +17,8 @@ export class Lightbox extends PureComponent {
             resizeMode: PropTypes.string,
             resizeModeFullScreen: PropTypes.string,
             onVisible: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -31,7 +32,8 @@ export class Lightbox extends PureComponent {
             resizeMode: undefined,
             resizeModeFullScreen: undefined,
             onVisible: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

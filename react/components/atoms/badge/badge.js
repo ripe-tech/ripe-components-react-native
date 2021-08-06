@@ -14,7 +14,8 @@ export class Badge extends Component {
             animationDuration: PropTypes.number,
             backgroundColor: PropTypes.string,
             color: PropTypes.string,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -27,7 +28,8 @@ export class Badge extends Component {
             animationDuration: 200,
             backgroundColor: "#597cf0",
             color: "#ffffff",
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

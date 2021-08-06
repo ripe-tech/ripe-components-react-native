@@ -20,7 +20,8 @@ export class RichTextInput extends PureComponent {
             onSendMessage: PropTypes.func,
             onFocus: PropTypes.func,
             onBlur: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -38,7 +39,8 @@ export class RichTextInput extends PureComponent {
             onSendMessage: text => {},
             onFocus: () => {},
             onBlur: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

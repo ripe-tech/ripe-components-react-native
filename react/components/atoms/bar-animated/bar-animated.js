@@ -8,14 +8,16 @@ export class BarAnimated extends PureComponent {
             offset: PropTypes.number.isRequired,
             width: PropTypes.number.isRequired,
             color: PropTypes.string,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
     static get defaultProps() {
         return {
             color: "#597cf0",
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 
