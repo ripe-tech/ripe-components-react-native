@@ -121,7 +121,8 @@ export class Profile extends Component {
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
             borderTopLeftRadius: 0,
-            borderTopRightRadius: 0
+            borderTopRightRadius: 0,
+            paddingLeft: 15
         };
     };
 
@@ -161,7 +162,7 @@ export class Profile extends Component {
                         items={this._buttons()}
                         orientation={"vertical"}
                         variant={"flat"}
-                        align={"flex-start"}
+                        align={"left"}
                         toggle={false}
                     />
                 </View>
