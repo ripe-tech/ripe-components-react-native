@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Screen mixin responsible for changing the StatusBar color
 * Ability to override the entiry stylesheet in any component
 
 ### Changed
@@ -19,6 +18,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *
+
+
+## [0.8.0] - 2021-08-04
+
+### Added
+
+* Applications list component responsible for listing all mobile applications and allows navigation to them
+
+## [0.7.0] - 2021-08-04
+
+### Added
+
+* Screen mixin responsible for changing the StatusBar color - [#259](https://github.com/ripe-tech/ripe-components-react-native/pull/259)
+* Chat displays an icon when it has no messages - [#258](https://github.com/ripe-tech/ripe-components-react-native/pull/258)
 
 ## [0.6.0] - 2021-07-30
 
