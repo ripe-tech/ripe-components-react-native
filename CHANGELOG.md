@@ -9,11 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Button support for style override
+* Button support for left and right icons as well as left and right slots
 * Ability to override the entiry stylesheet in any component
 
 ### Changed
 
-*
+* Button alignment changed to keywords `left`, `right`, `center` and `spacing`.
 
 ### Fixed
 
