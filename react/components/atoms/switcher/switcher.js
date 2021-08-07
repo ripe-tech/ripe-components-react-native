@@ -18,7 +18,8 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
             animationDuration: PropTypes.number,
             marginLeftValue: PropTypes.number,
             colorInputRangeValue: PropTypes.number,
-            onValueUpdate: PropTypes.func
+            onValueUpdate: PropTypes.func,
+            styles: PropTypes.any
         };
     }
 
@@ -32,7 +33,8 @@ export class Switcher extends mix(PureComponent).with(IdentifiableMixin) {
             animationDuration: 200,
             marginLeftValue: 20,
             colorInputRangeValue: 150,
-            onValueUpdate: () => {}
+            onValueUpdate: () => {},
+            styles: styles
         };
     }
 

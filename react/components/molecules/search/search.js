@@ -16,7 +16,8 @@ export class Search extends PureComponent {
             onFocus: PropTypes.func,
             onBlur: PropTypes.func,
             onClear: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -29,7 +30,8 @@ export class Search extends PureComponent {
             onFocus: () => {},
             onBlur: () => {},
             onClear: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

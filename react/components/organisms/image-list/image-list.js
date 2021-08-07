@@ -14,7 +14,8 @@ export class ImageList extends PureComponent {
             enableRemove: PropTypes.bool,
             onAddImage: PropTypes.func,
             onRemoveImage: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -25,7 +26,8 @@ export class ImageList extends PureComponent {
             enableRemove: true,
             onAddImage: () => {},
             onRemoveImage: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

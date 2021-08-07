@@ -24,7 +24,8 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
             buttonProps: PropTypes.object,
             onPress: PropTypes.func,
             onUpdateActive: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -43,7 +44,8 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
             buttonProps: {},
             onPress: undefined,
             onUpdateActive: value => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

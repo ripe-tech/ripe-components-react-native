@@ -28,7 +28,8 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
             onPress: PropTypes.func,
             onButtonIconPress: PropTypes.func,
             onLongPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -49,7 +50,8 @@ export class KeyValue extends mix(PureComponent).with(IdentifiableMixin) {
             onPress: () => {},
             onButtonIconPress: () => {},
             onLongPress: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

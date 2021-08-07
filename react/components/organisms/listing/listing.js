@@ -31,7 +31,8 @@ export class Listing extends Component {
             onFilter: PropTypes.func,
             style: ViewPropTypes.style,
             scrollViewStyle: ViewPropTypes.style,
-            scrollViewContainerStyle: ViewPropTypes.style
+            scrollViewContainerStyle: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -49,7 +50,8 @@ export class Listing extends Component {
             onFilter: async () => {},
             style: {},
             scrollViewStyle: {},
-            scrollViewContainerStyle: {}
+            scrollViewContainerStyle: {},
+            styles: styles
         };
     }
 

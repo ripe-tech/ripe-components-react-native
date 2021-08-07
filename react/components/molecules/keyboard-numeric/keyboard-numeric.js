@@ -12,14 +12,16 @@ export class KeyboardNumeric extends mix(PureComponent).with(IdentifiableMixin) 
     static get propTypes() {
         return {
             onKeyPress: PropTypes.func,
-            onKeyLongPress: PropTypes.func
+            onKeyLongPress: PropTypes.func,
+            styles: PropTypes.any
         };
     }
 
     static get defaultProps() {
         return {
             onKeyPress: value => {},
-            onKeyLongPress: value => {}
+            onKeyLongPress: value => {},
+            styles: styles
         };
     }
 

@@ -20,7 +20,8 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
             activeOpacity: PropTypes.number,
             variant: PropTypes.string,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -35,7 +36,8 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
             activeOpacity: 0.5,
             variant: undefined,
             onPress: undefined,
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

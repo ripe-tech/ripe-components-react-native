@@ -18,7 +18,8 @@ export class Radio extends mix(PureComponent).with(IdentifiableMixin) {
             variant: PropTypes.string,
             size: PropTypes.number,
             onUpdateChecked: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -31,7 +32,8 @@ export class Radio extends mix(PureComponent).with(IdentifiableMixin) {
             size: 20,
             variant: undefined,
             onUpdateChecked: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

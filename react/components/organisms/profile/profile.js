@@ -15,14 +15,16 @@ export class Profile extends Component {
             editButton: PropTypes.bool,
             onEditPress: PropTypes.func,
             onAvatarPress: PropTypes.func,
-            onLogoutTouch: PropTypes.func
+            onLogoutTouch: PropTypes.func,
+            styles: PropTypes.any
         };
     }
 
     static get defaultProps() {
         return {
             editButton: false,
-            onAvatarPress: () => {}
+            onAvatarPress: () => {},
+            styles: styles
         };
     }
 

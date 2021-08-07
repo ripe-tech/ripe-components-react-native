@@ -25,7 +25,8 @@ export class Header extends mix(PureComponent).with(IdentifiableMixin) {
             }),
             onButtonLeftPress: PropTypes.func,
             onButtonRightPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -40,7 +41,8 @@ export class Header extends mix(PureComponent).with(IdentifiableMixin) {
             hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
             onButtonLeftPress: undefined,
             onButtonRightPress: undefined,
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

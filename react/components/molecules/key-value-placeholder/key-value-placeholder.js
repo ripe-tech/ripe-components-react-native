@@ -9,14 +9,16 @@ export class KeyValuePlaceholder extends PureComponent {
             colors: PropTypes.arrayOf(PropTypes.string).isRequired,
             locations: PropTypes.arrayOf(PropTypes.number).isRequired,
             numberOfLines: PropTypes.number,
-            border: PropTypes.string
+            border: PropTypes.string,
+            styles: PropTypes.any
         };
     }
 
     static get defaultProps() {
         return {
             numberOfLines: 1,
-            border: "soft"
+            border: "soft",
+            styles: styles
         };
     }
 

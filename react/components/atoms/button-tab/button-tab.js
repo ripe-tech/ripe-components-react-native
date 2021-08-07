@@ -40,7 +40,8 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
             disabled: PropTypes.bool,
             iconProps: PropTypes.object,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -61,7 +62,8 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
             selected: false,
             disabled: false,
             onPress: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

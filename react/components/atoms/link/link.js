@@ -12,7 +12,8 @@ export class Link extends PureComponent {
             onPress: PropTypes.func,
             color: PropTypes.string,
             styleText: Text.propTypes.style,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -23,7 +24,8 @@ export class Link extends PureComponent {
             onPress: undefined,
             color: undefined,
             styleText: {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 
@@ -45,7 +47,11 @@ export class Link extends PureComponent {
     };
 
     _textStyle = () => {
-        return [styles.text, { color: this._colorToHex(this.props.color) }, this.props.styleText];
+        return [
+            this.props.styles.text,
+            { color: this._colorToHex(this.props.color) },
+            this.props.styleText
+        ];
     };
 
     render() {

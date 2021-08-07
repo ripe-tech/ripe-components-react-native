@@ -22,9 +22,11 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
                 right: PropTypes.number.isRequired,
                 bottom: PropTypes.number.isRequired
             }),
+            imageProps: PropTypes.object,
             onPress: PropTypes.func,
             onError: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -36,9 +38,11 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
             borderRadius: 100,
             resizeMode: "contain",
             hitSlop: { top: 20, left: 20, right: 20, bottom: 20 },
+            imageProps: {},
             onPress: undefined,
             onError: undefined,
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 
@@ -114,6 +118,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
                     style={styles.image}
                     resizeMode={this.props.resizeMode}
                     onError={this.onLoadingError}
+                    {...this.props.imageProps}
                     {...this.id("avatar")}
                 />
                 {this._renderLabel()}

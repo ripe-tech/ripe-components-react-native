@@ -15,7 +15,8 @@ export class Snackbar extends mix(PureComponent).with(IdentifiableMixin) {
             duration: PropTypes.number,
             animationDuration: PropTypes.number,
             onActionPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -26,7 +27,8 @@ export class Snackbar extends mix(PureComponent).with(IdentifiableMixin) {
             duration: 5000,
             animationDuration: 300,
             onActionPress: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

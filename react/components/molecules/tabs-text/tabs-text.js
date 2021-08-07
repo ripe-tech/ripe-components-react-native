@@ -22,7 +22,8 @@ export class TabsText extends PureComponent {
             parentWidth: PropTypes.number,
             onTabChange: PropTypes.func.isRequired,
             onSelectedTabPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -36,7 +37,8 @@ export class TabsText extends PureComponent {
             variant: undefined,
             parentWidth: undefined,
             onSelectedTabPress: () => {},
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 

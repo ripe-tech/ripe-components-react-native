@@ -23,14 +23,16 @@ export class Tabs extends PureComponent {
                     props: PropTypes.object
                 })
             ),
-            style: ViewPropTypes.style
+            style: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
     static get defaultProps() {
         return {
             tabs: [],
-            style: {}
+            style: {},
+            styles: styles
         };
     }
 
