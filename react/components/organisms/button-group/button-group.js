@@ -74,7 +74,7 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
     onUpdateActive = value => {
         if (!this.props.toggle) return;
 
-        this.toggleButton(item.value);
+        this.toggleButton(value);
     };
 
     onPress = item => {
