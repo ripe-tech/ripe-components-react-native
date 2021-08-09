@@ -14,6 +14,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             text: PropTypes.string,
+            icon: PropTypes.string,
             leftIcon: PropTypes.string,
             rightIcon: PropTypes.string,
             leftSlot: PropTypes.any,
@@ -21,10 +22,13 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             loading: PropTypes.bool,
             disabled: PropTypes.bool,
             variant: PropTypes.string,
+            iconStrokeWidth: PropTypes.number,
+            iconColor: PropTypes.string,
+            iconFillColor: PropTypes.string,
             leftIconStrokeWidth: PropTypes.number,
-            rightIconStrokeWidth: PropTypes.number,
             leftIconColor: PropTypes.string,
             leftIconFillColor: PropTypes.string,
+            rightIconStrokeWidth: PropTypes.number,
             rightIconColor: PropTypes.string,
             rightIconFillColor: PropTypes.string,
             align: PropTypes.string,
@@ -46,13 +50,17 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
     static get defaultProps() {
         return {
             text: undefined,
-            lefticon: undefined,
+            icon: undefined,
+            leftIcon: undefined,
             rightIcon: undefined,
             leftSlot: undefined,
             rightSlot: undefined,
             loading: false,
             disabled: false,
             variant: undefined,
+            iconStrokeWidth: undefined,
+            iconColor: "#ffffff",
+            iconFillColor: "#ffffff",
             leftIconStrokeWidth: undefined,
             leftIconColor: "#ffffff",
             leftIconFillColor: "#ffffff",
@@ -149,14 +157,14 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
 
     _renderLeft() {
         if (this.props.leftSlot) return this.props.leftSlot;
-        if (this.props.leftIcon)
+        if (this.props.leftIcon || this.props.icon)
             return (
                 <Icon
                     style={this._iconLeftStyle()}
-                    icon={this.props.leftIcon}
-                    color={this.props.leftIconColor}
-                    fill={this.props.leftIconFillColor}
-                    strokeWidth={this.props.leftIconStrokeWidth}
+                    icon={this.props.icon || this.props.leftIcon}
+                    color={this.props.iconColor || this.props.leftIconColor}
+                    fill={this.props.iconFillColor || this.props.leftIconFillColor}
+                    strokeWidth={this.props.iconStrokeWidth || this.props.leftIconStrokeWidth}
                 />
             );
     }
