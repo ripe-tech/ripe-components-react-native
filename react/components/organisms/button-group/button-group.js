@@ -23,7 +23,8 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style,
             buttonStyle: ViewPropTypes.style,
-            buttonActiveStyle: ViewPropTypes.style
+            buttonActiveStyle: ViewPropTypes.style,
+            styles: PropTypes.any
         };
     }
 
@@ -42,7 +43,8 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             onUpdateValue: value => {},
             style: {},
             buttonStyle: {},
-            buttonActiveStyle: {}
+            buttonActiveStyle: {},
+            styles: styles
         };
     }
 
@@ -148,7 +150,7 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
 
     _style = () => {
         return [
-            styles.buttonGroup,
+            this.props.styles.buttonGroup,
             this.props.orientation === "horizontal" ? { flexDirection: "row" } : {},
             this.props.orientation === "vertical" ? { flexDirection: "column" } : {}
         ];
@@ -156,7 +158,8 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
 
     _buttonStyle = item => {
         return [
-            styles.buttonToggle,
+            this.props.styles.buttonToggle,
+            this.props.orientation === "vertical" ? { width: "100%" } : {},
             this.props.buttonStyle,
             this.state.valueData === item.value ? this.props.buttonActiveStyle : {}
         ];
@@ -174,9 +177,6 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
 const styles = StyleSheet.create({
     buttonGroup: {
         overflow: "hidden"
-    },
-    buttonToggle: {
-        marginRight: 5
     }
 });
 
