@@ -93,7 +93,11 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     buttonStyle = () => {
-        return [styles.buttonToggle, this.props.buttonStyle];
+        return [
+            styles.buttonToggle,
+            this.props.orientation === "vertical" ? { width: "100%" } : {},
+            this.props.buttonStyle
+        ];
     };
 
     _renderButtons = () => {
@@ -127,9 +131,6 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
 const styles = StyleSheet.create({
     buttonGroup: {
         overflow: "hidden"
-    },
-    buttonToggle: {
-        marginRight: 5
     }
 });
 
