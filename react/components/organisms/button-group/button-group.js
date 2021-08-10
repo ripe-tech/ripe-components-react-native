@@ -176,7 +176,12 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
 
 const styles = StyleSheet.create({
     buttonGroup: {
-        overflow: "hidden"
+        overflow: "hidden",
+        flexWrap: "wrap"
+    },
+    buttonToggle: {
+        flexShrink: 0,
+        flexGrow: 0
     }
 });
 
