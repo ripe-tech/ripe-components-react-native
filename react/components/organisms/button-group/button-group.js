@@ -15,12 +15,15 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             loading: PropTypes.bool,
             disabled: PropTypes.bool,
             variant: PropTypes.string,
+            variantActive: PropTypes.string,
             align: PropTypes.string,
             toggle: PropTypes.bool,
             orientation: PropTypes.string,
+            buttonComponent: PropTypes.any,
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style,
             buttonStyle: ViewPropTypes.style,
+            buttonActiveStyle: ViewPropTypes.style,
             styles: PropTypes.any
         };
     }
@@ -32,12 +35,15 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             loading: false,
             disabled: false,
             variant: undefined,
+            variantActive: undefined,
             align: undefined,
             toggle: true,
             orientation: "horizontal",
+            buttonComponent: undefined,
             onUpdateValue: value => {},
             style: {},
             buttonStyle: {},
+            buttonActiveStyle: {},
             styles: styles
         };
     }
@@ -58,15 +64,26 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
         }
     }
 
-    onUpdateActive = value => {
-        if (!this.props.toggle) return;
-
+    toggleButton = value => {
         this.setState(
             {
                 valueData: value
             },
             () => this.props.onUpdateValue(value)
         );
+    };
+
+    onUpdateActive = value => {
+        if (!this.props.toggle) return;
+
+        this.toggleButton(value);
+    };
+
+    onPress = item => {
+        if (item.onPress) item.onPress();
+
+        if (!this.props.toggle) return;
+        this.toggleButton(item.value);
     };
 
     _direction = index => {
@@ -84,52 +101,82 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
         return "middle-horizontal";
     };
 
+    _variant = item => {
+        if (this.state.valueData !== item.value) return this.props.variant;
+        return this.props.variantActive || this.props.variant;
+    };
+
+    _button = (item, index) => {
+        if (!this.props.buttonComponent)
+            return (
+                <ButtonToggle
+                    key={item.value}
+                    style={this._buttonStyle(item)}
+                    text={item.label || item.value}
+                    value={this.state.valueData === item.value}
+                    buttonProps={{
+                        ...item.buttonProps,
+                        loading: item.loading || this.props.loading,
+                        disabled: item.disabled || this.props.disabled
+                    }}
+                    variant={this._variant(item)}
+                    direction={this._direction(index)}
+                    align={this.props.align}
+                    toggle={this.props.toggle}
+                    onPress={item.onPress}
+                    onUpdateActive={() => this.onUpdateActive(item.value)}
+                    {...item.buttonProps}
+                />
+            );
+
+        return React.cloneElement(React.Children.only(this.props.buttonComponent), {
+            key: item.value,
+            style: this._buttonStyle(item),
+            text: item.label || item.value,
+            value: this.state.valueData === item.value,
+            buttonProps: {
+                ...item.buttonProps,
+                loading: item.loading || this.props.loading,
+                disabled: item.disabled || this.props.disabled
+            },
+            variant: this._variant(item),
+            direction: this._direction(index),
+            align: this.props.align,
+            toggle: this.props.toggle,
+            onPress: () => this.onPress(item),
+            ...item.buttonProps
+        });
+    };
+
     _style = () => {
         return [
-            styles.buttonGroup,
+            this.props.styles.buttonGroup,
             this.props.orientation === "horizontal" ? { flexDirection: "row" } : {},
             this.props.orientation === "vertical" ? { flexDirection: "column" } : {}
         ];
     };
 
-    buttonStyle = () => {
-        return [styles.buttonToggle, this.props.buttonStyle];
-    };
-
-    _renderButtons = () => {
-        return this.props.items.map((item, index) => (
-            <ButtonToggle
-                key={item.value}
-                style={this.buttonStyle()}
-                text={item.label || item.value}
-                value={this.state.valueData === item.value}
-                buttonProps={{
-                    ...item.buttonProps,
-                    loading: item.loading || this.props.loading,
-                    disabled: item.disabled || this.props.disabled
-                }}
-                variant={this.props.variant}
-                direction={this._direction(index)}
-                align={this.props.align}
-                toggle={this.props.toggle}
-                onPress={item.onPress}
-                onUpdateActive={() => this.onUpdateActive(item.value)}
-                {...item.buttonProps}
-            />
-        ));
+    _buttonStyle = item => {
+        return [
+            this.props.styles.buttonToggle,
+            this.props.orientation === "vertical" ? { width: "100%" } : {},
+            this.props.buttonStyle,
+            this.state.valueData === item.value ? this.props.buttonActiveStyle : {}
+        ];
     };
 
     render() {
-        return <View style={this._style()}>{this._renderButtons()}</View>;
+        return (
+            <View style={this._style()}>
+                {this.props.items.map((item, index) => this._button(item, index))}
+            </View>
+        );
     }
 }
 
 const styles = StyleSheet.create({
     buttonGroup: {
         overflow: "hidden"
-    },
-    buttonToggle: {
-        marginRight: 5
     }
 });
 

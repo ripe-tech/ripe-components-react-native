@@ -105,30 +105,37 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _style = () => {
-        return [styles.buttonToggle];
+        return [this.props.styles.buttonToggle, this.props.style];
     };
 
     _containerStyle = () => {
         return [
-            styles.buttonToggle,
+            this.props.styles.buttonToggle,
             this.props.direction === "middle-horizontal"
-                ? styles[this._styleName("buttonToggleMiddleHorizontal")]
+                ? this.props.styles[this._styleName("buttonToggleMiddleHorizontal")]
                 : {},
             this.props.direction === "middle-vertical"
-                ? styles[this._styleName("buttonToggleMiddleVertical")]
+                ? this.props.styles[this._styleName("buttonToggleMiddleVertical")]
                 : {},
-            this.props.direction === "left" ? styles[this._styleName("buttonToggleLeft")] : {},
-            this.props.direction === "right" ? styles[this._styleName("buttonToggleRight")] : {},
-            this.props.direction === "top" ? styles[this._styleName("buttonToggleTop")] : {},
-            this.props.direction === "bottom" ? styles[this._styleName("buttonToggleBottom")] : {},
-            this.props.style
+            this.props.direction === "left"
+                ? this.props.styles[this._styleName("buttonToggleLeft")]
+                : {},
+            this.props.direction === "right"
+                ? this.props.styles[this._styleName("buttonToggleRight")]
+                : {},
+            this.props.direction === "top"
+                ? this.props.styles[this._styleName("buttonToggleTop")]
+                : {},
+            this.props.direction === "bottom"
+                ? this.props.styles[this._styleName("buttonToggleBottom")]
+                : {}
         ];
     };
 
     render() {
         return (
             <Button
-                style={styles.buttonToggle}
+                style={this._style()}
                 containerStyle={this._containerStyle()}
                 text={this._text()}
                 icon={this._icon()}
@@ -150,9 +157,7 @@ const styles = StyleSheet.create({
     buttonToggle: {
         overflow: "hidden",
         minWidth: 60,
-        borderRadius: 0,
-        flex: 1,
-        width: "100%"
+        borderRadius: 0
     },
     buttonToggleLeft: {
         borderRadius: 0,
