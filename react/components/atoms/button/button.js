@@ -103,6 +103,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             this.props.styles.button,
             { width: this.props.width },
             this.props.backgroundColor ? { backgroundColor: this.props.backgroundColor } : {},
+            this.props.disabled ? this.props.styles.buttonDisabled : {},
             this.props.style
         ];
     };
@@ -138,7 +139,6 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             { width: this.props.width },
             { justifyContent: this._align() },
             this.props.backgroundColor ? { backgroundColor: this.props.backgroundColor } : {},
-            this.props.disabled ? this.props.styles.buttonDisabled : {},
             this.props.containerStyle
         ];
     };
@@ -231,8 +231,7 @@ const styles = StyleSheet.create({
         borderRadius: 6
     },
     buttonDisabled: {
-        opacity: 0.5,
-        fontSize: 120
+        opacity: 0.5
     },
     container: {
         height: 48,
