@@ -75,6 +75,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             gradientColors: ["#4a6fe9", "#6687f6"],
             width: undefined,
             onPress: () => {},
+            onLongPress: () => {},
             style: {},
             containerStyle: {},
             styles: styles
@@ -217,6 +218,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
                 activeOpacity={0.8}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
+                onLongPress={this.props.onLongPress}
                 {...this.id(`button-${this.props.text}`)}
             >
                 {this._renderButton()}
