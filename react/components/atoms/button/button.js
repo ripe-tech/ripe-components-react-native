@@ -15,8 +15,8 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             text: PropTypes.string,
             icon: PropTypes.string,
-            leftIcon: PropTypes.string,
-            rightIcon: PropTypes.string,
+            leftIcon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+            rightIcon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             leftSlot: PropTypes.any,
             rightSlot: PropTypes.any,
             loading: PropTypes.bool,
