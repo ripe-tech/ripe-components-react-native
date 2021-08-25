@@ -75,6 +75,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             gradientColors: ["#4a6fe9", "#6687f6"],
             width: undefined,
             onPress: () => {},
+            onLongPress: () => {},
             style: {},
             containerStyle: {},
             styles: styles
@@ -103,6 +104,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             this.props.styles.button,
             { width: this.props.width },
             this.props.backgroundColor ? { backgroundColor: this.props.backgroundColor } : {},
+            this.props.disabled ? this.props.styles.buttonDisabled : {},
             this.props.style
         ];
     };
@@ -138,7 +140,6 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             { width: this.props.width },
             { justifyContent: this._align() },
             this.props.backgroundColor ? { backgroundColor: this.props.backgroundColor } : {},
-            this.props.disabled ? this.props.styles.buttonDisabled : {},
             this.props.containerStyle
         ];
     };
@@ -217,6 +218,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
                 activeOpacity={0.8}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
+                onLongPress={this.props.onLongPress}
                 {...this.id(`button-${this.props.text}`)}
             >
                 {this._renderButton()}
@@ -231,8 +233,7 @@ const styles = StyleSheet.create({
         borderRadius: 6
     },
     buttonDisabled: {
-        opacity: 0.5,
-        fontSize: 120
+        opacity: 0.5
     },
     container: {
         height: 48,
