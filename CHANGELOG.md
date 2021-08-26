@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-*
+* Add new keyboard component [#274](https://github.com/ripe-tech/ripe-components-react-native/pull/274#issuecomment-906492859)
 
 ### Changed
 
