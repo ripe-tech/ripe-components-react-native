@@ -13,6 +13,7 @@ export * from "./key-value";
 export * from "./key-value-placeholder";
 export * from "./key-values";
 export * from "./key-values-placeholder";
+export * from "./keyboard";
 export * from "./keyboard-numeric";
 export * from "./radio-group";
 export * from "./rich-textinput";
