@@ -9,15 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+*
+
+### Changed
+
+*
+
+### Fixed
+
+*
+
+## [0.10.0] - 2021-08-31
+
+### Added
+
 * Add new keyboard component [#274](https://github.com/ripe-tech/ripe-components-react-native/pull/274#issuecomment-906492859)
 
 ### Changed
 
 * Button icon support for external icons
-
-### Fixed
-
-*
 
 ## [0.9.0] - 2021-08-23
 
