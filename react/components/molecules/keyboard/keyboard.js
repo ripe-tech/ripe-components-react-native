@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Animated, ScrollView, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { Button } from "../../atoms";
@@ -10,6 +10,7 @@ export class Keyboard extends Component {
             supportedCharacters: PropTypes.string,
             symbolicKeyboard: PropTypes.bool,
             capsLock: PropTypes.bool,
+            animations: PropTypes.bool,
             onBackspacePress: PropTypes.func,
             onBackspaceLongPress: PropTypes.func,
             onKeyPress: PropTypes.func,
@@ -25,6 +26,7 @@ export class Keyboard extends Component {
             supportedCharacters: "0123456789abcdefghijklmnopqrstuvwxyz",
             symbolicKeyboard: false,
             capsLock: true,
+            animations: true,
             onBackspacePress: () => {},
             onBackspaceLongPress: () => {},
             onKeyPress: value => {},
@@ -39,12 +41,51 @@ export class Keyboard extends Component {
         super(props);
 
         this.state = {
-            symbolicKeyboard: this.props.symbolicKeyboard
+            symbolicKeyboard: this.props.symbolicKeyboard,
+            animationPositionY: new Animated.Value(212),
+            animationOpacity: new Animated.Value(0)
         };
 
         this.keys = "1234567890qwertyuiopasdfghjklzxcvbnm";
         this.keyColumns = [10, 10, 9, 9];
     }
+
+    componentDidMount() {
+        this.showKeyboardAnimated();
+    }
+
+    showKeyboardAnimated = async () => {
+        if (!this.props.animations) return;
+
+        await this._animateKeyboard(0, 1);
+    };
+
+    hideKeyboardAnimated = async () => {
+        if (!this.props.animations) return;
+
+        await this._animateKeyboard(212, 0, 200);
+    };
+
+    _animateKeyboard = async (positionY, opacity, duration = 250) => {
+        return new Promise(resolve => {
+            this.animating = true;
+            Animated.parallel([
+                Animated.timing(this.state.animationPositionY, {
+                    toValue: positionY,
+                    duration: duration,
+                    useNativeDriver: true
+                }),
+                Animated.timing(this.state.animationOpacity, {
+                    toValue: opacity,
+                    duration: duration,
+                    useNativeDriver: true
+                })
+            ]).start(() => {
+                this.animating = false;
+                resolve();
+            });
+        });
+    };
 
     _keyObject = key => {
         return {
@@ -149,7 +190,16 @@ export class Keyboard extends Component {
     };
 
     _style = () => {
-        return [styles.keyboard, this.props.style];
+        return [
+            styles.keyboard,
+            this.props.animations
+                ? {
+                      transform: [{ translateY: this.state.animationPositionY }],
+                      opacity: this.state.animationOpacity
+                  }
+                : {},
+            this.props.style
+        ];
     };
 
     _keyStyle = () => {
@@ -218,7 +268,7 @@ export class Keyboard extends Component {
 
     render() {
         return (
-            <ScrollView
+            <Animated.ScrollView
                 directionalLockEnabled={true}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
@@ -229,7 +279,7 @@ export class Keyboard extends Component {
                 {this.state.symbolicKeyboard
                     ? this._renderSymbolicKeyboard()
                     : this._renderQwertyKeyboard()}
-            </ScrollView>
+            </Animated.ScrollView>
         );
     }
 }
