@@ -10,7 +10,7 @@ export class Keyboard extends Component {
             supportedCharacters: PropTypes.string,
             symbolicKeyboard: PropTypes.bool,
             capsLock: PropTypes.bool,
-            animations: PropTypes.bool,
+            animate: PropTypes.bool,
             onBackspacePress: PropTypes.func,
             onBackspaceLongPress: PropTypes.func,
             onKeyPress: PropTypes.func,
@@ -26,7 +26,7 @@ export class Keyboard extends Component {
             supportedCharacters: "0123456789abcdefghijklmnopqrstuvwxyz",
             symbolicKeyboard: false,
             capsLock: true,
-            animations: true,
+            animate: true,
             onBackspacePress: () => {},
             onBackspaceLongPress: () => {},
             onKeyPress: value => {},
@@ -48,6 +48,7 @@ export class Keyboard extends Component {
 
         this.keys = "1234567890qwertyuiopasdfghjklzxcvbnm";
         this.keyColumns = [10, 10, 9, 9];
+        this.keyboardHiddenPositionY = 212;
     }
 
     componentDidMount() {
@@ -55,20 +56,19 @@ export class Keyboard extends Component {
     }
 
     showKeyboardAnimated = async () => {
-        if (!this.props.animations) return;
+        if (!this.props.animate) return;
 
         await this._animateKeyboard(0, 1);
     };
 
     hideKeyboardAnimated = async () => {
-        if (!this.props.animations) return;
+        if (!this.props.animate) return;
 
-        await this._animateKeyboard(212, 0, 200);
+        await this._animateKeyboard(this.keyboardHiddenPositionY, 0, 200);
     };
 
     _animateKeyboard = async (positionY, opacity, duration = 250) => {
         return new Promise(resolve => {
-            this.animating = true;
             Animated.parallel([
                 Animated.timing(this.state.animationPositionY, {
                     toValue: positionY,
@@ -81,7 +81,6 @@ export class Keyboard extends Component {
                     useNativeDriver: true
                 })
             ]).start(() => {
-                this.animating = false;
                 resolve();
             });
         });
@@ -192,7 +191,7 @@ export class Keyboard extends Component {
     _style = () => {
         return [
             styles.keyboard,
-            this.props.animations
+            this.props.animate
                 ? {
                       transform: [{ translateY: this.state.animationPositionY }],
                       opacity: this.state.animationOpacity
