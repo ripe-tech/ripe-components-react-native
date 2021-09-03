@@ -55,19 +55,19 @@ export class Keyboard extends Component {
         this.showKeyboardAnimated();
     }
 
-    showKeyboardAnimated = async () => {
+    showKeyboardAnimated = async (animationDuration = 250) => {
         if (!this.props.animate) return;
 
-        await this._animateKeyboard(0, 1);
+        await this._animateKeyboard(0, 1, animationDuration);
     };
 
-    hideKeyboardAnimated = async () => {
+    hideKeyboardAnimated = async (animationDuration = 200) => {
         if (!this.props.animate) return;
 
-        await this._animateKeyboard(this.keyboardHiddenPositionY, 0, 200);
+        await this._animateKeyboard(this.keyboardHiddenPositionY, 0, animationDuration);
     };
 
-    _animateKeyboard = async (positionY, opacity, duration = 250) => {
+    _animateKeyboard = async (positionY, opacity, duration) => {
         return new Promise(resolve => {
             Animated.parallel([
                 Animated.timing(this.state.animationPositionY, {
