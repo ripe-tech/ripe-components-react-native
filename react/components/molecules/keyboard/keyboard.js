@@ -40,15 +40,15 @@ export class Keyboard extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            symbolicKeyboard: this.props.symbolicKeyboard,
-            animationPositionY: new Animated.Value(212),
-            animationOpacity: new Animated.Value(0)
-        };
-
         this.keys = "1234567890qwertyuiopasdfghjklzxcvbnm";
         this.keyColumns = [10, 10, 9, 9];
         this.keyboardHiddenPositionY = 212;
+
+        this.state = {
+            symbolicKeyboard: this.props.symbolicKeyboard,
+            animationPositionY: new Animated.Value(this.keyboardHiddenPositionY),
+            animationOpacity: new Animated.Value(0)
+        };
     }
 
     async componentDidMount() {
