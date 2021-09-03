@@ -51,8 +51,8 @@ export class Keyboard extends Component {
         this.keyboardHiddenPositionY = 212;
     }
 
-    componentDidMount() {
-        this.showKeyboardAnimated();
+    async componentDidMount() {
+        await this.showKeyboardAnimated();
     }
 
     showKeyboardAnimated = async (animationDuration = 250) => {
