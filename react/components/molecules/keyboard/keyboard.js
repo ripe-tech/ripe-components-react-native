@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     key: {
         borderRadius: 10,
         width: 46,
-        margin: 1,
+        margin: 2,
         flexShrink: 1
     }
 });
