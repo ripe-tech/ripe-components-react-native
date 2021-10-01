@@ -157,12 +157,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
     _loadingStyle = () => {
         return [
             this.props.styles.container,
-            {
-                position: "absolute",
-                justifyContent: "center",
-                paddingHorizontal: 0,
-                paddingVertical: 0
-            },
+            styles.activityIndicator,
             this.props.loadingPosition === "right"
                 ? { right: 15 }
                 : this.props.loadingPosition === "left"
@@ -286,6 +281,12 @@ const styles = StyleSheet.create({
     },
     textFlat: {
         color: "#4f7af8"
+    },
+    activityIndicator: {
+        position: "absolute",
+        justifyContent: "center",
+        paddingHorizontal: 0,
+        paddingVertical: 0
     }
 });
 
