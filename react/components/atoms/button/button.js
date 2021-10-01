@@ -172,29 +172,17 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _renderLoading() {
-        switch (this.props.loadingPosition) {
-            case "left":
-                return (
-                    <>
-                        <ActivityIndicator style={this._loadingStyle()} color="#ffffff" />
-                        <Text style={[this._textStyle()]}>{this.props.text}</Text>
-                    </>
-                );
-            case "right":
-                return (
-                    <>
-                        <Text style={[this._textStyle()]}>{this.props.text}</Text>
-                        <ActivityIndicator style={this._loadingStyle()} color="#ffffff" />
-                    </>
-                );
-            case "center":
-            default:
-                return (
-                    <>
-                        <ActivityIndicator style={this._loadingStyle()} color="#ffffff" />
-                    </>
-                );
-        }
+        return (
+            <>
+                {this.props.loadingPosition === "right" && (
+                    <Text style={this._textStyle()}>{this.props.text}</Text>
+                )}
+                <ActivityIndicator style={this._loadingStyle()} color="#ffffff" />
+                {this.props.loadingPosition === "left" && (
+                    <Text style={this._textStyle()}>{this.props.text}</Text>
+                )}
+            </>
+        );
     }
 
     _renderLeft() {
