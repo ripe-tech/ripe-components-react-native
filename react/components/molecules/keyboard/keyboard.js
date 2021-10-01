@@ -99,7 +99,7 @@ export class Keyboard extends Component {
     };
 
     _specialChars = () => {
-        return this.props.supportedCharacters.match(/[^a-zA-Z\d:]/g);
+        return [...this.props.supportedCharacters.replace(/[a-zA-Z\d:]/g, "")];
     };
 
     _hasSpecialChars = () => {
