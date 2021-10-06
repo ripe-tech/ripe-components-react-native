@@ -66,6 +66,7 @@
         "@react-native-community/clipboard": "^1.5.1",
         "@react-native-picker/picker": "^1.16.1",
         "buffer": "^6.0.3",
+        "grapheme-splitter": "^1.0.4",
         "js-base64": "^3.6.1",
         "react": "^17.0.1",
         "react-native": "^0.63.4",
