@@ -20,6 +20,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             leftSlot: PropTypes.any,
             rightSlot: PropTypes.any,
             loading: PropTypes.bool,
+            loadingPosition: PropTypes.string,
             disabled: PropTypes.bool,
             variant: PropTypes.string,
             iconStrokeWidth: PropTypes.number,
@@ -56,6 +57,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             leftSlot: undefined,
             rightSlot: undefined,
             loading: false,
+            loadingPosition: "center",
             disabled: false,
             variant: undefined,
             iconStrokeWidth: undefined,
@@ -152,8 +154,30 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
         ];
     };
 
+    _loadingStyle = () => {
+        return [
+            this.props.styles.container,
+            styles.activityIndicator,
+            this.props.loadingPosition === "right"
+                ? { right: 15 }
+                : this.props.loadingPosition === "left"
+                ? { left: 15 }
+                : {}
+        ];
+    };
+
     _renderLoading() {
-        return <ActivityIndicator style={this.props.styles.container} color="#ffffff" />;
+        return (
+            <>
+                {this.props.loadingPosition === "right" && (
+                    <Text style={this._textStyle()}>{this.props.text}</Text>
+                )}
+                <ActivityIndicator style={this._loadingStyle()} color="#ffffff" />
+                {this.props.loadingPosition === "left" && (
+                    <Text style={this._textStyle()}>{this.props.text}</Text>
+                )}
+            </>
+        );
     }
 
     _renderLeft() {
@@ -257,6 +281,12 @@ const styles = StyleSheet.create({
     },
     textFlat: {
         color: "#4f7af8"
+    },
+    activityIndicator: {
+        position: "absolute",
+        justifyContent: "center",
+        paddingHorizontal: 0,
+        paddingVertical: 0
     }
 });
 
