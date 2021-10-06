@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Animated, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
+import GraphemeSplitter from "grapheme-splitter";
+
 import { Button } from "../../atoms";
 
 export class Keyboard extends Component {
@@ -99,7 +101,9 @@ export class Keyboard extends Component {
     };
 
     _specialChars = () => {
-        return [...this.props.supportedCharacters.replace(/[a-zA-Z\d:]/g, "")];
+        const specialCharsString = this.props.supportedCharacters.replace(/[a-zA-Z\d:]/g, "");
+        const stringSplitter = new GraphemeSplitter();
+        return stringSplitter.splitGraphemes(specialCharsString);
     };
 
     _hasSpecialChars = () => {
