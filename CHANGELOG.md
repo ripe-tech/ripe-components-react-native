@@ -19,6 +19,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *
 
+## [0.11.0] - 2021-10-11
+
+### Added
+
+* Added loading indicator positioning in button
+
+### Changed
+
+* Increase keyboard key spacing
+* Improved icon support for keyboard
+
+### Fixed
+
+*
+
 ## [0.10.0] - 2021-08-31
 
 ### Added
