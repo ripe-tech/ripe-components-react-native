@@ -3,6 +3,7 @@ export * from "./card";
 export * from "./chat-message";
 export * from "./checkbox-group";
 export * from "./date-input";
+export * from "./gradient-animated";
 export * from "./header";
 export * from "./image-carrousel";
 export * from "./input-animated";
