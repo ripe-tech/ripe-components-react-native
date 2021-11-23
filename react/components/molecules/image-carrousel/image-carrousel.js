@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 
-import { isTabletSize } from "../../../util";
+import { isTabletSize } from "ripe-commons-native";
 
 import { ButtonIcon } from "../../atoms";
 
