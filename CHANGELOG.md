@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* Imagecarrousel 'isTabletSize' import [#284](https://github.com/ripe-tech/ripe-components-react-native/pull/284)
 
 ## [0.11.0] - 2021-10-11
 
