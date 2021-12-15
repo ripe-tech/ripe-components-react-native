@@ -62,7 +62,7 @@ export class ImageCarrousel extends PureComponent {
 
         this.fullZoomedInValue = 2;
         this.fullZoomedOutValue = 1;
-        
+
         this.translatedX = 0;
         this.translatedXTreshold = 0;
         this.translatedY = 0;
