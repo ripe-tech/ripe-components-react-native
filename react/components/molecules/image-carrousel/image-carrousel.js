@@ -54,6 +54,12 @@ export class ImageCarrousel extends PureComponent {
 
         this.screenWidth = Dimensions.get("window").width;
         this.screenHeight = Dimensions.get("window").height;
+
+        this.fullscreenContainerBackgroundColor = 0;
+        this.fullscreenContainerBackgroundColorAnimated = 1;
+        this.fullscreenContainerTranslateYAnimationValue = 15;
+        this.fullscreenContainerBackgroundColorAnimatedDuration = 200;
+
         this.fullZoomedInValue = 2;
         this.fullZoomedOutValue = 1;
         
@@ -69,6 +75,7 @@ export class ImageCarrousel extends PureComponent {
             zooming: false,
             visible: false,
             selectedImage: this.props.selectedImage,
+            fullscreenContainerBackgroundColor: new Animated.Value(0),
             baseScale: new Animated.Value(1),
             translateX: new Animated.Value(0),
             translateY: new Animated.Value(0),
@@ -261,7 +268,18 @@ export class ImageCarrousel extends PureComponent {
     onFlingMovement = event => {
         if (this.state.zoomed) return;
         if (event.nativeEvent.state === State.END) {
-            this.setState({ visible: false });
+            Animated.parallel([
+                Animated.timing(this.state.translateY, {
+                    toValue: this.fullscreenContainerTranslateYAnimationValue,
+                    duration: this.fullscreenContainerBackgroundColorAnimatedDuration,
+                    useNativeDriver: true
+                }),
+                Animated.timing(this.state.fullscreenContainerBackgroundColor, {
+                    toValue: this.fullscreenContainerBackgroundColorAnimated,
+                    duration: this.fullscreenContainerBackgroundColorAnimatedDuration,
+                    useNativeDriver: false
+                })
+            ]).start(() => this.setState({ visible: false }));
         }
     };
 
@@ -272,6 +290,22 @@ export class ImageCarrousel extends PureComponent {
     _imageSource = image => {
         return image?.uri ? image : { uri: image };
     };
+
+    _fullscreenContainerStyle = () => {
+        return [
+            styles.fullscreenContainer,
+            {
+                backgroundColor: this.state.fullscreenContainerBackgroundColor.interpolate({
+                    inputRange: [
+                        this.fullscreenContainerBackgroundColor,
+                        this.fullscreenContainerBackgroundColorAnimated
+                    ],
+                    outputRange: ["rgba(0, 0, 0, 1)", "rgba(0, 0, 0, 0.8)"]
+                })
+            }
+        ];
+    };
+
     _imageFullscreenStyle = (image, index) => {
         return [
             styles.imageFullscreen,
@@ -304,10 +338,10 @@ export class ImageCarrousel extends PureComponent {
                     onRequestClose={this.onBackButtonPress}
                 >
                     <FlingGestureHandler
-                        direction={Directions.DOWN | Directions.UP}
+                        direction={Directions.DOWN}
                         onHandlerStateChange={this.onFlingMovement}
                     >
-                        <View style={styles.fullscreenContainer}>
+                        <Animated.View style={this._fullscreenContainerStyle()}>
                             <ScrollView
                                 scrollEnabled={this.state.zooming || !this.state.zoomed}
                                 disableScrollViewPanResponder={this.state.zoomed}
@@ -369,7 +403,7 @@ export class ImageCarrousel extends PureComponent {
                                     }`}
                                 </Text>
                             )}
-                        </View>
+                        </Animated.View>
                     </FlingGestureHandler>
                 </Modal>
             </View>
@@ -387,8 +421,7 @@ const styles = StyleSheet.create({
     fullscreenContainer: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#000000"
+        justifyContent: "center"
     },
     panResponderView: {
         position: "absolute",
