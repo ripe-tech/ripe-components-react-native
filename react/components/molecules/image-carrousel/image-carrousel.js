@@ -358,9 +358,11 @@ export class ImageCarrousel extends PureComponent {
                                 iconStrokeColor={"#ffffff"}
                                 onPress={this.onClosePress}
                             />
-                            <Text style={styles.title}>
+                            {this.props.images.length > 1 && (
+                                <Text style={styles.title}>
                                 {`${this.state.selectedImage + 1} / ${this.props.images.length}`}
                             </Text>
+                            )}
                         </View>
                     </FlingGestureHandler>
                 </Modal>
