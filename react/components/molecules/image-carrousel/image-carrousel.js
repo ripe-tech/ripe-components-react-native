@@ -256,8 +256,8 @@ export class ImageCarrousel extends PureComponent {
     };
 
     onFlingMovement = event => {
+        if (this.state.zoomed) return;
         if (event.nativeEvent.state === State.END) {
-            if (this.state.zoomed) return;
             this.setState({ visible: false });
         }
     };
@@ -294,6 +294,7 @@ export class ImageCarrousel extends PureComponent {
         return (
             <View style={styles.container}>
                 <Modal
+                    activeOpacity={0.3}
                     animationType="fade"
                     transparent={false}
                     visible={this.state.visible}
@@ -360,8 +361,10 @@ export class ImageCarrousel extends PureComponent {
                             />
                             {this.props.images.length > 1 && (
                                 <Text style={styles.title}>
-                                {`${this.state.selectedImage + 1} / ${this.props.images.length}`}
-                            </Text>
+                                    {`${this.state.selectedImage + 1} / ${
+                                        this.props.images.length
+                                    }`}
+                                </Text>
                             )}
                         </View>
                     </FlingGestureHandler>
