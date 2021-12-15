@@ -54,6 +54,9 @@ export class ImageCarrousel extends PureComponent {
 
         this.screenWidth = Dimensions.get("window").width;
         this.screenHeight = Dimensions.get("window").height;
+        this.fullZoomedInValue = 2;
+        this.fullZoomedOutValue = 1;
+        
         this.translatedX = 0;
         this.translatedXTreshold = 0;
         this.translatedY = 0;
@@ -213,7 +216,7 @@ export class ImageCarrousel extends PureComponent {
         this.setState({ zooming: true }, () => {
             Animated.parallel([
                 Animated.timing(this.state.baseScale, {
-                    toValue: 2,
+                    toValue: this.fullZoomedInValue,
                     duration: this.props.zoomAnimationDuration,
                     useNativeDriver: true
                 }),
@@ -237,7 +240,7 @@ export class ImageCarrousel extends PureComponent {
         this.setState({ zooming: true }, () => {
             Animated.parallel([
                 Animated.timing(this.state.baseScale, {
-                    toValue: 1,
+                    toValue: this.fullZoomedOutValue,
                     duration: this.props.zoomAnimationDuration,
                     useNativeDriver: true
                 }),
