@@ -9,8 +9,6 @@ import {
     View,
     ViewPropTypes
 } from "react-native";
-import PropTypes from "prop-types";
-
 import {
     Directions,
     FlingGestureHandler,
@@ -20,9 +18,11 @@ import {
     State,
     TapGestureHandler
 } from "react-native-gesture-handler";
-
+import PropTypes from "prop-types";
 import { isTabletSize } from "ripe-commons-native";
-import { ButtonIcon } from "ripe-components-react-native";
+
+import { ButtonIcon } from "../../atoms/button-icon";
+
 export class ImageCarrousel extends PureComponent {
     static get propTypes() {
         return {
@@ -184,6 +184,24 @@ export class ImageCarrousel extends PureComponent {
         }
     };
 
+    onFlingMovement = event => {
+        if (this.state.zoomed) return;
+        if (event.nativeEvent.state === State.END) {
+            Animated.parallel([
+                Animated.timing(this.state.translateY, {
+                    toValue: this.fullscreenContainerTranslateYAnimationValue,
+                    duration: this.fullscreenContainerBackgroundColorAnimatedDuration,
+                    useNativeDriver: true
+                }),
+                Animated.timing(this.state.fullscreenContainerBackgroundColor, {
+                    toValue: this.fullscreenContainerBackgroundColorAnimated,
+                    duration: this.fullscreenContainerBackgroundColorAnimatedDuration,
+                    useNativeDriver: false
+                })
+            ]).start(() => this.closeLigthBox());
+        }
+    };
+
     _getTranslateX = (event, middle) => {
         const x = event.x;
         this.translatedXTreshold = this.screenWidth / 4;
@@ -264,24 +282,6 @@ export class ImageCarrousel extends PureComponent {
                 })
             ]).start(() => this.setState({ zooming: false, zoomed: false }));
         });
-    };
-
-    onFlingMovement = event => {
-        if (this.state.zoomed) return;
-        if (event.nativeEvent.state === State.END) {
-            Animated.parallel([
-                Animated.timing(this.state.translateY, {
-                    toValue: this.fullscreenContainerTranslateYAnimationValue,
-                    duration: this.fullscreenContainerBackgroundColorAnimatedDuration,
-                    useNativeDriver: true
-                }),
-                Animated.timing(this.state.fullscreenContainerBackgroundColor, {
-                    toValue: this.fullscreenContainerBackgroundColorAnimated,
-                    duration: this.fullscreenContainerBackgroundColorAnimatedDuration,
-                    useNativeDriver: false
-                })
-            ]).start(() => this.closeLigthBox());
-        }
     };
 
     _getAspectRatioHeight = imageIndex => {
