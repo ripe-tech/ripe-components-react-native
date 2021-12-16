@@ -359,6 +359,7 @@ export class ImageCarrousel extends PureComponent {
                             >
                                 {this.props.images.map((image, index) => (
                                     <TapGestureHandler
+                                        key={index}
                                         onHandlerStateChange={event =>
                                             this.onImageDoubleTap(event, index)
                                         }
