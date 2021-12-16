@@ -130,7 +130,7 @@ export class ImageCarrousel extends PureComponent {
 
     reset() {
         this.setState({ zoomed: false });
-        this.state.baseScale.setValue(1);
+        this.state.baseScale.setValue(this.fullZoomedOutValue);
         this.state.translateX.setValue(0);
         this.state.translateY.setValue(0);
     }
