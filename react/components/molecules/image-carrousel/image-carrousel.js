@@ -14,6 +14,7 @@ import PropTypes from "prop-types";
 import {
     Directions,
     FlingGestureHandler,
+    GestureHandlerRootView,
     PanGestureHandler,
     ScrollView,
     State,
@@ -279,7 +280,7 @@ export class ImageCarrousel extends PureComponent {
                     duration: this.fullscreenContainerBackgroundColorAnimatedDuration,
                     useNativeDriver: false
                 })
-            ]).start(() => this.setState({ visible: false }));
+            ]).start(() => this.closeLigthBox());
         }
     };
 
@@ -337,75 +338,79 @@ export class ImageCarrousel extends PureComponent {
                     visible={this.state.visible}
                     onRequestClose={this.onBackButtonPress}
                 >
-                    <FlingGestureHandler
-                        direction={Directions.DOWN}
-                        onHandlerStateChange={this.onFlingMovement}
-                    >
-                        <Animated.View style={this._fullscreenContainerStyle()}>
-                            <ScrollView
-                                scrollEnabled={this.state.zooming || !this.state.zoomed}
-                                disableScrollViewPanResponder={this.state.zoomed}
-                                contentOffset={{ x: this.state.currentPagePosition, y: 0 }}
-                                style={styles.scrollView}
-                                contentContainerStyle={{
-                                    flexGrow: 1,
-                                    alignItems: "center",
-                                    justifyContent: "center"
-                                }}
-                                horizontal={true}
-                                pagingEnabled={true}
-                                showsHorizontalScrollIndicator={true}
-                                onScroll={this.onScroll}
-                            >
-                                {this.props.images.map((image, index) => (
-                                    <TapGestureHandler
-                                        key={index}
-                                        onHandlerStateChange={event =>
-                                            this.onImageDoubleTap(event, index)
-                                        }
-                                        numberOfTaps={2}
-                                    >
-                                        <Animated.Image
-                                            style={this._imageFullscreenStyle(image, index)}
-                                            resizeMode={this.props.resizeModeFullScreen}
-                                            source={this._imageSource(image)}
-                                        />
-                                    </TapGestureHandler>
-                                ))}
-                            </ScrollView>
-                            {this.state.zoomed && (
-                                <PanGestureHandler
-                                    onHandlerStateChange={this.onPanGestureEnd}
-                                    onGestureEvent={this.onPanGesture}
+                    <GestureHandlerRootView style={{ width: "100%", height: "100%" }}>
+                        <FlingGestureHandler
+                            direction={Directions.DOWN}
+                            onHandlerStateChange={this.onFlingMovement}
+                        >
+                            <Animated.View style={this._fullscreenContainerStyle()}>
+                                <ScrollView
+                                    scrollEnabled={this.state.zooming || !this.state.zoomed}
+                                    disableScrollViewPanResponder={this.state.zoomed}
+                                    contentOffset={{ x: this.state.currentPagePosition, y: 0 }}
+                                    style={styles.scrollView}
+                                    contentContainerStyle={{
+                                        flexGrow: 1,
+                                        alignItems: "center",
+                                        justifyContent: "center"
+                                    }}
+                                    horizontal={true}
+                                    pagingEnabled={true}
+                                    showsHorizontalScrollIndicator={true}
+                                    onScroll={this.onScroll}
                                 >
-                                    <TapGestureHandler
-                                        onHandlerStateChange={event => this.onImageDoubleTap(event)}
-                                        numberOfTaps={2}
+                                    {this.props.images.map((image, index) => (
+                                        <TapGestureHandler
+                                            key={index}
+                                            onHandlerStateChange={event =>
+                                                this.onImageDoubleTap(event, index)
+                                            }
+                                            numberOfTaps={2}
+                                        >
+                                            <Animated.Image
+                                                style={this._imageFullscreenStyle(image, index)}
+                                                resizeMode={this.props.resizeModeFullScreen}
+                                                source={this._imageSource(image)}
+                                            />
+                                        </TapGestureHandler>
+                                    ))}
+                                </ScrollView>
+                                {this.state.zoomed && (
+                                    <PanGestureHandler
+                                        onHandlerStateChange={this.onPanGestureEnd}
+                                        onGestureEvent={this.onPanGesture}
                                     >
-                                        <View style={styles.panResponderView} />
-                                    </TapGestureHandler>
-                                </PanGestureHandler>
-                            )}
-                            <ButtonIcon
-                                style={styles.buttonClose}
-                                icon={"close"}
-                                iconStrokeWidth={2}
-                                size={isTabletSize() ? 52 : 34}
-                                iconHeight={isTabletSize() ? 34 : 22}
-                                iconWidth={isTabletSize() ? 34 : 22}
-                                backgroundColor={"#000000"}
-                                iconStrokeColor={"#ffffff"}
-                                onPress={this.onClosePress}
-                            />
-                            {this.props.images.length > 1 && (
-                                <Text style={styles.title}>
-                                    {`${this.state.selectedImage + 1} / ${
-                                        this.props.images.length
-                                    }`}
-                                </Text>
-                            )}
-                        </Animated.View>
-                    </FlingGestureHandler>
+                                        <TapGestureHandler
+                                            onHandlerStateChange={event =>
+                                                this.onImageDoubleTap(event)
+                                            }
+                                            numberOfTaps={2}
+                                        >
+                                            <View style={styles.panResponderView} />
+                                        </TapGestureHandler>
+                                    </PanGestureHandler>
+                                )}
+                                <ButtonIcon
+                                    style={styles.buttonClose}
+                                    icon={"close"}
+                                    iconStrokeWidth={2}
+                                    size={isTabletSize() ? 52 : 34}
+                                    iconHeight={isTabletSize() ? 34 : 22}
+                                    iconWidth={isTabletSize() ? 34 : 22}
+                                    backgroundColor={"#000000"}
+                                    iconStrokeColor={"#ffffff"}
+                                    onPress={this.onClosePress}
+                                />
+                                {this.props.images.length > 1 && (
+                                    <Text style={styles.title}>
+                                        {`${this.state.selectedImage + 1} / ${
+                                            this.props.images.length
+                                        }`}
+                                    </Text>
+                                )}
+                            </Animated.View>
+                        </FlingGestureHandler>
+                    </GestureHandlerRootView>
                 </Modal>
             </View>
         );
