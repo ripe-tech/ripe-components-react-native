@@ -163,7 +163,7 @@ export class ImageCarrousel extends PureComponent {
         }
 
         if (Math.abs(dy) < this.translatedYTreshold) {
-            this.state.translateX.setValue(dy);
+            this.state.translateY.setValue(dy);
         }
     };
 
