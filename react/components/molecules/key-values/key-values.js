@@ -15,6 +15,7 @@ export class KeyValues extends PureComponent {
                 PropTypes.shape({
                     key: PropTypes.string.isRequired,
                     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+                    valueComponent: PropTypes.object,
                     keyColor: PropTypes.string,
                     valueColor: PropTypes.string,
                     border: PropTypes.string,
