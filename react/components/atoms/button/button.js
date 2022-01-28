@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        paddingHorizontal: 16,
+        paddingHorizontal: 16
     },
     containerFlat: {
         backgroundColor: "#ffffff",
