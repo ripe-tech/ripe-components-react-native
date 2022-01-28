@@ -124,7 +124,7 @@ export class Profile extends Component {
             borderBottomRightRadius: 0,
             borderTopLeftRadius: 0,
             borderTopRightRadius: 0,
-            paddingLeft: 15
+            paddingHorizontal: 15
         };
     };
 
