@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 * Apply padding horizontal to button group in profile component
+* Made button horizontal padding similar to the key-value padding
 
 ## [0.12.0] - 2021-12-10
 
