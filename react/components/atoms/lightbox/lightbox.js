@@ -1,6 +1,13 @@
 import React, { PureComponent } from "react";
-import { Image, Modal, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Animated, Dimensions, Image, Modal, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
+import {
+    GestureHandlerRootView,
+    PanGestureHandler,
+    PinchGestureHandler,
+    State,
+    TapGestureHandler
+} from "react-native-gesture-handler";
 import { isTabletSize } from "ripe-commons-native";
 
 import { ButtonIcon } from "../button-icon";
@@ -14,8 +21,12 @@ export class Lightbox extends PureComponent {
             width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             borderRadius: PropTypes.number,
+            zoomAnimationDuration: PropTypes.number,
+            translateAnimationDuration: PropTypes.number,
             resizeMode: PropTypes.string,
             resizeModeFullScreen: PropTypes.string,
+            closeButton: PropTypes.bool,
+            visible: PropTypes.bool,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style,
             styles: PropTypes.any
@@ -28,9 +39,13 @@ export class Lightbox extends PureComponent {
             src: undefined,
             width: "100%",
             height: "100%",
+            zoomAnimationDuration: 200,
+            translateAnimationDuration: 200,
             borderRadius: undefined,
             resizeMode: undefined,
-            resizeModeFullScreen: undefined,
+            resizeModeFullScreen: "contain",
+            closeButton: true,
+            visible: false,
             onVisible: () => {},
             style: {},
             styles: styles
@@ -39,8 +54,36 @@ export class Lightbox extends PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.screenWidth = Dimensions.get("window").width;
+        this.screenHeight = Dimensions.get("window").height;
+
+        this.fullscreenContainerBackgroundColor = 0;
+        this.fullscreenContainerBackgroundColorAnimated = 1;
+        this.fullscreenContainerTranslateYAnimationValue = 15;
+        this.fullscreenContainerBackgroundColorAnimatedDuration = 200;
+
+        this.fullZoomedInValue = 2;
+        this.fullZoomedOutValue = 1;
+
+        this.translatedX = 0;
+        this.translatedXTreshold = 0;
+        this.translatedY = 0;
+        this.translatedYTreshold = 0;
+
+        this.baseScale = new Animated.Value(1);
+        this.scaleRate = new Animated.Value(1);
+        this.lastScale = 1;
+
         this.state = {
-            visible: false
+            imageSizes: null,
+            zoomed: false,
+            zooming: false,
+            visible: this.props.visible,
+            fullscreenContainerBackgroundColor: new Animated.Value(0),
+            scale: Animated.multiply(this.baseScale, this.scaleRate),
+            translateX: new Animated.Value(0),
+            translateY: new Animated.Value(0)
         };
     }
 
@@ -55,6 +98,7 @@ export class Lightbox extends PureComponent {
 
     closeLigthBox() {
         this.setVisibility(false);
+        this.reset();
     }
 
     onBackButtonPress = () => {
@@ -65,12 +109,182 @@ export class Lightbox extends PureComponent {
         this.closeLigthBox();
     };
 
+    reset() {
+        this.setState({ zoomed: false });
+        this.scaleRate.setValue(1);
+        this.baseScale.setValue(1);
+        this.state.translateX.setValue(0);
+        this.state.translateY.setValue(0);
+        this.state.fullscreenContainerBackgroundColor.setValue(0);
+    }
+
+    resetTranslation = () => {
+        Animated.parallel([
+            Animated.timing(this.state.translateX, {
+                toValue: 0,
+                duration: this.props.zoomAnimationDuration,
+                useNativeDriver: true
+            }),
+            Animated.timing(this.state.translateY, {
+                toValue: 0,
+                duration: this.props.zoomAnimationDuration,
+                useNativeDriver: true
+            })
+        ]).start();
+    };
+
     onLightboxPress = () => {
         this.setVisibility(true);
     };
 
+    onPanGesture = event => {
+        if (this.state.scale._value === 1 || !this.state.zoomed) return;
+        const dx = event.nativeEvent.translationX + this.translatedX;
+        const dy = event.nativeEvent.translationY + this.translatedY;
+        if (Math.abs(dx) < this.translatedXTreshold) {
+            this.state.translateX.setValue(dx);
+        }
+
+        if (Math.abs(dy) < this.translatedYTreshold) {
+            this.state.translateY.setValue(dy);
+        }
+    };
+
+    onPanGestureEnd = event => {
+        if (event.nativeEvent.state === State.END) {
+            this.translatedX = this.state.translateX._value;
+            this.translatedY = this.state.translateY._value;
+        }
+    };
+
+    onPinchGesture = event => {
+        const pinchScale = event.nativeEvent.scale;
+        const scale = this.baseScale._value * pinchScale;
+        if (scale < 1 || scale > 2) return;
+        this.scaleRate.setValue(pinchScale);
+        this.lastScale = scale;
+        this.setState({ zoomed: true });
+    };
+
+    onPinchGestureEnd = event => {
+        if (event.nativeEvent.oldState === State.ACTIVE) {
+            this.resetTranslation();
+            this.baseScale.setValue(this.lastScale);
+            this.scaleRate.setValue(1);
+            this.translatedXTreshold = this.screenWidth / this._sanatizeFloat(this.lastScale * 2);
+            this.translatedYTreshold = this.screenHeight / this._sanatizeFloat(this.lastScale * 2);
+        }
+    };
+
+    onDoubleTap = event => {
+        if (event.nativeEvent.state === State.ACTIVE) {
+            if (!this.state.zoomed) {
+                this._doubleTapZoomIn(event.nativeEvent);
+            } else {
+                this._doubleTapZoomOut();
+            }
+        }
+    };
+
+    _doubleTapZoomIn = event => {
+        const scaledImage = this.screenHeight * 2;
+        this.translatedXTreshold = this.screenWidth / 4;
+        this.translatedYTreshold = (scaledImage - this.screenHeight) / 4;
+
+        const translateX = this._getTranslateX(event);
+        const translateY = this._getTranslateY(event);
+
+        this.translatedX = translateX;
+        this.translatedY = translateY;
+
+        this.setState({ zooming: true }, () => {
+            Animated.parallel([
+                Animated.timing(this.scaleRate, {
+                    toValue: this.fullZoomedInValue,
+                    duration: this.props.zoomAnimationDuration,
+                    useNativeDriver: true
+                }),
+                Animated.timing(this.state.translateX, {
+                    toValue: translateX,
+                    duration: this.props.translateAnimationDuration,
+                    useNativeDriver: true
+                }),
+                Animated.timing(this.state.translateY, {
+                    toValue: translateY,
+                    duration: this.props.translateAnimationDuration,
+                    useNativeDriver: true
+                })
+            ]).start(() => {
+                const scaleRatio = this.baseScale._value * 2;
+                this.lastScale = scaleRatio;
+                this.baseScale.setValue(this.lastScale);
+                this.scaleRate.setValue(1);
+                this.setState({ zooming: false, zoomed: true });
+            });
+        });
+    };
+
+    _doubleTapZoomOut = () => {
+        this.setState({ zooming: true }, () => {
+            Animated.parallel([
+                Animated.timing(this.scaleRate, {
+                    toValue: this.fullZoomedOutValue,
+                    duration: this.props.zoomAnimationDuration,
+                    useNativeDriver: true
+                }),
+                Animated.timing(this.baseScale, {
+                    toValue: 1,
+                    duration: this.props.zoomAnimationDuration,
+                    useNativeDriver: true
+                }),
+                Animated.timing(this.state.translateX, {
+                    toValue: 0,
+                    duration: this.props.zoomAnimationDuration,
+                    useNativeDriver: true
+                }),
+                Animated.timing(this.state.translateY, {
+                    toValue: 0,
+                    duration: this.props.zoomAnimationDuration,
+                    useNativeDriver: true
+                })
+            ]).start(() => {
+                this.lastScale = 1;
+                this.baseScale.setValue(this.lastScale);
+                this.setState({ zooming: false, zoomed: false });
+            });
+        });
+    };
+
     _imageSource = () => {
         return this.props.uri ? { uri: this.props.uri } : this.props.src;
+    };
+
+    _sanatizeFloat = x => {
+        return x - Math.floor(x) > 0.85 ? Math.round(x) : x.toFixed(2);
+    };
+
+    _getTranslateY = event => {
+        const y = event.y;
+        const middle = this.screenHeight / 2;
+        const touchMiddleDistance = middle - y;
+        const translateY =
+            Math.abs(touchMiddleDistance) > this.translatedYTreshold
+                ? this.translatedYTreshold
+                : touchMiddleDistance;
+
+        return y > middle ? -1 * Math.abs(translateY) : Math.abs(translateY);
+    };
+
+    _getTranslateX = event => {
+        const x = event.x;
+        const middle = this.screenWidth / 2;
+        const touchMiddleDistance = x - middle;
+
+        const translateX =
+            Math.abs(touchMiddleDistance) > this.translatedXTreshold
+                ? this.translatedXTreshold
+                : touchMiddleDistance;
+        return x > middle ? -1 * Math.abs(translateX) : Math.abs(translateX);
     };
 
     _imageStyle = () => {
@@ -89,7 +303,14 @@ export class Lightbox extends PureComponent {
         return [
             styles.imageFullscreen,
             {
-                resizeMode: this.props.resizeModeFullScreen
+                width: this.screenWidth,
+                resizeMode: "contain",
+                transform: [
+                    { perspective: 200 },
+                    { scale: this.state.scale },
+                    { translateX: this.state.translateX },
+                    { translateY: this.state.translateY }
+                ]
             }
         ];
     };
@@ -106,20 +327,43 @@ export class Lightbox extends PureComponent {
                     visible={this.state.visible}
                     onRequestClose={this.onBackButtonPress}
                 >
-                    <View style={styles.fullscreenContainer}>
-                        <Image style={this._imageFullscreenStyle()} source={this._imageSource()} />
-                        <ButtonIcon
-                            icon={"close"}
-                            onPress={this.onClosePress}
-                            style={styles.buttonClose}
-                            iconStrokeWidth={2}
-                            size={isTabletSize() ? 52 : 34}
-                            iconHeight={isTabletSize() ? 34 : 22}
-                            iconWidth={isTabletSize() ? 34 : 22}
-                            backgroundColor={"#000000"}
-                            iconStrokeColor={"#ffffff"}
-                        />
-                    </View>
+                    <GestureHandlerRootView style={{ width: "100%", height: "100%" }}>
+                        <Animated.View style={styles.fullscreenContainer}>
+                            <PanGestureHandler
+                                onHandlerStateChange={this.onPanGestureEnd}
+                                onGestureEvent={this.onPanGesture}
+                            >
+                                <TapGestureHandler
+                                    onHandlerStateChange={this.onDoubleTap}
+                                    numberOfTaps={2}
+                                >
+                                    <PinchGestureHandler
+                                        onGestureEvent={this.onPinchGesture}
+                                        onHandlerStateChange={this.onPinchGestureEnd}
+                                    >
+                                        <Animated.Image
+                                            resizeMode={"contain"}
+                                            style={this._imageFullscreenStyle()}
+                                            source={this._imageSource()}
+                                        />
+                                    </PinchGestureHandler>
+                                </TapGestureHandler>
+                            </PanGestureHandler>
+                            {this.props.closeButton && (
+                                <ButtonIcon
+                                    icon={"close"}
+                                    onPress={this.onClosePress}
+                                    style={styles.buttonClose}
+                                    iconStrokeWidth={2}
+                                    size={isTabletSize() ? 52 : 34}
+                                    iconHeight={isTabletSize() ? 34 : 22}
+                                    iconWidth={isTabletSize() ? 34 : 22}
+                                    backgroundColor={"#000000"}
+                                    iconStrokeColor={"#ffffff"}
+                                />
+                            )}
+                        </Animated.View>
+                    </GestureHandlerRootView>
                 </Modal>
             </View>
         );
@@ -131,12 +375,13 @@ const styles = StyleSheet.create({
         resizeMode: "contain"
     },
     imageFullscreen: {
-        flex: 1,
-        resizeMode: "contain"
+        flex: 1
     },
     fullscreenContainer: {
         flex: 1,
-        backgroundColor: "#000000"
+        alignItems: "center",
+        backgroundColor: "#000000",
+        justifyContent: "center"
     },
     buttonClose: {
         position: "absolute",
