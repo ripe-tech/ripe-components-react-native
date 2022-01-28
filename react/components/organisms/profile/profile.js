@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, Share, StyleSheet, View } from "react-native";
+import { Platform, ScrollView, Share, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -85,15 +85,39 @@ export class Profile extends Component {
             },
             {
                 key: "Github",
-                value: this.props.account.meta?.github_username
+                value: this.props.account.meta?.github_username,
+                valueComponent: (
+                    <View style={styles.keyValue}>
+                        <Text style={styles.keyPrefixValue}>{"github.com/"}</Text>
+                        <Text style={styles.keyValueValue}>
+                            {this.props.account.meta?.github_username}
+                        </Text>
+                    </View>
+                )
             },
             {
                 key: "Twitter",
-                value: this.props.account.meta?.twitter_username
+                value: this.props.account.meta?.twitter_username,
+                valueComponent: (
+                    <View style={styles.keyValue}>
+                        <Text style={styles.keyPrefixValue}>{"twitter.com/"}</Text>
+                        <Text style={styles.keyValueValue}>
+                            {this.props.account.meta?.twitter_username}
+                        </Text>
+                    </View>
+                )
             },
             {
                 key: "Linkedin",
-                value: this.props.account.meta?.linkedin_username
+                value: this.props.account.meta?.linkedin_username,
+                valueComponent: (
+                    <View style={styles.keyValue}>
+                        <Text style={styles.keyPrefixValue}>{"linkedin.com/in/"}</Text>
+                        <Text style={styles.keyValueValue}>
+                            {this.props.account.meta?.linkedin_username}
+                        </Text>
+                    </View>
+                )
             }
         ].filter(v => Boolean(v));
     };
@@ -244,6 +268,20 @@ const styles = StyleSheet.create({
     },
     detailsTitleText: {
         fontFamily: baseStyles.FONT
+    },
+    keyValue: {
+        flexDirection: "row"
+    },
+    keyPrefixValue: {
+        color: "#9a9a9a",
+        fontSize: 16,
+        lineHeight: 18
+    },
+    keyValueValue: {
+        marginTop: Platform.OS === "ios" ? 4 : 0,
+        fontFamily: baseStyles.FONT,
+        fontSize: 16,
+        lineHeight: 18
     },
     buttons: {
         height: "100%",
