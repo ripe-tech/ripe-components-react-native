@@ -171,8 +171,8 @@ export class Lightbox extends PureComponent {
             this.resetTranslation();
             this.baseScale.setValue(this.lastScale);
             this.scaleRate.setValue(1);
-            this.translatedXTreshold = this.screenWidth / this._sanatizeFloat(this.lastScale * 2);
-            this.translatedYTreshold = this.screenHeight / this._sanatizeFloat(this.lastScale * 2);
+            this.translatedXTreshold = (this.screenWidth * this.lastScale - this.screenWidth) / 4;
+            this.translatedYTreshold = (this.screenHeight * this.lastScale - this.screenHeight) / 4;
         }
     };
 
