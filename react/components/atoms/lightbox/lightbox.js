@@ -21,6 +21,8 @@ export class Lightbox extends PureComponent {
             width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             borderRadius: PropTypes.number,
+            maxZoomScale: PropTypes.number,
+            minZoomScale: PropTypes.number,
             zoomAnimationDuration: PropTypes.number,
             translateAnimationDuration: PropTypes.number,
             resizeMode: PropTypes.string,
@@ -41,6 +43,8 @@ export class Lightbox extends PureComponent {
             height: "100%",
             zoomAnimationDuration: 200,
             translateAnimationDuration: 200,
+            maxZoomScale: 3,
+            minZoomScale: 1,
             borderRadius: undefined,
             resizeMode: undefined,
             resizeModeFullScreen: "contain",
@@ -58,7 +62,7 @@ export class Lightbox extends PureComponent {
         this.screenWidth = Dimensions.get("window").width;
         this.screenHeight = Dimensions.get("window").height;
 
-        this.fullZoomedInValue = 2;
+        this.fullZoomedInValue = this.props.maxZoomScale;
         this.fullZoomedOutValue = 1;
 
         this.translatedX = 0;
@@ -74,7 +78,6 @@ export class Lightbox extends PureComponent {
             zoomed: false,
             zooming: false,
             visible: this.props.visible,
-            containerBackgroundColor: new Animated.Value(0),
             scale: Animated.multiply(this.baseScale, this.scaleRate),
             translateX: new Animated.Value(0),
             translateY: new Animated.Value(0)
@@ -139,6 +142,7 @@ export class Lightbox extends PureComponent {
 
         const dx = event.nativeEvent.translationX + this.translatedX;
         const dy = event.nativeEvent.translationY + this.translatedY;
+
         if (Math.abs(dx) < this.translatedXTreshold) {
             this.state.translateX.setValue(dx);
         }
@@ -157,7 +161,7 @@ export class Lightbox extends PureComponent {
     onPinchGesture = event => {
         const pinchScale = event.nativeEvent.scale;
         const scale = this.baseScale._value * pinchScale;
-        if (scale < 1 || scale > 2) return;
+        if (scale < this.props.minZoomScale || scale > this.props.maxZoomScale) return;
 
         this.scaleRate.setValue(pinchScale);
         this.lastScale = scale;
@@ -170,8 +174,7 @@ export class Lightbox extends PureComponent {
         this.resetTranslation();
         this.baseScale.setValue(this.lastScale);
         this.scaleRate.setValue(1);
-        this.translatedXTreshold = (this.screenWidth * this.lastScale - this.screenWidth) / 4;
-        this.translatedYTreshold = (this.screenHeight * this.lastScale - this.screenHeight) / 4;
+        this._setTranslateTresholds(this.lastScale);
     };
 
     onDoubleTap = event => {
@@ -185,12 +188,9 @@ export class Lightbox extends PureComponent {
     };
 
     _doubleTapZoomIn = event => {
-        const scaledImage = this.screenHeight * 2;
-        this.translatedXTreshold = this.screenWidth / 4;
-        this.translatedYTreshold = (scaledImage - this.screenHeight) / 4;
-
-        const translateX = this._getTranslateX(event);
-        const translateY = this._getTranslateY(event);
+        this._setTranslateTresholds(this.fullZoomedInValue);
+        const translateX = this._getDoubleTapZoomInTranslateX(event);
+        const translateY = this._getDoubleTapZoomInTranslateY(event);
 
         this.translatedX = translateX;
         this.translatedY = translateY;
@@ -213,7 +213,7 @@ export class Lightbox extends PureComponent {
                     useNativeDriver: true
                 })
             ]).start(() => {
-                const scaleRatio = this.baseScale._value * 2;
+                const scaleRatio = this.baseScale._value * this.fullZoomedInValue;
                 this.lastScale = scaleRatio;
                 this.baseScale.setValue(this.lastScale);
                 this.scaleRate.setValue(1);
@@ -257,28 +257,36 @@ export class Lightbox extends PureComponent {
         return this.props.uri ? { uri: this.props.uri } : this.props.src;
     };
 
-    _getTranslateY = event => {
+    /**
+     * gets the Y coordinate to zoom in to.
+     *
+     * @param {Object} event The double tap event
+     */
+    _getDoubleTapZoomInTranslateY = event => {
         const y = event.y;
-        const middle = this.screenHeight / 2;
+        const middle = this.screenHeight / this.fullZoomedInValue;
         const touchMiddleDistance = middle - y;
-        const translateY =
-            Math.abs(touchMiddleDistance) > this.translatedYTreshold
-                ? this.translatedYTreshold
-                : touchMiddleDistance;
 
-        return y > middle ? -1 * Math.abs(translateY) : Math.abs(translateY);
+        // if the distance of the coordinate is greater than the translate treshold
+        // then assume the treshold value as the X coordinate to zoom in to
+        const translateY = Math.min(this.translatedYTreshold, Math.abs(touchMiddleDistance));
+        return y > middle ? -1 * translateY : translateY;
     };
 
-    _getTranslateX = event => {
+    /**
+     * gets the X coordinate to zoom in to.
+     *
+     * @param {Object} event The double tap event
+     */
+    _getDoubleTapZoomInTranslateX = event => {
         const x = event.x;
-        const middle = this.screenWidth / 2;
+        const middle = this.screenWidth / this.fullZoomedInValue;
         const touchMiddleDistance = x - middle;
 
-        const translateX =
-            Math.abs(touchMiddleDistance) > this.translatedXTreshold
-                ? this.translatedXTreshold
-                : touchMiddleDistance;
-        return x > middle ? -1 * Math.abs(translateX) : Math.abs(translateX);
+        // if the distance of the coordinate is greater than the translate treshold
+        // then assume the treshold value as the X coordinate to zoom in to
+        const translateX = Math.min(this.translatedXTreshold, Math.abs(touchMiddleDistance));
+        return x > middle ? -1 * translateX : translateX;
     };
 
     _imageStyle = () => {
@@ -297,16 +305,30 @@ export class Lightbox extends PureComponent {
         return [
             styles.imageFullscreen,
             {
-                width: this.screenWidth,
-                resizeMode: "contain",
+                width: "100%",
+                resizeMode: this.props.resizeModeFullScreen,
                 transform: [
-                    { perspective: 200 },
                     { scale: this.state.scale },
                     { translateX: this.state.translateX },
                     { translateY: this.state.translateY }
                 ]
             }
         ];
+    };
+
+    /**
+     * determines how much space is available after translation
+     * until reach the end of the scaled "image".
+     *
+     * @param {Float} scale Current scale value of the image
+     */
+    _setTranslateTresholds = scale => {
+        const scaledHeight = this.screenHeight * scale;
+        const scaledWidth = this.screenWidth * scale;
+
+        const scaleDivisor = scale * 2;
+        this.translatedXTreshold = (scaledWidth - this.screenWidth) / scaleDivisor;
+        this.translatedYTreshold = (scaledHeight - this.screenHeight) / scaleDivisor;
     };
 
     render() {
@@ -321,45 +343,43 @@ export class Lightbox extends PureComponent {
                     visible={this.state.visible}
                     onRequestClose={this.onBackButtonPress}
                 >
-                    <GestureHandlerRootView style={styles.gestureHandlerRootView}>
-                        <Animated.View style={styles.fullscreenContainer}>
-                            <PanGestureHandler
-                                minPointers={1}
-                                maxPointers={1}
-                                onHandlerStateChange={this.onPanGestureEnd}
-                                onGestureEvent={this.onPanGesture}
+                    <Animated.View style={styles.fullscreenContainer}>
+                        <PanGestureHandler
+                            minPointers={1}
+                            maxPointers={1}
+                            onHandlerStateChange={this.onPanGestureEnd}
+                            onGestureEvent={this.onPanGesture}
+                        >
+                            <TapGestureHandler
+                                onHandlerStateChange={this.onDoubleTap}
+                                numberOfTaps={2}
                             >
-                                <TapGestureHandler
-                                    onHandlerStateChange={this.onDoubleTap}
-                                    numberOfTaps={2}
+                                <PinchGestureHandler
+                                    onGestureEvent={this.onPinchGesture}
+                                    onHandlerStateChange={this.onPinchGestureEnd}
                                 >
-                                    <PinchGestureHandler
-                                        onGestureEvent={this.onPinchGesture}
-                                        onHandlerStateChange={this.onPinchGestureEnd}
-                                    >
-                                        <Animated.Image
-                                            resizeMode={"contain"}
-                                            style={this._imageFullscreenStyle()}
-                                            source={this._imageSource()}
-                                        />
-                                    </PinchGestureHandler>
-                                </TapGestureHandler>
-                            </PanGestureHandler>
-                            {this.props.closeButton && (
-                                <ButtonIcon
-                                    icon={"close"}
-                                    onPress={this.onClosePress}
-                                    style={styles.buttonClose}
-                                    iconStrokeWidth={2}
-                                    size={isTabletSize() ? 52 : 34}
-                                    iconHeight={isTabletSize() ? 34 : 22}
-                                    iconWidth={isTabletSize() ? 34 : 22}
-                                    backgroundColor={"#000000"}
-                                    iconStrokeColor={"#ffffff"}
-                                />
-                            )}
-                        </Animated.View>
-                    </GestureHandlerRootView>
+                                    <Animated.Image
+                                        resizeMode={this.props.resizeModeFullScreen}
+                                        style={this._imageFullscreenStyle()}
+                                        source={this._imageSource()}
+                                    />
+                                </PinchGestureHandler>
+                            </TapGestureHandler>
+                        </PanGestureHandler>
+                        {this.props.closeButton && (
+                            <ButtonIcon
+                                icon={"close"}
+                                onPress={this.onClosePress}
+                                style={styles.buttonClose}
+                                iconStrokeWidth={2}
+                                size={isTabletSize() ? 52 : 34}
+                                iconHeight={isTabletSize() ? 34 : 22}
+                                iconWidth={isTabletSize() ? 34 : 22}
+                                backgroundColor={"#000000"}
+                                iconStrokeColor={"#ffffff"}
+                            />
+                        )}
+                    </Animated.View>
                 </Modal>
             </View>
         );
@@ -367,15 +387,8 @@ export class Lightbox extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    image: {
-        resizeMode: "contain"
-    },
     imageFullscreen: {
         flex: 1
-    },
-    gestureHandlerRootView: {
-        width: "100%",
-        height: "100%"
     },
     fullscreenContainer: {
         flex: 1,
