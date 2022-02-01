@@ -154,7 +154,6 @@ export class Lightbox extends PureComponent {
     onPinchGesture = event => {
         const pinchScale = event.nativeEvent.scale;
         const scale = this.baseScale._value * pinchScale;
-
         if (scale < 1 || scale > 2) return;
 
         this.scaleRate.setValue(pinchScale);
