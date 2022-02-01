@@ -13,6 +13,9 @@ export class Tabs extends PureComponent {
                 PropTypes.shape({
                     text: PropTypes.string,
                     icon: PropTypes.string.isRequired,
+                    iconSelected: PropTypes.string,
+                    iconStrokeWidth: PropTypes.number,
+                    iconSelectedStrokeWidth: PropTypes.number,
                     color: PropTypes.string,
                     colorSelected: PropTypes.string,
                     fill: PropTypes.string,
@@ -75,6 +78,9 @@ export class Tabs extends PureComponent {
                             badgeCountThreshold={tab.badgeCountThreshold}
                             badgeHasAnimation={tab.badgeHasAnimation}
                             icon={tab.icon}
+                            iconSelected={tab.iconSelected}
+                            iconStrokeWidth={tab.iconStrokeWidth}
+                            iconSelectedStrokeWidth={tab.iconSelectedStrokeWidth}
                             {...tab.props}
                             onPress={() => this.onPressTab(tab.id)}
                             selected={this._isSelected(tab.id)}
