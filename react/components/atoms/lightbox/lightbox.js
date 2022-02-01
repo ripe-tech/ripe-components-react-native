@@ -171,7 +171,10 @@ export class Lightbox extends PureComponent {
     onPinchGestureEnd = event => {
         if (event.nativeEvent.oldState !== State.ACTIVE) return;
 
+        // as the pinch is always centered we reset translation
+        // as housekeeping
         this.resetTranslation();
+
         this.baseScale.setValue(this.lastScale);
         this.scaleRate.setValue(1);
         this._setTranslateTresholds(this.lastScale);
