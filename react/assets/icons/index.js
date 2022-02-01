@@ -167,6 +167,7 @@ import horn from "./horn.svg";
 import hourglass from "./hourglass.svg";
 import image from "./image.svg";
 import inboxAlt from "./inbox-alt.svg";
+import inboxAltFill from "./inbox-alt-fill.svg";
 import inbox from "./inbox.svg";
 import info from "./info.svg";
 import iphone from "./iphone.svg";
@@ -238,6 +239,7 @@ import previousAlt from "./previous-alt.svg";
 import previous from "./previous.svg";
 import print from "./print.svg";
 import qr from "./qr.svg";
+import qrFill from "./qr-fill.svg";
 import radioButtonSelected from "./radio-button-selected.svg";
 import radioButton from "./radio-button.svg";
 import radio from "./radio.svg";
@@ -256,6 +258,7 @@ import rss from "./rss.svg";
 import sadFace from "./sad-face.svg";
 import save from "./save.svg";
 import search from "./search.svg";
+import searchFill from "./search-fill.svg";
 import send from "./send.svg";
 import settings from "./settings.svg";
 import shareAndroid from "./share-android.svg";
@@ -317,6 +320,7 @@ import umbrella from "./umbrella.svg";
 import undo from "./undo.svg";
 import upload from "./upload.svg";
 import user from "./user.svg";
+import userFill from "./user-fill.svg";
 import verified from "./verified.svg";
 import vertical from "./vertical.svg";
 import video from "./video.svg";
@@ -508,6 +512,7 @@ const icons = {
     hourglass: hourglass,
     image: image,
     "inbox-alt": inboxAlt,
+    "inbox-alt-fill": inboxAltFill,
     inbox: inbox,
     info: info,
     iphone: iphone,
@@ -579,6 +584,7 @@ const icons = {
     previous: previous,
     print: print,
     qr: qr,
+    "qr-fill": qrFill,
     "radio-button-selected": radioButtonSelected,
     "radio-button": radioButton,
     radio: radio,
@@ -597,6 +603,7 @@ const icons = {
     "sad-face": sadFace,
     save: save,
     search: search,
+    "search-fill": searchFill,
     send: send,
     settings: settings,
     "share-android": shareAndroid,
@@ -658,6 +665,7 @@ const icons = {
     undo: undo,
     upload: upload,
     user: user,
+    "user-fill": userFill,
     verified: verified,
     vertical: vertical,
     video: video,
