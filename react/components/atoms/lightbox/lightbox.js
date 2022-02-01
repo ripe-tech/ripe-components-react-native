@@ -175,12 +175,12 @@ export class Lightbox extends PureComponent {
     };
 
     onDoubleTap = event => {
-        if (event.nativeEvent.state === State.ACTIVE) {
-            if (!this.state.zoomed) {
-                this._doubleTapZoomIn(event.nativeEvent);
-            } else {
-                this._doubleTapZoomOut();
-            }
+        if (event.nativeEvent.state !== State.ACTIVE) return;
+
+        if (!this.state.zoomed) {
+            this._doubleTapZoomIn(event.nativeEvent);
+        } else {
+            this._doubleTapZoomOut();
         }
     };
 
