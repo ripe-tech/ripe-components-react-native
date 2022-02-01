@@ -116,7 +116,10 @@ export class Lightbox extends PureComponent {
                 duration: this.props.zoomAnimationDuration,
                 useNativeDriver: true
             })
-        ]).start();
+        ]).start(() => {
+            this.translatedX = 0;
+            this.translatedY = 0;
+        });
     };
 
     onBackButtonPress = () => {
@@ -163,6 +166,7 @@ export class Lightbox extends PureComponent {
 
     onPinchGestureEnd = event => {
         if (event.nativeEvent.oldState !== State.ACTIVE) return;
+
         this.resetTranslation();
         this.baseScale.setValue(this.lastScale);
         this.scaleRate.setValue(1);
