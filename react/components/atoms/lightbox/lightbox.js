@@ -330,6 +330,8 @@ export class Lightbox extends PureComponent {
                     <GestureHandlerRootView style={{ width: "100%", height: "100%" }}>
                         <Animated.View style={styles.fullscreenContainer}>
                             <PanGestureHandler
+                                minPointers={1}
+                                maxPointers={1}
                                 onHandlerStateChange={this.onPanGestureEnd}
                                 onGestureEvent={this.onPanGesture}
                             >
