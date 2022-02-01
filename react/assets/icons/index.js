@@ -49,6 +49,7 @@ import boxAlt2 from "./box-alt2.svg";
 import box from "./box.svg";
 import brightness from "./brightness.svg";
 import bug from "./bug.svg";
+import bugFill from "./bug-fill.svg";
 import calendarAdd from "./calendar-add.svg";
 import calendarDecline from "./calendar-decline.svg";
 import calendarEvent from "./calendar-event.svg";
@@ -394,6 +395,7 @@ const icons = {
     box: box,
     brightness: brightness,
     bug: bug,
+    "bug-fill": bugFill,
     "calendar-add": calendarAdd,
     "calendar-decline": calendarDecline,
     "calendar-event": calendarEvent,
