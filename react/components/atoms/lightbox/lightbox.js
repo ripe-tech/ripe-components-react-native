@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { Animated, Dimensions, Image, Modal, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import {
+    GestureHandlerRootView,
     PanGestureHandler,
     PinchGestureHandler,
     State,
@@ -69,11 +70,11 @@ export class Lightbox extends PureComponent {
         this.translatedY = 0;
         this.translatedYTreshold = 0;
 
-        this.translateX = new Animated.Value(0),
-        this.translateY = new Animated.Value(0),
+        this.translateX = new Animated.Value(0);
+        this.translateY = new Animated.Value(0);
         this.baseScale = new Animated.Value(1);
         this.scaleRate = new Animated.Value(1);
-        this.scale = Animated.multiply(this.baseScale, this.scaleRate),
+        this.scale = Animated.multiply(this.baseScale, this.scaleRate);
         this.lastScale = 1;
 
         this.state = {
@@ -268,10 +269,10 @@ export class Lightbox extends PureComponent {
 
     _getDoubleTapZoomInTranslateY = event => {
         const y = event.y;
-        const middle = this.screenHeight / this.fullZoomedInValue;
-        const touchMiddleDistance = middle - y;
+        const middleY = this.screenHeight / 2;
+        const touchMiddleDistance = middleY - y;
         const translateY = Math.min(this.translatedYTreshold, Math.abs(touchMiddleDistance));
-        return y > middle ? -1 * translateY : translateY;
+        return y > middleY ? -1 * translateY : translateY;
     };
 
     /**
@@ -283,10 +284,10 @@ export class Lightbox extends PureComponent {
      */
     _getDoubleTapZoomInTranslateX = event => {
         const x = event.x;
-        const middle = this.screenWidth / this.fullZoomedInValue;
-        const touchMiddleDistance = x - middle;
+        const middleX = this.screenWidth / 2;
+        const touchMiddleDistance = x - middleX;
         const translateX = Math.min(this.translatedXTreshold, Math.abs(touchMiddleDistance));
-        return x > middle ? -1 * translateX : translateX;
+        return x > middleX ? -1 * translateX : translateX;
     };
 
     /**
@@ -342,43 +343,45 @@ export class Lightbox extends PureComponent {
                     visible={this.state.visible}
                     onRequestClose={this.onBackButtonPress}
                 >
-                    <Animated.View style={styles.fullscreenContainer}>
-                        <PanGestureHandler
-                            minPointers={1}
-                            maxPointers={1}
-                            onHandlerStateChange={this.onPanGestureEnd}
-                            onGestureEvent={this.onPanGesture}
-                        >
-                            <TapGestureHandler
-                                onHandlerStateChange={this.onDoubleTap}
-                                numberOfTaps={2}
+                    <GestureHandlerRootView style={styles.gestureHandlerRootView}>
+                        <Animated.View style={styles.fullscreenContainer}>
+                            <PanGestureHandler
+                                minPointers={1}
+                                maxPointers={1}
+                                onHandlerStateChange={this.onPanGestureEnd}
+                                onGestureEvent={this.onPanGesture}
                             >
-                                <PinchGestureHandler
-                                    onGestureEvent={this.onPinchGesture}
-                                    onHandlerStateChange={this.onPinchGestureEnd}
+                                <TapGestureHandler
+                                    onHandlerStateChange={this.onDoubleTap}
+                                    numberOfTaps={2}
                                 >
-                                    <Animated.Image
-                                        resizeMode={this.props.resizeModeFullScreen}
-                                        style={this._imageFullscreenStyle()}
-                                        source={this._imageSource()}
-                                    />
-                                </PinchGestureHandler>
-                            </TapGestureHandler>
-                        </PanGestureHandler>
-                        {this.props.closeButton && (
-                            <ButtonIcon
-                                icon={"close"}
-                                onPress={this.onClosePress}
-                                style={styles.buttonClose}
-                                iconStrokeWidth={2}
-                                size={isTabletSize() ? 52 : 34}
-                                iconHeight={isTabletSize() ? 34 : 22}
-                                iconWidth={isTabletSize() ? 34 : 22}
-                                backgroundColor={"#000000"}
-                                iconStrokeColor={"#ffffff"}
-                            />
-                        )}
-                    </Animated.View>
+                                    <PinchGestureHandler
+                                        onGestureEvent={this.onPinchGesture}
+                                        onHandlerStateChange={this.onPinchGestureEnd}
+                                    >
+                                        <Animated.Image
+                                            resizeMode={this.props.resizeModeFullScreen}
+                                            style={this._imageFullscreenStyle()}
+                                            source={this._imageSource()}
+                                        />
+                                    </PinchGestureHandler>
+                                </TapGestureHandler>
+                            </PanGestureHandler>
+                            {this.props.closeButton && (
+                                <ButtonIcon
+                                    icon={"close"}
+                                    onPress={this.onClosePress}
+                                    style={styles.buttonClose}
+                                    iconStrokeWidth={2}
+                                    size={isTabletSize() ? 52 : 34}
+                                    iconHeight={isTabletSize() ? 34 : 22}
+                                    iconWidth={isTabletSize() ? 34 : 22}
+                                    backgroundColor={"#000000"}
+                                    iconStrokeColor={"#ffffff"}
+                                />
+                            )}
+                        </Animated.View>
+                    </GestureHandlerRootView>
                 </Modal>
             </View>
         );
@@ -389,6 +392,10 @@ const styles = StyleSheet.create({
     imageFullscreen: {
         flex: 1,
         width: "100%"
+    },
+    gestureHandlerRootView: {
+        width: "100%",
+        height: "100%"
     },
     fullscreenContainer: {
         flex: 1,
