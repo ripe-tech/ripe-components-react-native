@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* Added support for different icon and icon properties when `ButtonTab` is selected
+* `Tabs` now can change icon when selected and can show an animated bar that moves when a new tab is selected 
 
 ### Fixed
 
