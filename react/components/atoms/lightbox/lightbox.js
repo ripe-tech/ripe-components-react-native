@@ -104,7 +104,6 @@ export class Lightbox extends PureComponent {
         this.baseScale.setValue(1);
         this.state.translateX.setValue(0);
         this.state.translateY.setValue(0);
-        this.state.containerBackgroundColor.setValue(0);
     }
 
     resetTranslation = () => {
