@@ -259,7 +259,7 @@ export class Lightbox extends PureComponent {
         return this.props.uri ? { uri: this.props.uri } : this.props.src;
     };
 
-     /**
+    /**
      * Gets the Y coordinate to zoom in to when double tapping
      * the image. It takes into account the threshold so that the
      * image does not move outside its limits.
@@ -296,7 +296,7 @@ export class Lightbox extends PureComponent {
      *
      * @param {Number} scale Current scale value of the image.
      */
-     _setTranslateTresholds = scale => {
+    _setTranslateTresholds = scale => {
         const scaledHeight = this.screenHeight * scale;
         const scaledWidth = this.screenWidth * scale;
 
