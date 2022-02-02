@@ -69,17 +69,17 @@ export class Lightbox extends PureComponent {
         this.translatedY = 0;
         this.translatedYTreshold = 0;
 
+        this.translateX = new Animated.Value(0),
+        this.translateY = new Animated.Value(0),
         this.baseScale = new Animated.Value(1);
         this.scaleRate = new Animated.Value(1);
+        this.scale = Animated.multiply(this.baseScale, this.scaleRate),
         this.lastScale = 1;
 
         this.state = {
             zoomed: false,
             zooming: false,
-            visible: this.props.visible,
-            scale: Animated.multiply(this.baseScale, this.scaleRate),
-            translateX: new Animated.Value(0),
-            translateY: new Animated.Value(0)
+            visible: this.props.visible
         };
     }
 
@@ -101,18 +101,18 @@ export class Lightbox extends PureComponent {
         this.setState({ zoomed: false });
         this.scaleRate.setValue(1);
         this.baseScale.setValue(1);
-        this.state.translateX.setValue(0);
-        this.state.translateY.setValue(0);
+        this.translateX.setValue(0);
+        this.translateY.setValue(0);
     }
 
     resetTranslation = () => {
         Animated.parallel([
-            Animated.timing(this.state.translateX, {
+            Animated.timing(this.translateX, {
                 toValue: 0,
                 duration: this.props.zoomAnimationDuration,
                 useNativeDriver: true
             }),
-            Animated.timing(this.state.translateY, {
+            Animated.timing(this.translateY, {
                 toValue: 0,
                 duration: this.props.zoomAnimationDuration,
                 useNativeDriver: true
@@ -136,24 +136,24 @@ export class Lightbox extends PureComponent {
     };
 
     onPanGesture = event => {
-        if (this.state.scale._value === 1 || !this.state.zoomed) return;
+        if (this.scale._value === 1 || !this.state.zoomed) return;
 
         const dx = event.nativeEvent.translationX + this.translatedX;
         const dy = event.nativeEvent.translationY + this.translatedY;
 
         if (Math.abs(dx) < this.translatedXTreshold) {
-            this.state.translateX.setValue(dx);
+            this.translateX.setValue(dx);
         }
         if (Math.abs(dy) < this.translatedYTreshold) {
-            this.state.translateY.setValue(dy);
+            this.translateY.setValue(dy);
         }
     };
 
     onPanGestureEnd = event => {
         if (event.nativeEvent.state !== State.END) return;
 
-        this.translatedX = this.state.translateX._value;
-        this.translatedY = this.state.translateY._value;
+        this.translatedX = this.translateX._value;
+        this.translatedY = this.translateY._value;
     };
 
     onPinchGesture = event => {
@@ -203,12 +203,12 @@ export class Lightbox extends PureComponent {
                     duration: this.props.zoomAnimationDuration,
                     useNativeDriver: true
                 }),
-                Animated.timing(this.state.translateX, {
+                Animated.timing(this.translateX, {
                     toValue: translateX,
                     duration: this.props.translateAnimationDuration,
                     useNativeDriver: true
                 }),
-                Animated.timing(this.state.translateY, {
+                Animated.timing(this.translateY, {
                     toValue: translateY,
                     duration: this.props.translateAnimationDuration,
                     useNativeDriver: true
@@ -236,12 +236,12 @@ export class Lightbox extends PureComponent {
                     duration: this.props.zoomAnimationDuration,
                     useNativeDriver: true
                 }),
-                Animated.timing(this.state.translateX, {
+                Animated.timing(this.translateX, {
                     toValue: 0,
                     duration: this.props.zoomAnimationDuration,
                     useNativeDriver: true
                 }),
-                Animated.timing(this.state.translateY, {
+                Animated.timing(this.translateY, {
                     toValue: 0,
                     duration: this.props.zoomAnimationDuration,
                     useNativeDriver: true
@@ -322,9 +322,9 @@ export class Lightbox extends PureComponent {
             {
                 resizeMode: this.props.resizeModeFullScreen,
                 transform: [
-                    { scale: this.state.scale },
-                    { translateX: this.state.translateX },
-                    { translateY: this.state.translateY }
+                    { scale: this.scale },
+                    { translateX: this.translateX },
+                    { translateY: this.translateY }
                 ]
             }
         ];
