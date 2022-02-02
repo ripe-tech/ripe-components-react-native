@@ -154,7 +154,8 @@ const styles = StyleSheet.create({
     },
     barAnimated: {
         position: "absolute",
-        top: 0
+        top: -1,
+        height: 1
     },
     buttonTab: {
         flex: 1

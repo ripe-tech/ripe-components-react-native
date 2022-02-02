@@ -182,7 +182,6 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         alignItems: "center",
         borderRadius: 4,
         paddingTop: 10,
