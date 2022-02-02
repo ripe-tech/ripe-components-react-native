@@ -48,7 +48,7 @@ export class Tabs extends PureComponent {
             animatedBarWidth: undefined,
             animatedBarOffset: undefined,
             selectedTab: 2
-        }
+        };
         this.tabLayouts = {};
     }
 
@@ -73,7 +73,7 @@ export class Tabs extends PureComponent {
             width: event.nativeEvent.layout.width
         };
         this._updateBar(this.state.selectedTab);
-    }; 
+    };
 
     _animatedBarEnabled = () =>
         Boolean(

@@ -78,7 +78,7 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
         return this.props.iconSelected && (this.props.selected || this.state.pressed)
             ? this.props.iconSelected
             : this.props.icon;
-    }
+    };
 
     _iconColor = () => {
         return this.props.selected || this.state.pressed
