@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import { Animated, Dimensions, Image, Modal, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import {
-    GestureHandlerRootView,
     PanGestureHandler,
     PinchGestureHandler,
     State,
