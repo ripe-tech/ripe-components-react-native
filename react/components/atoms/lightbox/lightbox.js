@@ -259,36 +259,50 @@ export class Lightbox extends PureComponent {
         return this.props.uri ? { uri: this.props.uri } : this.props.src;
     };
 
-    /**
-     * gets the Y coordinate to zoom in to.
+     /**
+     * Gets the Y coordinate to zoom in to when double tapping
+     * the image. It takes into account the threshold so that the
+     * image does not move outside its limits.
      *
-     * @param {Object} event The double tap event
+     * @param {Object} event The double tap event.
      */
+
     _getDoubleTapZoomInTranslateY = event => {
         const y = event.y;
         const middle = this.screenHeight / this.fullZoomedInValue;
         const touchMiddleDistance = middle - y;
-
-        // if the distance of the coordinate is greater than the translate treshold
-        // then assume the treshold value as the X coordinate to zoom in to
         const translateY = Math.min(this.translatedYTreshold, Math.abs(touchMiddleDistance));
         return y > middle ? -1 * translateY : translateY;
     };
 
     /**
-     * gets the X coordinate to zoom in to.
+     * Gets the X coordinate to zoom in to when double tapping
+     * the image. It takes into account the threshold so that the
+     * image does not move outside its limits.
      *
-     * @param {Object} event The double tap event
+     * @param {Object} event The double tap event.
      */
     _getDoubleTapZoomInTranslateX = event => {
         const x = event.x;
         const middle = this.screenWidth / this.fullZoomedInValue;
         const touchMiddleDistance = x - middle;
-
-        // if the distance of the coordinate is greater than the translate treshold
-        // then assume the treshold value as the X coordinate to zoom in to
         const translateX = Math.min(this.translatedXTreshold, Math.abs(touchMiddleDistance));
         return x > middle ? -1 * translateX : translateX;
+    };
+
+    /**
+     * Determines how much space is available after translation
+     * until it reaches the end of the scaled image.
+     *
+     * @param {Number} scale Current scale value of the image.
+     */
+     _setTranslateTresholds = scale => {
+        const scaledHeight = this.screenHeight * scale;
+        const scaledWidth = this.screenWidth * scale;
+
+        const scaleDivisor = scale * 2;
+        this.translatedXTreshold = (scaledWidth - this.screenWidth) / scaleDivisor;
+        this.translatedYTreshold = (scaledHeight - this.screenHeight) / scaleDivisor;
     };
 
     _imageStyle = () => {
@@ -307,7 +321,6 @@ export class Lightbox extends PureComponent {
         return [
             styles.imageFullscreen,
             {
-                width: "100%",
                 resizeMode: this.props.resizeModeFullScreen,
                 transform: [
                     { scale: this.state.scale },
@@ -316,21 +329,6 @@ export class Lightbox extends PureComponent {
                 ]
             }
         ];
-    };
-
-    /**
-     * determines how much space is available after translation
-     * until reach the end of the scaled "image".
-     *
-     * @param {Float} scale Current scale value of the image
-     */
-    _setTranslateTresholds = scale => {
-        const scaledHeight = this.screenHeight * scale;
-        const scaledWidth = this.screenWidth * scale;
-
-        const scaleDivisor = scale * 2;
-        this.translatedXTreshold = (scaledWidth - this.screenWidth) / scaleDivisor;
-        this.translatedYTreshold = (scaledHeight - this.screenHeight) / scaleDivisor;
     };
 
     render() {
@@ -390,7 +388,8 @@ export class Lightbox extends PureComponent {
 
 const styles = StyleSheet.create({
     imageFullscreen: {
-        flex: 1
+        flex: 1,
+        width: "100%"
     },
     fullscreenContainer: {
         flex: 1,
