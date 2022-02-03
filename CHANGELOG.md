@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * Added URL prefix for some fields of the profile component
+* Support for modal-like image viewing and zooming - [#286](https://github.com/ripe-tech/ripe-components-react-native/issues/286)
 
 ### Changed
 
