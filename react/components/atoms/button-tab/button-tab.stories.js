@@ -24,6 +24,16 @@ storiesOf("Atoms", module)
             },
             "add"
         );
+        const iconSelected = select(
+            "Icon Selected",
+            {
+                Unset: undefined,
+                Add: "add",
+                Alarm: "alarm",
+                Bell: "bell"
+            },
+            "alarm"
+        );
         const selected = boolean("Selected", true);
         return (
             <ButtonTab
@@ -34,6 +44,7 @@ storiesOf("Atoms", module)
                 badgeHasAnimation={badgeHasAnimation}
                 text={_text || undefined}
                 icon={icon}
+                iconSelected={iconSelected}
                 selected={selected}
                 disabled={disabled}
             />

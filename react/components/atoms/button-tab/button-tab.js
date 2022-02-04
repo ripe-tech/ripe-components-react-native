@@ -32,6 +32,9 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
             badgeText: PropTypes.string,
             text: PropTypes.string,
             icon: PropTypes.string,
+            iconSelected: PropTypes.string,
+            iconStrokeWidth: PropTypes.number,
+            iconSelectedStrokeWidth: PropTypes.number,
             color: PropTypes.string,
             colorSelected: PropTypes.string,
             fill: PropTypes.string,
@@ -55,6 +58,10 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
             badgeHasAnimation: true,
             badgeText: undefined,
             text: undefined,
+            icon: undefined,
+            iconSelected: undefined,
+            iconStrokeWidth: 2.5,
+            iconSelectedStrokeWidth: 2.5,
             color: "#a6adb4",
             colorSelected: "#1d2631",
             fill: undefined,
@@ -67,6 +74,12 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
         };
     }
 
+    _icon = () => {
+        return this.props.iconSelected && (this.props.selected || this.state.pressed)
+            ? this.props.iconSelected
+            : this.props.icon;
+    };
+
     _iconColor = () => {
         return this.props.selected || this.state.pressed
             ? this.props.colorSelected
@@ -77,6 +90,12 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
         return this.props.selected || this.state.pressed
             ? this.props.fillSelected
             : this.props.fill;
+    };
+
+    _iconStrokeWidth = () => {
+        return this.props.selected || this.state.pressed
+            ? this.props.iconSelectedStrokeWidth
+            : this.props.iconStrokeWidth;
     };
 
     _labelStyle = () => {
@@ -105,10 +124,10 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
             <View style={styles.container}>
                 {this.props.icon ? (
                     <Icon
-                        icon={this.props.icon}
+                        icon={this._icon()}
                         color={this._iconColor()}
                         fill={this._iconFillColor()}
-                        strokeWidth={2.5}
+                        strokeWidth={this._iconStrokeWidth()}
                         {...this.props.iconProps}
                     />
                 ) : null}
@@ -163,7 +182,6 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         alignItems: "center",
         borderRadius: 4,
         paddingTop: 10,

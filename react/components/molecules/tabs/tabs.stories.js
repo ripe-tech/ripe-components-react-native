@@ -7,7 +7,7 @@ import { Tabs } from "./tabs";
 
 storiesOf("Molecules", module)
     .addDecorator(withKnobs)
-    .add("Tab", () => {
+    .add("Tabs", () => {
         const selectedIndex = select(
             "Select Tab",
             {
