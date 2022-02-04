@@ -13,11 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* Added props specific to the image in `Lightbox`
+*
 
 ### Fixed
 
 *
+
+## [0.15.0] - 2022-02-04
+
+### Changed
+
+* Added props specific to the image in `Lightbox`
 
 ## [0.14.0] - 2022-02-04
 
