@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
-import { capitalize } from "ripe-commons-native";
 import { mix } from "yonius";
 
 import { IdentifiableMixin, baseStyles } from "../../../util";
@@ -13,12 +12,12 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             active: PropTypes.bool,
             backgroundColor: PropTypes.string,
+            backgroundColorSelected: PropTypes.string,
             color: PropTypes.string,
             colorSelected: PropTypes.string,
             text: PropTypes.string,
             disabled: PropTypes.bool,
             activeOpacity: PropTypes.number,
-            variant: PropTypes.string,
             onPress: PropTypes.func,
             style: ViewPropTypes.style,
             styles: PropTypes.any
@@ -28,13 +27,13 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
     static get defaultProps() {
         return {
             active: false,
-            backgroundColor: "#f6f7f9",
-            color: "#c8cdd2",
-            colorSelected: "#00435e",
+            backgroundColor: "#ffffff",
+            backgroundColorSelected: "#4f7af8",
+            color: "#00435e",
+            colorSelected: "#ff0000",
             text: undefined,
             disabled: false,
             activeOpacity: 0.5,
-            variant: undefined,
             onPress: undefined,
             style: {},
             styles: styles
@@ -44,8 +43,11 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
     _style() {
         return [
             styles.buttonTabText,
-            styles[`buttonTabText${capitalize(this.props.variant)}`],
-            { backgroundColor: this.props.backgroundColor },
+            {
+                backgroundColor: this.props.active
+                    ? this.props.backgroundColorSelected
+                    : this.props.backgroundColor
+            },
             this.props.style
         ];
     }
@@ -53,54 +55,50 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
     _styleText() {
         return [
             styles.text,
-            styles[`text${capitalize(this.props.variant)}`],
             {
                 color: this.props.color
             },
             this.props.disabled ? styles.textDisabled : {},
-            this.props.active ? { ...styles.textSelected, color: this.props.colorSelected } : {}
+            { color: this.props.active ? this.props.colorSelected : this.props.color }
         ];
     }
 
     render() {
         return (
-            <Touchable
-                style={this._style()}
-                disabled={this.props.disabled}
-                activeOpacity={this.props.activeOpacity}
-                onPress={this.props.onPress}
-            >
-                <Text style={this._styleText()} {...this.id("button-tab-text")}>
-                    {this.props.text}
-                </Text>
-            </Touchable>
+            <View style={this._style()}>
+                <Touchable
+                    style={styles.touchable}
+                    disabled={this.props.disabled}
+                    activeOpacity={this.props.activeOpacity}
+                    onPress={this.props.onPress}
+                >
+                    <Text style={this._styleText()} {...this.id("button-tab-text")}>
+                        {this.props.text}
+                    </Text>
+                </Touchable>
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
     buttonTabText: {
-        alignItems: "center",
+        flex: 1
+    },
+    touchable: {
         flex: 1,
+        alignItems: "center",
         justifyContent: "center"
     },
-    buttonTabTextCompact: {
-        flex: 0,
-        paddingVertical: 9,
-        paddingHorizontal: 16
-    },
     text: {
-        marginTop: Platform.OS === "ios" ? 4 : 0,
+        marginTop: Platform.OS === "ios" ? 10 : 4,
+        marginBottom: 8,
+        marginHorizontal: 10,
         fontFamily: baseStyles.FONT_BOOK,
         fontSize: 16,
         letterSpacing: 0.25
     },
-    textCompact: {
-        fontSize: 14,
-        lineHeight: 18
-    },
     textDisabled: {
         opacity: 0.4
-    },
-    textSelected: {}
+    }
 });
