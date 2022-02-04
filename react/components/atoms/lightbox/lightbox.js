@@ -31,6 +31,7 @@ export class Lightbox extends PureComponent {
             visible: PropTypes.bool,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style,
+            imageStyle: ViewPropTypes.style,
             styles: PropTypes.any
         };
     }
@@ -313,7 +314,7 @@ export class Lightbox extends PureComponent {
                 borderRadius: this.props.borderRadius,
                 resizeMode: this.props.resizeMode
             },
-            this.props.style
+            this.props.imageStyle
         ];
     };
 
@@ -333,7 +334,7 @@ export class Lightbox extends PureComponent {
 
     render() {
         return (
-            <View>
+            <View style={this.props.style}>
                 <Touchable onPress={this.onLightboxPress} activeOpacity={0.7}>
                     <Image style={this._imageStyle()} source={this._imageSource()} />
                 </Touchable>
