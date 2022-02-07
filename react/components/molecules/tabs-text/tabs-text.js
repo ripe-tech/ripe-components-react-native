@@ -96,8 +96,23 @@ export class TabsText extends PureComponent {
             styles.button,
             index === 0 ? styles.buttonLeft : {},
             index === this.props.tabs.length - 1 ? styles.buttonRight : {},
-            this.state.tabSelected === index ? { borderColor: "transparent" } : {},
-            this.state.tabSelected === index - 1 ? { borderLeftColor: "transparent" } : {}
+            this.state.tabSelected === index
+                ? {
+                      borderTopColor: this.props.tabsBackgroundColorSelected,
+                      borderRightColor: this.props.tabsBackgroundColorSelected,
+                      borderBottomColor: this.props.tabsBackgroundColorSelected,
+                      borderLeftColor: this.props.tabsBackgroundColorSelected
+                  }
+                : {},
+            // workaround for android border problem that does not
+            // allow override of specific border color when a global
+            // one is applied
+            this.state.tabSelected === index - 1
+                ? {
+                      borderLeftColor: "transparent",
+                      borderLeftWidth: 1
+                  }
+                : {}
         ];
     };
 
@@ -150,7 +165,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRightWidth: 0,
         borderStyle: "solid",
-        borderColor: "#e4e8f0"
+        borderTopColor: "#e4e8f0",
+        borderRightColor: "#e4e8f0",
+        borderBottomColor: "#e4e8f0",
+        borderLeftColor: "#e4e8f0"
     },
     buttonLeft: {
         borderTopLeftRadius: 6,
