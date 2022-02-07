@@ -96,7 +96,8 @@ export class TabsText extends PureComponent {
             styles.button,
             index === 0 ? styles.buttonLeft : {},
             index === this.props.tabs.length - 1 ? styles.buttonRight : {},
-            this.state.tabSelected === index ? { borderColor: "transparent" } : {}
+            this.state.tabSelected === index ? { borderColor: "transparent" } : {},
+            this.state.tabSelected === index - 1 ? { borderLeftColor: "transparent" } : {}
         ];
     };
 
@@ -152,7 +153,6 @@ const styles = StyleSheet.create({
         borderColor: "#e4e8f0"
     },
     buttonLeft: {
-        borderRightWidth: 0,
         borderTopLeftRadius: 6,
         borderBottomLeftRadius: 6
     },
