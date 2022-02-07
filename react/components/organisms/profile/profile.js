@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Platform, ScrollView, Share, StyleSheet, View } from "react-native";
+import { ScrollView, Share, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
         lineHeight: 18
     },
     keyValueValue: {
-        marginTop: Platform.OS === "ios" ? 4 : 0,
+        marginTop: 0,
         fontFamily: baseStyles.FONT,
         fontSize: 16,
         lineHeight: 18
