@@ -63,7 +63,16 @@ export class TabsText extends PureComponent {
         this.setState({ tabSelected: tabSelectedIndex }, () => {
             this.props.onTabChange(this.state.tabSelected);
         });
-        this._scrollTo(tabSelectedIndex);
+
+        // scrolls to the beginning or end of the tabs taking
+        // into account the selected tab, so that it is always
+        // showing the tabs next to the one selected
+        let scrollIndex = tabSelectedIndex;
+        if (tabSelectedIndex < this.props.tabs.length / 2) scrollIndex = 0;
+        if (tabSelectedIndex > this.props.tabs.length / 2) {
+            scrollIndex = this.props.tabs.length - 1;
+        }
+        this._scrollTo(scrollIndex);
     };
 
     onScroll = event => {
