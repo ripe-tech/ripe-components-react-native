@@ -18,6 +18,7 @@ export class Lightbox extends PureComponent {
         return {
             uri: PropTypes.string,
             src: PropTypes.string,
+            source: PropTypes.object,
             width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             borderRadius: PropTypes.number,
@@ -40,6 +41,7 @@ export class Lightbox extends PureComponent {
         return {
             uri: undefined,
             src: undefined,
+            source: undefined,
             width: "100%",
             height: "100%",
             zoomAnimationDuration: 200,
@@ -257,7 +259,9 @@ export class Lightbox extends PureComponent {
     };
 
     _imageSource = () => {
-        return this.props.uri ? { uri: this.props.uri } : this.props.src;
+        if (this.props.source) return this.props.source;
+        if (this.props.src) return { src: this.props.src };
+        return { uri: this.props.uri };
     };
 
     /**
