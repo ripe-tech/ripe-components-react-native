@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+* Remove margin for iOS for profile specific key values
 * Box shadow mismatch between iOS and Android for `Item`
 
 ## [0.15.0] - 2022-02-04
