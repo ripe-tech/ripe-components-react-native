@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 * Remove margin for iOS for profile specific key values
+* Fix `Lightbox` `src` prop type
 
 ## [0.15.0] - 2022-02-04
 

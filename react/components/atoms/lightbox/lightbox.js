@@ -17,7 +17,7 @@ export class Lightbox extends PureComponent {
     static get propTypes() {
         return {
             uri: PropTypes.string,
-            src: PropTypes.string,
+            src: PropTypes.object,
             width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             borderRadius: PropTypes.number,
