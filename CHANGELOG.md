@@ -13,8 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-* Changed `TabsText` and `ButtonTabText` to reflect the new design - [ripe-robin-revamp/#315](https://github.com/ripe-tech/ripe-robin-revamp/issues/315)
-* Removed variant `compact` for `TabsText` and `ButtonTabText` - [ripe-robin-revamp/#315](https://github.com/ripe-tech/ripe-robin-revamp/issues/315)
+* Added new variant to `TabsText` and `ButtonTabText` to reflect the new design - [ripe-robin-revamp/#315](https://github.com/ripe-tech/ripe-robin-revamp/issues/315)
 * Scroll on tab selected in `TabsText` now tries to show all tabs next to the one selected - [ripe-robin-revamp/#315](https://github.com/ripe-tech/ripe-robin-revamp/issues/315)
 
 ### Fixed
