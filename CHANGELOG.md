@@ -13,11 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* Added new variant to `TabsText` and `ButtonTabText` to reflect the new design - [ripe-robin-revamp/#315](https://github.com/ripe-tech/ripe-robin-revamp/issues/315)
+* Scroll on tab selected in `TabsText` now tries to show all tabs next to the one selected - [ripe-robin-revamp/#315](https://github.com/ripe-tech/ripe-robin-revamp/issues/315)
 
 ### Fixed
 
 * Remove margin for iOS for profile specific key values
+* Box shadow mismatch between iOS and Android for `Item`
 
 ## [0.15.0] - 2022-02-04
 
