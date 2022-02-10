@@ -1,8 +1,9 @@
 import React, { PureComponent } from "react";
 import { Dimensions, ScrollView, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
+import { capitalize } from "ripe-commons-native";
 
-import { ButtonTabText } from "../../atoms";
+import { BarAnimated, ButtonTabText } from "../../atoms";
 
 export class TabsText extends PureComponent {
     static get propTypes() {
@@ -18,6 +19,8 @@ export class TabsText extends PureComponent {
             tabsBackgroundColor: PropTypes.string,
             tabsBackgroundColorSelected: PropTypes.string,
             tabSelected: PropTypes.number,
+            hasAnimation: PropTypes.bool,
+            variant: PropTypes.string,
             parentWidth: PropTypes.number,
             onTabChange: PropTypes.func.isRequired,
             onSelectedTabPress: PropTypes.func,
@@ -29,12 +32,15 @@ export class TabsText extends PureComponent {
     static get defaultProps() {
         return {
             tabs: [],
-            tabsColor: "#4f7af8",
-            tabsColorSelected: "#ffffff",
-            tabsBackgroundColor: "#ffffff",
+            tabsColor: "#c8cdd2",
+            tabsColorSelected: "#00435e",
+            tabsBackgroundColor: "#f6f7f9",
             tabsBackgroundColorSelected: "#4f7af8",
             tabSelected: 0,
+            hasAnimation: true,
+            variant: undefined,
             parentWidth: undefined,
+            onTabChange: () => {},
             onSelectedTabPress: () => {},
             style: {},
             styles: styles
@@ -45,8 +51,9 @@ export class TabsText extends PureComponent {
         super(props);
 
         this.state = {
-            tabs: props.tabs,
-            tabSelected: props.tabSelected
+            tabSelected: props.tabSelected,
+            animatedBarWidth: undefined,
+            animatedBarOffset: undefined
         };
         this.tabLayouts = {};
         this.scroll = 0;
@@ -59,6 +66,7 @@ export class TabsText extends PureComponent {
             return;
         }
         this.setState({ tabSelected: tabSelectedIndex }, () => {
+            if (this.props.hasAnimation) this._updateBar();
             this.props.onTabChange(this.state.tabSelected);
         });
 
@@ -78,12 +86,32 @@ export class TabsText extends PureComponent {
         this.scroll = scroll;
     };
 
+    _updateBar = () => {
+        const index = this.state.tabSelected;
+        const tabLayout = this.tabLayouts[index];
+
+        if (tabLayout) {
+            this.setState({ animatedBarOffset: tabLayout.x, animatedBarWidth: tabLayout.width });
+        } else {
+            this.setState({ animatedBarOffset: undefined, animatedBarWidth: undefined });
+        }
+    };
+
     _onTabLayout = (event, index) => {
         this.tabLayouts[index] = {
             x: event.nativeEvent.layout.x,
             width: event.nativeEvent.layout.width
         };
+        if (this.props.hasAnimation) this._updateBar();
     };
+
+    _animatedBarEnabled = () =>
+        Boolean(
+            this.props.hasAnimation &&
+                this.state.animatedBarWidth !== undefined &&
+                this.state.animatedBarOffset !== undefined &&
+                this.props.variant === undefined
+        );
 
     _scrollTo = index => {
         const deviceWidth = this.props.parentWidth || Dimensions.get("window").width;
@@ -98,11 +126,31 @@ export class TabsText extends PureComponent {
         }
     };
 
+    _style = () => {
+        return [
+            styles.tabsText,
+            styles[`tabsText${capitalize(this.props.variant)}`],
+            this.props.style
+        ];
+    };
+
+    _buttonContainerStyle = () => {
+        return [styles.buttonContainer, styles[`buttonContainer${capitalize(this.props.variant)}`]];
+    };
+
     _buttonStyle = index => {
         return [
             styles.button,
-            index === 0 ? styles.buttonLeft : {},
-            index === this.props.tabs.length - 1 ? styles.buttonRight : {},
+            styles[`button${capitalize(this.props.variant)}`],
+            ...(this.props.variant === "colored" ? this._coloredVariantStyle(index) : [])
+        ];
+    };
+
+    _coloredVariantStyle = index => {
+        return [
+            styles.buttonColored,
+            index === 0 ? styles.buttonColoredLeft : {},
+            index === this.props.tabs.length - 1 ? styles.buttonColoredRight : {},
             this.state.tabSelected === index
                 ? {
                       borderTopColor: this.props.tabsBackgroundColorSelected,
@@ -126,7 +174,7 @@ export class TabsText extends PureComponent {
     _renderTabs() {
         return this.props.tabs.map((tab, index) => (
             <View
-                style={styles.buttonContainer}
+                style={this._buttonContainerStyle()}
                 key={`${tab.text}-${index}`}
                 onLayout={event => this._onTabLayout(event, index)}
             >
@@ -137,6 +185,7 @@ export class TabsText extends PureComponent {
                     colorSelected={this.props.tabsColorSelected}
                     backgroundColor={this.props.tabsBackgroundColor}
                     backgroundColorSelected={this.props.tabsBackgroundColorSelected}
+                    variant={this.props.variant}
                     onPress={() => this.onTabPress(index)}
                     active={this.state.tabSelected === index}
                     disabled={tab.disabled}
@@ -149,7 +198,7 @@ export class TabsText extends PureComponent {
         return (
             <ScrollView
                 ref={this.scrollRef}
-                style={this.props.style}
+                style={this._style()}
                 contentContainerStyle={{ flexGrow: 1 }}
                 horizontal={true}
                 bounces={false}
@@ -158,17 +207,48 @@ export class TabsText extends PureComponent {
                 onScroll={this.onScroll}
             >
                 {this._renderTabs()}
+                {this._animatedBarEnabled() ? (
+                    <BarAnimated
+                        style={styles.barAnimated}
+                        offset={this.state.animatedBarOffset}
+                        width={this.state.animatedBarWidth}
+                    />
+                ) : null}
             </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    tabsText: {
+        maxHeight: 50
+    },
+    tabsTextCompact: {
+        borderTopWidth: 1,
+        backgroundColor: "#f6f7f9",
+        textDecorationLine: "underline"
+    },
     buttonContainer: {
         flex: 1,
-        height: 36
+        borderBottomWidth: 1,
+        borderColor: "#e4e8f0"
+    },
+    buttonContainerCompact: {
+        flex: 0,
+        borderBottomWidth: 0
+    },
+    buttonContainerColored: {
+        flex: 1,
+        height: 36,
+        borderBottomWidth: 0
     },
     button: {
+        flex: 1
+    },
+    buttonCompact: {
+        flex: 1
+    },
+    buttonColored: {
         borderWidth: 1,
         borderRightWidth: 0,
         borderStyle: "solid",
@@ -177,13 +257,18 @@ const styles = StyleSheet.create({
         borderBottomColor: "#e4e8f0",
         borderLeftColor: "#e4e8f0"
     },
-    buttonLeft: {
+    buttonColoredLeft: {
         borderTopLeftRadius: 6,
         borderBottomLeftRadius: 6
     },
-    buttonRight: {
+    buttonColoredRight: {
         borderRightWidth: 1,
         borderTopRightRadius: 6,
         borderBottomRightRadius: 6
+    },
+    barAnimated: {
+        position: "absolute",
+        bottom: 0,
+        height: 1
     }
 });

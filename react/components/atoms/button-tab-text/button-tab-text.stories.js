@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, boolean, text } from "@storybook/addon-knobs";
+import { withKnobs, boolean, select, text } from "@storybook/addon-knobs";
 
 import { ButtonTabText } from "./button-tab-text";
 
@@ -14,6 +14,15 @@ storiesOf("Atoms", module)
         const colorSelected = text("Selected Color", undefined);
         const disabled = boolean("Disabled", false);
         const active = boolean("Active", true);
+        const variant = select(
+            "Variant",
+            {
+                Unset: undefined,
+                Compact: "compact",
+                Colored: "colored"
+            },
+            undefined
+        );
 
         return (
             <ButtonTabText
@@ -24,6 +33,7 @@ storiesOf("Atoms", module)
                 backgroundColorSelected={backgroundColorSelected}
                 color={color}
                 colorSelected={colorSelected}
+                variant={variant}
                 onPress={() => alert("Thanks for the press!")}
             />
         );

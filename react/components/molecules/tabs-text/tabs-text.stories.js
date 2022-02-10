@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, text } from "@storybook/addon-knobs";
+import { withKnobs, select, text } from "@storybook/addon-knobs";
 
 import { TabsText } from "./tabs-text";
 
@@ -18,6 +18,15 @@ storiesOf("Molecules", module)
         const tabsBackgroundColorSelected = text("Selected Background Color", undefined);
         const tabsColor = text("Tab Text Color", undefined);
         const tabsColorSelected = text("Selected Tab Text Color", undefined);
+        const variant = select(
+            "Variant",
+            {
+                Unset: undefined,
+                Compact: "compact",
+                Colored: "colored"
+            },
+            undefined
+        );
 
         const onTabChange = tabIndex => alert(`Switched to index: ${tabIndex}`);
 
@@ -29,6 +38,7 @@ storiesOf("Molecules", module)
                 tabsBackgroundColorSelected={tabsBackgroundColorSelected}
                 tabsColor={tabsColor}
                 tabsColorSelected={tabsColorSelected}
+                variant={variant}
                 onTabChange={onTabChange}
             />
         );
