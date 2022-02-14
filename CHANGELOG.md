@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* Bumped dependencies and dropped support for Node 10
 
 ### Fixed
 
