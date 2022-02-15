@@ -1,6 +1,6 @@
 {
     "name": "ripe-components-react-native",
-    "version": "0.16.0",
+    "version": "0.17.0",
     "description": "RIPE Components for React Native",
     "keywords": [
         "components",
@@ -48,7 +48,6 @@
     },
     "devDependencies": {
         "@babel/core": "^7.17.2",
-        "@babel/eslint-parser": "^7.17.0",
         "@babel/runtime": "^7.17.2",
         "@react-native-community/eslint-config": "^3.0.1",
         "babel-jest": "^27.5.1",
@@ -83,6 +82,6 @@
         "react-native-safe-area-view": "^1.1.1",
         "react-native-svg": "^12.1.1",
         "ripe-commons": "^0.8.1",
-        "ripe-commons-native": "^0.3.0"
+        "ripe-commons-native": "^0.4.0"
     }
 }
