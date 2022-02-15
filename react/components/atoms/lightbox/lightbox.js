@@ -260,7 +260,7 @@ export class Lightbox extends PureComponent {
 
     _imageSource = () => {
         if (this.props.source) return this.props.source;
-        if (this.props.src) return { src: this.props.src };
+        if (this.props.src) return { uri: this.props.src };
         return { uri: this.props.uri };
     };
 
@@ -339,7 +339,7 @@ export class Lightbox extends PureComponent {
     render() {
         return (
             <View style={this.props.style}>
-                <Touchable onPress={this.onLightboxPress} activeOpacity={0.7}>
+                <Touchable activeOpacity={0.7} onPress={this.onLightboxPress}>
                     <Image style={this._imageStyle()} source={this._imageSource()} />
                 </Touchable>
                 <Modal
@@ -357,16 +357,16 @@ export class Lightbox extends PureComponent {
                                 onGestureEvent={this.onPanGesture}
                             >
                                 <TapGestureHandler
-                                    onHandlerStateChange={this.onDoubleTap}
                                     numberOfTaps={2}
+                                    onHandlerStateChange={this.onDoubleTap}
                                 >
                                     <PinchGestureHandler
                                         onGestureEvent={this.onPinchGesture}
                                         onHandlerStateChange={this.onPinchGestureEnd}
                                     >
                                         <Animated.Image
-                                            resizeMode={this.props.resizeModeFullScreen}
                                             style={this._imageFullscreenStyle()}
+                                            resizeMode={this.props.resizeModeFullScreen}
                                             source={this._imageSource()}
                                         />
                                     </PinchGestureHandler>
@@ -374,15 +374,15 @@ export class Lightbox extends PureComponent {
                             </PanGestureHandler>
                             {this.props.closeButton && (
                                 <ButtonIcon
-                                    icon={"close"}
-                                    onPress={this.onClosePress}
                                     style={styles.buttonClose}
+                                    icon={"close"}
                                     iconStrokeWidth={2}
                                     size={isTabletSize() ? 52 : 34}
                                     iconHeight={isTabletSize() ? 34 : 22}
                                     iconWidth={isTabletSize() ? 34 : 22}
                                     backgroundColor={"#000000"}
                                     iconStrokeColor={"#ffffff"}
+                                    onPress={this.onClosePress}
                                 />
                             )}
                         </Animated.View>
