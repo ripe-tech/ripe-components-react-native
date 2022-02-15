@@ -1,5 +1,4 @@
 import React from "react";
-import { Image } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, number, select, text } from "@storybook/addon-knobs";
 
@@ -8,10 +7,7 @@ import { Lightbox } from "./lightbox";
 storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Lightbox", () => {
-        const uri = text(
-            "URI",
-            "https://sandbox.platforme.com/api/compose?model=dummy"
-        );
+        const uri = text("URI", "https://sandbox.platforme.com/api/compose?model=dummy");
         const width = number("Width", 200);
         const height = number("Height", 150);
         const borderRadius = number("Border Radius", -1);
