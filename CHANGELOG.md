@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-*
+* Support for `Profile` key value action buttons
 
 ### Changed
 
-*
+* Update `Profile` and bring it closer to the design
 
 ### Fixed
 
