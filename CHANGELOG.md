@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* Use index of current route to choose the selected tab in `Tabs` component
 
 ## [0.18.0] - 2022-02-21
 
