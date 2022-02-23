@@ -50,14 +50,16 @@ export class ChatMessage extends PureComponent {
         return (
             <View style={[styles.chatMessage, this.props.style]}>
                 <Avatar style={styles.avatar} image={{ uri: this.props.avatarUrl }} size={32} />
-                <View style={styles.content}>
+                <View>
                     <View style={styles.header}>
                         <RNText style={styles.username}>{this.props.username}</RNText>
                         <RNText style={styles.date}>
                             {dateTimeString(this.props.date, { seconds: false })}
                         </RNText>
                     </View>
-                    {this.props.message ? <Text>{this.props.message}</Text> : null}
+                    {this.props.message ? (
+                        <Text style={styles.text}>{this.props.message}</Text>
+                    ) : null}
                     {this.props.attachments.map((attachment, index) => (
                         <View style={this._attachmentsStyle()} key={index}>
                             {isImage(attachment.name) ? (
@@ -91,13 +93,13 @@ const styles = StyleSheet.create({
     avatar: {
         marginEnd: 13
     },
-    content: {
-        flex: 1
-    },
     header: {
         flexDirection: "row",
         marginTop: 3,
         alignItems: "center"
+    },
+    text: {
+        marginEnd: 40
     },
     username: {
         fontFamily: baseStyles.FONT_BOLD,
