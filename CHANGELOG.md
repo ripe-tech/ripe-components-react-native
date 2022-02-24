@@ -17,7 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* Use the same margin horizontal in `Item` as the one being used in other components
+* Align expand buttons in `KeyValues` to the center in tablet screens
+* Align images in chat to the left and fix text wrap
 
 ## [0.18.0] - 2022-02-21
 

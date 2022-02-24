@@ -100,7 +100,7 @@ export class Item extends PureComponent {
 const styles = StyleSheet.create({
     item: {
         width: "100%",
-        paddingHorizontal: "4%"
+        paddingHorizontal: 15
     },
     itemFull: {
         paddingHorizontal: 0
