@@ -45,9 +45,7 @@ export class Tabs extends PureComponent {
 
     constructor(props) {
         super(props);
-
         const currentTab = this.props.state.index;
-
         this.state = {
             animatedBarWidth: undefined,
             animatedBarOffset: undefined,
