@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     keyValuesColumns: {
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "space-between"
+        justifyContent: "center"
     },
     keyValueWrapperColumns: {
         width: "50%"
