@@ -26,6 +26,7 @@ export class Tabs extends PureComponent {
                     props: PropTypes.object
                 })
             ),
+            selectedTab: PropTypes.number,
             hasAnimation: PropTypes.bool,
             style: ViewPropTypes.style,
             styles: PropTypes.any
@@ -35,6 +36,7 @@ export class Tabs extends PureComponent {
     static get defaultProps() {
         return {
             tabs: [],
+            selectedTab: undefined,
             hasAnimation: true,
             style: {},
             styles: styles
@@ -43,11 +45,11 @@ export class Tabs extends PureComponent {
 
     constructor(props) {
         super(props);
-
+        const currentTab = this.props.state.index;
         this.state = {
             animatedBarWidth: undefined,
             animatedBarOffset: undefined,
-            selectedTab: 2
+            selectedTab: props.selectedTab === undefined ? currentTab : props.selectedTab
         };
         this.tabLayouts = {};
     }

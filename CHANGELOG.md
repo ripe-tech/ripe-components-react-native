@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+* Use index of current route to choose the selected tab in `Tabs` component - [#301](https://github.com/ripe-tech/ripe-components-react-native/issues/301)
 * Use the same margin horizontal in `Item` as the one being used in other components
 * Align expand buttons in `KeyValues` to the center in tablet screens
 * Align images in chat to the left and fix text wrap
