@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-*
+* Support for `Profile` key value action buttons - [ripe-id-mobile/#58](https://github.com/ripe-tech/ripe-id-mobile/issues/58)
 
 ### Changed
 
-*
+* Update `Profile` and bring it closer to the design - [ripe-id-mobile/#58](https://github.com/ripe-tech/ripe-id-mobile/issues/58)
 
 ### Fixed
 
