@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Image, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Image, Platform, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { equal } from "yonius";
@@ -42,6 +42,7 @@ export class ImageLoading extends PureComponent {
 
         this.state = {
             loading: false,
+            ended: true,
             cached: false
         };
     }
@@ -76,6 +77,7 @@ export class ImageLoading extends PureComponent {
 
     _onLoadStart() {
         if (this.state.cached) return;
+        if (Platform.OS === "ios" && this.state.ended) return;
         this.setState({
             loading: true
         });
