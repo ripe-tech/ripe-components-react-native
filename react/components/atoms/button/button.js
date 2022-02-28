@@ -35,6 +35,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             align: PropTypes.string,
             textColor: PropTypes.string,
             backgroundColor: PropTypes.string,
+            underlayColor: PropTypes.string,
             gradientAngle: PropTypes.number,
             gradientColors: PropTypes.arrayOf(PropTypes.string),
             gradientLocations: PropTypes.arrayOf(PropTypes.number),
@@ -72,6 +73,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             align: "center",
             textColor: undefined,
             backgroundColor: undefined,
+            underlayColor: undefined,
             gradientAngle: 62,
             gradientLocations: [0.4, 0.84],
             gradientColors: ["#4a6fe9", "#6687f6"],
@@ -240,6 +242,7 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             <Touchable
                 style={this._style()}
                 activeOpacity={0.8}
+                underlayColor={this.props.underlayColor}
                 disabled={this.props.disabled}
                 onPress={this.props.onPress}
                 onLongPress={this.props.onLongPress}
