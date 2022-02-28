@@ -43,7 +43,7 @@ export class ImageLoading extends PureComponent {
         this.state = {
             loading: false,
             ended: true,
-            cached: false
+            cached: true
         };
     }
 
