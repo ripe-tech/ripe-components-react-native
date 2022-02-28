@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 * Update `Profile` and bring it closer to the design - [ripe-id-mobile/#58](https://github.com/ripe-tech/ripe-id-mobile/issues/58)
+* Support `TouchableHighlight` use in `Touchable` if `underlayColor` is passed as prop
 
 ### Fixed
 
