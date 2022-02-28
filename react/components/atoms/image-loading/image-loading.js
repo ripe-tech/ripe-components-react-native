@@ -91,8 +91,8 @@ export class ImageLoading extends PureComponent {
     _imageStyle() {
         return [
             {
-                width: this.state.loading ? 0 : this.props.width,
-                height: this.state.loading ? 0 : this.props.height,
+                width: this.state.loading && this.props.placeholder ? 0 : this.props.width,
+                height: this.state.loading && this.props.placeholder ? 0 : this.props.height,
                 borderRadius: this.props.borderRadius,
                 resizeMode: this.props.resizeMode
             },
