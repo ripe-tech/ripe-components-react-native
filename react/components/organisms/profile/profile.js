@@ -174,8 +174,7 @@ export class Profile extends Component {
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
             borderTopLeftRadius: 0,
-            borderTopRightRadius: 0,
-            paddingHorizontal: 15
+            borderTopRightRadius: 0
         };
     }
 
@@ -349,7 +348,8 @@ const styles = StyleSheet.create({
     buttons: {
         height: "100%",
         paddingVertical: 15,
-        backgroundColor: "#f6f7f9"
+        backgroundColor: "#f6f7f9",
+        paddingHorizontal: 15
     },
     signoutButton: {
         marginTop: 13

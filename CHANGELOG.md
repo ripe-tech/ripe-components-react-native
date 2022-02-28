@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Use the same margin horizontal in `Item` as the one being used in other components
 * Align expand buttons in `KeyValues` to the center in tablet screens
 * Align images in chat to the left and fix text wrap
+* Horizontal padding for button group in `Profile`
 
 ## [0.18.0] - 2022-02-21
 
