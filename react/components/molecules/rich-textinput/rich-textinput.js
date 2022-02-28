@@ -65,7 +65,7 @@ export class RichTextInput extends PureComponent {
         this.textAreaComponent.blur();
     };
 
-    startAnimations = () => {
+    startAnimations() {
         LayoutAnimation.configureNext(
             LayoutAnimation.create(
                 this.props.animationTime,
@@ -79,9 +79,9 @@ export class RichTextInput extends PureComponent {
         } else {
             this.startHideButtonsAnimation();
         }
-    };
+    }
 
-    startShowButtonsAnimation = () => {
+    startShowButtonsAnimation() {
         Animated.parallel([
             Animated.timing(this.state.buttonsOpacityValue, {
                 toValue: 1,
@@ -94,9 +94,9 @@ export class RichTextInput extends PureComponent {
                 useNativeDriver: true
             })
         ]).start();
-    };
+    }
 
-    startHideButtonsAnimation = () => {
+    startHideButtonsAnimation() {
         Animated.parallel([
             Animated.timing(this.state.buttonsOpacityValue, {
                 toValue: 0,
@@ -109,66 +109,74 @@ export class RichTextInput extends PureComponent {
                 useNativeDriver: true
             })
         ]).start();
-    };
+    }
 
-    sendMessage = () => {
+    sendMessage() {
         this.props.onSendMessage(this.state.value);
-    };
+    }
 
-    onPhotoButtonPress = async () => {
+    async onPhotoButtonPress() {
         const image = await pickImageCamera();
 
         if (image) {
             this.props.onPhotoAdded(image);
         }
-    };
+    }
 
-    onAttachmentButtonPress = async () => {
+    async onAttachmentButtonPress() {
         const attachments = await pickDocuments();
 
         if (attachments) {
             this.props.onAttachmentsAdded(attachments);
         }
-    };
+    }
 
-    onMoreOptionsButtonPress = () => {
+    onMoreOptionsButtonPress() {
         this.textAreaComponent.blur();
-    };
+    }
 
-    onTextAreaValue = value => {
+    onTextAreaValue(value) {
         this.setState({ value: value });
-    };
+    }
 
-    onTextAreaSubmit = () => {
+    onTextAreaSubmit() {
         this.sendMessage();
-    };
+    }
 
-    onTextAreaFocus = () => {
+    onTextAreaFocus() {
         this.setState({ buttonsVisible: false }, () => {
             this.startAnimations();
             this.props.onFocus();
         });
-    };
+    }
 
-    onTextAreaBlur = () => {
+    onTextAreaBlur() {
         this.setState({ buttonsVisible: true }, () => {
             this.startAnimations();
             this.props.onBlur();
         });
-    };
+    }
 
-    onSendButtonPress = () => {
+    onSendButtonPress() {
         this.sendMessage();
-    };
+    }
 
-    _buttonsStyle = () => {
+    _isSendDisabled() {
+        return !this.state.value || this.state.value.length === 0;
+    }
+
+    _style() {
+        return [styles.richTextInput, this.props.style];
+    }
+
+    _buttonsStyle() {
         const style = [styles.buttons, { opacity: this.state.buttonsOpacityValue }];
 
         if (!this.state.buttonsVisible) style.push({ width: 0 });
         return style;
-    };
+    }
 
-    _moreOptionsStyle = () => {
+    _moreOptionsStyle() {
         const style = [
             styles.moreOptions,
             {
@@ -178,11 +186,7 @@ export class RichTextInput extends PureComponent {
 
         if (this.state.buttonsVisible) style.push({ width: 0 });
         return style;
-    };
-
-    _style = () => {
-        return [styles.richTextInput, this.props.style];
-    };
+    }
 
     render() {
         return (
@@ -241,6 +245,7 @@ export class RichTextInput extends PureComponent {
                     style={styles.sendButton}
                     icon={"send"}
                     size={24}
+                    disabled={this._isSendDisabled()}
                     iconStrokeColor={"#ffffff"}
                     iconFill={"#375274"}
                     iconStrokeWidth={0.5}
