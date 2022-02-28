@@ -42,15 +42,6 @@ export class Profile extends Component {
         };
     }
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            account: null,
-            roles: null
-        };
-    }
-
     scrollTop = () => {
         this.scrollRef?.scrollTo({ animated: true, x: 0 });
     };
@@ -60,7 +51,6 @@ export class Profile extends Component {
     }
 
     _details() {
-        console.log(this.props.actions?.email);
         return [
             {
                 key: "E-mail",
@@ -155,13 +145,13 @@ export class Profile extends Component {
             buttons.push({
                 label: "Share contact",
                 value: "share",
-                onPress: this.onShareContactPress
+                onPress: () => this.onShareContactPress()
             });
         }
         buttons.push({
             label: "Sign out",
             value: "signout",
-            onPress: this.props.onLogoutTouch,
+            onPress: () => this.props.onLogoutTouch(),
             buttonProps: {
                 textColor: "#f86a6a"
             }
