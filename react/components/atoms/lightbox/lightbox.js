@@ -348,6 +348,8 @@ export class Lightbox extends PureComponent {
                         uri={this.props.uri}
                         src={this.props.src}
                         source={this.props.source}
+                        width={this.props.width}
+                        height={this.props.height}
                         resizeMode={this.props.resizeMode}
                         placeholder={this.props.placeholder}
                     />

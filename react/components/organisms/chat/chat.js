@@ -28,6 +28,7 @@ export class Chat extends PureComponent {
             ),
             aggregationThreshold: PropTypes.number,
             animateScrollBottom: PropTypes.bool,
+            imagePlaceholder: PropTypes.object,
             onNewMessage: PropTypes.func,
             onScrollBottom: PropTypes.func,
             onScroll: PropTypes.func,
@@ -43,6 +44,7 @@ export class Chat extends PureComponent {
             messages: [],
             aggregationThreshold: 120,
             animateScrollBottom: true,
+            imagePlaceholder: undefined,
             onNewMessage: () => {},
             onScrollBottom: () => {},
             onScroll: event => {},
@@ -187,13 +189,14 @@ export class Chat extends PureComponent {
                             {this._aggregatedMessages().map((message, index) => {
                                 return (
                                     <ChatMessage
+                                        key={index}
                                         style={index !== 0 && styles.chatMessage}
                                         avatarUrl={message.avatarUrl}
                                         username={message.username}
                                         message={message.message}
                                         date={message.date}
                                         attachments={message.attachments}
-                                        key={index}
+                                        imagePlaceholder={this.props.imagePlaceholder}
                                     />
                                 );
                             })}
