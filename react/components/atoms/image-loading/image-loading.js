@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Image, Platform, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Image, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { equal } from "yonius";
