@@ -169,15 +169,6 @@ export class Profile extends Component {
         });
     }
 
-    _buttonGroupStyle() {
-        return {
-            borderBottomLeftRadius: 0,
-            borderBottomRightRadius: 0,
-            borderTopLeftRadius: 0,
-            borderTopRightRadius: 0
-        };
-    }
-
     _renderHeader() {
         return (
             <View style={styles.header}>
@@ -205,7 +196,6 @@ export class Profile extends Component {
                 {this.props.showButtons && (
                     <View style={styles.buttons}>
                         <ButtonGroup
-                            buttonStyle={this._buttonGroupStyle()}
                             items={this._buttons()}
                             orientation={"vertical"}
                             variant={"flat"}
