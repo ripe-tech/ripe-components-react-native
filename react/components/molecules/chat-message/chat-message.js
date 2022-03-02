@@ -21,6 +21,7 @@ export class ChatMessage extends PureComponent {
                     path: PropTypes.string.isRequired
                 })
             ),
+            imagePlaceholder: PropTypes.object,
             style: ViewPropTypes.style,
             styles: PropTypes.any
         };
@@ -33,6 +34,7 @@ export class ChatMessage extends PureComponent {
             message: undefined,
             date: undefined,
             attachments: [],
+            imagePlaceholder: undefined,
             style: {},
             styles: styles
         };
@@ -68,6 +70,7 @@ export class ChatMessage extends PureComponent {
                                     height={180}
                                     uri={attachment.path}
                                     resizeMode={"contain"}
+                                    placeholder={this.props.imagePlaceholder}
                                 />
                             ) : (
                                 <Link

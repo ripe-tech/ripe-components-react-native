@@ -11,6 +11,7 @@ import {
 import { isTabletSize } from "ripe-commons-native";
 
 import { ButtonIcon } from "../button-icon";
+import { ImageLoading } from "../image-loading";
 import { Touchable } from "../touchable";
 
 export class Lightbox extends PureComponent {
@@ -30,6 +31,7 @@ export class Lightbox extends PureComponent {
             resizeModeFullScreen: PropTypes.string,
             closeButton: PropTypes.bool,
             visible: PropTypes.bool,
+            placeholder: PropTypes.object,
             onVisible: PropTypes.func,
             style: ViewPropTypes.style,
             imageStyle: ViewPropTypes.style,
@@ -53,8 +55,10 @@ export class Lightbox extends PureComponent {
             resizeModeFullScreen: "contain",
             closeButton: true,
             visible: false,
+            placeholder: undefined,
             onVisible: () => {},
             style: {},
+            imageStyle: {},
             styles: styles
         };
     }
@@ -315,8 +319,7 @@ export class Lightbox extends PureComponent {
             {
                 width: this.props.width,
                 height: this.props.height,
-                borderRadius: this.props.borderRadius,
-                resizeMode: this.props.resizeMode
+                borderRadius: this.props.borderRadius
             },
             this.props.imageStyle
         ];
@@ -340,7 +343,16 @@ export class Lightbox extends PureComponent {
         return (
             <View style={this.props.style}>
                 <Touchable activeOpacity={0.7} onPress={this.onLightboxPress}>
-                    <Image style={this._imageStyle()} source={this._imageSource()} />
+                    <ImageLoading
+                        style={this._imageStyle()}
+                        uri={this.props.uri}
+                        src={this.props.src}
+                        source={this.props.source}
+                        width={this.props.width}
+                        height={this.props.height}
+                        resizeMode={this.props.resizeMode}
+                        placeholder={this.props.placeholder}
+                    />
                 </Touchable>
                 <Modal
                     animationType="fade"
