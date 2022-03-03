@@ -139,7 +139,7 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
     _underlayColor() {
         switch (this.props.variant) {
             case "flat":
-                return "#dddddd";
+                return "#f3f5ff";
             default:
                 return;
         }
