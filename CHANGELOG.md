@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* New component `ImageLoading` that shows a placeholder while the image is loading - [ripe-robin-revamp/#337](https://github.com/ripe-tech/ripe-robin-revamp/issues/337)
+*
 
 ### Changed
 
@@ -18,6 +18,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *
+
+## [0.20.0] - 2022-03-03
+
+### Added
+
+* New component `ImageLoading` that shows a placeholder while the image is loading - [ripe-robin-revamp/#337](https://github.com/ripe-tech/ripe-robin-revamp/issues/337)
+
+### Changed
+
+* Support `TouchableHighlight` use in `Touchable` if `underlayColor` is passed as prop
+* Default to touchable with highlight when using variant `flat` of `ButtonToggle`
 
 ## [0.19.0] - 2022-02-25
 
@@ -28,8 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 * Update `Profile` and bring it closer to the design - [ripe-id-mobile/#58](https://github.com/ripe-tech/ripe-id-mobile/issues/58)
-* Support `TouchableHighlight` use in `Touchable` if `underlayColor` is passed as prop
-* Default to touchable with highlight when using variant `flat` of `ButtonToggle`
 
 ### Fixed
 
