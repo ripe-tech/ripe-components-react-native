@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import {
     Platform,
+    TouchableHighlight,
     TouchableNativeFeedback,
     TouchableOpacity,
     View,
@@ -12,6 +13,7 @@ export class Touchable extends PureComponent {
     static get propTypes() {
         return {
             activeOpacity: PropTypes.number,
+            underlayColor: PropTypes.string,
             disabled: PropTypes.bool,
             hitSlop: PropTypes.shape({
                 top: PropTypes.number,
@@ -31,6 +33,7 @@ export class Touchable extends PureComponent {
     static get defaultProps() {
         return {
             activeOpacity: undefined,
+            underlayColor: undefined,
             disabled: undefined,
             hitSlop: undefined,
             useForeground: true,
@@ -44,6 +47,23 @@ export class Touchable extends PureComponent {
 
     render() {
         if (Platform.OS === "ios") {
+            if (this.props.underlayColor) {
+                return (
+                    <TouchableHighlight
+                        style={this.props.style}
+                        activeOpacity={this.props.activeOpacity}
+                        underlayColor={this.props.underlayColor}
+                        disabled={this.props.disabled}
+                        onPress={this.props.onPress}
+                        onPressIn={this.props.onPressIn}
+                        onPressOut={this.props.onPressOut}
+                        onLongPress={this.props.onLongPress}
+                        hitSlop={this.props.hitSlop}
+                    >
+                        {this.props.children}
+                    </TouchableHighlight>
+                );
+            }
             return (
                 <TouchableOpacity
                     style={this.props.style}

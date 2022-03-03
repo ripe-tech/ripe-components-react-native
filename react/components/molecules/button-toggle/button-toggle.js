@@ -104,13 +104,8 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
         return this.state.valueData ? "#ffffff" : this.props.colorSecondary || "#000000";
     };
 
-    _style = () => {
-        return [this.props.styles.buttonToggle, this.props.style];
-    };
-
-    _containerStyle = () => {
+    _directionStyles() {
         return [
-            this.props.styles.buttonToggle,
             this.props.direction === "middle-horizontal"
                 ? this.props.styles[this._styleName("buttonToggleMiddleHorizontal")]
                 : {},
@@ -130,6 +125,32 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
                 ? this.props.styles[this._styleName("buttonToggleBottom")]
                 : {}
         ];
+    }
+
+    _activeOpacity() {
+        switch (this.props.variant) {
+            case "flat":
+                return 0.6;
+            default:
+                return 0.8;
+        }
+    }
+
+    _underlayColor() {
+        switch (this.props.variant) {
+            case "flat":
+                return "#f3f5ff";
+            default:
+                return;
+        }
+    }
+
+    _style = () => {
+        return [this.props.styles.buttonToggle, ...this._directionStyles(), this.props.style];
+    };
+
+    _containerStyle = () => {
+        return [this.props.styles.buttonToggle, ...this._directionStyles()];
     };
 
     render() {
@@ -145,6 +166,8 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
                 textColor={this._contentColor()}
                 variant={this.props.variant}
                 align={this.props.align}
+                activeOpacity={this._activeOpacity()}
+                underlayColor={this._underlayColor()}
                 {...this.props.buttonProps}
                 onPress={this.onPress}
                 {...this.id("toggle-button")}
