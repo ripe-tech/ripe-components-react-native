@@ -42,7 +42,7 @@ export class Chat extends PureComponent {
             avatarUrl: undefined,
             username: undefined,
             messages: [],
-            aggregationThreshold: 120,
+            aggregationThreshold: 3600,
             animateScrollBottom: true,
             imagePlaceholder: undefined,
             onNewMessage: () => {},
@@ -92,6 +92,7 @@ export class Chat extends PureComponent {
         let previousMessage = null;
         let previousDate = null;
         for (const message of this.props.messages) {
+            console.log(message.date - previousDate);
             if (
                 previousMessage &&
                 previousMessage.message &&
@@ -227,13 +228,18 @@ const styles = StyleSheet.create({
     },
     chatMessagesContainer: {
         flex: 1,
-        backgroundColor: "#f6f7f9"
+        backgroundColor: "#ffffff"
     },
     chatMessagesContent: {
-        paddingVertical: 12
+        paddingTop: 12,
+        marginBottom: -1
     },
     chatMessage: {
-        marginTop: 16
+        marginTop: 16,
+        borderStyle: "solid",
+        borderBottomColor: "#dfe2e5",
+        borderBottomWidth: 1,
+        paddingBottom: 16
     },
     noMessages: {
         alignItems: "center",
@@ -246,6 +252,11 @@ const styles = StyleSheet.create({
     noMessagesText: {
         color: "#57626e",
         fontFamily: baseStyles.FONT_BOOK
+    },
+    richTextInput: {
+        borderStyle: "solid",
+        borderTopColor: "#dfe2e5",
+        borderTopWidth: 1
     }
 });
 
