@@ -94,7 +94,8 @@ const styles = StyleSheet.create({
         marginEnd: 15
     },
     avatar: {
-        marginEnd: 13
+        marginEnd: 13,
+        marginTop: 3
     },
     header: {
         flexDirection: "row",
@@ -108,14 +109,14 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.FONT_BOLD,
         marginEnd: 5,
         fontSize: 14,
-        lineHeight: 22,
+        lineHeight: 18,
         color: "#3e566a"
     },
     date: {
         fontFamily: baseStyles.FONT,
         color: "#a4adb5",
         fontSize: 11,
-        lineHeight: 22
+        lineHeight: 18
     }
 });
 
