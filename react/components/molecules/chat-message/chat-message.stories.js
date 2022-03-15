@@ -20,7 +20,7 @@ storiesOf("Molecules", module)
         const attachments = [
             {
                 name: "dummy.pdf",
-                path: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+                url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
             },
             {
                 name: "image.png",
