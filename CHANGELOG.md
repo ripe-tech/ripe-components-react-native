@@ -9,15 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-*
+* New component `Attachment` that shows a file info and works as a link - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
 
 ### Changed
 
-*
+* Use new component `Attachment` in `ChatMessage` - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
 
 ### Fixed
 
-*
+* Fix image link in `ChatMessage` story
 
 ## [0.20.0] - 2022-03-03
 
