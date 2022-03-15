@@ -20,13 +20,14 @@ storiesOf("Molecules", module)
         const attachments = [
             {
                 name: "dummy.pdf",
-                path: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+                url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
             },
             {
                 name: "image.png",
-                path: "https://id.platforme.com/admin/accounts/t-ms%40platforme.com/avatar"
+                path: "https://ripe-core-sbx.platforme.com/api/compose?brand=dummy&model=cube"
             }
         ];
+
         return (
             <ChatMessage
                 avatarUrl={avatarUrl}

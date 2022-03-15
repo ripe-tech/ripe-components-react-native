@@ -5,7 +5,7 @@ import { dateTimeString, isImage } from "ripe-commons-native";
 
 import { baseStyles } from "../../../util";
 
-import { Avatar, Lightbox, Link, Text } from "../../atoms";
+import { Attachment, Avatar, Lightbox, Text } from "../../atoms";
 
 export class ChatMessage extends PureComponent {
     static get propTypes() {
@@ -73,10 +73,10 @@ export class ChatMessage extends PureComponent {
                                     placeholder={this.props.imagePlaceholder}
                                 />
                             ) : (
-                                <Link
+                                <Attachment
                                     style={this._attachmentStyle(index)}
-                                    text={attachment.name}
-                                    url={attachment.path}
+                                    filename={attachment.name}
+                                    url={attachment.url}
                                 />
                             )}
                         </View>
