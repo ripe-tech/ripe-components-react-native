@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* Fix image link in `ChatMessage` story
 
 ## [0.20.0] - 2022-03-03
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs, boolean, number } from "@storybook/addon-knobs";
+import { withKnobs, boolean, number, text } from "@storybook/addon-knobs";
 import { Alert, StyleSheet, Text } from "react-native";
 
 import { Touchable } from "./touchable";
@@ -9,6 +9,7 @@ storiesOf("Atoms", module)
     .addDecorator(withKnobs)
     .add("Touchable", () => {
         const activeOpacity = number("Active Opacity", 0.5);
+        const underlayColor = text("Underlay Color", "#f3f5ff");
         const disabled = boolean("Disabled", false);
         const onLongPress = () => {
             Alert.alert("onLongPress");
@@ -22,6 +23,7 @@ storiesOf("Atoms", module)
         return (
             <Touchable
                 activeOpacity={activeOpacity}
+                underlayColor={underlayColor}
                 disabled={disabled}
                 onLongPress={onLongPress}
                 onPress={onPress}

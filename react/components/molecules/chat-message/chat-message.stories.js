@@ -24,9 +24,10 @@ storiesOf("Molecules", module)
             },
             {
                 name: "image.png",
-                path: "https://id.platforme.com/admin/accounts/t-ms%40platforme.com/avatar"
+                path: "https://ripe-core-sbx.platforme.com/api/compose?brand=dummy&model=cube"
             }
         ];
+
         return (
             <ChatMessage
                 avatarUrl={avatarUrl}
