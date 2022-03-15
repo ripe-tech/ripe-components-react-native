@@ -1,3 +1,4 @@
+export * from "./attachment";
 export * from "./avatar";
 export * from "./badge";
 export * from "./bar-animated";
