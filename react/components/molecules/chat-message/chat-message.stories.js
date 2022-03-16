@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { storiesOf } from "@storybook/react-native";
 import { withKnobs, number, text } from "@storybook/addon-knobs";
 
@@ -27,14 +28,23 @@ storiesOf("Molecules", module)
                 path: "https://ripe-core-sbx.platforme.com/api/compose?brand=dummy&model=cube"
             }
         ];
+        const status = text("Status", "created");
 
         return (
-            <ChatMessage
-                avatarUrl={avatarUrl}
-                username={username}
-                message={message || undefined}
-                date={date || new Date()}
-                attachments={attachments}
-            />
+            <View>
+                <ChatMessage
+                    avatarUrl={avatarUrl}
+                    username={username}
+                    message={message || undefined}
+                    date={date || new Date()}
+                    attachments={attachments}
+                />
+                <ChatMessage
+                    avatarUrl={avatarUrl}
+                    username={username}
+                    status={status || undefined}
+                    date={date || new Date()}
+                />
+            </View>
         );
     });

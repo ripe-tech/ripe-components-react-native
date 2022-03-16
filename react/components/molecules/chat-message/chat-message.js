@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text as RNText, View, ViewPropTypes } from "react-native";
+import { StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { dateTimeString, isImage } from "ripe-commons-native";
 
 import { baseStyles } from "../../../util";
 
-import { Attachment, Avatar, Lightbox, Text } from "../../atoms";
+import { Attachment, Avatar, Lightbox, StatusEntry, Text } from "../../atoms";
 
 export class ChatMessage extends PureComponent {
     static get propTypes() {
@@ -13,8 +13,9 @@ export class ChatMessage extends PureComponent {
             id: PropTypes.number,
             avatarUrl: PropTypes.string.isRequired,
             username: PropTypes.string.isRequired,
-            message: PropTypes.string.isRequired,
             date: PropTypes.number.isRequired,
+            message: PropTypes.string,
+            status: PropTypes.string,
             attachments: PropTypes.arrayOf(
                 PropTypes.exact({
                     name: PropTypes.string.isRequired,
@@ -31,8 +32,9 @@ export class ChatMessage extends PureComponent {
         return {
             avatarUrl: undefined,
             username: undefined,
-            message: undefined,
             date: undefined,
+            message: undefined,
+            status: undefined,
             attachments: [],
             imagePlaceholder: undefined,
             style: {},
@@ -52,15 +54,18 @@ export class ChatMessage extends PureComponent {
         return (
             <View style={[styles.chatMessage, this.props.style]}>
                 <Avatar style={styles.avatar} image={{ uri: this.props.avatarUrl }} size={32} />
-                <View>
+                <View style={styles.message}>
                     <View style={styles.header}>
-                        <RNText style={styles.username}>{this.props.username}</RNText>
-                        <RNText style={styles.date}>
+                        <Text style={styles.username}>{this.props.username}</Text>
+                        <Text style={styles.date}>
                             {dateTimeString(this.props.date, { seconds: false })}
-                        </RNText>
+                        </Text>
                     </View>
                     {this.props.message ? (
                         <Text style={styles.text}>{this.props.message}</Text>
+                    ) : null}
+                    {this.props.status ? (
+                        <StatusEntry style={styles.text} status={this.props.status} />
                     ) : null}
                     {this.props.attachments.map((attachment, index) => (
                         <View style={this._attachmentsStyle()} key={index}>
@@ -90,20 +95,19 @@ export class ChatMessage extends PureComponent {
 const styles = StyleSheet.create({
     chatMessage: {
         flexDirection: "row",
-        marginStart: 15,
-        marginEnd: 15
+        width: "100%"
     },
     avatar: {
-        marginEnd: 13,
+        marginEnd: 9,
         marginTop: 3
+    },
+    message: {
+        flex: 1
     },
     header: {
         justifyContent: "flex-start",
         flexDirection: "column",
         marginTop: 3
-    },
-    text: {
-        marginEnd: 40
     },
     username: {
         fontFamily: baseStyles.FONT_BOLD,
