@@ -98,9 +98,9 @@ const styles = StyleSheet.create({
         marginTop: 3
     },
     header: {
-        flexDirection: "row",
-        marginTop: 3,
-        alignItems: "center"
+        justifyContent: "flex-start",
+        flexDirection: "column",
+        marginTop: 3
     },
     text: {
         marginEnd: 40

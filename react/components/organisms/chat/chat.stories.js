@@ -110,6 +110,28 @@ storiesOf("Organisms", module)
                 message: "Donec varius eget eros a euismod.",
                 date: 1574950742823,
                 attachments: []
+            },
+            {
+                avatarUrl: "https://id.platforme.com/admin/accounts/t-ms%40platforme.com/avatar",
+                username: "BeeMargarida",
+                message: "Lorem ipsum dolor sit.",
+                date: 1574950742823,
+                attachments: []
+            },
+            {
+                avatarUrl: "https://id.platforme.com/admin/accounts/t-ms%40platforme.com/avatar",
+                username: "BeeMargarida",
+                message:
+                    "Sed tristique faucibus interdum. Cras egestas efficitur sem id mollis. Cras varius malesuada orci, in vulputate urna vulputate a.",
+                date: 1574950746423,
+                attachments: []
+            },
+            {
+                avatarUrl: "https://id.platforme.com/admin/accounts/t-ms%40platforme.com/avatar",
+                username: "BeeMargarida",
+                message: "Lorem ipsum.",
+                date: 1574950746424,
+                attachments: []
             }
         ];
         return (
