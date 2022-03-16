@@ -1,12 +1,10 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
-import { capitalize } from "ripe-commons-native";
 import { mix } from "yonius";
 
 import { IdentifiableMixin, baseStyles } from "../../../util";
 
-import { Touchable } from "../touchable";
 import { Tag } from "../tag";
 
 export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
@@ -25,6 +23,11 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
     static get defaultProps() {
         return {
             text: "Changed order status to",
+            backgroundColor: "rgba(96, 81, 242, 0.06)",
+            borderColor: "rgba(96, 81, 242, 0.4)",
+            tagColor: "#57626e",
+            tagBackgroundColor: "#eceef1",
+            tagBorderColor: "transparent",
             style: {},
             styles: styles
         };
@@ -33,18 +36,22 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
     _style() {
         return [
             styles.statusEntry,
+            {
+                backgroundColor: this.props.backgroundColor,
+                borderColor: this.props.borderColor
+            },
             this.props.style
         ];
-    };
+    }
 
     render() {
         return (
             <View style={this._style()} {...this.id("status-entry")}>
                 <Text style={styles.text}>{this.props.text}</Text>
                 <Tag
-                    text={this.props.status}
+                    text={this.props.status.toUpperCase()}
                     color={this.props.tagColor}
-                    backgroundColor={this.props.backgroundColor}
+                    backgroundColor={this.props.tagBackgroundColor}
                     borderColor={this.props.tagBorderColor}
                 />
             </View>
@@ -54,8 +61,14 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
 
 const styles = StyleSheet.create({
     statusEntry: {
+        width: "100%",
         overflow: "hidden",
-        flexDirection: "row"
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderWidth: 1,
+        borderRadius: 7,
+        padding: 8
     },
     text: {
         fontFamily: baseStyles.FONT_BOOK
