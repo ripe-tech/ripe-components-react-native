@@ -1,3 +1,4 @@
+export * from "./avatar-list";
 export * from "./button-toggle";
 export * from "./card";
 export * from "./chat-message";
