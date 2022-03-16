@@ -280,15 +280,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#f6f7f9"
     },
     search: {
-        marginBottom: 10,
         marginHorizontal: 15
     },
     filters: {
         marginHorizontal: 15
     },
     scrollViewContainer: {
-        height: 46,
-        marginBottom: 10,
+        marginVertical: 10,
         minWidth: "100%"
     },
     selectContainer: {
