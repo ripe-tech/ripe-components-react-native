@@ -16,6 +16,7 @@ export class ChatMessage extends PureComponent {
             date: PropTypes.number.isRequired,
             message: PropTypes.string,
             status: PropTypes.string,
+            statusProps: PropTypes.object,
             attachments: PropTypes.arrayOf(
                 PropTypes.exact({
                     name: PropTypes.string.isRequired,
@@ -35,6 +36,7 @@ export class ChatMessage extends PureComponent {
             date: undefined,
             message: undefined,
             status: undefined,
+            statusProps: {},
             attachments: [],
             imagePlaceholder: undefined,
             style: {},
@@ -65,7 +67,11 @@ export class ChatMessage extends PureComponent {
                         <Text style={styles.text}>{this.props.message}</Text>
                     ) : null}
                     {this.props.status ? (
-                        <StatusEntry style={styles.text} status={this.props.status} />
+                        <StatusEntry
+                            style={styles.status}
+                            status={this.props.status}
+                            {...this.props.statusProps}
+                        />
                     ) : null}
                     {this.props.attachments.map((attachment, index) => (
                         <View style={this._attachmentsStyle()} key={index}>
@@ -108,6 +114,12 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         flexDirection: "column",
         marginTop: 3
+    },
+    text: {
+        marginTop: 4
+    },
+    status: {
+        marginTop: 4
     },
     username: {
         fontFamily: baseStyles.FONT_BOLD,
