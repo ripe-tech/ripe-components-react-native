@@ -15,6 +15,9 @@ export class Attachment extends Component {
             url: PropTypes.string,
             underlayColor: PropTypes.string,
             activeOpacity: PropTypes.number,
+            attachmentIcon: PropTypes.string,
+            attachmentIconColor: PropTypes.string,
+            attachmentIconBackgroundColor: PropTypes.string,
             onPress: PropTypes.func,
             style: ViewPropTypes.style,
             styles: PropTypes.any
@@ -27,6 +30,9 @@ export class Attachment extends Component {
             url: undefined,
             underlayColor: "#f3f5ff",
             activeOpacity: 0.8,
+            attachmentIcon: "file",
+            attachmentIconColor: "#ffffff",
+            attachmentIconBackgroundColor: "#6051f2",
             onPress: () => {},
             style: {},
             styles: styles
@@ -59,6 +65,13 @@ export class Attachment extends Component {
         return [styles.attachment, this.props.style];
     }
 
+    _iconContainerStyle() {
+        return [
+            styles.iconContainer,
+            { backgroundColor: this.props.attachmentIconBackgroundColor }
+        ];
+    }
+
     render() {
         return (
             <View style={this._style()}>
@@ -70,8 +83,13 @@ export class Attachment extends Component {
                 >
                     <View style={styles.attachmentContainer}>
                         <View style={styles.image}>
-                            <View style={styles.iconContainer}>
-                                <Icon icon={"file"} color={"#ffffff"} height={25} width={25} />
+                            <View style={this._iconContainerStyle()}>
+                                <Icon
+                                    icon={this.props.attachmentIcon}
+                                    color={this.props.attachmentIconColor}
+                                    height={25}
+                                    width={25}
+                                />
                             </View>
                         </View>
                         <View style={styles.info}>
@@ -91,7 +109,7 @@ export class Attachment extends Component {
 
 const styles = StyleSheet.create({
     attachment: {
-        width: 270,
+        width: "100%",
         height: 65,
         borderRadius: 13,
         borderWidth: 1,
@@ -112,7 +130,6 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         flex: 1,
-        backgroundColor: "#6051f2",
         borderRadius: 7,
         aspectRatio: 1,
         marginVertical: 5,
