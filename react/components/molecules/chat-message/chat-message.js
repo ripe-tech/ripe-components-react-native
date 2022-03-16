@@ -87,7 +87,7 @@ export class ChatMessage extends PureComponent {
                                 <Attachment
                                     style={this._attachmentStyle(index)}
                                     filename={attachment.name}
-                                    url={attachment.url}
+                                    url={attachment.path}
                                 />
                             )}
                         </View>
