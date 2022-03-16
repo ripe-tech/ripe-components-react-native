@@ -105,6 +105,13 @@ storiesOf("Organisms", module)
                 attachments: []
             },
             {
+                avatarUrl: "https://id.platforme.com/admin/accounts/ns%40platforme.com/avatar",
+                username: "NFSS10",
+                status: "created",
+                date: 1574950742823,
+                attachments: []
+            },
+            {
                 avatarUrl: "https://id.platforme.com/admin/accounts/t-ms%40platforme.com/avatar",
                 username: "BeeMargarida",
                 message: "Donec varius eget eros a euismod.",

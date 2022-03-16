@@ -16,8 +16,10 @@ export class Chat extends PureComponent {
                     id: PropTypes.number,
                     avatarUrl: PropTypes.string.isRequired,
                     username: PropTypes.string.isRequired,
-                    message: PropTypes.string.isRequired,
                     date: PropTypes.number.isRequired,
+                    message: PropTypes.string,
+                    status: PropTypes.string,
+                    statusProps: PropTypes.object,
                     attachments: PropTypes.arrayOf(
                         PropTypes.exact({
                             name: PropTypes.string.isRequired,
@@ -161,6 +163,14 @@ export class Chat extends PureComponent {
         await this._onNewMessage(message);
     };
 
+    _style() {
+        return [styles.chat, this.props.style];
+    }
+
+    _chatMessageStyle(index) {
+        return [styles.chatMessage, index === 0 ? { marginTop: 0 } : {}];
+    }
+
     _renderNoMessages = () => {
         return (
             <View style={styles.noMessages}>
@@ -175,7 +185,7 @@ export class Chat extends PureComponent {
 
     render() {
         return (
-            <View style={[styles.chat, this.props.style]}>
+            <View style={this._style()}>
                 <ScrollView
                     style={styles.chatMessagesContainer}
                     ref={ref => (this.scrollViewComponent = ref)}
@@ -190,11 +200,13 @@ export class Chat extends PureComponent {
                                 return (
                                     <ChatMessage
                                         key={index}
-                                        style={index !== 0 && styles.chatMessage}
+                                        style={this._chatMessageStyle()}
                                         avatarUrl={message.avatarUrl}
                                         username={message.username}
-                                        message={message.message}
                                         date={message.date}
+                                        message={message.message}
+                                        status={message.status}
+                                        statusProps={message.statusProps}
                                         attachments={message.attachments}
                                         imagePlaceholder={this.props.imagePlaceholder}
                                     />

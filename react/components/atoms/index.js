@@ -18,6 +18,7 @@ export * from "./lightbox";
 export * from "./link";
 export * from "./progress-bar";
 export * from "./radio";
+export * from "./status-entry";
 export * from "./switcher";
 export * from "./tag";
 export * from "./text";

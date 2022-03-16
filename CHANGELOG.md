@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * New component `Attachment` that shows a file info and works as a link - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
+* New component `StatusEntry` that shows the status change entry in a chat - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 
 ### Changed
 
@@ -18,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Change `ChatMessage` so that the message date appears below the name - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 * Update `ChatMessage` and `Chat` to match the new design - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 * Change chat messages aggregation threshold to 1 hour - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
+* Use new component `StatusEntry` in `ChatMessage` - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
+* Adapt `ChatMessage` and `Chat` styling to better adapt to the available size - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 
 ### Fixed
 
