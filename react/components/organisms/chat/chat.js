@@ -92,7 +92,6 @@ export class Chat extends PureComponent {
         let previousMessage = null;
         let previousDate = null;
         for (const message of this.props.messages) {
-            console.log(message.date - previousDate);
             if (
                 previousMessage &&
                 previousMessage.message &&
