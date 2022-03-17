@@ -108,6 +108,14 @@ storiesOf("Organisms", module)
                 avatarUrl: "https://id.platforme.com/admin/accounts/ns%40platforme.com/avatar",
                 username: "NFSS10",
                 status: "created",
+                replies: 5,
+                repliesAvatars: [
+                    "https://i.pravatar.cc",
+                    "https://i.pravatar.cc",
+                    "https://i.pravatar.cc",
+                    "https://i.pravatar.cc",
+                    "https://i.pravatar.cc"
+                ],
                 date: 1574950742823,
                 attachments: []
             },

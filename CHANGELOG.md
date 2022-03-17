@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Change chat messages aggregation threshold to 1 hour - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 * Use new component `StatusEntry` in `ChatMessage` - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 * Adapt `ChatMessage` and `Chat` styling to better adapt to the available size - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
+* Use new component `AvatarList` in `ChatMessage` and modify `Chat` to use it - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
 
 ### Fixed
 
