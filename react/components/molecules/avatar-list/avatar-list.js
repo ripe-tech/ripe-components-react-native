@@ -68,7 +68,11 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
         return [
             styles.textOverlay,
             {
-                fontSize: this.props.size / 2 - 5
+                // the required line height so that the text always
+                // appears vertically centered in the middle of the
+                // avatar image
+                lineHeight: this.props.size / 2 + this.props.size / 8,
+                fontSize: this.props.size / 2
             }
         ];
     }
@@ -78,7 +82,7 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
             <View>
                 <Avatar
                     style={this._avatarStyle(index)}
-                    key={index}
+                    key={`${avatar}-${index}`}
                     image={{ uri: avatar }}
                     size={this.props.size}
                     {...this.props.avatarProps}
@@ -97,7 +101,7 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
 
     render() {
         return (
-            <View styles={styles.avatarList}>
+            <View styles={this._style()}>
                 <View style={styles.avatars}>{this._renderAvatars()}</View>
             </View>
         );
@@ -110,9 +114,7 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     avatars: {
-        flex: 1,
-        flexDirection: "row",
-        backgroundColor: "yellow"
+        flexDirection: "row"
     },
     avatarOverlayContainer: {
         position: "absolute",
