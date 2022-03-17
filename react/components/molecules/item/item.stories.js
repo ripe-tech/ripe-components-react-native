@@ -14,6 +14,7 @@ storiesOf("Molecules", module)
         const headerDate = number("Header Date", 1337);
         const disabled = boolean("Disabled", true);
         const variant = select("Variant", { Unset: undefined, Full: "full" }, undefined);
+        const underlayColor = text("Underlay Color", "");
         const activeOpacity = number("Active Opacity", -1);
         return (
             <Item
@@ -23,6 +24,7 @@ storiesOf("Molecules", module)
                 headerDate={headerDate}
                 disabled={disabled}
                 variant={variant}
+                underlayColor={underlayColor || undefined}
                 activeOpacity={activeOpacity === -1 ? undefined : activeOpacity}
             >
                 <Text>Custom content text line</Text>
