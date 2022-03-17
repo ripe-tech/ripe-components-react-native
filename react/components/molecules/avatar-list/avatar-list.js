@@ -131,8 +131,7 @@ const styles = StyleSheet.create({
     },
     textOverlay: {
         fontFamily: baseStyles.FONT,
-        color: "#ffffff",
-        lineHeight: undefined
+        color: "#ffffff"
     }
 });
 
