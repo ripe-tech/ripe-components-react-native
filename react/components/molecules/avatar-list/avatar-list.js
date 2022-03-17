@@ -15,8 +15,7 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
             avatarProps: PropTypes.object,
             visibleAvatars: PropTypes.number,
             style: ViewPropTypes.style,
-            textStyle: ViewPropTypes.style,
-            styles: PropTypes.any
+            textStyle: ViewPropTypes.style
         };
     }
 
@@ -26,8 +25,7 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
             size: 40,
             avatarProps: {},
             visibleAvatars: 3,
-            style: {},
-            styles: styles
+            style: {}
         };
     }
 
@@ -48,7 +46,7 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
                       marginLeft: 0
                   }
                 : {
-                      marginLeft: -1 * (this.props.size / 3)
+                      marginLeft: -1 * (this.props.size / 2)
                   }
         ];
     }
@@ -59,7 +57,7 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
             {
                 width: this.props.size,
                 height: this.props.size,
-                marginLeft: -1 * (this.props.size / 3)
+                marginLeft: -1 * (this.props.size / 2)
             }
         ];
     }
