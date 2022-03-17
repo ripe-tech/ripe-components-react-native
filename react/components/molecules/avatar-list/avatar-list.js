@@ -30,9 +30,9 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     _avatars() {
-        if (this.props.avatars.length <= this.props.visibleAvatars) return this.props.avatars;
-        const reducedAvatars = this.props.avatars.slice(0, this.props.visibleAvatars + 1);
-        return reducedAvatars;
+        return this.props.avatars.length <= this.props.visibleAvatars
+            ? this.props.avatars
+            : this.props.avatars.slice(0, this.props.visibleAvatars + 1);
     }
 
     _style() {
