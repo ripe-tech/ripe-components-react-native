@@ -13,7 +13,7 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
             avatars: PropTypes.arrayOf(PropTypes.string).isRequired,
             size: PropTypes.number,
             avatarProps: PropTypes.object,
-            showNumber: PropTypes.number,
+            visibleAvatars: PropTypes.number,
             style: ViewPropTypes.style,
             textStyle: ViewPropTypes.style,
             styles: PropTypes.any
@@ -25,15 +25,15 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
             label: undefined,
             size: 40,
             avatarProps: {},
-            showNumber: 3,
+            visibleAvatars: 3,
             style: {},
             styles: styles
         };
     }
 
     _avatars() {
-        if (this.props.avatars.length <= this.props.showNumber) return this.props.avatars;
-        const reducedAvatars = this.props.avatars.slice(0, this.props.showNumber + 1);
+        if (this.props.avatars.length <= this.props.visibleAvatars) return this.props.avatars;
+        const reducedAvatars = this.props.avatars.slice(0, this.props.visibleAvatars + 1);
         return reducedAvatars;
     }
 
@@ -87,11 +87,11 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
                     size={this.props.size}
                     {...this.props.avatarProps}
                 />
-                {index >= this.props.showNumber && (
+                {index >= this.props.visibleAvatars && (
                     <View style={this._avatarOverlayContainerStyle()}>
                         <View style={styles.avatarOverlay} />
                         <Text style={this._avatarOverlayText()}>
-                            + {this.props.avatars.length - this.props.showNumber}
+                            + {this.props.avatars.length - this.props.visibleAvatars}
                         </Text>
                     </View>
                 )}

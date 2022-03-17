@@ -18,8 +18,8 @@ storiesOf("Molecules", module)
             "https://i.pravatar.cc",
             "https://i.pravatar.cc"
         ];
-        const showNumber = number("Show Number", 3);
+        const visibleAvatars = number("Number of visible avatars", 3);
         const size = number("Size", 40);
 
-        return <AvatarList avatars={avatars} showNumber={showNumber} size={size} />;
+        return <AvatarList avatars={avatars} visibleAvatars={visibleAvatars} size={size} />;
     });
