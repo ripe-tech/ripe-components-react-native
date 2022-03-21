@@ -111,10 +111,10 @@ storiesOf("Organisms", module)
                 replies: 5,
                 repliesAvatars: [
                     "https://i.pravatar.cc",
-                    "https://i.pravatar.cc",
-                    "https://i.pravatar.cc",
-                    "https://i.pravatar.cc",
-                    "https://i.pravatar.cc"
+                    "https://i.pravatar.cc?1",
+                    "https://i.pravatar.cc?2",
+                    "https://i.pravatar.cc?3",
+                    "https://i.pravatar.cc?4"
                 ],
                 date: 1574950742823,
                 attachments: []
