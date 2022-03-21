@@ -34,6 +34,7 @@ export class Chat extends PureComponent {
             onNewMessage: PropTypes.func,
             onScrollBottom: PropTypes.func,
             onScroll: PropTypes.func,
+            chatMessagesContainerStyle: ViewPropTypes.style,
             style: ViewPropTypes.style,
             styles: PropTypes.any
         };
@@ -50,6 +51,7 @@ export class Chat extends PureComponent {
             onNewMessage: () => {},
             onScrollBottom: () => {},
             onScroll: event => {},
+            chatMessagesContainerStyle: {},
             style: {},
             styles: styles
         };
@@ -167,6 +169,10 @@ export class Chat extends PureComponent {
         return [styles.chat, this.props.style];
     }
 
+    _chatMessagesContainerStyle() {
+        return [styles.chatMessagesContainer, this.props.chatMessagesContainerStyle];
+    }
+
     _chatMessageStyle(index) {
         return [styles.chatMessage, index === 0 ? { marginTop: 0 } : {}];
     }
@@ -187,7 +193,7 @@ export class Chat extends PureComponent {
         return (
             <View style={this._style()}>
                 <ScrollView
-                    style={styles.chatMessagesContainer}
+                    style={this._chatMessagesContainerStyle()}
                     ref={ref => (this.scrollViewComponent = ref)}
                     onContentSizeChange={() => this.scrollToEnd(false)}
                     onScroll={this.onScroll}
