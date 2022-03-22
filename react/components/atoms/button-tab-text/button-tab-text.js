@@ -43,19 +43,6 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
         };
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            color: "blue"
-        };
-    }
-
-    componentDidMount() {
-        setInterval(() => {
-            this.setState({ color: this.state.color === "red" ? "blue" : "red" });
-        }, 1200);
-    }
-
     _style = () => {
         return [
             styles.buttonTabText,
@@ -93,9 +80,10 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
             styles.text,
             styles[`text${capitalize(this.props.variant)}`],
             {
-                color: this.state.color
+                color: this.props.color
             },
-            this.props.disabled ? styles.textDisabled : {}
+            this.props.disabled ? styles.textDisabled : {},
+            { color: this.props.active ? this.props.colorSelected : this.props.color }
         ];
     };
 
