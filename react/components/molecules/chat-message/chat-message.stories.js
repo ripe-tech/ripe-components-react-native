@@ -29,6 +29,11 @@ storiesOf("Molecules", module)
             }
         ];
         const status = text("Status", "created");
+        const replies = text("Replies", 10);
+        const repliesAvatars = Array.from(
+            { length: replies },
+            () => "https://id.platforme.com/admin/accounts/ns%40platforme.com/avatar"
+        );
 
         return (
             <View>
@@ -43,6 +48,8 @@ storiesOf("Molecules", module)
                     avatarUrl={avatarUrl}
                     username={username}
                     status={status || undefined}
+                    replies={replies}
+                    repliesAvatars={repliesAvatars}
                     date={date || new Date()}
                 />
             </View>
