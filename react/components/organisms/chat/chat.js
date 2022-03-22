@@ -16,8 +16,12 @@ export class Chat extends PureComponent {
                     id: PropTypes.number,
                     avatarUrl: PropTypes.string.isRequired,
                     username: PropTypes.string.isRequired,
-                    message: PropTypes.string.isRequired,
                     date: PropTypes.number.isRequired,
+                    message: PropTypes.string,
+                    status: PropTypes.string,
+                    statusProps: PropTypes.object,
+                    replies: PropTypes.number,
+                    repliesAvatars: PropTypes.array,
                     attachments: PropTypes.arrayOf(
                         PropTypes.exact({
                             name: PropTypes.string.isRequired,
@@ -42,7 +46,7 @@ export class Chat extends PureComponent {
             avatarUrl: undefined,
             username: undefined,
             messages: [],
-            aggregationThreshold: 120,
+            aggregationThreshold: 3600,
             animateScrollBottom: true,
             imagePlaceholder: undefined,
             onNewMessage: () => {},
@@ -161,6 +165,14 @@ export class Chat extends PureComponent {
         await this._onNewMessage(message);
     };
 
+    _style() {
+        return [styles.chat, this.props.style];
+    }
+
+    _chatMessageStyle(index) {
+        return [styles.chatMessage, index === 0 ? { marginTop: 0 } : {}];
+    }
+
     _renderNoMessages = () => {
         return (
             <View style={styles.noMessages}>
@@ -175,7 +187,7 @@ export class Chat extends PureComponent {
 
     render() {
         return (
-            <View style={[styles.chat, this.props.style]}>
+            <View style={this._style()}>
                 <ScrollView
                     style={styles.chatMessagesContainer}
                     ref={ref => (this.scrollViewComponent = ref)}
@@ -190,11 +202,15 @@ export class Chat extends PureComponent {
                                 return (
                                     <ChatMessage
                                         key={index}
-                                        style={index !== 0 && styles.chatMessage}
+                                        style={this._chatMessageStyle()}
                                         avatarUrl={message.avatarUrl}
                                         username={message.username}
-                                        message={message.message}
                                         date={message.date}
+                                        message={message.message}
+                                        status={message.status}
+                                        statusProps={message.statusProps}
+                                        replies={message.replies}
+                                        repliesAvatars={message.repliesAvatars}
                                         attachments={message.attachments}
                                         imagePlaceholder={this.props.imagePlaceholder}
                                     />
@@ -227,13 +243,18 @@ const styles = StyleSheet.create({
     },
     chatMessagesContainer: {
         flex: 1,
-        backgroundColor: "#f6f7f9"
+        backgroundColor: "#ffffff"
     },
     chatMessagesContent: {
-        paddingVertical: 12
+        paddingTop: 12,
+        marginBottom: -1
     },
     chatMessage: {
-        marginTop: 16
+        marginTop: 16,
+        borderStyle: "solid",
+        borderBottomColor: "#dfe2e5",
+        borderBottomWidth: 1,
+        paddingBottom: 16
     },
     noMessages: {
         alignItems: "center",
@@ -246,6 +267,11 @@ const styles = StyleSheet.create({
     noMessagesText: {
         color: "#57626e",
         fontFamily: baseStyles.FONT_BOOK
+    },
+    richTextInput: {
+        borderStyle: "solid",
+        borderTopColor: "#dfe2e5",
+        borderTopWidth: 1
     }
 });
 

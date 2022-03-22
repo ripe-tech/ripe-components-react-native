@@ -11,6 +11,9 @@ storiesOf("Atoms", module)
         const extension = text("Extension", "");
         const underlayColor = text("Underlay Color", "");
         const activeOpacity = number("Active Opacity", 0.8);
+        const attachmentIcon = text("Attachment Icon", "");
+        const attachmentIconColor = text("Attachment Icon Color", "");
+        const attachmentIconBackgroundColor = text("Attachment Icon Background Color", "");
 
         return (
             <Attachment
@@ -18,6 +21,9 @@ storiesOf("Atoms", module)
                 extension={extension || undefined}
                 underlayColor={underlayColor || undefined}
                 activeOpacity={activeOpacity || undefined}
+                attachmentIcon={attachmentIcon || undefined}
+                attachmentIconColor={attachmentIconColor || undefined}
+                attachmentIconBackgroundColor={attachmentIconBackgroundColor || undefined}
             />
         );
     });
