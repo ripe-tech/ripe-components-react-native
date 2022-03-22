@@ -54,7 +54,7 @@ export class ImageLoading extends PureComponent {
     async componentDidUpdate(prevProps) {
         if (
             prevProps.uri !== this.props.uri ||
-            prevProps.src !== this.props.uri ||
+            prevProps.src !== this.props.src ||
             !equal(prevProps.source, this.props.source)
         ) {
             await this._verifyCache();
