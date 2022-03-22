@@ -16,6 +16,7 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
             colorSelected: PropTypes.string,
             backgroundColor: PropTypes.string,
             backgroundColorSelected: PropTypes.string,
+            underlayColor: PropTypes.string,
             text: PropTypes.string,
             disabled: PropTypes.bool,
             activeOpacity: PropTypes.number,
@@ -33,6 +34,7 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
             colorSelected: "#00435e",
             backgroundColor: "#f6f7f9",
             backgroundColorSelected: "#4f7af8",
+            underlayColor: "#c8cdd2",
             text: undefined,
             disabled: false,
             activeOpacity: 0.5,
@@ -93,6 +95,7 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
                 <Touchable
                     style={this._touchableStyle()}
                     disabled={this.props.disabled}
+                    underlayColor={this.props.underlayColor}
                     activeOpacity={this.props.activeOpacity}
                     onPress={this.props.onPress}
                 >
