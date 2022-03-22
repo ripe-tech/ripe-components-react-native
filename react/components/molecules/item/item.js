@@ -69,31 +69,35 @@ export class Item extends PureComponent {
                     disabled={this.props.disabled}
                     onPress={this.props.onPress}
                 >
-                    {this.props.header && (
-                        <LinearGradient
-                            style={styles.gradient}
-                            angle={this.props.gradientAngle}
-                            colors={this.props.gradientColors}
-                            locations={this.props.gradientLocations}
-                            useAngle={true}
-                        >
-                            <View style={styles.header}>
-                                <View style={styles.headerTextContainer}>
-                                    <Icon
-                                        icon={this.props.headerIcon}
-                                        width={17}
-                                        height={17}
-                                        color="#ffffff"
-                                    />
-                                    <Text style={styles.headerText}>{this.props.headerText}</Text>
+                    <>
+                        {this.props.header && (
+                            <LinearGradient
+                                style={styles.gradient}
+                                angle={this.props.gradientAngle}
+                                colors={this.props.gradientColors}
+                                locations={this.props.gradientLocations}
+                                useAngle={true}
+                            >
+                                <View style={styles.header}>
+                                    <View style={styles.headerTextContainer}>
+                                        <Icon
+                                            icon={this.props.headerIcon}
+                                            width={17}
+                                            height={17}
+                                            color="#ffffff"
+                                        />
+                                        <Text style={styles.headerText}>
+                                            {this.props.headerText}
+                                        </Text>
+                                    </View>
+                                    <Text style={styles.headerDate}>
+                                        {dateTimeString(this.props.headerDate)}
+                                    </Text>
                                 </View>
-                                <Text style={styles.headerDate}>
-                                    {dateTimeString(this.props.headerDate)}
-                                </Text>
-                            </View>
-                        </LinearGradient>
-                    )}
-                    {this.props.children}
+                            </LinearGradient>
+                        )}
+                        {this.props.children}
+                    </>
                 </Touchable>
             </View>
         );
