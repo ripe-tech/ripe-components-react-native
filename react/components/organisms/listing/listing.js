@@ -242,6 +242,12 @@ export class Listing extends Component {
         );
     };
 
+    _renderLoading = () => {
+        if (!this.state.refreshing && !this.state.loading && !this.props.loading) return null;
+
+        return <ActivityIndicator style={styles.loadingIndicator} size="large" color="#6687f6" />;
+    };
+
     render() {
         return (
             <View style={this._style()}>
@@ -262,13 +268,7 @@ export class Listing extends Component {
                     ListFooterComponent={<View style={styles.flatListBottom} />}
                     {...this.props.flatListProps}
                 />
-                {this.props.loading && this.state.loading && (
-                    <ActivityIndicator
-                        style={styles.loadingIndicator}
-                        size="large"
-                        color="#6687f6"
-                    />
-                )}
+                {this._renderLoading()}
             </View>
         );
     }
