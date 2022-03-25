@@ -110,7 +110,8 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
 
 const styles = StyleSheet.create({
     buttonTabText: {
-        flex: 1
+        flex: 1,
+        overflow: "hidden"
     },
     buttonTabTextCompact: {
         flex: 1,
