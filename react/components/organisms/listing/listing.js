@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
     ActivityIndicator,
     FlatList,
+    Platform,
     ScrollView,
     StyleSheet,
     Text,
@@ -305,7 +306,7 @@ const styles = StyleSheet.create({
     },
     loadingIndicator: {
         position: "absolute",
-        bottom: 20,
+        bottom: Platform.OS === "ios" ? "50%" : 20,
         left: 0,
         right: 0
     },
