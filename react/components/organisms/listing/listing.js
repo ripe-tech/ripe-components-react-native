@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
     ActivityIndicator,
+    Animated,
     FlatList,
     ScrollView,
     StyleSheet,
@@ -30,6 +31,8 @@ export class Listing extends Component {
             flatListProps: PropTypes.object,
             onEndReachedThreshold: PropTypes.number,
             onFilter: PropTypes.func,
+            onSearch: PropTypes.func,
+            onSearchFocus: PropTypes.func,
             style: ViewPropTypes.style,
             scrollViewStyle: ViewPropTypes.style,
             scrollViewContainerStyle: ViewPropTypes.style,
@@ -53,6 +56,8 @@ export class Listing extends Component {
             layout: "horizontal",
             flatListProps: {},
             onFilter: async () => {},
+            onSearch: async () => {},
+            onSearchFocus: async () => {},
             style: {},
             scrollViewStyle: {},
             scrollViewContainerStyle: {},
@@ -109,7 +114,12 @@ export class Listing extends Component {
     }
 
     onSearch = async value => {
+        await this.props.onSearch(value);
         this.setState({ searchText: value }, async () => await this.refresh());
+    };
+
+    onSearchFocus = async value => {
+        await this.props.onSearchFocus(value);
     };
 
     onFilter = async value => {
@@ -216,14 +226,14 @@ export class Listing extends Component {
     _renderSearch() {
         if (!this.props.search) return;
 
-        return <Search style={this._searchStyle()} onValue={this.onSearch} />;
+        return <Search style={this._searchStyle()} onValue={this.onSearch} onFocus={this.onSearchFocus} />;
     }
 
     _renderFilters() {
         if (this.props.filters.length === 0) return;
 
         return (
-            <View style={this._filtersStyle()}>
+            <Animated.View style={this._filtersStyle()}>
                 <ScrollView
                     onLayout={event => this._onScrollViewLayout(event)}
                     style={this._scrollViewStyle()}
@@ -237,7 +247,7 @@ export class Listing extends Component {
                         {this._renderSelects()}
                     </View>
                 </ScrollView>
-            </View>
+            </Animated.View>
         );
     }
 

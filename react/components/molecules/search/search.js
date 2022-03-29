@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { Animated, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -94,7 +94,7 @@ export class Search extends PureComponent {
 
     render() {
         return (
-            <View style={this._style()}>
+            <Animated.View style={this._style()}>
                 <Input
                     ref={el => (this.textInputComponent = el)}
                     style={styles.input}
@@ -116,7 +116,7 @@ export class Search extends PureComponent {
                     {...this.props.buttonProps}
                     onPress={this.onButtonPress}
                 />
-            </View>
+            </Animated.View>
         );
     }
 }
