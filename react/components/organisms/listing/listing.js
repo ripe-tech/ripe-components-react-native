@@ -28,7 +28,7 @@ export class Listing extends Component {
             search: PropTypes.bool,
             loading: PropTypes.bool,
             refreshing: PropTypes.bool,
-            layout: PropTypes.oneOf(["horizontal", "vertical"]),
+            searchingHeaderLayout: PropTypes.oneOf(["horizontal", "vertical"]),
             expandSearchBar: PropTypes.bool,
             flatListProps: PropTypes.object,
             onEndReachedThreshold: PropTypes.number,
@@ -56,7 +56,7 @@ export class Listing extends Component {
             search: true,
             loading: false,
             refreshing: false,
-            layout: "horizontal",
+            searchingHeaderLayout: "horizontal",
             expandSearchBar: false,
             flatListProps: {},
             onFilter: async () => {},
@@ -234,7 +234,7 @@ export class Listing extends Component {
 
     _searchingHeaderStyle() {
         const layoutStyle =
-            this.props.layout === "horizontal"
+            this.props.searchingHeaderLayout === "horizontal"
                 ? styles.searchingHeaderHorizontal
                 : styles.searchingHeaderVertical;
         return [styles.searchingHeader, layoutStyle, this.props.searchingHeaderStyle];
@@ -250,7 +250,7 @@ export class Listing extends Component {
 
     _searchStyle = () => {
         const layoutStyle =
-            this.props.layout === "horizontal" ? styles.searchHorizontal : styles.searchVertical;
+            this.props.searchingHeaderLayout === "horizontal" ? styles.searchHorizontal : styles.searchVertical;
 
         const animationStyle = this.props.expandSearchBar
             ? {
@@ -266,7 +266,7 @@ export class Listing extends Component {
 
     _filtersStyle = () => {
         const layoutStyle =
-            this.props.layout === "horizontal" ? styles.filtersHorizontal : styles.filtersVertical;
+            this.props.searchingHeaderLayout === "horizontal" ? styles.filtersHorizontal : styles.filtersVertical;
 
         const animationStyle = this.props.expandSearchBar
             ? {
