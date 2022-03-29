@@ -250,7 +250,9 @@ export class Listing extends Component {
 
     _searchStyle = () => {
         const layoutStyle =
-            this.props.searchingHeaderLayout === "horizontal" ? styles.searchHorizontal : styles.searchVertical;
+            this.props.searchingHeaderLayout === "horizontal"
+                ? styles.searchHorizontal
+                : styles.searchVertical;
 
         const animationStyle = this.props.expandSearchBar
             ? {
@@ -266,7 +268,9 @@ export class Listing extends Component {
 
     _filtersStyle = () => {
         const layoutStyle =
-            this.props.searchingHeaderLayout === "horizontal" ? styles.filtersHorizontal : styles.filtersVertical;
+            this.props.searchingHeaderLayout === "horizontal"
+                ? styles.filtersHorizontal
+                : styles.filtersVertical;
 
         const animationStyle = this.props.expandSearchBar
             ? {
