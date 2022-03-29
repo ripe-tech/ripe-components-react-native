@@ -32,6 +32,9 @@ export class Listing extends Component {
             style: ViewPropTypes.style,
             scrollViewStyle: ViewPropTypes.style,
             scrollViewContainerStyle: ViewPropTypes.style,
+            searchingHeaderStyle: ViewPropTypes.style,
+            searchStyle: ViewPropTypes.style,
+            filtersStyle: ViewPropTypes.style,
             styles: PropTypes.any
         };
     }
@@ -51,6 +54,9 @@ export class Listing extends Component {
             style: {},
             scrollViewStyle: {},
             scrollViewContainerStyle: {},
+            searchingHeaderStyle: {},
+            searchStyle: {},
+            filtersStyle: {},
             styles: styles
         };
     }
@@ -148,14 +154,6 @@ export class Listing extends Component {
         );
     };
 
-    _scrollViewStyle = () => {
-        return [styles.scrollView, this.props.scrollViewStyle];
-    };
-
-    _scrollViewContainerStyle = () => {
-        return [styles.scrollViewContainer, this.props.scrollViewContainerStyle];
-    };
-
     _getItems = async (options = {}) => {
         const items = await this.props.getItems(
             {
@@ -175,27 +173,47 @@ export class Listing extends Component {
         return Object.values(this.state.filters).filter(f => Boolean(f));
     }
 
-    _style() {
-        return [styles.listing, this.props.style];
-    }
-
-    _renderSearch() {
-        if (!this.props.search) return;
-
-        return <Search style={styles.search} onValue={this.onSearch} />;
-    }
-
     _onScrollViewLayout(event) {
         if (this.state.searchLoaded) return;
         this.scrollViewWidth = event.nativeEvent.layout.width;
         this.setState({ searchLoaded: true });
     }
 
+    _style() {
+        return [styles.listing, this.props.style];
+    }
+
+    _searchingHeaderStyle() {
+        return [this.props.searchingHeaderStyle];
+    }
+
+    _scrollViewStyle = () => {
+        return [styles.scrollView, this.props.scrollViewStyle];
+    };
+
+    _scrollViewContainerStyle = () => {
+        return [styles.scrollViewContainer, this.props.scrollViewContainerStyle];
+    };
+
+    _searchStyle = () => {
+        return [styles.search, this.props.searchStyle];
+    };
+
+    _filtersStyle = () => {
+        return [styles.filters, this.props.filtersStyle];
+    };
+
+    _renderSearch() {
+        if (!this.props.search) return;
+
+        return <Search style={this._searchStyle()} onValue={this.onSearch} />;
+    }
+
     _renderFilters() {
         if (this.props.filters.length === 0) return;
 
         return (
-            <View style={styles.filters}>
+            <View style={this._filtersStyle()}>
                 <ScrollView
                     onLayout={event => this._onScrollViewLayout(event)}
                     style={this._scrollViewStyle()}
@@ -245,8 +263,10 @@ export class Listing extends Component {
     render() {
         return (
             <View style={this._style()}>
-                {this._renderSearch()}
-                {this._renderFilters()}
+                <View style={this._searchingHeaderStyle()}>
+                    {this._renderSearch()}
+                    {this._renderFilters()}
+                </View>
                 <FlatList
                     ref={el => (this.flatListRef = el)}
                     key={"items"}
