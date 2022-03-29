@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
     },
     loadingIndicator: {
         position: "absolute",
-        bottom: Platform.OS === "ios" ? "50%" : 20,
+        bottom: 20,
         left: 0,
         right: 0
     },
