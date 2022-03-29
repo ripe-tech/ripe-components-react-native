@@ -78,6 +78,7 @@ export class Listing extends Component {
 
         this.state = {
             searchWidth: new Animated.Value(0),
+            searchIcon: "search",
             searchText: "",
             itemsOffset: 0,
             filters: this.props.filtersValue,
@@ -213,6 +214,7 @@ export class Listing extends Component {
             easing: Easing.inOut(Easing.ease)
         }).start(() => {
             this.animating = false;
+            this.setState({ searchIcon: "close" });
         });
     }
 
@@ -225,6 +227,7 @@ export class Listing extends Component {
             easing: Easing.inOut(Easing.ease)
         }).start(() => {
             this.animating = false;
+            this.setState({ searchIcon: "search" });
         });
     }
 
@@ -286,9 +289,10 @@ export class Listing extends Component {
 
     _renderSearch() {
         if (!this.props.search) return;
-
         return (
             <Search
+                closeAfterClear={true}
+                icon={this.state.searchIcon}
                 style={this._searchStyle()}
                 onValue={this.onSearch}
                 onFocus={this.onSearchFocus}

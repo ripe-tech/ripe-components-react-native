@@ -11,6 +11,8 @@ export class Search extends PureComponent {
         return {
             value: PropTypes.string,
             placeholder: PropTypes.string,
+            icon: PropTypes.string,
+            closeAfterClear: PropTypes.bool,
             buttonProps: PropTypes.object,
             onValue: PropTypes.func,
             onFocus: PropTypes.func,
@@ -25,6 +27,8 @@ export class Search extends PureComponent {
         return {
             value: undefined,
             placeholder: "Search",
+            icon: undefined,
+            closeAfterClear: false,
             buttonProps: {},
             onValue: () => {},
             onFocus: () => {},
@@ -62,6 +66,7 @@ export class Search extends PureComponent {
     };
 
     _icon = () => {
+        if (this.props.icon) return this.props.icon;
         return this.state.valueData ? "close" : "search";
     };
 
@@ -84,8 +89,8 @@ export class Search extends PureComponent {
     };
 
     onButtonPress = () => {
-        if (!this.state.valueData) return;
-        this.clear();
+        if (this.props.closeAfterClear) this.onInputBlur();
+        if (this.state.valueData) this.clear();
     };
 
     _style = () => {
