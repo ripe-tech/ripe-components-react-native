@@ -32,6 +32,7 @@ export class Listing extends Component {
             onEndReachedThreshold: PropTypes.number,
             onFilter: PropTypes.func,
             onSearch: PropTypes.func,
+            onSearchBlur: PropTypes.func,
             onSearchFocus: PropTypes.func,
             style: ViewPropTypes.style,
             scrollViewStyle: ViewPropTypes.style,
@@ -57,6 +58,7 @@ export class Listing extends Component {
             flatListProps: {},
             onFilter: async () => {},
             onSearch: async () => {},
+            onSearchBlur: async () => {},
             onSearchFocus: async () => {},
             style: {},
             scrollViewStyle: {},
@@ -120,6 +122,10 @@ export class Listing extends Component {
 
     onSearchFocus = async value => {
         await this.props.onSearchFocus(value);
+    };
+
+    onSearchBlur = async value => {
+        await this.props.onSearchBlur(value);
     };
 
     onFilter = async value => {
@@ -226,7 +232,9 @@ export class Listing extends Component {
     _renderSearch() {
         if (!this.props.search) return;
 
-        return <Search style={this._searchStyle()} onValue={this.onSearch} onFocus={this.onSearchFocus} />;
+        return <Search style={this._searchStyle()} onValue={this.onSearch} 
+        onFocus={this.onSearchFocus} 
+        onBlur={this.onSearchBlur}/>;
     }
 
     _renderFilters() {
