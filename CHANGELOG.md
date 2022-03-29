@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * New component `Attachment` that shows a file info and works as a link - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
 * New component `StatusEntry` that shows the status change entry in a chat - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 * New component `AvatarList` that shows avatars in list form - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
+* Extra style props to listing component - [ripe-robin-revamp/#329](https://github.com/ripe-tech/ripe-robin-revamp/issues/329)
 
 ### Changed
 
