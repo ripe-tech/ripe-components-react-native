@@ -1,5 +1,13 @@
 import React, { PureComponent } from "react";
-import { ScrollView, StyleSheet, Image, Text, View, ViewPropTypes } from "react-native";
+import {
+    Image,
+    InputAccessoryView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+    ViewPropTypes
+} from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -35,6 +43,7 @@ export class Chat extends PureComponent {
             onScrollBottom: PropTypes.func,
             onScroll: PropTypes.func,
             chatMessagesContainerStyle: ViewPropTypes.style,
+            chatMessagesContentStyle: ViewPropTypes.style,
             style: ViewPropTypes.style,
             styles: PropTypes.any
         };
@@ -51,7 +60,10 @@ export class Chat extends PureComponent {
             onNewMessage: () => {},
             onScrollBottom: () => {},
             onScroll: event => {},
+            onInputFocus: event => {},
+            onInputBlur: event => {},
             chatMessagesContainerStyle: {},
+            chatMessagesContentStyle: {},
             style: {},
             styles: styles
         };
@@ -174,6 +186,10 @@ export class Chat extends PureComponent {
         return [styles.chatMessagesContainer, this.props.chatMessagesContainerStyle];
     }
 
+    _chatMessagesContentStyle() {
+        return [styles.chatMessagesContent, this.props.chatMessagesContentStyle];
+    }
+
     _chatMessageStyle(index) {
         return [styles.chatMessage, index === 0 ? { marginTop: 0 } : {}];
     }
@@ -196,13 +212,13 @@ export class Chat extends PureComponent {
                 <ScrollView
                     style={this._chatMessagesContainerStyle()}
                     ref={ref => (this.scrollViewComponent = ref)}
-                    onContentSizeChange={() => this.scrollToEnd(false)}
                     onScroll={this.onScroll}
+                    scrollEventThrottle={4}
                 >
                     {this.props.messages.length === 0 ? (
                         this._renderNoMessages()
                     ) : (
-                        <View style={styles.chatMessagesContent}>
+                        <View style={this._chatMessagesContentStyle()}>
                             {this._aggregatedMessages().map((message, index) => {
                                 return (
                                     <ChatMessage
@@ -233,6 +249,8 @@ export class Chat extends PureComponent {
                     onAttachmentsAdded={attachments =>
                         this.onRichTextInputAttachmentsAdded(attachments)
                     }
+                    onFocus={this.props.onInputFocus}
+                    onBlur={this.props.onInputBlur}
                     onSendMessage={text => this.onRichTextInputSendMessage(text)}
                 />
             </View>
@@ -261,7 +279,7 @@ const styles = StyleSheet.create({
     },
     noMessages: {
         alignItems: "center",
-        marginTop: "10%"
+        marginTop: "40%"
     },
     noMessagesImage: {
         width: 150,
