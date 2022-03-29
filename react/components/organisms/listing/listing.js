@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
     ActivityIndicator,
     Animated,
+    Easing,
     FlatList,
     ScrollView,
     StyleSheet,
@@ -28,6 +29,7 @@ export class Listing extends Component {
             loading: PropTypes.bool,
             refreshing: PropTypes.bool,
             layout: PropTypes.oneOf(["horizontal", "vertical"]),
+            expandSearchBar: PropTypes.bool,
             flatListProps: PropTypes.object,
             onEndReachedThreshold: PropTypes.number,
             onFilter: PropTypes.func,
@@ -55,6 +57,7 @@ export class Listing extends Component {
             loading: false,
             refreshing: false,
             layout: "horizontal",
+            expandSearchBar: false,
             flatListProps: {},
             onFilter: async () => {},
             onSearch: async () => {},
@@ -74,6 +77,7 @@ export class Listing extends Component {
         super(props);
 
         this.state = {
+            searchWidth: new Animated.Value(0),
             searchText: "",
             itemsOffset: 0,
             filters: this.props.filtersValue,
@@ -83,6 +87,7 @@ export class Listing extends Component {
             end: false,
             items: []
         };
+        this.animating = false;
 
         this.scrollViewWidth = 0;
     }
@@ -122,10 +127,12 @@ export class Listing extends Component {
 
     onSearchFocus = async value => {
         await this.props.onSearchFocus(value);
+        if (this.props.expandSearchBar) await this._expandSearchBar();
     };
 
     onSearchBlur = async value => {
         await this.props.onSearchBlur(value);
+        if (this.props.expandSearchBar) await this._shrinkSearchBar();
     };
 
     onFilter = async value => {
@@ -197,6 +204,30 @@ export class Listing extends Component {
         this.setState({ searchLoaded: true });
     }
 
+    _expandSearchBar() {
+        this.animating = true;
+        Animated.timing(this.state.searchWidth, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: false,
+            easing: Easing.inOut(Easing.ease)
+        }).start(() => {
+            this.animating = false;
+        });
+    }
+
+    _shrinkSearchBar() {
+        this.animating = true;
+        Animated.timing(this.state.searchWidth, {
+            toValue: 0,
+            duration: 500,
+            useNativeDriver: false,
+            easing: Easing.inOut(Easing.ease)
+        }).start(() => {
+            this.animating = false;
+        });
+    }
+
     _style() {
         return [styles.listing, this.props.style];
     }
@@ -220,13 +251,33 @@ export class Listing extends Component {
     _searchStyle = () => {
         const layoutStyle =
             this.props.layout === "horizontal" ? styles.searchHorizontal : styles.searchVertical;
-        return [layoutStyle, this.props.searchStyle];
+
+        const animationStyle = this.props.expandSearchBar
+            ? {
+                  width: this.state.searchWidth.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: ["50%", "100%"]
+                  })
+              }
+            : {};
+
+        return [layoutStyle, animationStyle, this.props.searchStyle];
     };
 
     _filtersStyle = () => {
         const layoutStyle =
             this.props.layout === "horizontal" ? styles.filtersHorizontal : styles.filtersVertical;
-        return [layoutStyle, this.props.filtersStyle];
+
+        const animationStyle = this.props.expandSearchBar
+            ? {
+                  width: this.state.searchWidth.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: ["50%", "0%"]
+                  })
+              }
+            : {};
+
+        return [layoutStyle, animationStyle, this.props.filtersStyle];
     };
 
     _renderSearch() {
