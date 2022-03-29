@@ -232,9 +232,14 @@ export class Listing extends Component {
     _renderSearch() {
         if (!this.props.search) return;
 
-        return <Search style={this._searchStyle()} onValue={this.onSearch} 
-        onFocus={this.onSearchFocus} 
-        onBlur={this.onSearchBlur}/>;
+        return (
+            <Search
+                style={this._searchStyle()}
+                onValue={this.onSearch}
+                onFocus={this.onSearchFocus}
+                onBlur={this.onSearchBlur}
+            />
+        );
     }
 
     _renderFilters() {
