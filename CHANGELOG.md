@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Fix image link in `ChatMessage` story
 * Fix iOS flicker of `ImageLoading` - [ripe-robin-revamp/#343](https://github.com/ripe-tech/ripe-robin-revamp/issues/343)
+* Fix iOS flicker of `Listing` on refresh - [ripe-robin-revamp/#343](https://github.com/ripe-tech/ripe-robin-revamp/issues/343)
 
 ## [0.20.0] - 2022-03-03
 

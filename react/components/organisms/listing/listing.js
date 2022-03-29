@@ -77,10 +77,10 @@ export class Listing extends Component {
         await this.refresh();
     }
 
-    async refresh() {
+    async refresh(scrollToTop = false) {
         if (!this.props.getItems) return;
 
-        this.scrollToTop();
+        if (scrollToTop) this.scrollToTop();
         this.setState({ refreshing: true, itemsOffset: 0, end: false }, async () => {
             const items = await this._getItems();
             this.setState({
@@ -102,12 +102,12 @@ export class Listing extends Component {
     }
 
     onSearch = async value => {
-        this.setState({ searchText: value }, async () => await this.refresh());
+        this.setState({ searchText: value }, async () => await this.refresh(true));
     };
 
     onFilter = async value => {
         await this.props.onFilter(value);
-        this.setState({ filters: value }, async () => await this.refresh());
+        this.setState({ filters: value }, async () => await this.refresh(true));
     };
 
     onRefresh = async () => {
@@ -244,8 +244,7 @@ export class Listing extends Component {
     };
 
     _renderLoading = () => {
-        if (!this.state.refreshing && !this.state.loading && !this.props.loading) return null;
-
+        if (!this.state.loading && !this.props.loading) return null;
         return <ActivityIndicator style={styles.loadingIndicator} size="large" color="#6687f6" />;
     };
 
