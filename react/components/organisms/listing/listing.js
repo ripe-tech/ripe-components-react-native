@@ -26,6 +26,7 @@ export class Listing extends Component {
             search: PropTypes.bool,
             loading: PropTypes.bool,
             refreshing: PropTypes.bool,
+            layout: PropTypes.oneOf(["horizontal", "vertical"]),
             flatListProps: PropTypes.object,
             onEndReachedThreshold: PropTypes.number,
             onFilter: PropTypes.func,
@@ -49,6 +50,7 @@ export class Listing extends Component {
             search: true,
             loading: false,
             refreshing: false,
+            layout: "horizontal",
             flatListProps: {},
             onFilter: async () => {},
             style: {},
@@ -184,7 +186,11 @@ export class Listing extends Component {
     }
 
     _searchingHeaderStyle() {
-        return [this.props.searchingHeaderStyle];
+        const layoutStyle =
+            this.props.layout === "horizontal"
+                ? styles.searchingHeaderHorizontal
+                : styles.searchingHeaderVertical;
+        return [styles.searchingHeader, layoutStyle, this.props.searchingHeaderStyle];
     }
 
     _scrollViewStyle = () => {
@@ -196,11 +202,15 @@ export class Listing extends Component {
     };
 
     _searchStyle = () => {
-        return [styles.search, this.props.searchStyle];
+        const layoutStyle =
+            this.props.layout === "horizontal" ? styles.searchHorizontal : styles.searchVertical;
+        return [layoutStyle, this.props.searchStyle];
     };
 
     _filtersStyle = () => {
-        return [styles.filters, this.props.filtersStyle];
+        const layoutStyle =
+            this.props.layout === "horizontal" ? styles.filtersHorizontal : styles.filtersVertical;
+        return [layoutStyle, this.props.filtersStyle];
     };
 
     _renderSearch() {
@@ -299,12 +309,41 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#f6f7f9"
     },
-    search: {
+    searchingHeader: {
+        flex: 1
+    },
+    searchingHeaderVertical: {
+        flexDirection: "column",
+        minHeight: 100,
+        marginVertical: 8,
+        marginHorizontal: 0,
+        padding: 0
+    },
+    searchingHeaderHorizontal: {
+        flexDirection: "row",
+        minHeight: 50,
+        marginVertical: 8,
+        marginHorizontal: 15,
+        padding: 0
+    },
+    searchVertical: {
         marginBottom: 10,
         marginHorizontal: 15
     },
-    filters: {
+    searchHorizontal: {
+        width: "50%",
+        height: "100%",
+        alignItems: "flex-start",
+        paddingRight: 5
+    },
+    filtersVertical: {
         marginHorizontal: 15
+    },
+    filtersHorizontal: {
+        width: "50%",
+        height: "100%",
+        alignItems: "flex-start",
+        paddingLeft: 5
     },
     scrollViewContainer: {
         height: 46,
