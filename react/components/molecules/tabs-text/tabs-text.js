@@ -138,6 +138,23 @@ export class TabsText extends PureComponent {
         return [styles.buttonContainer, styles[`buttonContainer${capitalize(this.props.variant)}`]];
     };
 
+    _buttonTabStyle(index) {
+        return [
+            index === 0
+                ? {
+                      borderTopLeftRadius: 6,
+                      borderBottomLeftRadius: 6
+                  }
+                : {},
+            index === this.props.tabs.length - 1
+                ? {
+                      borderTopRightRadius: 6,
+                      borderBottomRightRadius: 6
+                  }
+                : {}
+        ];
+    }
+
     _buttonStyle = index => {
         return [
             styles.button,
@@ -179,7 +196,8 @@ export class TabsText extends PureComponent {
                 onLayout={event => this._onTabLayout(event, index)}
             >
                 <ButtonTabText
-                    style={this._buttonStyle(index)}
+                    style={this._buttonTabStyle(index)}
+                    buttonStyle={this._buttonStyle(index)}
                     text={tab.text}
                     color={this.props.tabsColor}
                     colorSelected={this.props.tabsColorSelected}
