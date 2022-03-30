@@ -28,6 +28,8 @@ export class Chat extends PureComponent {
                     message: PropTypes.string,
                     status: PropTypes.string,
                     statusProps: PropTypes.object,
+                    replies: PropTypes.number,
+                    repliesAvatars: PropTypes.array,
                     attachments: PropTypes.arrayOf(
                         PropTypes.exact({
                             name: PropTypes.string.isRequired,
@@ -230,6 +232,8 @@ export class Chat extends PureComponent {
                                         message={message.message}
                                         status={message.status}
                                         statusProps={message.statusProps}
+                                        replies={message.replies}
+                                        repliesAvatars={message.repliesAvatars}
                                         attachments={message.attachments}
                                         imagePlaceholder={this.props.imagePlaceholder}
                                     />

@@ -6,6 +6,7 @@ import { dateTimeString, isImage } from "ripe-commons-native";
 import { baseStyles } from "../../../util";
 
 import { Attachment, Avatar, Lightbox, StatusEntry, Text } from "../../atoms";
+import { AvatarList } from "../avatar-list";
 
 export class ChatMessage extends PureComponent {
     static get propTypes() {
@@ -17,6 +18,8 @@ export class ChatMessage extends PureComponent {
             message: PropTypes.string,
             status: PropTypes.string,
             statusProps: PropTypes.object,
+            replies: PropTypes.number,
+            repliesAvatars: PropTypes.array,
             attachments: PropTypes.arrayOf(
                 PropTypes.exact({
                     name: PropTypes.string.isRequired,
@@ -37,6 +40,8 @@ export class ChatMessage extends PureComponent {
             message: undefined,
             status: undefined,
             statusProps: {},
+            replies: undefined,
+            repliesAvatars: [],
             attachments: [],
             imagePlaceholder: undefined,
             style: {},
@@ -72,6 +77,14 @@ export class ChatMessage extends PureComponent {
                             status={this.props.status}
                             {...this.props.statusProps}
                         />
+                    ) : null}
+                    {this.props.replies ? (
+                        <View style={styles.replies}>
+                            <AvatarList avatars={this.props.repliesAvatars} size={24} />
+                            <Text style={styles.repliesText}>
+                                {this.props.replies} {this.props.replies > 1 ? "replies" : "reply"}
+                            </Text>
+                        </View>
                     ) : null}
                     {this.props.attachments.map((attachment, index) => (
                         <View style={this._attachmentsStyle()} key={index}>
@@ -115,12 +128,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         marginTop: 3
     },
-    text: {
-        marginTop: 4
-    },
-    status: {
-        marginTop: 4
-    },
     username: {
         fontFamily: baseStyles.FONT_BOLD,
         marginEnd: 5,
@@ -133,6 +140,23 @@ const styles = StyleSheet.create({
         color: "#a4adb5",
         fontSize: 11,
         lineHeight: 18
+    },
+    text: {
+        marginTop: 4
+    },
+    status: {
+        marginTop: 4
+    },
+    replies: {
+        marginTop: 8,
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    repliesText: {
+        marginLeft: 8,
+        fontFamily: baseStyles.FONT,
+        fontSize: 14,
+        color: "#6051f2"
     }
 });
 
