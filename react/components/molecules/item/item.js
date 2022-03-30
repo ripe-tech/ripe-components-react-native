@@ -15,6 +15,7 @@ export class Item extends PureComponent {
             headerIcon: PropTypes.string,
             headerText: PropTypes.string,
             headerDate: PropTypes.number,
+            underlayColor: PropTypes.string,
             gradientAngle: PropTypes.number,
             gradientColors: PropTypes.arrayOf(PropTypes.string),
             gradientLocations: PropTypes.arrayOf(PropTypes.number),
@@ -33,6 +34,7 @@ export class Item extends PureComponent {
             headerIcon: undefined,
             headerText: undefined,
             headerDate: undefined,
+            underlayColor: undefined,
             gradientAngle: 62,
             gradientLocations: [0.4, 0.84],
             gradientColors: ["#4a6fe9", "#6687f6"],
@@ -63,34 +65,39 @@ export class Item extends PureComponent {
                 <Touchable
                     style={this._contentStyle()}
                     activeOpacity={this.props.activeOpacity}
+                    underlayColor={this.props.underlayColor}
                     disabled={this.props.disabled}
                     onPress={this.props.onPress}
                 >
-                    {this.props.header && (
-                        <LinearGradient
-                            style={styles.gradient}
-                            angle={this.props.gradientAngle}
-                            colors={this.props.gradientColors}
-                            locations={this.props.gradientLocations}
-                            useAngle={true}
-                        >
-                            <View style={styles.header}>
-                                <View style={styles.headerTextContainer}>
-                                    <Icon
-                                        icon={this.props.headerIcon}
-                                        width={17}
-                                        height={17}
-                                        color="#ffffff"
-                                    />
-                                    <Text style={styles.headerText}>{this.props.headerText}</Text>
+                    <>
+                        {this.props.header && (
+                            <LinearGradient
+                                style={styles.gradient}
+                                angle={this.props.gradientAngle}
+                                colors={this.props.gradientColors}
+                                locations={this.props.gradientLocations}
+                                useAngle={true}
+                            >
+                                <View style={styles.header}>
+                                    <View style={styles.headerTextContainer}>
+                                        <Icon
+                                            icon={this.props.headerIcon}
+                                            width={17}
+                                            height={17}
+                                            color="#ffffff"
+                                        />
+                                        <Text style={styles.headerText}>
+                                            {this.props.headerText}
+                                        </Text>
+                                    </View>
+                                    <Text style={styles.headerDate}>
+                                        {dateTimeString(this.props.headerDate)}
+                                    </Text>
                                 </View>
-                                <Text style={styles.headerDate}>
-                                    {dateTimeString(this.props.headerDate)}
-                                </Text>
-                            </View>
-                        </LinearGradient>
-                    )}
-                    {this.props.children}
+                            </LinearGradient>
+                        )}
+                        {this.props.children}
+                    </>
                 </Touchable>
             </View>
         );

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * New component `Attachment` that shows a file info and works as a link - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
 * New component `StatusEntry` that shows the status change entry in a chat - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 * New component `AvatarList` that shows avatars in list form - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
+* New loading indicator by prop for `ButtonIcon` - [ripe-robin-revamp/#343](https://github.com/ripe-tech/ripe-robin-revamp/issues/343)
 
 ### Changed
 
@@ -23,10 +24,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Use new component `StatusEntry` in `ChatMessage` - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 * Adapt `ChatMessage` and `Chat` styling to better adapt to the available size - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 * Use new component `AvatarList` in `ChatMessage` and modify `Chat` to use it - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
+* Improve button press animation in item and button tab - [ripe-robin-revamp/#343](https://github.com/ripe-tech/ripe-robin-revamp/issues/343)
 
 ### Fixed
 
 * Fix image link in `ChatMessage` story
+* Fix iOS flicker of `ImageLoading` - [ripe-robin-revamp/#343](https://github.com/ripe-tech/ripe-robin-revamp/issues/343)
+* Fix iOS flicker of `Listing` on refresh - [ripe-robin-revamp/#343](https://github.com/ripe-tech/ripe-robin-revamp/issues/343)
 
 ## [0.20.0] - 2022-03-03
 
