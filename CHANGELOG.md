@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * New component `StatusEntry` that shows the status change entry in a chat - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 * New component `AvatarList` that shows avatars in list form - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
 * Extra style props to listing component - [ripe-robin-revamp/#329](https://github.com/ripe-tech/ripe-robin-revamp/issues/329)
-* Listing component layout "horizontal" and "vertical" layouts - [ripe-robin-revamp/#329](https://github.com/ripe-tech/ripe-robin-revamp/issues/329)
+* Listing component header "horizontal" and "vertical" layouts - [ripe-robin-revamp/#329](https://github.com/ripe-tech/ripe-robin-revamp/issues/329)
 * Listing animated expandable search bar - [ripe-robin-revamp/#329](https://github.com/ripe-tech/ripe-robin-revamp/issues/329)
 
 ### Changed
