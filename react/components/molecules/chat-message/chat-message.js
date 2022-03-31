@@ -59,14 +59,17 @@ export class ChatMessage extends PureComponent {
         return { marginTop: index > 0 ? 2 : 0 };
     };
 
-    _test = () => {
+    _chatMessageComponent = () => {
         return this.props.onPress ? Touchable : View;
     };
 
     render() {
-        const Component = this._test();
+        const ChatMessageComponent = this._chatMessageComponent();
         return (
-            <Component style={[styles.chatMessage, this.props.style]} onPress={this.props.onPress}>
+            <ChatMessageComponent
+                style={[styles.chatMessage, this.props.style]}
+                onPress={this.props.onPress}
+            >
                 <Avatar style={styles.avatar} image={{ uri: this.props.avatarUrl }} size={32} />
                 <View style={styles.message}>
                     <View style={styles.header}>
@@ -113,7 +116,7 @@ export class ChatMessage extends PureComponent {
                         </View>
                     ))}
                 </View>
-            </Component>
+            </ChatMessageComponent>
         );
     }
 }
