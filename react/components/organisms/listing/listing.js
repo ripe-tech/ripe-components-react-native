@@ -264,7 +264,7 @@ export class Listing extends Component {
                 ? {
                       width: this.state.searchWidth.interpolate({
                           inputRange: [0, 1],
-                          outputRange: ["50%", "90%"]
+                          outputRange: ["50%", "95%"]
                       })
                   }
                 : {};
@@ -282,7 +282,7 @@ export class Listing extends Component {
                 ? {
                       width: this.state.searchWidth.interpolate({
                           inputRange: [0, 1],
-                          outputRange: [this.props.search ? "50%" : "100%", "10%"]
+                          outputRange: [this.props.search ? "50%" : "100%", "5%"]
                       }),
                       paddingLeft: this.props.search ? 5 : 0
                   }
