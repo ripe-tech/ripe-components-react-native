@@ -389,22 +389,20 @@ const styles = StyleSheet.create({
         backgroundColor: "#f6f7f9"
     },
     searchingHeader: {
-        flex: 1
+        flex: 1,
+        marginBottom: -2,
+        marginTop: 8,
+        padding: 0
     },
     searchingHeaderVertical: {
         flexDirection: "column",
         minHeight: 100,
-        marginVertical: 8,
         marginHorizontal: 0,
-        padding: 0
     },
     searchingHeaderHorizontal: {
         flexDirection: "row",
         minHeight: 50,
         marginHorizontal: 15,
-        marginBottom: -2,
-        marginTop: 8,
-        padding: 0
     },
     searchVertical: {
         marginBottom: 10,
