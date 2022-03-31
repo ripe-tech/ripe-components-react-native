@@ -132,12 +132,12 @@ export class Listing extends Component {
 
     onSearchFocus = async value => {
         await this.props.onSearchFocus(value);
-        if (this.props.expandSearchBar) await this._expandSearchBar();
+        if (this.props.expandSearchBar && this._isHorizontalLayout()) await this._expandSearchBar();
     };
 
     onSearchBlur = async value => {
         await this.props.onSearchBlur(value);
-        if (this.props.expandSearchBar) await this._shrinkSearchBar();
+        if (this.props.expandSearchBar && this._isHorizontalLayout()) await this._shrinkSearchBar();
     };
 
     onFilter = async value => {
@@ -237,12 +237,14 @@ export class Listing extends Component {
         });
     }
 
+    _isHorizontalLayout = () => this.props.searchingHeaderLayout === "horizontal";
+
     _style() {
         return [styles.listing, this.props.style];
     }
 
     _searchingHeaderStyle() {
-        const isHorizontal = this.props.searchingHeaderLayout === "horizontal";
+        const isHorizontal = this._isHorizontalLayout();
         const layoutStyle = isHorizontal
             ? styles.searchingHeaderHorizontal
             : styles.searchingHeaderVertical;
@@ -261,7 +263,7 @@ export class Listing extends Component {
     };
 
     _searchStyle = () => {
-        const isHorizontal = this.props.searchingHeaderLayout === "horizontal";
+        const isHorizontal = this._isHorizontalLayout();
         const layoutStyle = isHorizontal ? styles.searchHorizontal : styles.searchVertical;
         const animationStyle =
             isHorizontal && this.props.expandSearchBar
@@ -276,7 +278,7 @@ export class Listing extends Component {
     };
 
     _filtersStyle = () => {
-        const isHorizontal = this.props.searchingHeaderLayout === "horizontal";
+        const isHorizontal = this._isHorizontalLayout();
         const layoutStyle = isHorizontal ? styles.filtersHorizontal : styles.filtersVertical;
         const animationStyle =
             isHorizontal && this.props.expandSearchBar
@@ -292,7 +294,7 @@ export class Listing extends Component {
     };
 
     _selectTextColor = () => `rgba(36,66,90,${this.state.placeholderColorAlpha})`;
-    
+
     /**
      * Notice this does not follow the ReactNative style standard
      * where you can give an array of styles and it merges them.
@@ -302,7 +304,7 @@ export class Listing extends Component {
             ...styles.selectPickerAndroid,
             color: this._selectTextColor()
         };
-    }
+    };
 
     /**
      * Notice this does not follow the ReactNative style standard
@@ -313,8 +315,8 @@ export class Listing extends Component {
             ...styles.selectPickerIOS,
             color: this._selectTextColor()
         };
-    }
-    
+    };
+
     /**
      * Notice this does not follow the ReactNative style standard
      * where you can give an array of styles and it merges them.
@@ -324,7 +326,6 @@ export class Listing extends Component {
             color: this._selectTextColor()
         };
     };
-
 
     _renderSearch() {
         if (!this.props.search) return;
