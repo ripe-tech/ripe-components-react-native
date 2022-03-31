@@ -80,7 +80,7 @@ export class Listing extends Component {
 
         this.state = {
             searchWidth: new Animated.Value(0),
-            searchIcon: "search",
+            expanded: false,
             searchText: "",
             itemsOffset: 0,
             filters: this.props.filtersValue,
@@ -216,7 +216,7 @@ export class Listing extends Component {
             easing: Easing.inOut(Easing.ease)
         }).start(() => {
             this.animating = false;
-            this.setState({ searchIcon: "close" });
+            this.setState({ expanded: true });
         });
     }
 
@@ -229,7 +229,7 @@ export class Listing extends Component {
             easing: Easing.inOut(Easing.ease)
         }).start(() => {
             this.animating = false;
-            this.setState({ searchIcon: "search" });
+            this.setState({ expanded: false });
         });
     }
 
@@ -264,7 +264,7 @@ export class Listing extends Component {
                 ? {
                       width: this.state.searchWidth.interpolate({
                           inputRange: [0, 1],
-                          outputRange: ["50%", "100%"]
+                          outputRange: ["50%", "90%"]
                       })
                   }
                 : {};
@@ -282,7 +282,7 @@ export class Listing extends Component {
                 ? {
                       width: this.state.searchWidth.interpolate({
                           inputRange: [0, 1],
-                          outputRange: [this.props.search ? "50%" : "100%", "0%"]
+                          outputRange: [this.props.search ? "50%" : "100%", "10%"]
                       }),
                       paddingLeft: this.props.search ? 5 : 0
                   }
@@ -295,7 +295,6 @@ export class Listing extends Component {
         return (
             <Search
                 closeAfterClear={true}
-                icon={this.state.searchIcon}
                 style={this._searchStyle()}
                 onValue={this.onSearch}
                 onFocus={this.onSearchFocus}
@@ -337,6 +336,7 @@ export class Listing extends Component {
                     placeholder={item.placeholder}
                     options={item.options}
                     value={this.state.filters[item.value]}
+                    icon="filter"
                     onUpdateValue={value => this.onSelectUpdateValue(item.value, value)}
                     width={staticSize || item.width}
                     key={item.value}
