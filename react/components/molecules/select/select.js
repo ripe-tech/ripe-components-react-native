@@ -14,7 +14,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             options: PropTypes.array,
             value: PropTypes.any,
             icon: PropTypes.string,
-            shapeVariant: PropTypes.oneOf(["round"]),
+            shapeVariant: PropTypes.oneOf(["round", "square"]),
             colorVariant: PropTypes.oneOf(["white", "gray"]),
             placeholder: PropTypes.string,
             disabled: PropTypes.bool,
