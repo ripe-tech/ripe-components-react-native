@@ -291,15 +291,40 @@ export class Listing extends Component {
         return [layoutStyle, animationStyle, this.props.filtersStyle];
     };
 
+    _selectTextColor = () => `rgba(36,66,90,${this.state.placeholderColorAlpha})`;
+    
+    /**
+     * Notice this does not follow the ReactNative style standard
+     * where you can give an array of styles and it merges them.
+     */
+    _selectPickerAndroidStyle = () => {
+        return {
+            ...styles.selectPickerAndroid,
+            color: this._selectTextColor()
+        };
+    }
+
+    /**
+     * Notice this does not follow the ReactNative style standard
+     * where you can give an array of styles and it merges them.
+     */
+    _selectPickerIOSStyle = () => {
+        return {
+            ...styles.selectPickerIOS,
+            color: this._selectTextColor()
+        };
+    }
+    
     /**
      * Notice this does not follow the ReactNative style standard
      * where you can give an array of styles and it merges them.
      */
     _selectPlaceholderStyle = () => {
         return {
-            color: `rgba(36,66,90,${this.state.placeholderColorAlpha})`
+            color: this._selectTextColor()
         };
     };
+
 
     _renderSearch() {
         if (!this.props.search) return;
@@ -344,8 +369,8 @@ export class Listing extends Component {
                 <Select
                     style={isLastChild ? styles.selectLastChild : styles.select}
                     placeholderStyle={this._selectPlaceholderStyle()}
-                    inputAndroidStyle={styles.selectPickerAndroid}
-                    inputIOSContainerStyle={styles.selectPickerIOS}
+                    inputAndroidStyle={this._selectPickerAndroidStyle()}
+                    inputIOSContainerStyle={this._selectPickerIOSStyle()}
                     placeholder={item.placeholder}
                     options={item.options}
                     value={this.state.filters[item.value]}
