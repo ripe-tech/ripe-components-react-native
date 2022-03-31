@@ -81,6 +81,7 @@ export class Listing extends Component {
 
         this.state = {
             searchWidth: new Animated.Value(0),
+            placeholderColorAlpha: 1,
             expanded: false,
             searchText: "",
             itemsOffset: 0,
@@ -210,6 +211,7 @@ export class Listing extends Component {
 
     _expandSearchBar() {
         this.animating = true;
+        this.setState({ placeholderColorAlpha: 0 });
         Animated.timing(this.state.searchWidth, {
             toValue: 1,
             duration: this.props.expandAnimationDuration,
@@ -223,6 +225,7 @@ export class Listing extends Component {
 
     _shrinkSearchBar() {
         this.animating = true;
+        this.setState({ placeholderColorAlpha: 1 });
         Animated.timing(this.state.searchWidth, {
             toValue: 0,
             duration: this.props.expandAnimationDuration,
@@ -288,11 +291,20 @@ export class Listing extends Component {
         return [layoutStyle, animationStyle, this.props.filtersStyle];
     };
 
+    /**
+     * Notice this does not follow the ReactNative style standard
+     * where you can give an array of styles and it merges them.
+     */
+    _selectPlaceholderStyle = () => {
+        return {
+            color: `rgba(36,66,90,${this.state.placeholderColorAlpha})`
+        };
+    };
+
     _renderSearch() {
         if (!this.props.search) return;
         return (
             <Search
-                closeAfterClear={true}
                 style={this._searchStyle()}
                 onValue={this.onSearch}
                 onFocus={this.onSearchFocus}
@@ -331,6 +343,9 @@ export class Listing extends Component {
             return (
                 <Select
                     style={isLastChild ? styles.selectLastChild : styles.select}
+                    placeholderStyle={this._selectPlaceholderStyle()}
+                    inputAndroidStyle={styles.selectPickerAndroid}
+                    inputIOSContainerStyle={styles.selectPickerIOS}
                     placeholder={item.placeholder}
                     options={item.options}
                     value={this.state.filters[item.value]}
@@ -432,6 +447,14 @@ const styles = StyleSheet.create({
     select: {
         flex: 1,
         marginRight: 5
+    },
+    selectPickerAndroid: {
+        paddingLeft: 15,
+        paddingRight: 0
+    },
+    selectPickerIOS: {
+        paddingLeft: 15,
+        paddingRight: 0
     },
     selectLastChild: {
         flex: 1

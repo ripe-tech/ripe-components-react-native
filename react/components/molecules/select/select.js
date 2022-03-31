@@ -14,14 +14,17 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             options: PropTypes.array,
             value: PropTypes.any,
             icon: PropTypes.string,
-            shapeVariant: PropTypes.string,
-            colorVariant: PropTypes.string,
+            shapeVariant: PropTypes.oneOf(["round"]),
+            colorVariant: PropTypes.oneOf(["white", "gray"]),
             placeholder: PropTypes.string,
             disabled: PropTypes.bool,
             fixAndroidTouchableBug: PropTypes.bool,
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style,
+            placeholderStyle: ViewPropTypes.style,
+            inputAndroidStyle: ViewPropTypes.style,
+            inputIOSContainerStyle: ViewPropTypes.style,
             styles: PropTypes.any
         };
     }
@@ -40,6 +43,9 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             keyTimeout: 500,
             onUpdateValue: () => {},
             style: {},
+            placeholderStyle: {},
+            inputAndroidStyle: {},
+            inputIOSContainerStyle: {},
             styles: styles
         };
     }
@@ -131,7 +137,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 fontSize: 14,
                 paddingLeft: 15,
                 paddingRight: 38,
-                height: 40
+                height: 40,
+                ...this.props.inputAndroidStyle
             },
             inputIOSContainer: {
                 color: "#24425a",
@@ -144,10 +151,12 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 paddingLeft: 15,
                 paddingRight: 38,
                 height: 40,
-                justifyContent: "center"
+                justifyContent: "center",
+                ...this.props.inputIOSContainerStyle
             },
             placeholder: {
-                color: "#24425a"
+                color: "#24425a",
+                ...this.props.placeholderStyle
             },
             iconContainer: {
                 top: "25%",
