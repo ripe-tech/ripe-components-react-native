@@ -404,8 +404,9 @@ const styles = StyleSheet.create({
     searchingHeaderHorizontal: {
         flexDirection: "row",
         minHeight: 50,
-        marginVertical: 8,
         marginHorizontal: 15,
+        marginBottom: -2,
+        marginTop: 8,
         padding: 0
     },
     searchVertical: {
@@ -414,7 +415,6 @@ const styles = StyleSheet.create({
     },
     searchHorizontal: {
         width: "50%",
-        height: "100%",
         alignItems: "flex-start",
         paddingRight: 5
     },
@@ -423,7 +423,6 @@ const styles = StyleSheet.create({
     },
     filtersHorizontal: {
         width: "50%",
-        height: "100%",
         alignItems: "flex-start",
         paddingLeft: 5
     },
