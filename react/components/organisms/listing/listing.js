@@ -30,6 +30,7 @@ export class Listing extends Component {
             refreshing: PropTypes.bool,
             searchingHeaderLayout: PropTypes.oneOf(["horizontal", "vertical"]),
             expandSearchBar: PropTypes.bool,
+            expandAnimationDuration: PropTypes.number,
             flatListProps: PropTypes.object,
             onEndReachedThreshold: PropTypes.number,
             onFilter: PropTypes.func,
@@ -58,6 +59,7 @@ export class Listing extends Component {
             refreshing: false,
             searchingHeaderLayout: "horizontal",
             expandSearchBar: false,
+            expandAnimationDuration: 200,
             flatListProps: {},
             onFilter: async () => {},
             onSearch: async () => {},
@@ -209,7 +211,7 @@ export class Listing extends Component {
         this.animating = true;
         Animated.timing(this.state.searchWidth, {
             toValue: 1,
-            duration: 500,
+            duration: this.props.expandAnimationDuration,
             useNativeDriver: false,
             easing: Easing.inOut(Easing.ease)
         }).start(() => {
@@ -222,7 +224,7 @@ export class Listing extends Component {
         this.animating = true;
         Animated.timing(this.state.searchWidth, {
             toValue: 0,
-            duration: 500,
+            duration: this.props.expandAnimationDuration,
             useNativeDriver: false,
             easing: Easing.inOut(Easing.ease)
         }).start(() => {
@@ -277,8 +279,9 @@ export class Listing extends Component {
                 ? {
                       width: this.state.searchWidth.interpolate({
                           inputRange: [0, 1],
-                          outputRange: ["50%", "0%"]
-                      })
+                          outputRange: [this.props.search ? "50%" : "100%", "0%"]
+                      }),
+                      paddingLeft: this.props.search ? 5 : 0
                   }
                 : {};
         return [layoutStyle, animationStyle, this.props.filtersStyle];
@@ -397,19 +400,18 @@ const styles = StyleSheet.create({
     searchingHeaderVertical: {
         flexDirection: "column",
         minHeight: 100,
-        marginHorizontal: 0,
+        marginHorizontal: 0
     },
     searchingHeaderHorizontal: {
         flexDirection: "row",
         minHeight: 50,
-        marginHorizontal: 15,
+        marginHorizontal: 15
     },
     searchVertical: {
         marginBottom: 10,
         marginHorizontal: 15
     },
     searchHorizontal: {
-        width: "50%",
         alignItems: "flex-start",
         paddingRight: 5
     },
@@ -417,9 +419,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 15
     },
     filtersHorizontal: {
-        width: "50%",
-        alignItems: "flex-start",
-        paddingLeft: 5
+        alignItems: "flex-start"
     },
     scrollViewContainer: {
         height: 46,
