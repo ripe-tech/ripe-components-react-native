@@ -273,10 +273,7 @@ export class Listing extends Component {
 
     _filtersStyle = () => {
         const isHorizontal = this.props.searchingHeaderLayout === "horizontal";
-        const layoutStyle =
-            this.props.searchingHeaderLayout === "horizontal"
-                ? styles.filtersHorizontal
-                : styles.filtersVertical;
+        const layoutStyle = isHorizontal ? styles.filtersHorizontal : styles.filtersVertical;
         const animationStyle =
             isHorizontal && this.props.expandSearchBar
                 ? {
