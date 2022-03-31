@@ -16,12 +16,14 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
             colorSelected: PropTypes.string,
             backgroundColor: PropTypes.string,
             backgroundColorSelected: PropTypes.string,
+            underlayColor: PropTypes.string,
             text: PropTypes.string,
             disabled: PropTypes.bool,
             activeOpacity: PropTypes.number,
             variant: PropTypes.string,
             onPress: PropTypes.func,
             style: ViewPropTypes.style,
+            buttonStyle: ViewPropTypes.style,
             styles: PropTypes.any
         };
     }
@@ -33,19 +35,29 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
             colorSelected: "#00435e",
             backgroundColor: "#f6f7f9",
             backgroundColorSelected: "#4f7af8",
+            underlayColor: "#f3f5ff",
             text: undefined,
             disabled: false,
             activeOpacity: 0.5,
             variant: undefined,
             onPress: undefined,
             style: {},
+            buttonStyle: {},
             styles: styles
         };
     }
 
-    _style = () => {
+    _style() {
         return [
             styles.buttonTabText,
+            styles[`buttonTabText${capitalize(this.props.variant)}`],
+            this.props.style
+        ];
+    }
+
+    _buttonStyle() {
+        return [
+            styles.button,
             styles[`buttonTabText${capitalize(this.props.variant)}`],
             { backgroundColor: this.props.backgroundColor },
             this.props.variant === "colored"
@@ -67,15 +79,11 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
                           : "#e4e8f0"
                   }
                 : {},
-            this.props.style
+            this.props.buttonStyle
         ];
-    };
+    }
 
-    _touchableStyle = () => {
-        return [styles.touchable];
-    };
-
-    _textStyle = () => {
+    _textStyle() {
         return [
             styles.text,
             styles[`text${capitalize(this.props.variant)}`],
@@ -85,20 +93,23 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
             this.props.disabled ? styles.textDisabled : {},
             { color: this.props.active ? this.props.colorSelected : this.props.color }
         ];
-    };
+    }
 
     render() {
         return (
             <View style={this._style()}>
                 <Touchable
-                    style={this._touchableStyle()}
+                    style={styles.touchable}
                     disabled={this.props.disabled}
+                    underlayColor={this.props.underlayColor}
                     activeOpacity={this.props.activeOpacity}
                     onPress={this.props.onPress}
                 >
-                    <Text style={this._textStyle()} {...this.id("button-tab-text")}>
-                        {this.props.text}
-                    </Text>
+                    <View style={this._buttonStyle()}>
+                        <Text style={this._textStyle()} {...this.id("button-tab-text")}>
+                            {this.props.text}
+                        </Text>
+                    </View>
                 </Touchable>
             </View>
         );
@@ -107,13 +118,17 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
 
 const styles = StyleSheet.create({
     buttonTabText: {
-        flex: 1
+        flex: 1,
+        overflow: "hidden"
     },
     buttonTabTextCompact: {
         flex: 1,
         paddingHorizontal: 16
     },
     touchable: {
+        flex: 1
+    },
+    button: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center"

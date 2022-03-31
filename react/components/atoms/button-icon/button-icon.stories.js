@@ -22,6 +22,7 @@ storiesOf("Atoms", module)
         const height = number("Icon Height", 20);
         const width = number("Icon Width", 20);
         const strokeWidth = number("Icon Stroke Width", 1);
+        const loading = boolean("Loading", false);
         const disabled = boolean("Disabled", false);
 
         return (
@@ -33,6 +34,7 @@ storiesOf("Atoms", module)
                 iconStrokeWidth={strokeWidth}
                 iconHeight={height}
                 iconWidth={width}
+                loading={loading}
                 disabled={disabled}
                 onPress={() => alert("Amazing press!")}
             />

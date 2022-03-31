@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, TouchableOpacity, ViewPropTypes } from "react-native";
+import { ActivityIndicator, StyleSheet, TouchableOpacity, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -70,6 +70,24 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
         ];
     }
 
+    _renderIcon() {
+        return (
+            <Icon
+                icon={this.props.icon}
+                color={this.props.iconStrokeColor}
+                fill={this.props.iconFill}
+                width={this.props.iconWidth}
+                height={this.props.iconHeight}
+                strokeWidth={this.props.iconStrokeWidth}
+                {...this.id("button-icon")}
+            />
+        );
+    }
+
+    _renderLoading() {
+        return <ActivityIndicator style={styles.activityIndicator} color="#6687f6" />;
+    }
+
     render() {
         return (
             <TouchableOpacity
@@ -77,15 +95,7 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
                 disabled={this.props.disabled || !this.props.onPress}
                 style={this._style()}
             >
-                <Icon
-                    icon={this.props.icon}
-                    color={this.props.iconStrokeColor}
-                    fill={this.props.iconFill}
-                    width={this.props.iconWidth}
-                    height={this.props.iconHeight}
-                    strokeWidth={this.props.iconStrokeWidth}
-                    {...this.id("button-icon")}
-                />
+                {this.props.loading ? this._renderLoading() : this._renderIcon()}
             </TouchableOpacity>
         );
     }
@@ -95,6 +105,12 @@ const styles = StyleSheet.create({
     buttonIcon: {
         alignItems: "center",
         justifyContent: "center"
+    },
+    activityIndicator: {
+        position: "absolute",
+        justifyContent: "center",
+        paddingHorizontal: 0,
+        paddingVertical: 0
     }
 });
 

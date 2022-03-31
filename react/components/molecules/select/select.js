@@ -59,6 +59,10 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     onValueChange = value => {
+        // workaround for the `RNPickerSelect` - several triggers
+        // of `onValueChange` happen on a single value change
+        if (this.state.valueData === value) return;
+
         if (value === "_empty") {
             // workaround for not allowing the "no items" options to
             // be selected, for android it requires the double update
@@ -68,12 +72,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             return;
         }
 
-        this.setState(
-            {
-                valueData: value
-            },
-            () => this.props.onUpdateValue(value)
-        );
+        this.props.onUpdateValue(value);
+        this.setState({ valueData: value });
     };
 
     _inputBorderColor = () => {
