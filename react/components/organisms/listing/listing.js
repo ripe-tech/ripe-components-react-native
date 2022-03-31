@@ -238,11 +238,14 @@ export class Listing extends Component {
     }
 
     _searchingHeaderStyle() {
-        const layoutStyle =
-            this.props.searchingHeaderLayout === "horizontal"
-                ? styles.searchingHeaderHorizontal
-                : styles.searchingHeaderVertical;
-        return [styles.searchingHeader, layoutStyle, this.props.searchingHeaderStyle];
+        const isHorizontal = this.props.searchingHeaderLayout === "horizontal";
+        const layoutStyle = isHorizontal
+            ? styles.searchingHeaderHorizontal
+            : styles.searchingHeaderVertical;
+        const height = {
+            minHeight: !isHorizontal && this.props.search ? 100 : 50
+        };
+        return [styles.searchingHeader, layoutStyle, height, this.props.searchingHeaderStyle];
     }
 
     _scrollViewStyle = () => {
@@ -399,7 +402,6 @@ const styles = StyleSheet.create({
     },
     searchingHeaderVertical: {
         flexDirection: "column",
-        minHeight: 100,
         marginHorizontal: 0
     },
     searchingHeaderHorizontal: {
