@@ -92,7 +92,6 @@ export class Listing extends Component {
             end: false,
             items: []
         };
-        this.animating = false;
 
         this.scrollViewWidth = 0;
     }
@@ -210,29 +209,33 @@ export class Listing extends Component {
     }
 
     _expandSearchBar() {
-        this.animating = true;
+        // set select text as transparent
         this.setState({ placeholderColorAlpha: 0 });
+
+        // animate search bar width to maximum
+        // and decrease dropdown select width
         Animated.timing(this.state.searchWidth, {
             toValue: 1,
             duration: this.props.expandAnimationDuration,
             useNativeDriver: false,
             easing: Easing.inOut(Easing.ease)
         }).start(() => {
-            this.animating = false;
             this.setState({ expanded: true });
         });
     }
 
     _shrinkSearchBar() {
-        this.animating = true;
+        // set select text as visible
         this.setState({ placeholderColorAlpha: 1 });
+
+        // animate search bar width to normal
+        // and increase dropdown select width
         Animated.timing(this.state.searchWidth, {
             toValue: 0,
             duration: this.props.expandAnimationDuration,
             useNativeDriver: false,
             easing: Easing.inOut(Easing.ease)
         }).start(() => {
-            this.animating = false;
             this.setState({ expanded: false });
         });
     }
