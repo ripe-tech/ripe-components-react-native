@@ -13,6 +13,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             options: PropTypes.array,
             value: PropTypes.any,
+            icon: PropTypes.string,
             shapeVariant: PropTypes.string,
             colorVariant: PropTypes.string,
             placeholder: PropTypes.string,
@@ -29,6 +30,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             options: [],
             value: undefined,
+            icon: "chevron-down",
             placeholder: undefined,
             shapeVariant: "round",
             colorVariant: "white",
@@ -91,7 +93,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _icon = () => {
-        return <Icon icon={"chevron-down"} color={"#1b2632"} strokeWidth={2} />;
+        return <Icon icon={this.props.icon} color={"#1b2632"} strokeWidth={2} />;
     };
 
     _items = () => {
