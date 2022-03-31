@@ -84,8 +84,8 @@ export class Search extends PureComponent {
     };
 
     onButtonPress = () => {
-        if (this.props.closeAfterClear) this.onInputBlur();
-        if (this.state.valueData) this.clear();
+        if (!this.state.valueData) return;
+        this.clear();
     };
 
     _style = () => {
