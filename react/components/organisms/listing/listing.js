@@ -252,38 +252,35 @@ export class Listing extends Component {
     };
 
     _searchStyle = () => {
-        const layoutStyle =
-            this.props.searchingHeaderLayout === "horizontal"
-                ? styles.searchHorizontal
-                : styles.searchVertical;
-
-        const animationStyle = this.props.expandSearchBar
-            ? {
-                  width: this.state.searchWidth.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: ["50%", "100%"]
-                  })
-              }
-            : {};
-
+        const isHorizontal = this.props.searchingHeaderLayout === "horizontal";
+        const layoutStyle = isHorizontal ? styles.searchHorizontal : styles.searchVertical;
+        const animationStyle =
+            isHorizontal && this.props.expandSearchBar
+                ? {
+                      width: this.state.searchWidth.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: ["50%", "100%"]
+                      })
+                  }
+                : {};
         return [layoutStyle, animationStyle, this.props.searchStyle];
     };
 
     _filtersStyle = () => {
+        const isHorizontal = this.props.searchingHeaderLayout === "horizontal";
         const layoutStyle =
             this.props.searchingHeaderLayout === "horizontal"
                 ? styles.filtersHorizontal
                 : styles.filtersVertical;
-
-        const animationStyle = this.props.expandSearchBar
-            ? {
-                  width: this.state.searchWidth.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: ["50%", "0%"]
-                  })
-              }
-            : {};
-
+        const animationStyle =
+            isHorizontal && this.props.expandSearchBar
+                ? {
+                      width: this.state.searchWidth.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: ["50%", "0%"]
+                      })
+                  }
+                : {};
         return [layoutStyle, animationStyle, this.props.filtersStyle];
     };
 
