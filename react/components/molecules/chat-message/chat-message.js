@@ -5,7 +5,7 @@ import { dateTimeString, isImage } from "ripe-commons-native";
 
 import { baseStyles } from "../../../util";
 
-import { Attachment, Avatar, Lightbox, StatusEntry, Text } from "../../atoms";
+import { Attachment, Avatar, Lightbox, StatusEntry, Text, Touchable } from "../../atoms";
 import { AvatarList } from "../avatar-list";
 
 export class ChatMessage extends PureComponent {
@@ -27,6 +27,7 @@ export class ChatMessage extends PureComponent {
                 })
             ),
             imagePlaceholder: PropTypes.object,
+            onPress: PropTypes.func,
             style: ViewPropTypes.style,
             styles: PropTypes.any
         };
@@ -44,6 +45,7 @@ export class ChatMessage extends PureComponent {
             repliesAvatars: [],
             attachments: [],
             imagePlaceholder: undefined,
+            onPress: undefined,
             style: {},
             styles: styles
         };
@@ -57,9 +59,14 @@ export class ChatMessage extends PureComponent {
         return { marginTop: index > 0 ? 2 : 0 };
     };
 
+    _test = () => {
+        return this.props.onPress ? Touchable : View;
+    };
+
     render() {
+        const Component = this._test();
         return (
-            <View style={[styles.chatMessage, this.props.style]}>
+            <Component style={[styles.chatMessage, this.props.style]} onPress={this.props.onPress}>
                 <Avatar style={styles.avatar} image={{ uri: this.props.avatarUrl }} size={32} />
                 <View style={styles.message}>
                     <View style={styles.header}>
@@ -106,7 +113,7 @@ export class ChatMessage extends PureComponent {
                         </View>
                     ))}
                 </View>
-            </View>
+            </Component>
         );
     }
 }

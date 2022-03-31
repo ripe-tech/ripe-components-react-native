@@ -30,6 +30,7 @@ export class Chat extends PureComponent {
                     statusProps: PropTypes.object,
                     replies: PropTypes.number,
                     repliesAvatars: PropTypes.array,
+                    onPress: PropTypes.func,
                     attachments: PropTypes.arrayOf(
                         PropTypes.exact({
                             name: PropTypes.string.isRequired,
@@ -109,9 +110,10 @@ export class Chat extends PureComponent {
         const messages = [];
         let previousMessage = null;
         let previousDate = null;
-        const rawMessages = JSON.parse(JSON.stringify(this.props.messages));
+        const rawMessages = this.props.messages.map(message => ({ ...message }));
         for (const message of rawMessages) {
             if (
+                !message.status &&
                 previousMessage &&
                 previousMessage.message &&
                 message.message &&
@@ -235,6 +237,7 @@ export class Chat extends PureComponent {
                                         replies={message.replies}
                                         repliesAvatars={message.repliesAvatars}
                                         attachments={message.attachments}
+                                        onPress={message.onPress}
                                         imagePlaceholder={this.props.imagePlaceholder}
                                     />
                                 );
