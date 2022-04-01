@@ -296,6 +296,12 @@ export class Listing extends Component {
         return [layoutStyle, animationStyle, this.props.filtersStyle];
     };
 
+    /**
+     * The placeholder text in the `<Select />` component can not
+     * have opacity applied, otherwise the entire select is affected.
+     * This way we change only the text color and by reducing the alpha
+     * channel we get the same effect as reducing the opacity.
+     */
     _selectTextColor = () => `rgba(36,66,90,${this.state.placeholderColorAlpha})`;
 
     /**
