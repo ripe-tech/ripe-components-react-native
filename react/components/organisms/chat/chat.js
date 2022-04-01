@@ -1,13 +1,5 @@
 import React, { PureComponent } from "react";
-import {
-    Image,
-    InputAccessoryView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
-    ViewPropTypes
-} from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -45,10 +37,12 @@ export class Chat extends PureComponent {
             onNewMessage: PropTypes.func,
             onScrollBottom: PropTypes.func,
             onScroll: PropTypes.func,
-            chatMessagesContainerStyle: ViewPropTypes.style,
-            chatMessagesContentStyle: ViewPropTypes.style,
+            onInputFocus: PropTypes.func,
+            onInputBlur: PropTypes.func,
             style: ViewPropTypes.style,
-            styles: PropTypes.any
+            styles: PropTypes.any,
+            chatMessagesContainerStyle: ViewPropTypes.style,
+            chatMessagesContentStyle: ViewPropTypes.style
         };
     }
 

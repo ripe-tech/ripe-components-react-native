@@ -27,6 +27,7 @@ export class ChatMessage extends PureComponent {
                 })
             ),
             imagePlaceholder: PropTypes.object,
+            underlayColor: PropTypes.string,
             onPress: PropTypes.func,
             style: ViewPropTypes.style,
             styles: PropTypes.any
@@ -45,6 +46,7 @@ export class ChatMessage extends PureComponent {
             repliesAvatars: [],
             attachments: [],
             imagePlaceholder: undefined,
+            underlayColor: "f3f5ff",
             onPress: undefined,
             style: {},
             styles: styles
@@ -68,6 +70,7 @@ export class ChatMessage extends PureComponent {
         return (
             <ChatMessageComponent
                 style={[styles.chatMessage, this.props.style]}
+                underlayColor={this.props.underlayColor}
                 onPress={this.props.onPress}
             >
                 <Avatar style={styles.avatar} image={{ uri: this.props.avatarUrl }} size={32} />
