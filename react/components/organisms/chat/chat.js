@@ -110,8 +110,8 @@ export class Chat extends PureComponent {
         const messages = [];
         let previousMessage = null;
         let previousDate = null;
-        const rawMessages = this.props.messages.map(message => ({ ...message }));
-        for (const message of rawMessages) {
+        const originalMessages = this.props.messages.map(message => ({ ...message }));
+        for (const message of originalMessages) {
             if (
                 !message.status &&
                 previousMessage &&
