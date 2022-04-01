@@ -22,9 +22,9 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style,
-            placeholderStyle: ViewPropTypes.style,
-            inputAndroidStyle: ViewPropTypes.style,
-            inputIOSContainerStyle: ViewPropTypes.style,
+            placeholderStyle: PropTypes.object,
+            inputAndroidStyle: PropTypes.object,
+            inputIOSContainerStyle: PropTypes.object,
             styles: PropTypes.any
         };
     }

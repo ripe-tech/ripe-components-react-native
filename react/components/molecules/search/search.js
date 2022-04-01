@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, ViewPropTypes } from "react-native";
+import { Animated, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -16,7 +16,7 @@ export class Search extends PureComponent {
             onFocus: PropTypes.func,
             onBlur: PropTypes.func,
             onClear: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.object,
             styles: PropTypes.any
         };
     }
