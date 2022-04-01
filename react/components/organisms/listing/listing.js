@@ -307,6 +307,8 @@ export class Listing extends Component {
     /**
      * Notice this does not follow the ReactNative style standard
      * where you can give an array of styles and it merges them.
+     * This object is simply spread onto the actual styles used by
+     * the `<Select />` component.
      */
     _selectPickerAndroidStyle = () => {
         return {
@@ -318,6 +320,8 @@ export class Listing extends Component {
     /**
      * Notice this does not follow the ReactNative style standard
      * where you can give an array of styles and it merges them.
+     * This object is simply spread onto the actual styles used by
+     * the `<Select />` component.
      */
     _selectPickerIOSStyle = () => {
         return {
@@ -329,6 +333,8 @@ export class Listing extends Component {
     /**
      * Notice this does not follow the ReactNative style standard
      * where you can give an array of styles and it merges them.
+     * This object is simply spread onto the actual styles used by
+     * the `<Select />` component.
      */
     _selectPlaceholderStyle = () => {
         return {
