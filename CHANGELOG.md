@@ -13,7 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * New component `StatusEntry` that shows the status change entry in a chat - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 * New component `AvatarList` that shows avatars in list form - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
 * New loading indicator by prop for `ButtonIcon` - [ripe-robin-revamp/#343](https://github.com/ripe-tech/ripe-robin-revamp/issues/343)
-* Suport for hidden tab bar for `Tabs` - [ripe-robin-revamp/#346](https://github.com/ripe-tech/ripe-robin-revamp/issues/346)
 
 ### Changed
 
