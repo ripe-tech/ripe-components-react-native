@@ -68,7 +68,7 @@ export class ChatMessage extends PureComponent {
     render() {
         const ChatMessageComponent = this._chatMessageComponent();
         return (
-            <ChatMessageComponent
+            <View
                 style={[styles.chatMessage, this.props.style]}
                 underlayColor={this.props.underlayColor}
                 onPress={this.props.onPress}
@@ -119,7 +119,7 @@ export class ChatMessage extends PureComponent {
                         </View>
                     ))}
                 </View>
-            </ChatMessageComponent>
+            </View>
         );
     }
 }
