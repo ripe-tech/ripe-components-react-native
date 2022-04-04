@@ -30,7 +30,7 @@ export class ChatMessage extends PureComponent {
             underlayColor: PropTypes.string,
             onPress: PropTypes.func,
             style: ViewPropTypes.style,
-            styles: PropTypes.any
+            messageStyle: ViewPropTypes.style
         };
     }
 
@@ -49,7 +49,7 @@ export class ChatMessage extends PureComponent {
             underlayColor: "#f3f5ff",
             onPress: undefined,
             style: {},
-            styles: styles
+            messageStyle: {}
         };
     }
 
@@ -63,6 +63,10 @@ export class ChatMessage extends PureComponent {
 
     _attachmentStyle = index => {
         return { marginTop: index > 0 ? 2 : 0 };
+    };
+
+    _messageStyle = () => {
+        return [styles.message, this.props._messageStyle];
     };
 
     _renderHeader = () => {
@@ -134,7 +138,7 @@ export class ChatMessage extends PureComponent {
                 underlayColor={this.props.underlayColor}
                 onPress={this.props.onPress}
             >
-                <View style={styles.message}>
+                <View style={this._messageStyle()}>
                     <View style={styles.messageLeft}>
                         <Avatar
                             style={styles.avatar}
