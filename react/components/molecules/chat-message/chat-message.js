@@ -66,7 +66,7 @@ export class ChatMessage extends PureComponent {
     };
 
     _messageStyle = () => {
-        return [styles.message, this.props._messageStyle];
+        return [styles.message, this.props.messageStyle];
     };
 
     _renderHeader = () => {

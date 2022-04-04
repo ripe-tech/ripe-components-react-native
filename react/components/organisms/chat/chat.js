@@ -41,8 +41,10 @@ export class Chat extends PureComponent {
             onInputBlur: PropTypes.func,
             style: ViewPropTypes.style,
             styles: PropTypes.any,
+            chatMessageStyle: ViewPropTypes.style,
             chatMessagesContainerStyle: ViewPropTypes.style,
-            chatMessagesContentStyle: ViewPropTypes.style
+            chatMessagesContentStyle: ViewPropTypes.style,
+            chatMessageContentStyle: ViewPropTypes.style
         };
     }
 
@@ -59,10 +61,12 @@ export class Chat extends PureComponent {
             onScroll: event => {},
             onInputFocus: event => {},
             onInputBlur: event => {},
+            style: {},
+            styles: styles,
+            chatMessagesStyle: {},
             chatMessagesContainerStyle: {},
             chatMessagesContentStyle: {},
-            style: {},
-            styles: styles
+            chatMessageContentStyle: {}
         };
     }
 
@@ -188,8 +192,16 @@ export class Chat extends PureComponent {
         return [styles.chatMessagesContent, this.props.chatMessagesContentStyle];
     }
 
+    _chatMessageContentStyle() {
+        return [styles.chatMessageContent, this.props.chatMessageContentStyle];
+    }
+
     _chatMessageStyle(index) {
-        return [styles.chatMessage, index === 0 ? { marginTop: 0 } : {}];
+        return [
+            styles.chatMessage,
+            index === 0 ? { marginTop: 0 } : {},
+            this.props.chatMessageStyle
+        ];
     }
 
     _renderNoMessages = () => {
@@ -222,6 +234,7 @@ export class Chat extends PureComponent {
                                     <ChatMessage
                                         key={index}
                                         style={this._chatMessageStyle()}
+                                        messageStyle={this._chatMessageContentStyle()}
                                         avatarUrl={message.avatarUrl}
                                         username={message.username}
                                         date={message.date}
