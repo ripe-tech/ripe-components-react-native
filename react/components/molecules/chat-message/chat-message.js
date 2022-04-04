@@ -65,10 +65,6 @@ export class ChatMessage extends PureComponent {
         return { marginTop: index > 0 ? 2 : 0 };
     };
 
-    _style = () => {
-        return [styles.chatMessage, this.props.style];
-    };
-
     _renderHeader = () => {
         return (
             <>
@@ -134,7 +130,7 @@ export class ChatMessage extends PureComponent {
         const ChatMessageComponent = this._chatMessageComponent();
         return (
             <ChatMessageComponent
-                style={this._style()}
+                style={this.props.style}
                 underlayColor={this.props.underlayColor}
                 onPress={this.props.onPress}
             >
@@ -162,7 +158,6 @@ export class ChatMessage extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    chatMessage: {},
     message: {
         flex: 1,
         width: "100%",
