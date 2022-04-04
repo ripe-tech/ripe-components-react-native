@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Adapt `ChatMessage` and `Chat` styling to better adapt to the available size - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 * Use new component `AvatarList` in `ChatMessage` and modify `Chat` to use it - [ripe-robin-revamp/#347](https://github.com/ripe-tech/ripe-robin-revamp/issues/347)
 * Improve button press animation in item and button tab - [ripe-robin-revamp/#343](https://github.com/ripe-tech/ripe-robin-revamp/issues/343)
+* `Tag` does not allow text breaking and shows ellipsis when there is no enough space - [ripe-robin-revamp/#316](https://github.com/ripe-tech/ripe-robin-revamp/issues/316)
 * Adapt components to newer chat design - [ripe-robin-revamp/#346](https://github.com/ripe-tech/ripe-robin-revamp/issues/346)
 
 ### Fixed

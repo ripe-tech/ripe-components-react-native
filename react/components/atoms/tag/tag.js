@@ -87,7 +87,7 @@ export class Tag extends mix(PureComponent).with(IdentifiableMixin) {
                     />
                 ) : null}
                 {this.props.text ? (
-                    <Text style={this._textStyle()} {...this.id("tag-text")}>
+                    <Text style={this._textStyle()} numberOfLines={1} {...this.id("tag-text")}>
                         {this.props.text}
                     </Text>
                 ) : null}
