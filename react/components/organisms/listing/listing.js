@@ -4,7 +4,6 @@ import {
     Animated,
     Easing,
     FlatList,
-    Platform,
     ScrollView,
     StyleSheet,
     Text,
@@ -94,6 +93,8 @@ export class Listing extends Component {
         };
 
         this.scrollViewWidth = 0;
+        this.searchHeaderWidth = 0;
+        this.minFiltersWidth = 40;
     }
 
     async componentDidMount() {
@@ -205,7 +206,13 @@ export class Listing extends Component {
     _onScrollViewLayout(event) {
         if (this.state.searchLoaded) return;
         this.scrollViewWidth = event.nativeEvent.layout.width;
-        this.setState({ searchLoaded: true });
+        this.setState({ searchLoaded: this.scrollViewWidth !== 0 && this.searchHeaderWidth !== 0 });
+    }
+
+    _onSearchHeaderViewLayout(event) {
+        if (this.state.searchLoaded) return;
+        this.searchHeaderWidth = event.nativeEvent.layout.width;
+        this.setState({ searchLoaded: this.scrollViewWidth !== 0 && this.searchHeaderWidth !== 0 });
     }
 
     _expandSearchBar() {
@@ -273,7 +280,10 @@ export class Listing extends Component {
                 ? {
                       width: this.state.searchWidth.interpolate({
                           inputRange: [0, 1],
-                          outputRange: ["50%", "95%"]
+                          outputRange: [
+                              this.searchHeaderWidth / 2,
+                              this.searchHeaderWidth - this.minFiltersWidth
+                          ]
                       })
                   }
                 : {};
@@ -288,7 +298,12 @@ export class Listing extends Component {
                 ? {
                       width: this.state.searchWidth.interpolate({
                           inputRange: [0, 1],
-                          outputRange: [this.props.search ? "50%" : "100%", "5%"]
+                          outputRange: [
+                              this.props.search
+                                  ? this.searchHeaderWidth / 2
+                                  : this.searchHeaderWidth,
+                              this.minFiltersWidth
+                          ]
                       }),
                       paddingLeft: this.props.search ? 5 : 0
                   }
@@ -385,6 +400,7 @@ export class Listing extends Component {
                 <Select
                     style={isLastChild ? styles.selectLastChild : styles.select}
                     placeholderStyle={this._selectPlaceholderStyle()}
+                    iconContainerStyle={styles.selectIconContainer}
                     inputAndroidStyle={this._selectPickerAndroidStyle()}
                     inputIOSContainerStyle={this._selectPickerIOSStyle()}
                     placeholder={item.placeholder}
@@ -417,7 +433,10 @@ export class Listing extends Component {
     render() {
         return (
             <View style={this._style()}>
-                <View style={this._searchingHeaderStyle()}>
+                <View
+                    onLayout={event => this._onSearchHeaderViewLayout(event)}
+                    style={this._searchingHeaderStyle()}
+                >
                     {this._renderSearch()}
                     {this._renderFilters()}
                 </View>
@@ -488,6 +507,9 @@ const styles = StyleSheet.create({
     select: {
         flex: 1,
         marginRight: 5
+    },
+    selectIconContainer: {
+        right: 8
     },
     selectPickerAndroid: {
         paddingLeft: 15,

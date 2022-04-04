@@ -23,6 +23,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style,
             placeholderStyle: PropTypes.object,
+            iconContainerStyle: PropTypes.object,
             inputAndroidStyle: PropTypes.object,
             inputIOSContainerStyle: PropTypes.object,
             styles: PropTypes.any
@@ -44,6 +45,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             onUpdateValue: () => {},
             style: {},
             placeholderStyle: {},
+            iconContainerStyle: {},
             inputAndroidStyle: {},
             inputIOSContainerStyle: {},
             styles: styles
@@ -160,7 +162,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             },
             iconContainer: {
                 top: "25%",
-                right: 10
+                right: 10,
+                ...this.props.iconContainerStyle
             }
         };
     };
