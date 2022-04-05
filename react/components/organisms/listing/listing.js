@@ -94,7 +94,7 @@ export class Listing extends Component {
 
         this.scrollViewWidth = 0;
         this.searchHeaderWidth = 0;
-        this.minFiltersWidth = 40;
+        this.minFiltersWidth = 42;
     }
 
     async componentDidMount() {
@@ -375,8 +375,8 @@ export class Listing extends Component {
         return (
             <Animated.View style={this._filtersStyle()}>
                 <ScrollView
-                    onLayout={event => this._onScrollViewLayout(event)}
                     style={this._scrollViewStyle()}
+                    onLayout={event => this._onScrollViewLayout(event)}
                     contentContainerStyle={this._scrollViewContainerStyle()}
                     horizontal={true}
                     directionalLockEnabled={true}
@@ -434,8 +434,8 @@ export class Listing extends Component {
         return (
             <View style={this._style()}>
                 <View
-                    onLayout={event => this._onSearchHeaderViewLayout(event)}
                     style={this._searchingHeaderStyle()}
+                    onLayout={event => this._onSearchHeaderViewLayout(event)}
                 >
                     {this._renderSearch()}
                     {this._renderFilters()}
