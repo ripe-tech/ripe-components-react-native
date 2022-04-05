@@ -28,7 +28,7 @@ export class Listing extends Component {
             search: PropTypes.bool,
             loading: PropTypes.bool,
             refreshing: PropTypes.bool,
-            searchingHeaderLayout: PropTypes.oneOf(["horizontal", "vertical"]),
+            searchHeaderLayout: PropTypes.oneOf(["horizontal", "vertical"]),
             expandableSearchBar: PropTypes.bool,
             expandAnimationDuration: PropTypes.number,
             flatListProps: PropTypes.object,
@@ -57,7 +57,7 @@ export class Listing extends Component {
             search: true,
             loading: false,
             refreshing: false,
-            searchingHeaderLayout: "horizontal",
+            searchHeaderLayout: "horizontal",
             expandableSearchBar: false,
             expandAnimationDuration: 200,
             flatListProps: {},
@@ -247,7 +247,7 @@ export class Listing extends Component {
         });
     }
 
-    _isHorizontalLayout = () => this.props.searchingHeaderLayout === "horizontal";
+    _isHorizontalLayout = () => this.props.searchHeaderLayout === "horizontal";
 
     _style() {
         return [styles.listing, this.props.style];
