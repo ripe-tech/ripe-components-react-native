@@ -24,7 +24,14 @@ export class Tabs extends PureComponent {
                     selected: PropTypes.bool,
                     disabled: PropTypes.bool,
                     hidden: PropTypes.bool,
-                    props: PropTypes.object
+                    props: PropTypes.object,
+                    badgeAnimationDuration: PropTypes.number,
+                    badgeBackgroundColor: PropTypes.string,
+                    badgeColor: PropTypes.string,
+                    badgeCount: PropTypes.number,
+                    badgeCountThreshold: PropTypes.number,
+                    badgeHasAnimation: PropTypes.bool,
+                    badgeText: PropTypes.string
                 })
             ),
             selectedTab: PropTypes.number,
@@ -129,10 +136,11 @@ export class Tabs extends PureComponent {
                                 fillSelected={tab.fillSelected}
                                 badgeAnimationDuration={tab.badgeAnimationDuration}
                                 badgeBackgroundColor={tab.badgeBackgroundColor}
-                                badgeColor={tab.undefinedBadgeColor}
+                                badgeColor={tab.badgeColor}
                                 badgeCount={tab.badgeCount}
                                 badgeCountThreshold={tab.badgeCountThreshold}
                                 badgeHasAnimation={tab.badgeHasAnimation}
+                                badgeText={tab.badgeText}
                                 icon={tab.icon}
                                 iconSelected={tab.iconSelected}
                                 iconStrokeWidth={tab.iconStrokeWidth}
