@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
         marginBottom: -1
     },
     chatMessage: {
-        marginTop: 16,
+        paddingTop: 16,
         borderStyle: "solid",
         borderBottomColor: "#dfe2e5",
         borderBottomWidth: 1,
