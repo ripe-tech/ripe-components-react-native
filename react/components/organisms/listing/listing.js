@@ -132,12 +132,14 @@ export class Listing extends Component {
 
     onSearchFocus = async value => {
         await this.props.onSearchFocus(value);
-        if (this.props.expandableSearchBar && this._isHorizontalLayout()) await this._expandSearchBar();
+        if (this.props.expandableSearchBar && this._isHorizontalLayout())
+            await this._expandSearchBar();
     };
 
     onSearchBlur = async value => {
         await this.props.onSearchBlur(value);
-        if (this.props.expandableSearchBar && this._isHorizontalLayout()) await this._shrinkSearchBar();
+        if (this.props.expandableSearchBar && this._isHorizontalLayout())
+            await this._shrinkSearchBar();
     };
 
     onFilter = async value => {
