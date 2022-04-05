@@ -76,7 +76,7 @@ storiesOf("Organisms", module)
                 />
             );
         };
-        const searchingHeaderLayout = select(
+        const searchHeaderLayout = select(
             "Search Header Layout",
             {
                 Unset: undefined,
@@ -85,7 +85,7 @@ storiesOf("Organisms", module)
             },
             "horizontal"
         );
-        const expandSearchBar = bool("Expand Search Bar", false);
+        const expandableSearchBar = bool("Expand Search Bar", false);
         const expandAnimationDuration = number("Expand Animation Duration", 200);
 
         return (
@@ -94,8 +94,8 @@ storiesOf("Organisms", module)
                     items={getItems}
                     renderItem={renderItem}
                     filters={filters}
-                    searchingHeaderLayout={searchingHeaderLayout}
-                    expandSearchBar={expandSearchBar}
+                    searchHeaderLayout={searchHeaderLayout}
+                    expandableSearchBar={expandableSearchBar}
                     expandAnimationDuration={expandAnimationDuration}
                 />
             </View>
