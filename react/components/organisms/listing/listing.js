@@ -29,7 +29,7 @@ export class Listing extends Component {
             loading: PropTypes.bool,
             refreshing: PropTypes.bool,
             searchingHeaderLayout: PropTypes.oneOf(["horizontal", "vertical"]),
-            expandSearchBar: PropTypes.bool,
+            expandableSearchBar: PropTypes.bool,
             expandAnimationDuration: PropTypes.number,
             flatListProps: PropTypes.object,
             onEndReachedThreshold: PropTypes.number,
@@ -58,7 +58,7 @@ export class Listing extends Component {
             loading: false,
             refreshing: false,
             searchingHeaderLayout: "horizontal",
-            expandSearchBar: false,
+            expandableSearchBar: false,
             expandAnimationDuration: 200,
             flatListProps: {},
             onFilter: async () => {},
@@ -132,12 +132,12 @@ export class Listing extends Component {
 
     onSearchFocus = async value => {
         await this.props.onSearchFocus(value);
-        if (this.props.expandSearchBar && this._isHorizontalLayout()) await this._expandSearchBar();
+        if (this.props.expandableSearchBar && this._isHorizontalLayout()) await this._expandSearchBar();
     };
 
     onSearchBlur = async value => {
         await this.props.onSearchBlur(value);
-        if (this.props.expandSearchBar && this._isHorizontalLayout()) await this._shrinkSearchBar();
+        if (this.props.expandableSearchBar && this._isHorizontalLayout()) await this._shrinkSearchBar();
     };
 
     onFilter = async value => {
@@ -276,7 +276,7 @@ export class Listing extends Component {
         const isHorizontal = this._isHorizontalLayout();
         const layoutStyle = isHorizontal ? styles.searchHorizontal : styles.searchVertical;
         const animationStyle =
-            isHorizontal && this.props.expandSearchBar
+            isHorizontal && this.props.expandableSearchBar
                 ? {
                       width: this.state.searchWidth.interpolate({
                           inputRange: [0, 1],
@@ -294,7 +294,7 @@ export class Listing extends Component {
         const isHorizontal = this._isHorizontalLayout();
         const layoutStyle = isHorizontal ? styles.filtersHorizontal : styles.filtersVertical;
         const animationStyle =
-            isHorizontal && this.props.expandSearchBar
+            isHorizontal && this.props.expandableSearchBar
                 ? {
                       width: this.state.searchWidth.interpolate({
                           inputRange: [0, 1],
