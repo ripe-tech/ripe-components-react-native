@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ScrollView, StyleSheet, Image, Text, View, ViewPropTypes } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -22,6 +22,7 @@ export class Chat extends PureComponent {
                     statusProps: PropTypes.object,
                     replies: PropTypes.number,
                     repliesAvatars: PropTypes.array,
+                    onPress: PropTypes.func,
                     attachments: PropTypes.arrayOf(
                         PropTypes.exact({
                             name: PropTypes.string.isRequired,
@@ -36,8 +37,14 @@ export class Chat extends PureComponent {
             onNewMessage: PropTypes.func,
             onScrollBottom: PropTypes.func,
             onScroll: PropTypes.func,
+            onInputFocus: PropTypes.func,
+            onInputBlur: PropTypes.func,
             style: ViewPropTypes.style,
-            styles: PropTypes.any
+            styles: PropTypes.any,
+            chatMessageStyle: ViewPropTypes.style,
+            chatMessagesContainerStyle: ViewPropTypes.style,
+            chatMessagesContentStyle: ViewPropTypes.style,
+            chatMessageContentStyle: ViewPropTypes.style
         };
     }
 
@@ -52,8 +59,14 @@ export class Chat extends PureComponent {
             onNewMessage: () => {},
             onScrollBottom: () => {},
             onScroll: event => {},
+            onInputFocus: event => {},
+            onInputBlur: event => {},
             style: {},
-            styles: styles
+            styles: styles,
+            chatMessagesStyle: {},
+            chatMessagesContainerStyle: {},
+            chatMessagesContentStyle: {},
+            chatMessageContentStyle: {}
         };
     }
 
@@ -95,8 +108,10 @@ export class Chat extends PureComponent {
         const messages = [];
         let previousMessage = null;
         let previousDate = null;
-        for (const message of this.props.messages) {
+        const originalMessages = this.props.messages.map(message => ({ ...message }));
+        for (const message of originalMessages) {
             if (
+                !message.status &&
                 previousMessage &&
                 previousMessage.message &&
                 message.message &&
@@ -169,8 +184,24 @@ export class Chat extends PureComponent {
         return [styles.chat, this.props.style];
     }
 
+    _chatMessagesContainerStyle() {
+        return [styles.chatMessagesContainer, this.props.chatMessagesContainerStyle];
+    }
+
+    _chatMessagesContentStyle() {
+        return [styles.chatMessagesContent, this.props.chatMessagesContentStyle];
+    }
+
+    _chatMessageContentStyle() {
+        return [styles.chatMessageContent, this.props.chatMessageContentStyle];
+    }
+
     _chatMessageStyle(index) {
-        return [styles.chatMessage, index === 0 ? { marginTop: 0 } : {}];
+        return [
+            styles.chatMessage,
+            index === 0 ? { marginTop: 0 } : {},
+            this.props.chatMessageStyle
+        ];
     }
 
     _renderNoMessages = () => {
@@ -189,20 +220,21 @@ export class Chat extends PureComponent {
         return (
             <View style={this._style()}>
                 <ScrollView
-                    style={styles.chatMessagesContainer}
+                    style={this._chatMessagesContainerStyle()}
                     ref={ref => (this.scrollViewComponent = ref)}
-                    onContentSizeChange={() => this.scrollToEnd(false)}
                     onScroll={this.onScroll}
+                    scrollEventThrottle={4}
                 >
                     {this.props.messages.length === 0 ? (
                         this._renderNoMessages()
                     ) : (
-                        <View style={styles.chatMessagesContent}>
+                        <View style={this._chatMessagesContentStyle()}>
                             {this._aggregatedMessages().map((message, index) => {
                                 return (
                                     <ChatMessage
                                         key={index}
                                         style={this._chatMessageStyle()}
+                                        messageStyle={this._chatMessageContentStyle()}
                                         avatarUrl={message.avatarUrl}
                                         username={message.username}
                                         date={message.date}
@@ -212,6 +244,7 @@ export class Chat extends PureComponent {
                                         replies={message.replies}
                                         repliesAvatars={message.repliesAvatars}
                                         attachments={message.attachments}
+                                        onPress={message.onPress}
                                         imagePlaceholder={this.props.imagePlaceholder}
                                     />
                                 );
@@ -230,6 +263,8 @@ export class Chat extends PureComponent {
                     onAttachmentsAdded={attachments =>
                         this.onRichTextInputAttachmentsAdded(attachments)
                     }
+                    onFocus={this.props.onInputFocus}
+                    onBlur={this.props.onInputBlur}
                     onSendMessage={text => this.onRichTextInputSendMessage(text)}
                 />
             </View>
@@ -250,7 +285,7 @@ const styles = StyleSheet.create({
         marginBottom: -1
     },
     chatMessage: {
-        marginTop: 16,
+        paddingTop: 16,
         borderStyle: "solid",
         borderBottomColor: "#dfe2e5",
         borderBottomWidth: 1,
@@ -258,7 +293,7 @@ const styles = StyleSheet.create({
     },
     noMessages: {
         alignItems: "center",
-        marginTop: "10%"
+        marginTop: "40%"
     },
     noMessagesImage: {
         width: 150,

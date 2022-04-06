@@ -77,10 +77,9 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
 
     _renderAvatars() {
         return this._avatars().map((avatar, index) => (
-            <View>
+            <View key={`${avatar}-${index}`}>
                 <Avatar
                     style={this._avatarStyle(index)}
-                    key={`${avatar}-${index}`}
                     image={{ uri: avatar }}
                     size={this.props.size}
                     {...this.props.avatarProps}
