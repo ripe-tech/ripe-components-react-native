@@ -13,14 +13,19 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             options: PropTypes.array,
             value: PropTypes.any,
-            shapeVariant: PropTypes.string,
-            colorVariant: PropTypes.string,
+            icon: PropTypes.string,
+            shapeVariant: PropTypes.oneOf(["round", "square"]),
+            colorVariant: PropTypes.oneOf(["white", "gray"]),
             placeholder: PropTypes.string,
             disabled: PropTypes.bool,
             fixAndroidTouchableBug: PropTypes.bool,
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onUpdateValue: PropTypes.func,
             style: ViewPropTypes.style,
+            placeholderStyle: PropTypes.object,
+            iconContainerStyle: PropTypes.object,
+            inputAndroidStyle: PropTypes.object,
+            inputIOSContainerStyle: PropTypes.object,
             styles: PropTypes.any
         };
     }
@@ -29,6 +34,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             options: [],
             value: undefined,
+            icon: "chevron-down",
             placeholder: undefined,
             shapeVariant: "round",
             colorVariant: "white",
@@ -38,6 +44,10 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             keyTimeout: 500,
             onUpdateValue: () => {},
             style: {},
+            placeholderStyle: {},
+            iconContainerStyle: {},
+            inputAndroidStyle: {},
+            inputIOSContainerStyle: {},
             styles: styles
         };
     }
@@ -91,7 +101,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
     };
 
     _icon = () => {
-        return <Icon icon={"chevron-down"} color={"#1b2632"} strokeWidth={2} />;
+        return <Icon icon={this.props.icon} color={"#1b2632"} strokeWidth={2} />;
     };
 
     _items = () => {
@@ -129,7 +139,8 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 fontSize: 14,
                 paddingLeft: 15,
                 paddingRight: 38,
-                height: 40
+                height: 40,
+                ...this.props.inputAndroidStyle
             },
             inputIOSContainer: {
                 color: "#24425a",
@@ -142,14 +153,17 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 paddingLeft: 15,
                 paddingRight: 38,
                 height: 40,
-                justifyContent: "center"
+                justifyContent: "center",
+                ...this.props.inputIOSContainerStyle
             },
             placeholder: {
-                color: "#24425a"
+                color: "#24425a",
+                ...this.props.placeholderStyle
             },
             iconContainer: {
                 top: "25%",
-                right: 10
+                right: 10,
+                ...this.props.iconContainerStyle
             }
         };
     };

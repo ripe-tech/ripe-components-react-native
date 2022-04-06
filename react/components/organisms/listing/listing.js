@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import {
     ActivityIndicator,
+    Animated,
+    Easing,
     FlatList,
-    Platform,
     ScrollView,
     StyleSheet,
     Text,
@@ -27,12 +28,21 @@ export class Listing extends Component {
             search: PropTypes.bool,
             loading: PropTypes.bool,
             refreshing: PropTypes.bool,
+            searchHeaderLayout: PropTypes.oneOf(["horizontal", "vertical"]),
+            expandableSearchBar: PropTypes.bool,
+            expandAnimationDuration: PropTypes.number,
             flatListProps: PropTypes.object,
             onEndReachedThreshold: PropTypes.number,
             onFilter: PropTypes.func,
+            onSearch: PropTypes.func,
+            onSearchBlur: PropTypes.func,
+            onSearchFocus: PropTypes.func,
             style: ViewPropTypes.style,
             scrollViewStyle: ViewPropTypes.style,
             scrollViewContainerStyle: ViewPropTypes.style,
+            searchingHeaderStyle: ViewPropTypes.style,
+            searchStyle: ViewPropTypes.style,
+            filtersStyle: ViewPropTypes.style,
             styles: PropTypes.any
         };
     }
@@ -47,11 +57,20 @@ export class Listing extends Component {
             search: true,
             loading: false,
             refreshing: false,
+            searchHeaderLayout: "horizontal",
+            expandableSearchBar: false,
+            expandAnimationDuration: 200,
             flatListProps: {},
             onFilter: async () => {},
+            onSearch: async () => {},
+            onSearchBlur: async () => {},
+            onSearchFocus: async () => {},
             style: {},
             scrollViewStyle: {},
             scrollViewContainerStyle: {},
+            searchingHeaderStyle: {},
+            searchStyle: {},
+            filtersStyle: {},
             styles: styles
         };
     }
@@ -60,6 +79,9 @@ export class Listing extends Component {
         super(props);
 
         this.state = {
+            searchWidth: new Animated.Value(0),
+            placeholderColorAlpha: 1,
+            expanded: false,
             searchText: "",
             itemsOffset: 0,
             filters: this.props.filtersValue,
@@ -71,6 +93,8 @@ export class Listing extends Component {
         };
 
         this.scrollViewWidth = 0;
+        this.searchHeaderWidth = 0;
+        this.minFiltersWidth = 42;
     }
 
     async componentDidMount() {
@@ -102,7 +126,20 @@ export class Listing extends Component {
     }
 
     onSearch = async value => {
+        await this.props.onSearch(value);
         this.setState({ searchText: value }, async () => await this.refresh(true));
+    };
+
+    onSearchFocus = async value => {
+        await this.props.onSearchFocus(value);
+        if (this.props.expandableSearchBar && this._isHorizontalLayout())
+            await this._expandSearchBar();
+    };
+
+    onSearchBlur = async value => {
+        await this.props.onSearchBlur(value);
+        if (this.props.expandableSearchBar && this._isHorizontalLayout())
+            await this._shrinkSearchBar();
     };
 
     onFilter = async value => {
@@ -149,14 +186,6 @@ export class Listing extends Component {
         );
     };
 
-    _scrollViewStyle = () => {
-        return [styles.scrollView, this.props.scrollViewStyle];
-    };
-
-    _scrollViewContainerStyle = () => {
-        return [styles.scrollViewContainer, this.props.scrollViewContainerStyle];
-    };
-
     _getItems = async (options = {}) => {
         const items = await this.props.getItems(
             {
@@ -176,30 +205,180 @@ export class Listing extends Component {
         return Object.values(this.state.filters).filter(f => Boolean(f));
     }
 
+    _onScrollViewLayout(event) {
+        if (this.state.searchLoaded) return;
+        this.scrollViewWidth = event.nativeEvent.layout.width;
+        this.setState({ searchLoaded: this.scrollViewWidth !== 0 && this.searchHeaderWidth !== 0 });
+    }
+
+    _onSearchHeaderViewLayout(event) {
+        if (this.state.searchLoaded) return;
+        this.searchHeaderWidth = event.nativeEvent.layout.width;
+        this.setState({ searchLoaded: this.scrollViewWidth !== 0 && this.searchHeaderWidth !== 0 });
+    }
+
+    _expandSearchBar() {
+        // set select text as transparent
+        this.setState({ placeholderColorAlpha: 0 });
+
+        // animate search bar width to maximum
+        // and decrease dropdown select width
+        Animated.timing(this.state.searchWidth, {
+            toValue: 1,
+            duration: this.props.expandAnimationDuration,
+            useNativeDriver: false,
+            easing: Easing.inOut(Easing.ease)
+        }).start(() => {
+            this.setState({ expanded: true });
+        });
+    }
+
+    _shrinkSearchBar() {
+        // set select text as visible
+        this.setState({ placeholderColorAlpha: 1 });
+
+        // animate search bar width to normal
+        // and increase dropdown select width
+        Animated.timing(this.state.searchWidth, {
+            toValue: 0,
+            duration: this.props.expandAnimationDuration,
+            useNativeDriver: false,
+            easing: Easing.inOut(Easing.ease)
+        }).start(() => {
+            this.setState({ expanded: false });
+        });
+    }
+
+    _isHorizontalLayout = () => this.props.searchHeaderLayout === "horizontal";
+
     _style() {
         return [styles.listing, this.props.style];
     }
 
-    _renderSearch() {
-        if (!this.props.search) return;
-
-        return <Search style={styles.search} onValue={this.onSearch} />;
+    _searchingHeaderStyle() {
+        const isHorizontal = this._isHorizontalLayout();
+        const layoutStyle = isHorizontal
+            ? styles.searchingHeaderHorizontal
+            : styles.searchingHeaderVertical;
+        const height = {
+            minHeight: !isHorizontal && this.props.search ? 100 : 50
+        };
+        return [styles.searchingHeader, layoutStyle, height, this.props.searchingHeaderStyle];
     }
 
-    _onScrollViewLayout(event) {
-        if (this.state.searchLoaded) return;
-        this.scrollViewWidth = event.nativeEvent.layout.width;
-        this.setState({ searchLoaded: true });
+    _scrollViewStyle = () => {
+        return [styles.scrollView, this.props.scrollViewStyle];
+    };
+
+    _scrollViewContainerStyle = () => {
+        return [styles.scrollViewContainer, this.props.scrollViewContainerStyle];
+    };
+
+    _searchStyle = () => {
+        const isHorizontal = this._isHorizontalLayout();
+        const layoutStyle = isHorizontal ? styles.searchHorizontal : styles.searchVertical;
+        const animationStyle =
+            isHorizontal && this.props.expandableSearchBar
+                ? {
+                      width: this.state.searchWidth.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [
+                              this.searchHeaderWidth / 2,
+                              this.searchHeaderWidth - this.minFiltersWidth
+                          ]
+                      })
+                  }
+                : {};
+        return [layoutStyle, animationStyle, this.props.searchStyle];
+    };
+
+    _filtersStyle = () => {
+        const isHorizontal = this._isHorizontalLayout();
+        const layoutStyle = isHorizontal ? styles.filtersHorizontal : styles.filtersVertical;
+        const animationStyle =
+            isHorizontal && this.props.expandableSearchBar
+                ? {
+                      width: this.state.searchWidth.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [
+                              this.props.search
+                                  ? this.searchHeaderWidth / 2
+                                  : this.searchHeaderWidth,
+                              this.minFiltersWidth
+                          ]
+                      }),
+                      paddingLeft: this.props.search ? 5 : 0
+                  }
+                : {};
+        return [layoutStyle, animationStyle, this.props.filtersStyle];
+    };
+
+    /**
+     * The placeholder text in the `<Select />` component can not
+     * have opacity applied, otherwise the entire select is affected.
+     * This way we change only the text color and by reducing the alpha
+     * channel we get the same effect as reducing the opacity.
+     */
+    _selectTextColor = () => `rgba(36,66,90,${this.state.placeholderColorAlpha})`;
+
+    /**
+     * Notice this does not follow the ReactNative style standard
+     * where you can give an array of styles and it merges them.
+     * This object is simply spread onto the actual styles used by
+     * the `<Select />` component.
+     */
+    _selectPickerAndroidStyle = () => {
+        return {
+            ...styles.selectPickerAndroid,
+            color: this._selectTextColor()
+        };
+    };
+
+    /**
+     * Notice this does not follow the ReactNative style standard
+     * where you can give an array of styles and it merges them.
+     * This object is simply spread onto the actual styles used by
+     * the `<Select />` component.
+     */
+    _selectPickerIOSStyle = () => {
+        return {
+            ...styles.selectPickerIOS,
+            color: this._selectTextColor()
+        };
+    };
+
+    /**
+     * Notice this does not follow the ReactNative style standard
+     * where you can give an array of styles and it merges them.
+     * This object is simply spread onto the actual styles used by
+     * the `<Select />` component.
+     */
+    _selectPlaceholderStyle = () => {
+        return {
+            color: this._selectTextColor()
+        };
+    };
+
+    _renderSearch() {
+        if (!this.props.search) return;
+        return (
+            <Search
+                style={this._searchStyle()}
+                onValue={this.onSearch}
+                onFocus={this.onSearchFocus}
+                onBlur={this.onSearchBlur}
+            />
+        );
     }
 
     _renderFilters() {
         if (this.props.filters.length === 0) return;
 
         return (
-            <View style={styles.filters}>
+            <Animated.View style={this._filtersStyle()}>
                 <ScrollView
-                    onLayout={event => this._onScrollViewLayout(event)}
                     style={this._scrollViewStyle()}
+                    onLayout={event => this._onScrollViewLayout(event)}
                     contentContainerStyle={this._scrollViewContainerStyle()}
                     horizontal={true}
                     directionalLockEnabled={true}
@@ -210,7 +389,7 @@ export class Listing extends Component {
                         {this._renderSelects()}
                     </View>
                 </ScrollView>
-            </View>
+            </Animated.View>
         );
     }
 
@@ -222,9 +401,14 @@ export class Listing extends Component {
             return (
                 <Select
                     style={isLastChild ? styles.selectLastChild : styles.select}
+                    placeholderStyle={this._selectPlaceholderStyle()}
+                    iconContainerStyle={styles.selectIconContainer}
+                    inputAndroidStyle={this._selectPickerAndroidStyle()}
+                    inputIOSContainerStyle={this._selectPickerIOSStyle()}
                     placeholder={item.placeholder}
                     options={item.options}
                     value={this.state.filters[item.value]}
+                    icon="filter"
                     onUpdateValue={value => this.onSelectUpdateValue(item.value, value)}
                     width={staticSize || item.width}
                     key={item.value}
@@ -251,8 +435,13 @@ export class Listing extends Component {
     render() {
         return (
             <View style={this._style()}>
-                {this._renderSearch()}
-                {this._renderFilters()}
+                <View
+                    style={this._searchingHeaderStyle()}
+                    onLayout={event => this._onSearchHeaderViewLayout(event)}
+                >
+                    {this._renderSearch()}
+                    {this._renderFilters()}
+                </View>
                 <FlatList
                     ref={el => (this.flatListRef = el)}
                     key={"items"}
@@ -279,14 +468,38 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#f6f7f9"
     },
-    search: {
+    searchingHeader: {
+        flex: 1,
+        marginBottom: -2,
+        marginTop: 8,
+        padding: 0
+    },
+    searchingHeaderVertical: {
+        flexDirection: "column",
+        marginHorizontal: 0
+    },
+    searchingHeaderHorizontal: {
+        flexDirection: "row",
+        minHeight: 50,
         marginHorizontal: 15
     },
-    filters: {
+    searchVertical: {
+        marginBottom: 10,
         marginHorizontal: 15
+    },
+    searchHorizontal: {
+        alignItems: "flex-start",
+        paddingRight: 5
+    },
+    filtersVertical: {
+        marginHorizontal: 15
+    },
+    filtersHorizontal: {
+        alignItems: "flex-start"
     },
     scrollViewContainer: {
-        marginVertical: 10,
+        height: 46,
+        marginBottom: 10,
         minWidth: "100%"
     },
     selectContainer: {
@@ -296,6 +509,17 @@ const styles = StyleSheet.create({
     select: {
         flex: 1,
         marginRight: 5
+    },
+    selectIconContainer: {
+        right: 8
+    },
+    selectPickerAndroid: {
+        paddingLeft: 15,
+        paddingRight: 0
+    },
+    selectPickerIOS: {
+        paddingLeft: 15,
+        paddingRight: 0
     },
     selectLastChild: {
         flex: 1

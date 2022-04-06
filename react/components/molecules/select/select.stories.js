@@ -39,6 +39,7 @@ storiesOf("Molecules", module)
             },
             undefined
         );
+        const icon = text("Icon", "chevron-down");
         const shapeVariant = select(
             "Variant",
             {
@@ -63,6 +64,7 @@ storiesOf("Molecules", module)
                 placeholder={placeholder}
                 options={options}
                 value={value}
+                icon={icon}
                 disabled={disabled}
                 shapeVariant={shapeVariant}
                 colorVariant={colorVariant}

@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 
 import { storiesOf } from "@storybook/react-native";
-import { withKnobs } from "@storybook/addon-knobs";
+import { withKnobs, bool, number, select } from "@storybook/addon-knobs";
 
 import { Listing } from "../listing";
 import { Card } from "../../molecules";
@@ -76,10 +76,28 @@ storiesOf("Organisms", module)
                 />
             );
         };
+        const searchHeaderLayout = select(
+            "Search Header Layout",
+            {
+                Unset: undefined,
+                Horizontal: "horizontal",
+                Vertical: "vertical"
+            },
+            "horizontal"
+        );
+        const expandableSearchBar = bool("Expand Search Bar", false);
+        const expandAnimationDuration = number("Expand Animation Duration", 200);
 
         return (
             <View style={{ flex: 1, paddingVertical: 15, backgroundColor: "#f6f7f9" }}>
-                <Listing items={() => getItems()} renderItem={renderItem} filters={filters} />
+                <Listing
+                    items={getItems}
+                    renderItem={renderItem}
+                    filters={filters}
+                    searchHeaderLayout={searchHeaderLayout}
+                    expandableSearchBar={expandableSearchBar}
+                    expandAnimationDuration={expandAnimationDuration}
+                />
             </View>
         );
     });
