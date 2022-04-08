@@ -10,6 +10,7 @@ export class Tabs extends PureComponent {
         return {
             state: PropTypes.object.isRequired,
             navigation: PropTypes.object.isRequired,
+            descriptors: PropTypes.object.isRequired,
             tabs: PropTypes.arrayOf(
                 PropTypes.shape({
                     text: PropTypes.string,
@@ -96,6 +97,11 @@ export class Tabs extends PureComponent {
         return this.props.state.routeNames[this.props.state.index] === id;
     };
 
+    _isHidden = () => {
+        const currentOptions = this._currentTabOptions();
+        return currentOptions.hiddenTabBar;
+    };
+
     _updateBar = index => {
         const tabLayout = this.tabLayouts[index];
 
@@ -106,8 +112,16 @@ export class Tabs extends PureComponent {
         }
     };
 
+    _currentTabKey = () => {
+        return this.props.state?.routes?.[this.props.state?.index]?.key;
+    };
+
+    _currentTabOptions = () => {
+        return this.props?.descriptors?.[this._currentTabKey()].options;
+    };
+
     _style = () => {
-        return [styles.tabs, this.props.style];
+        return [styles.tabs, this.props.style, this._isHidden() ? { display: "none" } : {}];
     };
 
     render() {

@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Improve button press animation in item and button tab - [ripe-robin-revamp/#343](https://github.com/ripe-tech/ripe-robin-revamp/issues/343)
 * `Tag` does not allow text breaking and shows ellipsis when there is no enough space - [ripe-robin-revamp/#316](https://github.com/ripe-tech/ripe-robin-revamp/issues/316)
 * Adapt components to newer chat design - [ripe-robin-revamp/#346](https://github.com/ripe-tech/ripe-robin-revamp/issues/346)
+* Update `Tabs` to allow visibility toggling by tab option - [ripe-robin-revamp/#346](https://github.com/ripe-tech/ripe-robin-revamp/issues/346)
 
 ### Fixed
 
