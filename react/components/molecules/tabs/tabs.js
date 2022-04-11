@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { Keyboard, StyleSheet, View, ViewPropTypes } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import PropTypes from "prop-types";
 
@@ -10,7 +10,6 @@ export class Tabs extends PureComponent {
         return {
             state: PropTypes.object.isRequired,
             navigation: PropTypes.object.isRequired,
-            descriptors: PropTypes.object.isRequired,
             tabs: PropTypes.arrayOf(
                 PropTypes.shape({
                     text: PropTypes.string,
@@ -37,6 +36,7 @@ export class Tabs extends PureComponent {
             ),
             selectedTab: PropTypes.number,
             hasAnimation: PropTypes.bool,
+            hideOnKeyboard: PropTypes.bool,
             style: ViewPropTypes.style,
             styles: PropTypes.any
         };
@@ -47,6 +47,7 @@ export class Tabs extends PureComponent {
             tabs: [],
             selectedTab: undefined,
             hasAnimation: true,
+            hideOnKeyboard: true,
             style: {},
             styles: styles
         };
@@ -58,9 +59,16 @@ export class Tabs extends PureComponent {
         this.state = {
             animatedBarWidth: undefined,
             animatedBarOffset: undefined,
+            keyboardVisibility: false,
             selectedTab: props.selectedTab === undefined ? currentTab : props.selectedTab
         };
         this.tabLayouts = {};
+        this.keyboardDidHideListener = Keyboard.addListener("keyboardDidShow", () =>
+            this._updateKeyboardVisibility(true)
+        );
+        this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", () =>
+            this._updateKeyboardVisibility(false)
+        );
     }
 
     onTabPress = (route, index) => {
@@ -98,9 +106,12 @@ export class Tabs extends PureComponent {
     };
 
     _isHidden = () => {
-        const currentOptions = this._currentTabOptions();
-        return currentOptions.hiddenTabBar;
+        return this.props.hideOnKeyboard && this.state.keyboardVisibility;
     };
+
+    _updateKeyboardVisibility(value) {
+        this.setState({ keyboardVisibility: value });
+    }
 
     _updateBar = index => {
         const tabLayout = this.tabLayouts[index];
@@ -110,14 +121,6 @@ export class Tabs extends PureComponent {
         } else {
             this.setState({ animatedBarOffset: undefined, animatedBarWidth: undefined });
         }
-    };
-
-    _currentTabKey = () => {
-        return this.props.state?.routes?.[this.props.state?.index]?.key;
-    };
-
-    _currentTabOptions = () => {
-        return this.props?.descriptors?.[this._currentTabKey()].options;
     };
 
     _style = () => {
