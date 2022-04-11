@@ -63,12 +63,17 @@ export class Tabs extends PureComponent {
             selectedTab: props.selectedTab === undefined ? currentTab : props.selectedTab
         };
         this.tabLayouts = {};
-        this.keyboardDidHideListener = Keyboard.addListener("keyboardDidShow", () =>
+        this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", () =>
             this._updateKeyboardVisibility(true)
         );
         this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", () =>
             this._updateKeyboardVisibility(false)
         );
+    }
+
+    componentWillUnmount() {
+        this.keyboardDidHideListener.remove();
+        this.keyboardDidShowListener.remove();
     }
 
     onTabPress = (route, index) => {
