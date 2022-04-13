@@ -11,7 +11,7 @@ export class Chat extends PureComponent {
         return {
             avatarUrl: PropTypes.string.isRequired,
             username: PropTypes.string.isRequired,
-            renderBeforeMessages: PropTypes.func,
+            beforeMessages: PropTypes.object,
             messages: PropTypes.arrayOf(
                 PropTypes.exact({
                     id: PropTypes.number,
@@ -53,6 +53,7 @@ export class Chat extends PureComponent {
         return {
             avatarUrl: undefined,
             username: undefined,
+            beforeMessages: null,
             messages: [],
             aggregationThreshold: 3600,
             animateScrollBottom: true,
@@ -217,11 +218,6 @@ export class Chat extends PureComponent {
         );
     };
 
-    _renderBeforeMessages = () => {
-        if (!this.props.renderBeforeMessages) return null;
-        return this.props.renderBeforeMessages();
-    };
-
     render() {
         return (
             <View style={this._style()}>
@@ -235,7 +231,8 @@ export class Chat extends PureComponent {
                         this._renderNoMessages()
                     ) : (
                         <View style={this._chatMessagesContentStyle()}>
-                            {this._renderBeforeMessages()}
+                            {this.props.beforeMessages &&
+                                React.cloneElement(React.Children.only(this.props.beforeMessages))}
                             {this._aggregatedMessages().map((message, index) => {
                                 return (
                                     <ChatMessage
