@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { Keyboard, StyleSheet, View, ViewPropTypes } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import PropTypes from "prop-types";
 
@@ -36,6 +36,7 @@ export class Tabs extends PureComponent {
             ),
             selectedTab: PropTypes.number,
             hasAnimation: PropTypes.bool,
+            hideOnKeyboard: PropTypes.bool,
             style: ViewPropTypes.style,
             styles: PropTypes.any
         };
@@ -46,6 +47,7 @@ export class Tabs extends PureComponent {
             tabs: [],
             selectedTab: undefined,
             hasAnimation: true,
+            hideOnKeyboard: true,
             style: {},
             styles: styles
         };
@@ -57,9 +59,21 @@ export class Tabs extends PureComponent {
         this.state = {
             animatedBarWidth: undefined,
             animatedBarOffset: undefined,
+            keyboardVisibility: false,
             selectedTab: props.selectedTab === undefined ? currentTab : props.selectedTab
         };
         this.tabLayouts = {};
+        this.onKeyboardDidShow = Keyboard.addListener("keyboardDidShow", () =>
+            this._updateKeyboardVisibility(true)
+        );
+        this.onKeyboardDidHide = Keyboard.addListener("keyboardDidHide", () =>
+            this._updateKeyboardVisibility(false)
+        );
+    }
+
+    componentWillUnmount() {
+        this.onKeyboardDidHide.remove();
+        this.onKeyboardDidShow.remove();
     }
 
     onTabPress = (route, index) => {
@@ -96,6 +110,14 @@ export class Tabs extends PureComponent {
         return this.props.state.routeNames[this.props.state.index] === id;
     };
 
+    _isHidden = () => {
+        return this.props.hideOnKeyboard && this.state.keyboardVisibility;
+    };
+
+    _updateKeyboardVisibility(value) {
+        this.setState({ keyboardVisibility: value });
+    }
+
     _updateBar = index => {
         const tabLayout = this.tabLayouts[index];
 
@@ -107,7 +129,7 @@ export class Tabs extends PureComponent {
     };
 
     _style = () => {
-        return [styles.tabs, this.props.style];
+        return [styles.tabs, this.props.style, this._isHidden() ? { display: "none" } : {}];
     };
 
     render() {
