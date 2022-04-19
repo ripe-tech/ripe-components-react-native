@@ -35,6 +35,8 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
             iconSelected: PropTypes.string,
             iconStrokeWidth: PropTypes.number,
             iconSelectedStrokeWidth: PropTypes.number,
+            iconWidth: PropTypes.number,
+            iconHeight: PropTypes.number,
             color: PropTypes.string,
             colorSelected: PropTypes.string,
             fill: PropTypes.string,
@@ -62,6 +64,8 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
             iconSelected: undefined,
             iconStrokeWidth: 2.5,
             iconSelectedStrokeWidth: 2.5,
+            iconWidth: 23,
+            iconHeight: 23,
             color: "#a6adb4",
             colorSelected: "#1d2631",
             fill: undefined,
@@ -128,6 +132,8 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
                         color={this._iconColor()}
                         fill={this._iconFillColor()}
                         strokeWidth={this._iconStrokeWidth()}
+                        width={this.props.iconWidth}
+                        height={this.props.iconHeight}
                         {...this.props.iconProps}
                     />
                 ) : null}

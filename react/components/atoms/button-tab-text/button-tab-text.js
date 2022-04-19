@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         marginHorizontal: 10,
         fontFamily: baseStyles.FONT_BOOK,
-        fontSize: 16,
+        fontSize: 15,
         letterSpacing: 0.25
     },
     textCompact: {
