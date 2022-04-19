@@ -25,6 +25,7 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
             text: "Changed order status to",
             backgroundColor: "rgba(96, 81, 242, 0.06)",
             borderColor: "rgba(96, 81, 242, 0.4)",
+            borderWith: 0,
             tagColor: "#57626e",
             tagBackgroundColor: "#eceef1",
             tagBorderColor: "transparent",
@@ -38,7 +39,8 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
             styles.statusEntry,
             {
                 backgroundColor: this.props.backgroundColor,
-                borderColor: this.props.borderColor
+                borderColor: this.props.borderColor,
+                borderWith: this.props.borderWith
             },
             this.props.style
         ];
@@ -66,12 +68,14 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        borderWidth: 1,
         borderRadius: 7,
-        padding: 8
+        padding: 8,
+        paddingHorizontal: 12
     },
     text: {
-        fontFamily: baseStyles.FONT_BOOK
+        marginTop: 2,
+        fontFamily: baseStyles.FONT_BOOK,
+        color: "#2d2d2d"
     }
 });
 
