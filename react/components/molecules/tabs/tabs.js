@@ -23,6 +23,7 @@ export class Tabs extends PureComponent {
                     fillSelected: PropTypes.string,
                     selected: PropTypes.bool,
                     disabled: PropTypes.bool,
+                    iconProps: PropTypes.object,
                     hidden: PropTypes.bool,
                     props: PropTypes.object,
                     badgeAnimationDuration: PropTypes.number,

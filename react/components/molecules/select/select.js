@@ -143,18 +143,21 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 ...this.props.inputAndroidStyle
             },
             inputIOSContainer: {
-                color: "#24425a",
                 backgroundColor: this._inputBackgroundColor(),
                 borderColor: this._inputBorderColor(),
                 borderWidth: 1,
                 borderRadius: this._inputBorderRadius(),
-                fontFamily: baseStyles.FONT_BOOK,
-                fontSize: 14,
                 paddingLeft: 15,
                 paddingRight: 38,
                 height: 40,
                 justifyContent: "center",
                 ...this.props.inputIOSContainerStyle
+            },
+            inputIOS: {
+                color: "#24425a",
+                fontFamily: baseStyles.FONT_BOOK,
+                fontSize: 15,
+                lineHeight: 18
             },
             placeholder: {
                 color: "#24425a",

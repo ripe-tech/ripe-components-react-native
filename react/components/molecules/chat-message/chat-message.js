@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     },
     avatar: {
         marginEnd: 9,
-        marginTop: 3
+        marginTop: 5
     },
     header: {
         justifyContent: "flex-start",
@@ -199,7 +199,8 @@ const styles = StyleSheet.create({
         marginTop: 4
     },
     status: {
-        marginTop: 4
+        marginTop: 5,
+        marginBottom: 3
     },
     replies: {
         marginTop: 8,

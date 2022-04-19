@@ -171,7 +171,8 @@ const styles = StyleSheet.create({
     },
     buttonExpandDetailsText: {
         color: "#4f7af8",
-        fontFamily: baseStyles.FONT_BOOK
+        fontSize: 16,
+        fontFamily: baseStyles.FONT_REGULAR
     }
 });
 

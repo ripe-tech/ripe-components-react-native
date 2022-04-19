@@ -13,7 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* Decrease `ButtonTabText` text size and increase `ButtonTab` icon size
+* Remove default border from `StatusEntry`, increase padding and change font
+* Add new `Tag` medium size and change default font to bold
+* Increase spacing between element in `ChatMessage`
+* Increase font size of `View More` text in `KeyValues`
+* Increase font size for iOS in `Select`
 
 ### Fixed
 
