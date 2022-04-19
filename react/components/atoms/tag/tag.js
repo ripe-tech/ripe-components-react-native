@@ -115,13 +115,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8
     },
     text: {
-        fontFamily: baseStyles.FONT_BOOK,
+        fontFamily: baseStyles.FONT_BOLD,
         fontSize: 11,
         letterSpacing: 0.25,
         marginTop: Platform.OS === "ios" ? 3 : 0
     },
     textLarge: {
         fontSize: 13,
+        marginTop: Platform.OS === "ios" ? 3 : 0
+    },
+    textMedium: {
+        fontSize: 12,
         marginTop: Platform.OS === "ios" ? 3 : 0
     },
     textSmall: {
