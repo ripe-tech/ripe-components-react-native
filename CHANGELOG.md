@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Increase font size of `View More` text in `KeyValues`
 * Increase font size for iOS in `Select`
 * Make buttons round for touch feedback for Android
+* Support for no overlay and height control from parent in `ContainerOpenable`
 
 ### Fixed
 
