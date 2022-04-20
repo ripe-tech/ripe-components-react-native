@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import SafeAreaView from "react-native-safe-area-view";
 import { mix } from "yonius";
@@ -57,24 +57,26 @@ export class Header extends mix(PureComponent).with(IdentifiableMixin) {
         return (
             <SafeAreaView style={this._style()}>
                 {this.props.buttonLeftVisible && this.props.buttonLeftIcon ? (
-                    <Touchable
-                        hitSlop={this.props.hitSlop}
-                        onPress={
-                            this.props.onButtonLeftPress
-                                ? this.props.onButtonLeftPress
-                                : this.goBack
-                        }
-                        style={styles.containerButtonLeft}
-                    >
-                        <Icon
-                            icon={this.props.buttonLeftIcon}
-                            width={30}
-                            height={24}
-                            strokeWidth={2}
-                            color={"#1d2631"}
-                            {...this.id("header-button-left")}
-                        />
-                    </Touchable>
+                    <View style={styles.containerButtonLeft}>
+                        <Touchable
+                            hitSlop={this.props.hitSlop}
+                            onPress={
+                                this.props.onButtonLeftPress
+                                    ? this.props.onButtonLeftPress
+                                    : this.goBack
+                            }
+                            style={styles.touchableButtonLeft}
+                        >
+                            <Icon
+                                icon={this.props.buttonLeftIcon}
+                                width={30}
+                                height={24}
+                                strokeWidth={2}
+                                color={"#1d2631"}
+                                {...this.id("header-button-left")}
+                            />
+                        </Touchable>
+                    </View>
                 ) : null}
                 {this.props.title ? (
                     <Text style={styles.title} {...this.id("header-text")}>
@@ -82,22 +84,26 @@ export class Header extends mix(PureComponent).with(IdentifiableMixin) {
                     </Text>
                 ) : null}
                 {this.props.buttonRightVisible && this.props.buttonRightIcon ? (
-                    <Touchable
-                        hitSlop={this.props.hitSlop}
-                        onPress={
-                            this.props.onButtonRightPress ? this.props.onButtonRightPress : () => {}
-                        }
-                        style={styles.containerButtonRight}
-                    >
-                        <Icon
-                            color={"#1d2631"}
-                            icon={this.props.buttonRightIcon}
-                            width={24}
-                            height={30}
-                            strokeWidth={2}
-                            {...this.id("header-button-right")}
-                        />
-                    </Touchable>
+                    <View style={styles.containerButtonRight}>
+                        <Touchable
+                            hitSlop={this.props.hitSlop}
+                            onPress={
+                                this.props.onButtonRightPress
+                                    ? this.props.onButtonRightPress
+                                    : () => {}
+                            }
+                            style={styles.touchableButtonRight}
+                        >
+                            <Icon
+                                color={"#1d2631"}
+                                icon={this.props.buttonRightIcon}
+                                width={24}
+                                height={30}
+                                strokeWidth={2}
+                                {...this.id("header-button-right")}
+                            />
+                        </Touchable>
+                    </View>
                 ) : null}
             </SafeAreaView>
         );
@@ -122,16 +128,28 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     containerButtonLeft: {
-        zIndex: 1,
+        borderRadius: Platform.OS === "ios" ? 0 : 100,
+        overflow: "hidden",
         position: "absolute",
-        top: 18,
-        left: 10
+        top: 10,
+        left: 5,
+        zIndex: 1
+    },
+    touchableButtonLeft: {
+        paddingHorizontal: 6,
+        paddingVertical: 8
     },
     containerButtonRight: {
+        borderRadius: Platform.OS === "ios" ? 0 : 100,
+        overflow: "hidden",
         zIndex: 1,
         position: "absolute",
-        top: 18,
-        right: 10
+        top: 5,
+        right: 5
+    },
+    touchableButtonRight: {
+        paddingHorizontal: 10,
+        paddingVertical: 8
     }
 });
 
