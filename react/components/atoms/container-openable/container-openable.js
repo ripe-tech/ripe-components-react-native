@@ -27,6 +27,7 @@ export class ContainerOpenable extends PureComponent {
             headerPressable: PropTypes.bool,
             headerProps: PropTypes.object,
             showKnob: PropTypes.bool,
+            overlay: PropTypes.bool,
             overlayPress: PropTypes.bool,
             onContentHeight: PropTypes.func,
             onVisible: PropTypes.func,
@@ -44,6 +45,7 @@ export class ContainerOpenable extends PureComponent {
             headerPressable: true,
             headerProps: {},
             showKnob: true,
+            overlay: true,
             overlayPress: true,
             onContentHeight: height => {},
             onVisible: visible => {},
@@ -61,22 +63,24 @@ export class ContainerOpenable extends PureComponent {
             visible: false,
             showOverlay: false,
             overlayOpacity: new Animated.Value(0),
-            contentHeight: new Animated.Value(0)
+            contentHeight: new Animated.Value(0),
+            containerHeight: 0
         };
 
         this.state.contentHeight.addListener(h => this.props.onContentHeight(h.value));
 
         this.headerHeight = 0;
-        this.containerHeight = 0;
         this.containerPosY = 0;
         this.animating = false;
     }
 
     isVisible = () => this.state.visible;
 
-    contentHeight = () => this.containerHeight - this.headerHeight;
+    contentHeight = () => this.state.containerHeight - this.headerHeight;
 
     setContentHeight = height => this.state.contentHeight.setValue(height);
+
+    setContainerHeight = height => this.setState({ containerHeight: height });
 
     setOverlayOpacity = opacity => {
         this.state.overlayOpacity.setValue(opacity);
@@ -160,10 +164,10 @@ export class ContainerOpenable extends PureComponent {
     _onContainerLayout = event => {
         if (this.state.containerHeightLoaded) return;
 
-        this.containerHeight = event.nativeEvent.layout.height;
-        this.containerPosY = event.nativeEvent.layout.y + this.containerHeight;
+        const containerHeight = event.nativeEvent.layout.height;
+        this.containerPosY = event.nativeEvent.layout.y + containerHeight;
 
-        this.setState({ containerHeightLoaded: true });
+        this.setState({ containerHeightLoaded: true, containerHeight: containerHeight });
     };
 
     _onHeaderLayout = event => {
@@ -194,7 +198,7 @@ export class ContainerOpenable extends PureComponent {
             {
                 height: this.state.contentHeight.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [this.headerHeight, this.containerHeight]
+                    outputRange: [this.headerHeight, this.state.containerHeight]
                 })
             }
         ];
@@ -203,7 +207,7 @@ export class ContainerOpenable extends PureComponent {
     _container = () => {
         return (
             <>
-                {this.state.showOverlay ? (
+                {this.props.overlay && this.state.showOverlay ? (
                     <Animated.View
                         style={this._overlayStyle()}
                         onStartShouldSetResponder={e => this.state.showOverlay}
