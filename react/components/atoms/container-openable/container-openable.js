@@ -26,6 +26,7 @@ export class ContainerOpenable extends PureComponent {
             header: PropTypes.element,
             headerPressable: PropTypes.bool,
             headerProps: PropTypes.object,
+            contentProps: PropTypes.object,
             showKnob: PropTypes.bool,
             overlay: PropTypes.bool,
             overlayPress: PropTypes.bool,
@@ -44,6 +45,7 @@ export class ContainerOpenable extends PureComponent {
             header: undefined,
             headerPressable: true,
             headerProps: {},
+            contentProps: {},
             showKnob: true,
             overlay: true,
             overlayPress: true,
@@ -216,6 +218,7 @@ export class ContainerOpenable extends PureComponent {
                 ) : null}
                 <Animated.View
                     style={this._containerStyle()}
+                    {...this.props.contentProps}
                     onLayout={event => this._onContainerLayout(event)}
                 >
                     {this.props.headerPressable ? (
