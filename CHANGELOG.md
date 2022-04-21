@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+*
+
+### Changed
+
+*
+
+### Fixed
+
+*
+
+## [0.22.0] - 2022-04-21
+
+### Added
+
 * New `beforeMessages` prop to `Chat` component - [ripe-robin-revamp/#346](https://github.com/ripe-tech/ripe-robin-revamp/issues/346)
 
 ### Changed
@@ -21,10 +35,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Increase font size for iOS in `Select`
 * Make buttons round for touch feedback for Android
 * Support for no overlay and height control from parent in `ContainerOpenable`
-
-### Fixed
-
-*
 
 ## [0.21.0] - 2022-04-08
 
