@@ -8,7 +8,6 @@ export class ContainerDraggable extends PureComponent {
             childRef: PropTypes.func,
             pressThreshold: PropTypes.number,
             snapCloseThreshold: PropTypes.number,
-            panOnlyOnHeader: PropTypes.bool,
             onVisible: PropTypes.func
         };
     }
@@ -18,7 +17,6 @@ export class ContainerDraggable extends PureComponent {
             childRef: ref => {},
             pressThreshold: 2.5,
             snapCloseThreshold: 0.4,
-            panOnlyOnHeader: true,
             onVisible: visible => {}
         };
     }
@@ -76,8 +74,7 @@ export class ContainerDraggable extends PureComponent {
                 this.props.childRef(ref);
             },
             headerPressable: false,
-            headerProps: this.panResponder.panHandlers,
-            contentProps: this.props.panOnlyOnHeader ? {} : this.panResponder.panHandlers
+            headerProps: this.panResponder.panHandlers
         });
     }
 }
