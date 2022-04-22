@@ -81,8 +81,7 @@ export class ContainerDraggable extends PureComponent {
                 this.props.childRef(ref);
             },
             headerPressable: false,
-            headerProps: this.panResponder.panHandlers,
-            contentProps: this.props.panOnlyOnHeader ? {} : this.panResponder.panHandlers
+            headerProps: this.panResponder.panHandlers
         });
     }
 }
