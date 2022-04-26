@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* Allow gesture movements on the whole container of `ContainerOpenable`, controllable by prop
+* Prop that controls if the `ContainerOpenable` closes on tap
 
 ### Fixed
 

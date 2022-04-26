@@ -8,6 +8,8 @@ export class ContainerDraggable extends PureComponent {
             childRef: PropTypes.func,
             pressThreshold: PropTypes.number,
             snapCloseThreshold: PropTypes.number,
+            panOnlyOnHeader: PropTypes.bool,
+            closeOnTap: PropTypes.bool,
             onVisible: PropTypes.func
         };
     }
@@ -17,6 +19,8 @@ export class ContainerDraggable extends PureComponent {
             childRef: ref => {},
             pressThreshold: 2.5,
             snapCloseThreshold: 0.4,
+            panOnlyOnHeader: true,
+            closeOnTap: true,
             onVisible: visible => {}
         };
     }
@@ -53,10 +57,13 @@ export class ContainerDraggable extends PureComponent {
     };
 
     onPanResponderRelease = (event, gestureState) => {
-        if (!this.dragging) {
+        if (!this.dragging && this.props.closeOnTap) {
             this.child.onHeaderPress();
             return;
         }
+
+        // if no drag was made return immediatly
+        if (!this.contentHeightPercentage) return;
 
         this.dragging = false;
 
