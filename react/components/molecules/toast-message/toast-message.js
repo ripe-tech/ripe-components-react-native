@@ -15,6 +15,7 @@ export class ToastMessage extends PureComponent {
             duration: PropTypes.number,
             animationDuration: PropTypes.number,
             style: ViewPropTypes.style,
+            textStyle: ViewPropTypes.style,
             styles: PropTypes.any
         };
     }
@@ -27,6 +28,7 @@ export class ToastMessage extends PureComponent {
             duration: 5000,
             animationDuration: 300,
             style: {},
+            textStyle: {},
             styles: styles
         };
     }
@@ -68,6 +70,10 @@ export class ToastMessage extends PureComponent {
         }).start();
     }
 
+    _textStyle = () => {
+        return [styles.text, this.props.textStyle];
+    };
+
     _style = () => {
         return [
             styles.toast,
@@ -81,7 +87,7 @@ export class ToastMessage extends PureComponent {
     render() {
         return (
             <Animated.View style={this._style()}>
-                <Text style={styles.text}>{this.props.text}</Text>
+                <Text style={this._textStyle()}>{this.props.text}</Text>
                 {this.props.linkText ? (
                     <Link
                         text={this.props.linkText}
