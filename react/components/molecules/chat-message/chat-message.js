@@ -181,7 +181,9 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         marginTop: 3
     },
-    content: {},
+    content: {
+        paddingTop: 10
+    },
     username: {
         fontFamily: baseStyles.FONT_BOLD,
         marginEnd: 5,
@@ -194,9 +196,6 @@ const styles = StyleSheet.create({
         color: "#a4adb5",
         fontSize: 11,
         lineHeight: 18
-    },
-    text: {
-        marginTop: 4
     },
     status: {
         marginTop: 5,

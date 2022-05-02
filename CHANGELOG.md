@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* Increase top padding in `ChatMessage` content
 
 ## [0.23.0] - 2022-04-29
 
