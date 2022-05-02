@@ -70,10 +70,6 @@ export class ToastMessage extends PureComponent {
         }).start();
     }
 
-    _textStyle = () => {
-        return [styles.text, this.props.textStyle];
-    };
-
     _style = () => {
         return [
             styles.toast,
@@ -82,6 +78,10 @@ export class ToastMessage extends PureComponent {
             },
             this.props.style
         ];
+    };
+
+    _textStyle = () => {
+        return [styles.text, this.props.textStyle];
     };
 
     render() {
