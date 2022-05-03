@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
         lineHeight: 18
     },
     status: {
-        marginTop: 5,
         marginBottom: 3
     },
     replies: {
@@ -210,6 +209,8 @@ const styles = StyleSheet.create({
         marginLeft: 8,
         fontFamily: baseStyles.FONT,
         fontSize: 14,
+        lineHeight: 14,
+        marginTop: 3,
         color: "#6051f2"
     }
 });
