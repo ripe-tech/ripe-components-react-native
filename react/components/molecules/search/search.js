@@ -136,6 +136,9 @@ const styles = StyleSheet.create({
         paddingTop: 0,
         paddingLeft: 15,
         borderRadius: 6,
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "#e4e8f0",
         minHeight: 40,
         backgroundColor: "#ffffff"
     },
