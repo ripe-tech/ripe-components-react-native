@@ -234,9 +234,6 @@ export class Listing extends Component {
     }
 
     _shrinkSearchBar() {
-        // set select text as visible
-        this.setState({ placeholderColorAlpha: 1 });
-
         // animate search bar width to normal
         // and increase dropdown select width
         Animated.timing(this.state.searchWidth, {
@@ -245,7 +242,10 @@ export class Listing extends Component {
             useNativeDriver: false,
             easing: Easing.inOut(Easing.ease)
         }).start(() => {
-            this.setState({ expanded: false });
+            this.setState({
+                expanded: false,
+                placeholderColorAlpha: 1
+            });
         });
     }
 
