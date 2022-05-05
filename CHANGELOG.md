@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Increase top padding in `ChatMessage` content
 * Fix misalignment in replies text in `ChatMessage`
+* Fix the placeholder text appearance in search input expand animation - [ripe-robin-revamp/#329](https://github.com/ripe-tech/ripe-robin-revamp/issues/329)
 
 ## [0.23.0] - 2022-04-29
 
