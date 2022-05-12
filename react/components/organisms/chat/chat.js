@@ -225,7 +225,7 @@ export class Chat extends PureComponent {
                     style={this._chatMessagesContainerStyle()}
                     ref={ref => (this.scrollViewComponent = ref)}
                     onScroll={this.onScroll}
-                    scrollEventThrottle={4}
+                    scrollEventThrottle={13}
                 >
                     {this.props.messages.length === 0 ? (
                         this._renderNoMessages()
