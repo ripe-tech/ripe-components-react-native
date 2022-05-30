@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     },
     text: {
         marginTop: 2,
+        fontSize: Platform.OS === "ios" ? 14 : 12,
         fontFamily: baseStyles.FONT_BOOK,
         color: "#2d2d2d"
     }

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, View, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { dateTimeString, isImage } from "ripe-commons-native";
 
@@ -187,14 +187,14 @@ const styles = StyleSheet.create({
     username: {
         fontFamily: baseStyles.FONT_BOLD,
         marginEnd: 5,
-        fontSize: 14,
+        fontSize: Platform.OS === "ios" ? 14 : 12,
         lineHeight: 18,
         color: "#3e566a"
     },
     date: {
         fontFamily: baseStyles.FONT,
         color: "#a4adb5",
-        fontSize: 11,
+        fontSize: Platform.OS === "ios" ? 11 : 9,
         lineHeight: 18
     },
     status: {
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     repliesText: {
         marginLeft: 8,
         fontFamily: baseStyles.FONT,
-        fontSize: 14,
+        fontSize: Platform.OS === "ios" ? 14 : 12,
         lineHeight: 14,
         marginTop: 3,
         color: "#6051f2"

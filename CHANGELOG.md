@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Allow gesture movements on the whole container of `ContainerOpenable`, controllable by prop
 * Prop that controls if the `ContainerOpenable` closes on tap
+* Adapt chat header state font sizes to fit the content better in Android - [ripe-robin-revamp/#345](https://github.com/ripe-tech/ripe-robin-revamp/issues/345)
 
 ## [0.22.0] - 2022-04-21
 

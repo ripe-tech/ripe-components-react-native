@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontFamily: baseStyles.FONT_BOLD,
-        fontSize: 11,
+        fontSize: Platform.OS === "ios" ? 11 : 9,
         letterSpacing: 0.25,
         marginTop: Platform.OS === "ios" ? 3 : 0
     },
