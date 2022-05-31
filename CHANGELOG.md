@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Add `textStyle` prop to `ToastMessage`
 * Add border to `Search` component
+* Add `renderContentRefreshing` prop to `Listing` allowing content override when refreshing - [ripe-robin-revamp/#360](https://github.com/ripe-tech/ripe-robin-revamp/issues/360)
 
 ### Changed
 
