@@ -212,6 +212,7 @@ export class Chat extends PureComponent {
                 <Image
                     style={styles.noMessagesImage}
                     source={require("./assets/no-messages.png")}
+                    resizeMode={"contain"}
                 />
                 <Text style={styles.noMessagesText}>No messages, yet</Text>
             </View>

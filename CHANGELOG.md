@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Fix the placeholder text appearance in search input expand animation - [ripe-robin-revamp/#329](https://github.com/ripe-tech/ripe-robin-revamp/issues/329)
 * Fix problem with `@react-native-community/eslint-config@3.0.2` that causes the `lint` command to fail
 * Switch deprecated svgo config
+* Cropped `no-message` chat icon
 
 ## [0.23.0] - 2022-04-29
 
