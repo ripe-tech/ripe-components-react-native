@@ -20,6 +20,7 @@ export class Listing extends Component {
             getItems: PropTypes.func,
             itemsRequestLimit: PropTypes.number,
             renderItem: PropTypes.func.isRequired,
+            renderContentRefreshing: PropTypes.func,
             filters: PropTypes.array,
             filtersValue: PropTypes.object,
             itemsSortField: PropTypes.string,
@@ -427,6 +428,45 @@ export class Listing extends Component {
         );
     };
 
+    _renderListing = () => {
+        return (
+            <FlatList
+                ref={el => (this.flatListRef = el)}
+                key={"items"}
+                style={styles.flatList}
+                data={this.state.items}
+                refreshing={this.props.refreshing && this.state.refreshing}
+                onRefresh={this.onRefresh}
+                onEndReached={this.onEndReached}
+                onEndReachedThreshold={this.props.onEndReachedThreshold}
+                renderItem={({ item, index }) => this.props.renderItem(item, index)}
+                keyExtractor={item => String(item.id)}
+                ListEmptyComponent={this._renderEmptyList()}
+                ListFooterComponent={<View style={styles.flatListBottom} />}
+                {...this.props.flatListProps}
+            />
+        );
+    };
+
+    _renderHeader = () => {
+        return (
+            <View
+                style={this._searchingHeaderStyle()}
+                onLayout={event => this._onSearchHeaderViewLayout(event)}
+            >
+                {this._renderSearch()}
+                {this._renderFilters()}
+            </View>
+        );
+    };
+
+    _renderContent = () => {
+        if (this.state.refreshing && this.props.renderContentRefreshing) {
+            return this.props.renderContentRefreshing();
+        }
+        return this._renderListing();
+    };
+
     _renderLoading = () => {
         if (!this.state.loading && !this.props.loading) return null;
         return <ActivityIndicator style={styles.loadingIndicator} size="large" color="#6687f6" />;
@@ -435,28 +475,8 @@ export class Listing extends Component {
     render() {
         return (
             <View style={this._style()}>
-                <View
-                    style={this._searchingHeaderStyle()}
-                    onLayout={event => this._onSearchHeaderViewLayout(event)}
-                >
-                    {this._renderSearch()}
-                    {this._renderFilters()}
-                </View>
-                <FlatList
-                    ref={el => (this.flatListRef = el)}
-                    key={"items"}
-                    style={styles.flatList}
-                    data={this.state.items}
-                    refreshing={this.props.refreshing && this.state.refreshing}
-                    onRefresh={this.onRefresh}
-                    onEndReached={this.onEndReached}
-                    onEndReachedThreshold={this.props.onEndReachedThreshold}
-                    renderItem={({ item, index }) => this.props.renderItem(item, index)}
-                    keyExtractor={item => String(item.id)}
-                    ListEmptyComponent={this._renderEmptyList()}
-                    ListFooterComponent={<View style={styles.flatListBottom} />}
-                    {...this.props.flatListProps}
-                />
+                {this._renderHeader()}
+                {this._renderContent()}
                 {this._renderLoading()}
             </View>
         );
