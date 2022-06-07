@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 * Add node versions `17` and `18` to the Github workflow
+* Add animation instead of `no-message` icon in `chat.js`
 
 ### Fixed
 

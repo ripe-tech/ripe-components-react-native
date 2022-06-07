@@ -1,10 +1,13 @@
 import React, { PureComponent } from "react";
 import { Image, ScrollView, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { WebView } from "react-native-webview";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
 
 import { ChatMessage, RichTextInput } from "../../molecules";
+
+import noMessageAnimation from "./assets/no-messages-animation.svg";
 
 export class Chat extends PureComponent {
     static get propTypes() {
@@ -209,10 +212,7 @@ export class Chat extends PureComponent {
     _renderNoMessages = () => {
         return (
             <View style={styles.noMessages}>
-                <Image
-                    style={styles.noMessagesImage}
-                    source={require("./assets/no-messages.png")}
-                />
+                <WebView style={styles.noMessagesImage} source={noMessageAnimation} />
                 <Text style={styles.noMessagesText}>No messages, yet</Text>
             </View>
         );
@@ -300,8 +300,8 @@ const styles = StyleSheet.create({
         marginTop: "40%"
     },
     noMessagesImage: {
-        width: 150,
-        height: 150
+        height: 150,
+        width: "100%"
     },
     noMessagesText: {
         color: "#57626e",
