@@ -38,6 +38,7 @@ export class KeyValues extends PureComponent {
             nrShowingItems: PropTypes.number,
             expanded: PropTypes.bool,
             style: ViewPropTypes.style,
+            buttonExpandDetailsTextStyle: PropTypes.object,
             styles: PropTypes.any
         };
     }
@@ -49,6 +50,7 @@ export class KeyValues extends PureComponent {
             nrShowingItems: undefined,
             expanded: false,
             style: {},
+            buttonExpandDetailsTextStyle: {},
             styles: styles
         };
     }
@@ -93,13 +95,19 @@ export class KeyValues extends PureComponent {
                 style={styles.buttonExpandDetails}
                 onPress={() => this.toggleItemsListState()}
             >
-                <Text style={styles.buttonExpandDetailsText}>{this._getExpandButtonText()}</Text>
+                <Text style={this._buttonExpandDetailsTextStyle()}>
+                    {this._getExpandButtonText()}
+                </Text>
             </Touchable>
         );
     };
 
     _getExpandButtonText = () => {
         return `View ${this.state.expanded ? "less" : "more"}`;
+    };
+
+    _buttonExpandDetailsTextStyle = () => {
+        return [styles.buttonExpandDetailsText, this.props.buttonExpandDetailsTextStyle];
     };
 
     _style = () => {

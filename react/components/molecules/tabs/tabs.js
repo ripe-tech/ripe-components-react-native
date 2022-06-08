@@ -39,6 +39,7 @@ export class Tabs extends PureComponent {
             hasAnimation: PropTypes.bool,
             hideOnKeyboard: PropTypes.bool,
             style: ViewPropTypes.style,
+            barAnimatedStyle: PropTypes.object,
             styles: PropTypes.any
         };
     }
@@ -133,12 +134,16 @@ export class Tabs extends PureComponent {
         return [styles.tabs, this.props.style, this._isHidden() ? { display: "none" } : {}];
     };
 
+    _barAnimatedStyle = () => {
+        return [styles.barAnimated, this.props.barAnimatedStyle];
+    };
+
     render() {
         return (
             <SafeAreaView style={this._style()}>
                 {this._animatedBarEnabled() ? (
                     <BarAnimated
-                        style={styles.barAnimated}
+                        style={this._barAnimatedStyle()}
                         offset={this.state.animatedBarOffset}
                         width={this.state.animatedBarWidth}
                     />
