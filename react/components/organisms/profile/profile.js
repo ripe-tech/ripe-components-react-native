@@ -18,6 +18,7 @@ export class Profile extends Component {
             detailsTitle: PropTypes.string,
             showDescription: PropTypes.bool,
             showButtons: PropTypes.bool,
+            keyColor: PropTypes.string,
             onBackPress: PropTypes.func,
             onEditPress: PropTypes.func,
             onAvatarPress: PropTypes.func,
@@ -35,6 +36,7 @@ export class Profile extends Component {
             detailsBackgroundColor: "#f6f7f9",
             showDescription: true,
             showButtons: true,
+            keyColor: undefined,
             onPress: () => {},
             onEditPress: () => {},
             onAvatarPress: () => {},
@@ -54,51 +56,61 @@ export class Profile extends Component {
         return [
             {
                 key: "E-mail",
+                keyColor: this.props.keyColor,
                 value: this.props.account.email,
                 ...(this.props.actions?.email || {})
             },
             {
                 key: "Phone",
+                keyColor: this.props.keyColor,
                 value: this.props.account.meta?.phone_number,
                 ...(this.props.actions?.phone || {})
             },
             {
                 key: "Company",
+                keyColor: this.props.keyColor,
                 value: this.props.account.meta?.company,
                 ...(this.props.actions?.company || {})
             },
             {
                 key: "Company URL",
+                keyColor: this.props.keyColor,
                 value: this.props.account.meta?.company_url,
                 ...(this.props.actions?.companyUrl || {})
             },
             {
                 key: "Position",
+                keyColor: this.props.keyColor,
                 value: this.props.account.meta?.position,
                 ...(this.props.actions?.position || {})
             },
             {
                 key: "Birth Date",
+                keyColor: this.props.keyColor,
                 value: this.props.account.meta?.birth_date,
                 ...(this.props.actions?.birthDate || {})
             },
             {
                 key: "Nationality",
+                keyColor: this.props.keyColor,
                 value: this.props.account.meta?.nationality,
                 ...(this.props.actions?.nationality || {})
             },
             {
                 key: "Roles",
+                keyColor: this.props.keyColor,
                 value: this.props.account.roles,
                 ...(this.props.actions?.roles || {})
             },
             {
                 key: "Start Date",
+                keyColor: this.props.keyColor,
                 value: this.props.account.meta?.start_date,
                 ...(this.props.actions?.startDate || {})
             },
             {
                 key: "Github",
+                keyColor: this.props.keyColor,
                 value: this.props.account.meta?.github_username,
                 ...(this.props.actions?.githubUsername || {}),
                 valueComponent: (
@@ -112,6 +124,7 @@ export class Profile extends Component {
             },
             {
                 key: "Twitter",
+                keyColor: this.props.keyColor,
                 value: this.props.account.meta?.twitter_username,
                 ...(this.props.actions?.twitterUsername || {}),
                 valueComponent: (
@@ -125,6 +138,7 @@ export class Profile extends Component {
             },
             {
                 key: "Linkedin",
+                keyColor: this.props.keyColor,
                 value: this.props.account.meta?.linkedin_username,
                 ...(this.props.actions?.linkedinUsername || {}),
                 valueComponent: (
@@ -192,7 +206,12 @@ export class Profile extends Component {
     _renderDetails() {
         return (
             <>
-                <KeyValues items={this._details()} showUnset={false} />
+                <KeyValues
+                    items={this._details()}
+                    showUnset={false}
+                    keyColor={this.props.keyColor}
+                    {...this.props.keyValuesProps}
+                />
                 {this.props.showButtons && (
                     <View style={styles.buttons}>
                         <ButtonGroup
