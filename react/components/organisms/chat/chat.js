@@ -212,7 +212,11 @@ export class Chat extends PureComponent {
     _renderNoMessages = () => {
         return (
             <View style={styles.noMessages}>
-                <WebView style={styles.noMessagesImage} source={noMessageAnimation} />
+                <WebView
+                    style={styles.noMessagesImage}
+                    source={{ html: noMessageAnimation }}
+                    androidLayerType={"software"}
+                />
                 <Text style={styles.noMessagesText}>No messages, yet</Text>
             </View>
         );
@@ -300,10 +304,11 @@ const styles = StyleSheet.create({
         marginTop: "40%"
     },
     noMessagesImage: {
-        height: 150,
+        height: 170,
         width: "100%"
     },
     noMessagesText: {
+        margin: 20,
         color: "#57626e",
         fontFamily: baseStyles.FONT_BOOK
     },
