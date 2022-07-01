@@ -4,9 +4,8 @@ import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
 
-import { Avatar, Icon, Text, Touchable } from "../../atoms";
+import { Avatar, Button, Icon, Text, Touchable } from "../../atoms";
 import { KeyValues } from "../../molecules";
-import { ButtonGroup } from "../button-group";
 
 export class Profile extends Component {
     static get propTypes() {
@@ -157,18 +156,23 @@ export class Profile extends Component {
         const buttons = [];
         if (this.props.account.meta?.phone_number) {
             buttons.push({
-                label: "Share contact",
-                value: "share",
+                style: {
+                    borderColor: "#4a6fe9",
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                    marginBottom: 11
+                },
+                text: "Share contact",
+                textColor: "#4a6fe9",
+                backgroundColor: "#ffffff",
                 onPress: () => this.onShareContactPress()
             });
         }
         buttons.push({
-            label: "Sign out",
-            value: "signout",
-            onPress: () => this.props.onLogoutTouch(),
-            buttonProps: {
-                textColor: "#f86a6a"
-            }
+            text: "Sign out",
+            textColor: "#ffffff",
+            backgroundColor: "#f76969",
+            onPress: () => this.props.onLogoutTouch()
         });
         return buttons;
     }
@@ -214,13 +218,9 @@ export class Profile extends Component {
                 />
                 {this.props.showButtons && (
                     <View style={styles.buttons}>
-                        <ButtonGroup
-                            items={this._buttons()}
-                            orientation={"vertical"}
-                            variant={"flat"}
-                            align={"left"}
-                            toggle={false}
-                        />
+                        {this._buttons().map(buttonProps => (
+                            <Button {...buttonProps} />
+                        ))}
                     </View>
                 )}
             </>
@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
     buttons: {
         height: "100%",
         paddingVertical: 15,
-        backgroundColor: "#f6f7f9",
+        backgroundColor: "#ffffff",
         paddingHorizontal: 15
     },
     signoutButton: {
