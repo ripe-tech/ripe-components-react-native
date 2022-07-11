@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-*
+* Add details prop to `Profile` to override account profile details - [ripe-robin-revamp/#351](https://github.com/ripe-tech/ripe-robin-revamp/issues/351)
 
 ### Changed
 

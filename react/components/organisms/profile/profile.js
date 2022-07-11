@@ -15,6 +15,7 @@ export class Profile extends Component {
             actions: PropTypes.object,
             backButton: PropTypes.bool,
             editButton: PropTypes.bool,
+            details: PropTypes.array,
             detailsTitle: PropTypes.string,
             showDescription: PropTypes.bool,
             showButtons: PropTypes.bool,
@@ -32,6 +33,7 @@ export class Profile extends Component {
             actions: {},
             editButton: false,
             backButton: false,
+            details: null,
             detailsTitle: "Account Details",
             detailsBackgroundColor: "#f6f7f9",
             showDescription: true,
@@ -53,6 +55,7 @@ export class Profile extends Component {
     }
 
     _details() {
+        if (this.props.details) return this.props.details;
         return [
             {
                 key: "E-mail",
