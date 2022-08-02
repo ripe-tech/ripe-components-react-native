@@ -12,6 +12,7 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
         return {
             status: PropTypes.string.isRequired,
             text: PropTypes.string,
+            backgroundColor: PropTypes.string,
             tagColor: PropTypes.string,
             tagBackgroundColor: PropTypes.string,
             tagBorderColor: PropTypes.string,
@@ -23,8 +24,8 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
     static get defaultProps() {
         return {
             text: "Changed order status to",
-            backgroundColor: "rgba(96, 81, 242, 0.06)",
-            borderColor: "rgba(96, 81, 242, 0.4)",
+            backgroundColor: "#6051f20f",
+            borderColor: "#6051f266",
             borderWith: 0,
             tagColor: "#57626e",
             tagBackgroundColor: "#eceef1",

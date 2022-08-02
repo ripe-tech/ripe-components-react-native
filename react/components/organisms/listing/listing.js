@@ -38,6 +38,7 @@ export class Listing extends Component {
             onSearch: PropTypes.func,
             onSearchBlur: PropTypes.func,
             onSearchFocus: PropTypes.func,
+            loadingColor: PropTypes.string,
             style: ViewPropTypes.style,
             scrollViewStyle: ViewPropTypes.style,
             scrollViewContainerStyle: ViewPropTypes.style,
@@ -66,6 +67,7 @@ export class Listing extends Component {
             onSearch: async () => {},
             onSearchBlur: async () => {},
             onSearchFocus: async () => {},
+            loadingColor: "#6687f6",
             style: {},
             scrollViewStyle: {},
             scrollViewContainerStyle: {},
@@ -469,7 +471,13 @@ export class Listing extends Component {
 
     _renderLoading = () => {
         if (!this.state.loading && !this.props.loading) return null;
-        return <ActivityIndicator style={styles.loadingIndicator} size="large" color="#6687f6" />;
+        return (
+            <ActivityIndicator
+                style={styles.loadingIndicator}
+                size="large"
+                color={this.props.loadingColor}
+            />
+        );
     };
 
     render() {

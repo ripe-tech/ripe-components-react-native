@@ -35,6 +35,7 @@ export class Chat extends PureComponent {
             aggregationThreshold: PropTypes.number,
             animateScrollBottom: PropTypes.bool,
             imagePlaceholder: PropTypes.object,
+            repliesTextColor: PropTypes.string,
             onNewMessage: PropTypes.func,
             onScrollBottom: PropTypes.func,
             onScroll: PropTypes.func,
@@ -58,6 +59,7 @@ export class Chat extends PureComponent {
             aggregationThreshold: 3600,
             animateScrollBottom: true,
             imagePlaceholder: undefined,
+            repliesTextColor: "#6051f2",
             onNewMessage: () => {},
             onScrollBottom: () => {},
             onScroll: event => {},
@@ -246,6 +248,7 @@ export class Chat extends PureComponent {
                                         status={message.status}
                                         statusProps={message.statusProps}
                                         replies={message.replies}
+                                        repliesTextColor={this.props.repliesTextColor}
                                         repliesAvatars={message.repliesAvatars}
                                         attachments={message.attachments}
                                         onPress={message.onPress}
