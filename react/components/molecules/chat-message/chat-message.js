@@ -19,6 +19,7 @@ export class ChatMessage extends PureComponent {
             status: PropTypes.string,
             statusProps: PropTypes.object,
             replies: PropTypes.number,
+            repliesTextColor: PropTypes.string,
             repliesAvatars: PropTypes.array,
             attachments: PropTypes.arrayOf(
                 PropTypes.exact({
@@ -43,6 +44,7 @@ export class ChatMessage extends PureComponent {
             status: undefined,
             statusProps: {},
             replies: undefined,
+            repliesTextColor: "#6051f2",
             repliesAvatars: [],
             attachments: [],
             imagePlaceholder: undefined,
@@ -67,6 +69,10 @@ export class ChatMessage extends PureComponent {
 
     _messageStyle = () => {
         return [styles.message, this.props.messageStyle];
+    };
+
+    _repliesTextStyle = () => {
+        return [styles.repliesText, { color: this.props.repliesTextColor }];
     };
 
     _renderHeader = () => {
@@ -101,7 +107,7 @@ export class ChatMessage extends PureComponent {
         return (
             <View style={styles.replies}>
                 <AvatarList avatars={this.props.repliesAvatars} size={24} />
-                <Text style={styles.repliesText}>
+                <Text style={this._repliesTextStyle()}>
                     {this.props.replies} {this.props.replies > 1 ? "replies" : "reply"}
                 </Text>
             </View>
@@ -210,8 +216,7 @@ const styles = StyleSheet.create({
         fontFamily: baseStyles.FONT,
         fontSize: 14,
         lineHeight: 14,
-        marginTop: 3,
-        color: "#6051f2"
+        marginTop: 3
     }
 });
 
