@@ -9,16 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+*
+
+### Changed
+
+*
+
+### Fixed
+
+*
+
+## [0.25.0] - 2022-08-03
+
+### Added
+
 * Add details prop to `Profile` to override account profile details - [ripe-robin-revamp/#351](https://github.com/ripe-tech/ripe-robin-revamp/issues/351)
 * Add more color scheme props to `Chat` and `Listing` components - [ripe-robin-revamp/#372](https://github.com/ripe-tech/ripe-robin-revamp/issues/372)
 
 ### Changed
 
 * Adapt to latest profile buttons design - [#392](https://github.com/ripe-tech/ripe-robin-revamp/issues/392)
-
-### Fixed
-
-*
 
 ## [0.24.0] - 2022-06-20
 
