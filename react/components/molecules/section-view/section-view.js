@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -8,7 +8,7 @@ export class SectionView extends PureComponent {
     static get propTypes() {
         return {
             text: PropTypes.string.isRequired,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

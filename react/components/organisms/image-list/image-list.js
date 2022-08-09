@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Dimensions, LayoutAnimation, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Dimensions, LayoutAnimation, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { pickImageCamera } from "ripe-commons-native";
 
@@ -14,7 +14,7 @@ export class ImageList extends PureComponent {
             enableRemove: PropTypes.bool,
             onAddImage: PropTypes.func,
             onRemoveImage: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

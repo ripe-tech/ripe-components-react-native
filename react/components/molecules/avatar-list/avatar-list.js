@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -14,8 +14,8 @@ export class AvatarList extends mix(PureComponent).with(IdentifiableMixin) {
             size: PropTypes.number,
             avatarProps: PropTypes.object,
             visibleAvatars: PropTypes.number,
-            style: ViewPropTypes.style,
-            textStyle: ViewPropTypes.style
+            style: PropTypes.any,
+            textStyle: PropTypes.any
         };
     }
 

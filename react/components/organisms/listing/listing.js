@@ -39,12 +39,12 @@ export class Listing extends Component {
             onSearchBlur: PropTypes.func,
             onSearchFocus: PropTypes.func,
             loadingColor: PropTypes.string,
-            style: ViewPropTypes.style,
-            scrollViewStyle: ViewPropTypes.style,
-            scrollViewContainerStyle: ViewPropTypes.style,
-            searchingHeaderStyle: ViewPropTypes.style,
-            searchStyle: ViewPropTypes.style,
-            filtersStyle: ViewPropTypes.style,
+            style: PropTypes.any,
+            scrollViewStyle: PropTypes.any,
+            scrollViewContainerStyle: PropTypes.any,
+            searchingHeaderStyle: PropTypes.any,
+            searchStyle: PropTypes.any,
+            filtersStyle: PropTypes.any,
             styles: PropTypes.any
         };
     }

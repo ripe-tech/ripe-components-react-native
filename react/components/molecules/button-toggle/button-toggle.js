@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes } from "react-native";
+import { StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { capitalize } from "ripe-commons-native";
 import { mix } from "yonius";
@@ -24,7 +24,7 @@ export class ButtonToggle extends mix(PureComponent).with(IdentifiableMixin) {
             buttonProps: PropTypes.object,
             onPress: PropTypes.func,
             onUpdateActive: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

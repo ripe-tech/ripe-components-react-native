@@ -26,7 +26,7 @@ export class Touchable extends PureComponent {
             onPress: PropTypes.func,
             onPressIn: PropTypes.func,
             onPressOut: PropTypes.func,
-            style: ViewPropTypes.style
+            style: PropTypes.any
         };
     }
 

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, ViewPropTypes } from "react-native";
+import { Animated, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -16,7 +16,7 @@ export class InputAnimated extends mix(PureComponent).with(IdentifiableMixin) {
             placeholder: PropTypes.string,
             value: PropTypes.string,
             secureTextEntry: PropTypes.bool,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             onValueUpdate: PropTypes.func,
             onBlur: PropTypes.func,
             onFocus: PropTypes.func,

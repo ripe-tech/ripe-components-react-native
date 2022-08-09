@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { isTabletSize } from "ripe-commons-native";
 
@@ -37,7 +37,7 @@ export class KeyValues extends PureComponent {
             showUnset: PropTypes.bool,
             nrShowingItems: PropTypes.number,
             expanded: PropTypes.bool,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             buttonExpandDetailsTextStyle: PropTypes.object,
             styles: PropTypes.any
         };

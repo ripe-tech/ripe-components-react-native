@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Animated, StyleSheet, Text, ViewPropTypes } from "react-native";
+import { Animated, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -14,7 +14,7 @@ export class Badge extends Component {
             animationDuration: PropTypes.number,
             backgroundColor: PropTypes.string,
             color: PropTypes.string,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ActivityIndicator, Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { ActivityIndicator, Platform, StyleSheet, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
@@ -43,8 +43,8 @@ export class Button extends mix(PureComponent).with(IdentifiableMixin) {
             gradientEnd: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
-            containerStyle: ViewPropTypes.style,
+            style: PropTypes.any,
+            containerStyle: PropTypes.any,
             styles: PropTypes.any
         };
     }

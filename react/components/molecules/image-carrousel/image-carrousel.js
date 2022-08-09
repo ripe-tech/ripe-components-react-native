@@ -22,7 +22,7 @@ export class ImageCarrousel extends PureComponent {
             resizeModeFullScreen: PropTypes.string,
             images: PropTypes.array,
             onVisible: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

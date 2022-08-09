@@ -45,7 +45,7 @@ export class ButtonTab extends mix(PureComponent).with(IdentifiableMixin) {
             disabled: PropTypes.bool,
             iconProps: PropTypes.object,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

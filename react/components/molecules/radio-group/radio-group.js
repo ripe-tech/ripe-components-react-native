@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { mix } from "yonius";
 import PropTypes from "prop-types";
 
@@ -24,7 +24,7 @@ export class RadioGroup extends mix(PureComponent).with(IdentifiableMixin) {
             beforeItem: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
             afterItem: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
             onUpdateValue: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

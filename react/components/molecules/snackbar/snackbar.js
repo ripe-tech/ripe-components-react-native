@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
+import { Animated, Platform, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -15,7 +15,7 @@ export class Snackbar extends mix(PureComponent).with(IdentifiableMixin) {
             duration: PropTypes.number,
             animationDuration: PropTypes.number,
             onActionPress: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

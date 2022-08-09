@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { capitalize } from "ripe-commons-native";
 import { mix } from "yonius";
@@ -19,7 +19,7 @@ export class Checkbox extends mix(PureComponent).with(IdentifiableMixin) {
             size: PropTypes.number,
             variant: PropTypes.string,
             onUpdateChecked: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { equal, mix } from "yonius";
 
@@ -24,7 +24,7 @@ export class CheckboxGroup extends mix(PureComponent).with(IdentifiableMixin) {
             beforeItem: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
             afterItem: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
             onUpdateValues: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

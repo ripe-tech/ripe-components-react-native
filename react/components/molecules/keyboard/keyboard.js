@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Animated, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Animated, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 
 import GraphemeSplitter from "grapheme-splitter";
@@ -17,9 +17,9 @@ export class Keyboard extends Component {
             onBackspaceLongPress: PropTypes.func,
             onKeyPress: PropTypes.func,
             onKeyLongPress: PropTypes.func,
-            style: ViewPropTypes.style,
-            keyStyle: ViewPropTypes.style,
-            keyContainerStyle: ViewPropTypes.style
+            style: PropTypes.any,
+            keyStyle: PropTypes.any,
+            keyContainerStyle: PropTypes.any
         };
     }
 

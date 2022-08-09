@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Dimensions, ScrollView, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { capitalize } from "ripe-commons-native";
 
@@ -24,7 +24,7 @@ export class TabsText extends PureComponent {
             parentWidth: PropTypes.number,
             onTabChange: PropTypes.func.isRequired,
             onSelectedTabPress: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, Dimensions, Modal, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Animated, Dimensions, Modal, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import {
     GestureHandlerRootView,
@@ -33,8 +33,8 @@ export class Lightbox extends PureComponent {
             visible: PropTypes.bool,
             placeholder: PropTypes.object,
             onVisible: PropTypes.func,
-            style: ViewPropTypes.style,
-            imageStyle: ViewPropTypes.style,
+            style: PropTypes.any,
+            imageStyle: PropTypes.any,
             styles: PropTypes.any
         };
     }

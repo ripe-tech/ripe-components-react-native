@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import SafeAreaView from "react-native-safe-area-view";
 import { mix } from "yonius";
@@ -25,7 +25,7 @@ export class Header extends mix(PureComponent).with(IdentifiableMixin) {
             }),
             onButtonLeftPress: PropTypes.func,
             onButtonRightPress: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

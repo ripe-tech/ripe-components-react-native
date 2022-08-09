@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Linking, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -19,7 +19,7 @@ export class Attachment extends Component {
             attachmentIconColor: PropTypes.string,
             attachmentIconBackgroundColor: PropTypes.string,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

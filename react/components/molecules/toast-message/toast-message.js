@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, Platform, StyleSheet, ViewPropTypes } from "react-native";
+import { Animated, Platform, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -14,8 +14,8 @@ export class ToastMessage extends PureComponent {
             linkUrl: PropTypes.string,
             duration: PropTypes.number,
             animationDuration: PropTypes.number,
-            style: ViewPropTypes.style,
-            textStyle: ViewPropTypes.style,
+            style: PropTypes.any,
+            textStyle: PropTypes.any,
             styles: PropTypes.any
         };
     }

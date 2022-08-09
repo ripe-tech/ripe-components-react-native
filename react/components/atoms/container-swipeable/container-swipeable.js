@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, Dimensions, PanResponder, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Animated, Dimensions, PanResponder, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
@@ -26,7 +26,7 @@ export class ContainerSwipeable extends PureComponent {
             rightOptionGradientLocations: PropTypes.arrayOf(PropTypes.number),
             onLeftOptionTrigger: PropTypes.func,
             onRightOptionTrigger: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

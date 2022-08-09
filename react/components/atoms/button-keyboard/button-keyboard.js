@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 import { capitalize, isTabletSize } from "ripe-commons-native";
@@ -19,7 +19,7 @@ export class ButtonKeyboard extends mix(PureComponent).with(IdentifiableMixin) {
             variant: PropTypes.string,
             onPress: PropTypes.func,
             onLongPress: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

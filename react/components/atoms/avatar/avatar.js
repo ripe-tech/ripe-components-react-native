@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Image, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { equal, mix } from "yonius";
 
@@ -25,7 +25,7 @@ export class Avatar extends mix(PureComponent).with(IdentifiableMixin) {
             imageProps: PropTypes.object,
             onPress: PropTypes.func,
             onError: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }
