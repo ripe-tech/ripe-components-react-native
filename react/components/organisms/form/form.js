@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, ScrollView, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles, notify } from "../../../util";
@@ -26,7 +26,7 @@ export class Form extends PureComponent {
             onUpdateValues: PropTypes.func,
             onDiscard: PropTypes.func,
             onSave: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

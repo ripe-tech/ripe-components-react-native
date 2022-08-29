@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Image, ScrollView, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 import PropTypes from "prop-types";
 
@@ -44,12 +44,12 @@ export class Chat extends PureComponent {
             onScroll: PropTypes.func,
             onInputFocus: PropTypes.func,
             onInputBlur: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any,
-            chatMessageStyle: ViewPropTypes.style,
-            chatMessagesContainerStyle: ViewPropTypes.style,
-            chatMessagesContentStyle: ViewPropTypes.style,
-            chatMessageContentStyle: ViewPropTypes.style
+            chatMessageStyle: PropTypes.any,
+            chatMessagesContainerStyle: PropTypes.any,
+            chatMessagesContentStyle: PropTypes.any,
+            chatMessageContentStyle: PropTypes.any
         };
     }
 

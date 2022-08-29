@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 import { capitalize, dateTimeString } from "ripe-commons-native";
@@ -23,7 +23,7 @@ export class Item extends PureComponent {
             variant: PropTypes.string,
             activeOpacity: PropTypes.number,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

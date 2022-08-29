@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, StyleSheet, ViewPropTypes } from "react-native";
+import { Animated, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 
 export class BarAnimated extends PureComponent {
@@ -8,7 +8,7 @@ export class BarAnimated extends PureComponent {
             offset: PropTypes.number.isRequired,
             width: PropTypes.number.isRequired,
             color: PropTypes.string,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

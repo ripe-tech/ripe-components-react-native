@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -16,7 +16,7 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
             tagColor: PropTypes.string,
             tagBackgroundColor: PropTypes.string,
             tagBorderColor: PropTypes.string,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

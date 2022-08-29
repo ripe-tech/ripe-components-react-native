@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -21,9 +21,9 @@ export class ButtonGroup extends mix(PureComponent).with(IdentifiableMixin) {
             orientation: PropTypes.string,
             buttonComponent: PropTypes.any,
             onUpdateValue: PropTypes.func,
-            style: ViewPropTypes.style,
-            buttonStyle: ViewPropTypes.style,
-            buttonActiveStyle: ViewPropTypes.style,
+            style: PropTypes.any,
+            buttonStyle: PropTypes.any,
+            buttonActiveStyle: PropTypes.any,
             styles: PropTypes.any
         };
     }

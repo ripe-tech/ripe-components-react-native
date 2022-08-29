@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, LayoutAnimation, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Animated, LayoutAnimation, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { pickDocuments, pickImageCamera } from "ripe-commons-native";
 
@@ -20,7 +20,7 @@ export class RichTextInput extends PureComponent {
             onSendMessage: PropTypes.func,
             onFocus: PropTypes.func,
             onBlur: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

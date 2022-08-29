@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { View, ViewPropTypes } from "react-native";
+import { View } from "react-native";
 import PropTypes from "prop-types";
 
 import { KeyValuePlaceholder } from "../key-value-placeholder";
@@ -11,7 +11,7 @@ export class KeyValuesPlaceholder extends PureComponent {
             locations: PropTypes.arrayOf(PropTypes.number).isRequired,
             numberOfItems: PropTypes.number,
             border: PropTypes.string,
-            style: ViewPropTypes.style
+            style: PropTypes.any
         };
     }
 

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import { capitalize } from "ripe-commons-native";
 import { mix } from "yonius";
@@ -21,7 +21,7 @@ export class Tag extends mix(PureComponent).with(IdentifiableMixin) {
             iconHeight: PropTypes.number,
             size: PropTypes.string,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

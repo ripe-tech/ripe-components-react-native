@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { capitalize } from "ripe-commons-native";
 
@@ -26,8 +26,8 @@ export class Card extends PureComponent {
             itemProps: PropTypes.object,
             onPress: PropTypes.func,
             onLongPress: PropTypes.func,
-            contentStyle: ViewPropTypes.style,
-            style: ViewPropTypes.style,
+            contentStyle: PropTypes.any,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

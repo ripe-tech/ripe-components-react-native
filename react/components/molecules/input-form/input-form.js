@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -18,7 +18,7 @@ export class InputForm extends mix(PureComponent).with(IdentifiableMixin) {
             onValueUpdate: PropTypes.func,
             onBlur: PropTypes.func,
             onFocus: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ActivityIndicator, StyleSheet, TouchableOpacity, ViewPropTypes } from "react-native";
+import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -27,7 +27,7 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
                 left: PropTypes.number
             }),
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

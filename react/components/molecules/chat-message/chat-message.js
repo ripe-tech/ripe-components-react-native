@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, ViewPropTypes } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { dateTimeString, isImage } from "ripe-commons-native";
 
@@ -30,8 +30,8 @@ export class ChatMessage extends PureComponent {
             imagePlaceholder: PropTypes.object,
             underlayColor: PropTypes.string,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
-            messageStyle: ViewPropTypes.style
+            style: PropTypes.any,
+            messageStyle: PropTypes.any
         };
     }
 

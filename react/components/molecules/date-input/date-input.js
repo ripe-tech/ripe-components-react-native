@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, ViewPropTypes, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { dateStringUTC } from "ripe-commons";
 import { mix } from "yonius";
@@ -18,7 +18,7 @@ export class DateInput extends mix(PureComponent).with(IdentifiableMixin) {
             activeOpacity: PropTypes.number,
             showBorders: PropTypes.bool,
             onValueUpdate: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

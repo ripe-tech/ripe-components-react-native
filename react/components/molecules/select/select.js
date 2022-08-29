@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, ViewPropTypes, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import RNPickerSelect from "react-native-picker-select";
 import { equal, mix } from "yonius";
@@ -21,7 +21,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             fixAndroidTouchableBug: PropTypes.bool,
             width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             onUpdateValue: PropTypes.func,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             placeholderStyle: PropTypes.object,
             iconContainerStyle: PropTypes.object,
             inputAndroidStyle: PropTypes.object,

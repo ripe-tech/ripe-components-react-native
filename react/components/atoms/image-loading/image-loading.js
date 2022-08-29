@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Image, Platform, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Image, Platform, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { equal } from "yonius";
@@ -15,8 +15,8 @@ export class ImageLoading extends PureComponent {
             borderRadius: PropTypes.number,
             resizeMode: PropTypes.string,
             placeholder: PropTypes.object,
-            style: ViewPropTypes.style,
-            imageStyle: ViewPropTypes.style,
+            style: PropTypes.any,
+            imageStyle: PropTypes.any,
             styles: PropTypes.any
         };
     }

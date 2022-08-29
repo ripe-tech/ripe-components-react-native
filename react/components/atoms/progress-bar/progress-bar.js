@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Animated, Easing, Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Animated, Easing, Platform, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { mix } from "yonius";
 
@@ -14,7 +14,7 @@ export class ProgressBar extends mix(PureComponent).with(IdentifiableMixin) {
             showLabel: PropTypes.bool,
             fillTransitionTime: PropTypes.number,
             fillTransitionMode: PropTypes.string,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

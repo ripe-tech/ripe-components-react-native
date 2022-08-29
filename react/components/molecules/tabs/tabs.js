@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Keyboard, StyleSheet, View, ViewPropTypes } from "react-native";
+import { Keyboard, StyleSheet, View } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import PropTypes from "prop-types";
 
@@ -38,7 +38,7 @@ export class Tabs extends PureComponent {
             selectedTab: PropTypes.number,
             hasAnimation: PropTypes.bool,
             hideOnKeyboard: PropTypes.bool,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             barAnimatedStyle: PropTypes.object,
             styles: PropTypes.any
         };

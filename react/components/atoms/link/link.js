@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Linking, StyleSheet, Text, TouchableOpacity, ViewPropTypes } from "react-native";
+import { Linking, StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -12,7 +12,7 @@ export class Link extends PureComponent {
             onPress: PropTypes.func,
             color: PropTypes.string,
             styleText: Text.propTypes.style,
-            style: ViewPropTypes.style,
+            style: PropTypes.any,
             styles: PropTypes.any
         };
     }

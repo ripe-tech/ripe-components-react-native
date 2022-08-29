@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -20,7 +20,7 @@ export class ImageListItemAdd extends PureComponent {
             textColor: PropTypes.string,
             size: PropTypes.number.isRequired,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style
+            style: PropTypes.any
         };
     }
 

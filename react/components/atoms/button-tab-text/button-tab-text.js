@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Platform, StyleSheet, Text, View, ViewPropTypes } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { capitalize } from "ripe-commons-native";
 import { mix } from "yonius";
@@ -22,8 +22,8 @@ export class ButtonTabText extends mix(PureComponent).with(IdentifiableMixin) {
             activeOpacity: PropTypes.number,
             variant: PropTypes.string,
             onPress: PropTypes.func,
-            style: ViewPropTypes.style,
-            buttonStyle: ViewPropTypes.style,
+            style: PropTypes.any,
+            buttonStyle: PropTypes.any,
             styles: PropTypes.any
         };
     }
