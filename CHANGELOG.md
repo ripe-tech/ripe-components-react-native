@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* Adapt component labels to come from props allowing for label translations - [ripe-robin-revamp/#377](https://github.com/ripe-tech/ripe-robin-revamp/issues/377)
 
 ### Fixed
 
