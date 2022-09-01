@@ -29,6 +29,7 @@ export class Listing extends Component {
             search: PropTypes.bool,
             loading: PropTypes.bool,
             refreshing: PropTypes.bool,
+            searchPlaceholder: PropTypes.string,
             searchHeaderLayout: PropTypes.oneOf(["horizontal", "vertical"]),
             expandableSearchBar: PropTypes.bool,
             expandAnimationDuration: PropTypes.number,
@@ -59,6 +60,7 @@ export class Listing extends Component {
             search: true,
             loading: false,
             refreshing: false,
+            searchPlaceholder: "Search",
             searchHeaderLayout: "horizontal",
             expandableSearchBar: false,
             expandAnimationDuration: 200,
@@ -367,6 +369,7 @@ export class Listing extends Component {
         return (
             <Search
                 style={this._searchStyle()}
+                placeholder={this.props.searchPlaceholder}
                 onValue={this.onSearch}
                 onFocus={this.onSearchFocus}
                 onBlur={this.onSearchBlur}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, Share, StyleSheet, View } from "react-native";
+import { ScrollView, Share, StyleSheet, TouchableNativeFeedbackBase, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -12,6 +12,7 @@ export class Profile extends Component {
         return {
             account: PropTypes.object.isRequired,
             actions: PropTypes.object,
+            buttons: PropTypes.array,
             backButton: PropTypes.bool,
             editButton: PropTypes.bool,
             details: PropTypes.array,
@@ -30,6 +31,7 @@ export class Profile extends Component {
     static get defaultProps() {
         return {
             actions: {},
+            buttons: null,
             editButton: false,
             backButton: false,
             details: null,
@@ -156,6 +158,7 @@ export class Profile extends Component {
     }
 
     _buttons() {
+        if (this.props.buttons?.length) return this.props.buttons;
         const buttons = [];
         if (this.props.account.meta?.phone_number) {
             buttons.push({

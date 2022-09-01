@@ -37,6 +37,8 @@ export class KeyValues extends PureComponent {
             showUnset: PropTypes.bool,
             nrShowingItems: PropTypes.number,
             expanded: PropTypes.bool,
+            viewMoreLabel: PropTypes.string,
+            viewLessLabel: PropTypes.string,
             style: PropTypes.any,
             buttonExpandDetailsTextStyle: PropTypes.object,
             styles: PropTypes.any
@@ -49,6 +51,8 @@ export class KeyValues extends PureComponent {
             showUnset: true,
             nrShowingItems: undefined,
             expanded: false,
+            viewMoreLabel: "View more",
+            viewLessLabel: "View less",
             style: {},
             buttonExpandDetailsTextStyle: {},
             styles: styles
@@ -103,7 +107,7 @@ export class KeyValues extends PureComponent {
     };
 
     _getExpandButtonText = () => {
-        return `View ${this.state.expanded ? "less" : "more"}`;
+        return this.state.expanded ? this.props.viewLessLabel : this.props.viewMoreLabel;
     };
 
     _buttonExpandDetailsTextStyle = () => {
