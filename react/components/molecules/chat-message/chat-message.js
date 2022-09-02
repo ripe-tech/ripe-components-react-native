@@ -113,9 +113,7 @@ export class ChatMessage extends PureComponent {
                 <AvatarList avatars={this.props.repliesAvatars} size={24} />
                 <Text style={this._repliesTextStyle()}>
                     {this.props.replies}{" "}
-                    {this.props.replies > 1
-                        ? this.props.repliesLabel
-                        : this.props.replyLabel}
+                    {this.props.replies > 1 ? this.props.repliesLabel : this.props.replyLabel}
                 </Text>
             </View>
         );
