@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, Share, StyleSheet, TouchableNativeFeedbackBase, View } from "react-native";
+import { ScrollView, Share, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -17,6 +17,8 @@ export class Profile extends Component {
             editButton: PropTypes.bool,
             details: PropTypes.array,
             detailsTitle: PropTypes.string,
+            shareContactText: PropTypes.string,
+            signOutText: PropTypes.string,
             showDescription: PropTypes.bool,
             showButtons: PropTypes.bool,
             keyColor: PropTypes.string,
@@ -36,6 +38,8 @@ export class Profile extends Component {
             backButton: false,
             details: null,
             detailsTitle: "Account Details",
+            shareContactText: "Share contact",
+            signOutText: "Sign out",
             detailsBackgroundColor: "#f6f7f9",
             showDescription: true,
             showButtons: true,
@@ -168,14 +172,14 @@ export class Profile extends Component {
                     borderWidth: 1,
                     marginBottom: 11
                 },
-                text: "Share contact",
+                text: this.props.shareContactText,
                 textColor: "#4a6fe9",
                 backgroundColor: "#ffffff",
                 onPress: () => this.onShareContactPress()
             });
         }
         buttons.push({
-            text: "Sign out",
+            text: this.props.signOutText,
             textColor: "#ffffff",
             backgroundColor: "#f76969",
             onPress: () => this.props.onLogoutTouch()

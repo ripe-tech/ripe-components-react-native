@@ -19,8 +19,8 @@ export class ChatMessage extends PureComponent {
             status: PropTypes.string,
             statusProps: PropTypes.object,
             replies: PropTypes.number,
-            repliesLabelSingular: PropTypes.string,
-            repliesLabelPlural: PropTypes.string,
+            replyLabel: PropTypes.string,
+            repliesLabel: PropTypes.string,
             repliesTextColor: PropTypes.string,
             repliesAvatars: PropTypes.array,
             attachments: PropTypes.arrayOf(
@@ -46,8 +46,8 @@ export class ChatMessage extends PureComponent {
             status: undefined,
             statusProps: {},
             replies: undefined,
-            repliesLabelSingular: "reply",
-            repliesLabelPlural: "replies",
+            replyLabel: "reply",
+            repliesLabel: "replies",
             repliesTextColor: "#6051f2",
             repliesAvatars: [],
             attachments: [],
@@ -114,8 +114,8 @@ export class ChatMessage extends PureComponent {
                 <Text style={this._repliesTextStyle()}>
                     {this.props.replies}{" "}
                     {this.props.replies > 1
-                        ? this.props.repliesLabelPlural
-                        : this.props.repliesLabelSingular}
+                        ? this.props.repliesLabel
+                        : this.props.replyLabel}
                 </Text>
             </View>
         );

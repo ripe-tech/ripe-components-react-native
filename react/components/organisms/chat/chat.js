@@ -26,8 +26,8 @@ export class Chat extends PureComponent {
                     status: PropTypes.string,
                     statusProps: PropTypes.object,
                     replies: PropTypes.number,
-                    repliesLabelSingular: PropTypes.string,
-                    repliesLabelPlural: PropTypes.string,
+                    replyLabel: PropTypes.string,
+                    repliesLabel: PropTypes.string,
                     repliesAvatars: PropTypes.array,
                     onPress: PropTypes.func,
                     attachments: PropTypes.arrayOf(
@@ -259,8 +259,8 @@ export class Chat extends PureComponent {
                                         status={message.status}
                                         statusProps={message.statusProps}
                                         replies={message.replies}
-                                        repliesLabelSingular={message.repliesLabelPlural}
-                                        repliesLabelPlural={message.repliesLabelPlural}
+                                        replyLabel={message.repliesLabel}
+                                        repliesLabel={message.repliesLabel}
                                         repliesTextColor={this.props.repliesTextColor}
                                         repliesAvatars={message.repliesAvatars}
                                         attachments={message.attachments}
