@@ -12,6 +12,7 @@ export class ImageList extends PureComponent {
             images: PropTypes.arrayOf(PropTypes.shape({ uri: PropTypes.string.isRequired })),
             enableAdd: PropTypes.bool,
             enableRemove: PropTypes.bool,
+            addImageLabel: PropTypes.string,
             onAddImage: PropTypes.func,
             onRemoveImage: PropTypes.func,
             style: PropTypes.any,
@@ -24,6 +25,7 @@ export class ImageList extends PureComponent {
             images: [],
             enableAdd: true,
             enableRemove: true,
+            addImageLabel: "Add photo",
             onAddImage: () => {},
             onRemoveImage: () => {},
             style: {},
@@ -110,7 +112,7 @@ export class ImageList extends PureComponent {
                         iconStrokeWidth={2}
                         iconHeight={26}
                         iconWidth={26}
-                        text={"Add photo"}
+                        text={this.props.addImageLabel}
                         onPress={() => this._onPressAdd()}
                         style={styles.buttonAdd}
                     />

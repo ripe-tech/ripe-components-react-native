@@ -11,6 +11,7 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
     static get propTypes() {
         return {
             status: PropTypes.string.isRequired,
+            statusLabel: PropTypes.string,
             text: PropTypes.string,
             backgroundColor: PropTypes.string,
             tagColor: PropTypes.string,
@@ -35,6 +36,11 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
         };
     }
 
+    _statusText() {
+        const statusText = this.props.statusLabel || this.props.status;
+        return statusText.toUpperCase();
+    }
+
     _style() {
         return [
             styles.statusEntry,
@@ -52,7 +58,7 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
             <View style={this._style()} {...this.id("status-entry")}>
                 <Text style={styles.text}>{this.props.text}</Text>
                 <Tag
-                    text={this.props.status.toUpperCase()}
+                    text={this._statusText()}
                     color={this.props.tagColor}
                     backgroundColor={this.props.tagBackgroundColor}
                     borderColor={this.props.tagBorderColor}

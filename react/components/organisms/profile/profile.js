@@ -12,10 +12,13 @@ export class Profile extends Component {
         return {
             account: PropTypes.object.isRequired,
             actions: PropTypes.object,
+            buttons: PropTypes.array,
             backButton: PropTypes.bool,
             editButton: PropTypes.bool,
             details: PropTypes.array,
             detailsTitle: PropTypes.string,
+            shareContactText: PropTypes.string,
+            signOutText: PropTypes.string,
             showDescription: PropTypes.bool,
             showButtons: PropTypes.bool,
             keyColor: PropTypes.string,
@@ -30,10 +33,13 @@ export class Profile extends Component {
     static get defaultProps() {
         return {
             actions: {},
+            buttons: null,
             editButton: false,
             backButton: false,
             details: null,
             detailsTitle: "Account Details",
+            shareContactText: "Share contact",
+            signOutText: "Sign out",
             detailsBackgroundColor: "#f6f7f9",
             showDescription: true,
             showButtons: true,
@@ -156,6 +162,7 @@ export class Profile extends Component {
     }
 
     _buttons() {
+        if (this.props.buttons?.length) return this.props.buttons;
         const buttons = [];
         if (this.props.account.meta?.phone_number) {
             buttons.push({
@@ -165,14 +172,14 @@ export class Profile extends Component {
                     borderWidth: 1,
                     marginBottom: 11
                 },
-                text: "Share contact",
+                text: this.props.shareContactText,
                 textColor: "#4a6fe9",
                 backgroundColor: "#ffffff",
                 onPress: () => this.onShareContactPress()
             });
         }
         buttons.push({
-            text: "Sign out",
+            text: this.props.signOutText,
             textColor: "#ffffff",
             backgroundColor: "#f76969",
             onPress: () => this.props.onLogoutTouch()

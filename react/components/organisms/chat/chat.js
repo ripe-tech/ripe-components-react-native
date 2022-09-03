@@ -22,9 +22,12 @@ export class Chat extends PureComponent {
                     username: PropTypes.string.isRequired,
                     date: PropTypes.number.isRequired,
                     message: PropTypes.string,
+                    text: PropTypes.string,
                     status: PropTypes.string,
                     statusProps: PropTypes.object,
                     replies: PropTypes.number,
+                    replyLabel: PropTypes.string,
+                    repliesLabel: PropTypes.string,
                     repliesAvatars: PropTypes.array,
                     onPress: PropTypes.func,
                     attachments: PropTypes.arrayOf(
@@ -37,6 +40,8 @@ export class Chat extends PureComponent {
             ),
             aggregationThreshold: PropTypes.number,
             animateScrollBottom: PropTypes.bool,
+            textInputPlaceholder: PropTypes.string,
+            noMessagesPlaceholder: PropTypes.string,
             imagePlaceholder: PropTypes.object,
             repliesTextColor: PropTypes.string,
             onNewMessage: PropTypes.func,
@@ -61,6 +66,8 @@ export class Chat extends PureComponent {
             messages: [],
             aggregationThreshold: 3600,
             animateScrollBottom: true,
+            textInputPlaceholder: "Say something...",
+            noMessagesPlaceholder: "No messages, yet",
             imagePlaceholder: undefined,
             repliesTextColor: "#6051f2",
             onNewMessage: () => {},
@@ -219,7 +226,7 @@ export class Chat extends PureComponent {
                     source={{ html: noMessageAnimation }}
                     androidLayerType={"software"}
                 />
-                <Text style={styles.noMessagesText}>No messages, yet</Text>
+                <Text style={styles.noMessagesText}>{this.props.noMessagesPlaceholder}</Text>
             </View>
         );
     };
@@ -252,6 +259,8 @@ export class Chat extends PureComponent {
                                         status={message.status}
                                         statusProps={message.statusProps}
                                         replies={message.replies}
+                                        replyLabel={message.repliesLabel}
+                                        repliesLabel={message.repliesLabel}
                                         repliesTextColor={this.props.repliesTextColor}
                                         repliesAvatars={message.repliesAvatars}
                                         attachments={message.attachments}
@@ -266,7 +275,7 @@ export class Chat extends PureComponent {
                 <RichTextInput
                     ref={el => (this.input = el)}
                     style={styles.richTextInput}
-                    placeholder={"Say something..."}
+                    placeholder={this.props.textInputPlaceholder}
                     sendButtonProps={{ loading: this.state.sendingMessage }}
                     multiline={true}
                     textareaMaxHeight={baseStyles.FONT_SIZE * 5}
