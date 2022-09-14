@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-*
+* Fixed not showing none messages animation in `chat` component
 
 ## [0.27.2] - 2022-09-14
 
