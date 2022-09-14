@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+*
+
+### Fixed
+
+*
+
+## [0.27.3] - 2022-09-14
+
+### Changed
+
 * Updated volume and mute icons
 
 ### Fixed
