@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Allow to use a different border color when search input is focused
+*
 
 ### Changed
 
@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *
+
+## [0.27.2] - 2022-09-14
+
+### Added
+
+* Allow to use a different border color when search input is focused
 
 ## [0.27.1] - 2022-09-10
 
