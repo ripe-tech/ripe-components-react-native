@@ -92,12 +92,22 @@ export class Search extends PureComponent {
         return [styles.search, this.props.style];
     };
 
+    _inputStyle = () => {
+        return [
+            styles.input,
+            this.state.focused ? styles.inputFocused : {},
+            this.state.focused && StyleSheet.flatten(this.props.style)?.inputFocused
+                ? StyleSheet.flatten(this.props.style).inputFocused
+                : {}
+        ];
+    };
+
     render() {
         return (
             <Animated.View style={this._style()}>
                 <Input
                     ref={el => (this.textInputComponent = el)}
-                    style={styles.input}
+                    style={this._inputStyle()}
                     value={this.state.valueData}
                     placeholder={this.props.placeholder}
                     placeholderTextColor={"#223645"}
@@ -141,6 +151,9 @@ const styles = StyleSheet.create({
         borderColor: "#e4e8f0",
         minHeight: 40,
         backgroundColor: "#ffffff"
+    },
+    inputFocused: {
+        borderColor: "#4A6FE9"
     },
     button: {
         position: "absolute",
