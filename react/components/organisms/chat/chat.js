@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 import PropTypes from "prop-types";
 
@@ -7,7 +7,7 @@ import { baseStyles } from "../../../util";
 
 import { ChatMessage, RichTextInput } from "../../molecules";
 
-import noMessageAnimation from "./assets/no-messages-animation.svg";
+import noMessageAnimation from "./assets/no-messages-animation.svga";
 
 export class Chat extends PureComponent {
     static get propTypes() {
@@ -316,8 +316,8 @@ const styles = StyleSheet.create({
         marginTop: "40%"
     },
     noMessagesImage: {
-        height: 170,
-        width: "100%"
+        width: 250,
+        height: 180
     },
     noMessagesText: {
         margin: 20,
