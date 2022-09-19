@@ -25,6 +25,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             placeholderStyle: PropTypes.object,
             iconContainerStyle: PropTypes.object,
             inputAndroidStyle: PropTypes.object,
+            inputIOSStyle: PropTypes.object,
             inputIOSContainerStyle: PropTypes.object,
             styles: PropTypes.any
         };
@@ -47,6 +48,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
             placeholderStyle: {},
             iconContainerStyle: {},
             inputAndroidStyle: {},
+            inputIOSStyle: {},
             inputIOSContainerStyle: {},
             styles: styles
         };
@@ -142,6 +144,13 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 height: 40,
                 ...this.props.inputAndroidStyle
             },
+            inputIOS: {
+                color: "red",
+                fontFamily: baseStyles.FONT_BOOK,
+                fontSize: 15,
+                lineHeight: 18,
+                ...this.props.inputIOSStyle
+            },
             inputIOSContainer: {
                 backgroundColor: this._inputBackgroundColor(),
                 borderColor: this._inputBorderColor(),
@@ -152,12 +161,6 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 height: 40,
                 justifyContent: "center",
                 ...this.props.inputIOSContainerStyle
-            },
-            inputIOS: {
-                color: "#24425a",
-                fontFamily: baseStyles.FONT_BOOK,
-                fontSize: 15,
-                lineHeight: 18
             },
             placeholder: {
                 color: "#24425a",

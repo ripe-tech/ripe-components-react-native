@@ -410,6 +410,7 @@ export class Listing extends Component {
                     placeholderStyle={this._selectPlaceholderStyle()}
                     iconContainerStyle={styles.selectIconContainer}
                     inputAndroidStyle={this._selectPickerAndroidStyle()}
+                    inputIOSStyle={this._selectPickerIOSStyle()}
                     inputIOSContainerStyle={this._selectPickerIOSStyle()}
                     placeholder={item.placeholder}
                     options={item.options}
