@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-*
+* Add and adapt to use new prop `inputIOSStyle` to override `select` color in `listing`
 
 ### Changed
 
