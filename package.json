@@ -27,11 +27,13 @@
         "res/**/*.ico",
         "res/**/*.png",
         "res/**/*.svg",
+        "res/**/*.svga",
         "test/**/*.js",
         "react/**/*.js",
         "react/**/*.ico",
         "react/**/*.png",
-        "react/**/*.svg"
+        "react/**/*.svg",
+        "react/**/*.svga"
     ],
     "scripts": {
         "cleanup": "rm -rf node_modules && rm -f package-lock.json",
