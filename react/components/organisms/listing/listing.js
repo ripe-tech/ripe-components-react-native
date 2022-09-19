@@ -85,7 +85,7 @@ export class Listing extends Component {
 
         this.state = {
             searchWidth: new Animated.Value(0),
-            placeholderColorAlpha: "FF",
+            placeholderColorAlpha: 1,
             expanded: false,
             searchText: "",
             itemsOffset: 0,
@@ -224,7 +224,7 @@ export class Listing extends Component {
 
     _expandSearchBar() {
         // set select text as transparent
-        this.setState({ placeholderColorAlpha: "00" });
+        this.setState({ placeholderColorAlpha: 0 });
 
         // animate search bar width to maximum
         // and decrease dropdown select width
@@ -249,7 +249,7 @@ export class Listing extends Component {
         }).start(() => {
             this.setState({
                 expanded: false,
-                placeholderColorAlpha: "FF"
+                placeholderColorAlpha: 1
             });
         });
     }
@@ -324,7 +324,7 @@ export class Listing extends Component {
      * This way we change only the text color and by reducing the alpha
      * channel we get the same effect as reducing the opacity.
      */
-    _selectTextColor = () => `#24425a${this.state.placeholderColorAlpha}`;
+    _selectTextColor = () => `rgba(36,66,90,${this.state.placeholderColorAlpha})`;
 
     /**
      * Notice this does not follow the ReactNative style standard
