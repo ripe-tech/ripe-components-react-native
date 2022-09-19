@@ -120,6 +120,7 @@ export class Listing extends Component {
     }
 
     scrollToTop = () => {
+        if (!this.flatListRef) return;
         this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
     };
 
