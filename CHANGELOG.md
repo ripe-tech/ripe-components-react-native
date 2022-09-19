@@ -17,7 +17,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+*
+
+## [0.27.4] - 2022-09-19
+
+### Fixed
+
 * Including `*.svga` files in `package.json`
+
 
 ## [0.27.3] - 2022-09-14
 
