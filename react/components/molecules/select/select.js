@@ -145,7 +145,7 @@ export class Select extends mix(PureComponent).with(IdentifiableMixin) {
                 ...this.props.inputAndroidStyle
             },
             inputIOS: {
-                color: "red",
+                color: "#24425a",
                 fontFamily: baseStyles.FONT_BOOK,
                 fontSize: 15,
                 lineHeight: 18,
