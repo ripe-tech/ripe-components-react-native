@@ -85,7 +85,7 @@ export class ButtonIcon extends mix(PureComponent).with(IdentifiableMixin) {
     }
 
     _renderLoading() {
-        return <ActivityIndicator style={styles.activityIndicator} color="#6687f6" />;
+        return <ActivityIndicator style={styles.activityIndicator} color="#808080" />;
     }
 
     render() {

@@ -69,7 +69,7 @@ export class Listing extends Component {
             onSearch: async () => {},
             onSearchBlur: async () => {},
             onSearchFocus: async () => {},
-            loadingColor: "#6687f6",
+            loadingColor: "#808080",
             style: {},
             scrollViewStyle: {},
             scrollViewContainerStyle: {},
