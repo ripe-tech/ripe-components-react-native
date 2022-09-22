@@ -12,7 +12,21 @@ storiesOf("Molecules", module)
             { key: "Company", value: "Platforme", border: "none" },
             { key: "Position", value: "Head of Software Development", border: "soft" },
             { key: "Birth date", value: "14/03/1993", border: "hard" },
-            { key: "Nationality", value: "Portuguese" }
+            { key: "Nationality", value: "Portuguese" },
+            {
+                key: "section",
+                section: [
+                    { key: "section-E-mail", value: "gcc@platforme.com" },
+                    { key: "section-Company", value: "Platforme", border: "none" },
+                    {
+                        key: "section-Position",
+                        value: "Head of Software Development",
+                        border: "soft"
+                    },
+                    { key: "section-Birth date", value: "14/03/1993", border: "hard" },
+                    { key: "section-Nationality", value: "Portuguese" }
+                ]
+            }
         ];
         const twoColumns = boolean("Two Columns", false);
         const expanded = boolean("Expanded", false);

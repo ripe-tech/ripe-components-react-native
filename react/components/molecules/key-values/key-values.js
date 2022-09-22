@@ -78,7 +78,7 @@ export class KeyValues extends PureComponent {
     };
 
     _shouldShow = item => {
-        return Boolean(item.value) || this.props.showUnset;
+        return Boolean(item.value || this.props.showUnset) && !item.section;
     };
 
     _showButton = item => {
@@ -156,6 +156,36 @@ export class KeyValues extends PureComponent {
                                 {item.valueComponent}
                             </KeyValue>
                         )}
+                        {item.section && (
+                            <View>
+                                <Text style={styles.sectionTitle}>{item.key}</Text>
+                                {item.section.map((item, index) => (
+                                    <KeyValue
+                                        style={this._keyValueStyle(index)}
+                                        key={item.key}
+                                        _key={item.key}
+                                        value={item.value}
+                                        keyColor={item.keyColor}
+                                        valueColor={item.valueColor}
+                                        border={item.border}
+                                        icon={item.icon}
+                                        iconBackgroundColor={item.iconBackgroundColor}
+                                        iconColor={item.iconColor}
+                                        iconSize={item.iconSize}
+                                        iconHeight={item.iconHeight}
+                                        iconWidth={item.iconWidth}
+                                        iconStrokeWidth={item.iconStrokeWidth}
+                                        pressable={item.pressable}
+                                        clipboard={item.clipboard}
+                                        onPress={item.onPress}
+                                        onButtonIconPress={item.onButtonIconPress}
+                                        onLongPress={item.onLongPress}
+                                    >
+                                        {item.valueComponent}
+                                    </KeyValue>
+                                ))}
+                            </View>
+                        )}
                     </View>
                 ))}
                 {this._showButton() && this._renderExpandButton()}
@@ -185,6 +215,19 @@ const styles = StyleSheet.create({
         color: "#4f7af8",
         fontSize: 16,
         fontFamily: baseStyles.FONT_REGULAR
+    },
+    sectionTitle: {
+        height: 75,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        lineHeight: 75,
+        paddingLeft: 16,
+        backgroundColor: "#f5f7f9",
+        color: "#223645",
+        fontSize: 14,
+        fontWeight: "700",
+        textTransform: "capitalize"
     }
 });
 

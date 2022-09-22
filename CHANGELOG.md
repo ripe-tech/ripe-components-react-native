@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*
+* Add sections to `key-values` components - [ripe-robin-revamp/#330](https://github.com/ripe-tech/ripe-robin-revamp/issues/330)
 
 ### Fixed
 
