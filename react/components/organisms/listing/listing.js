@@ -562,11 +562,11 @@ const styles = StyleSheet.create({
         height: "100%"
     },
     loadingContainer: {
-        height: 50
+        height: 79
     },
     loadingIndicator: {
         position: "absolute",
-        top: 3,
+        top: 19,
         left: 0,
         right: 0
     },
