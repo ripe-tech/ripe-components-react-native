@@ -126,6 +126,10 @@ export class KeyValues extends PureComponent {
         return this.props.keyValueTwoColumns && index % 2 > 0 ? styles.keyValueColumnRight : {};
     };
 
+    _sectionTitle = style => {
+        return [styles.sectionTitle, style];
+    };
+
     render() {
         return (
             <View style={this._style()}>
@@ -156,7 +160,7 @@ export class KeyValues extends PureComponent {
                                 {item.valueComponent}
                             </KeyValue>
                         )}
-                        {item.section && <Text style={styles.sectionTitle}>{item.key}</Text>}
+                        {item.section && <Text style={this._sectionTitle(item?.style)}>{item.key}</Text>}
                     </View>
                 ))}
                 {this._showButton() && this._renderExpandButton()}
