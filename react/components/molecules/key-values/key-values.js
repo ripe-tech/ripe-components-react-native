@@ -160,7 +160,9 @@ export class KeyValues extends PureComponent {
                                 {item.valueComponent}
                             </KeyValue>
                         )}
-                        {item.section && <Text style={this._sectionTitle(item?.style)}>{item.key}</Text>}
+                        {item.section && (
+                            <Text style={this._sectionTitle(item?.style)}>{item.key}</Text>
+                        )}
                     </View>
                 ))}
                 {this._showButton() && this._renderExpandButton()}
