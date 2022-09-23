@@ -159,31 +159,6 @@ export class KeyValues extends PureComponent {
                         {item.section && (
                             <View>
                                 <Text style={styles.sectionTitle}>{item.key}</Text>
-                                {item.section.map((item, index) => (
-                                    <KeyValue
-                                        style={this._keyValueStyle(index)}
-                                        key={item.key}
-                                        _key={item.key}
-                                        value={item.value}
-                                        keyColor={item.keyColor}
-                                        valueColor={item.valueColor}
-                                        border={item.border}
-                                        icon={item.icon}
-                                        iconBackgroundColor={item.iconBackgroundColor}
-                                        iconColor={item.iconColor}
-                                        iconSize={item.iconSize}
-                                        iconHeight={item.iconHeight}
-                                        iconWidth={item.iconWidth}
-                                        iconStrokeWidth={item.iconStrokeWidth}
-                                        pressable={item.pressable}
-                                        clipboard={item.clipboard}
-                                        onPress={item.onPress}
-                                        onButtonIconPress={item.onButtonIconPress}
-                                        onLongPress={item.onLongPress}
-                                    >
-                                        {item.valueComponent}
-                                    </KeyValue>
-                                ))}
                             </View>
                         )}
                     </View>
