@@ -78,7 +78,7 @@ export class KeyValues extends PureComponent {
     };
 
     _shouldShow = item => {
-        return Boolean(item.value) || this.props.showUnset;
+        return Boolean(item.value || this.props.showUnset) && !item.section;
     };
 
     _showButton = item => {
@@ -126,6 +126,10 @@ export class KeyValues extends PureComponent {
         return this.props.keyValueTwoColumns && index % 2 > 0 ? styles.keyValueColumnRight : {};
     };
 
+    _sectionTitle = style => {
+        return [styles.sectionTitle, style];
+    };
+
     render() {
         return (
             <View style={this._style()}>
@@ -156,6 +160,9 @@ export class KeyValues extends PureComponent {
                                 {item.valueComponent}
                             </KeyValue>
                         )}
+                        {item.section && (
+                            <Text style={this._sectionTitle(item?.style)}>{item.key}</Text>
+                        )}
                     </View>
                 ))}
                 {this._showButton() && this._renderExpandButton()}
@@ -185,6 +192,19 @@ const styles = StyleSheet.create({
         color: "#4f7af8",
         fontSize: 16,
         fontFamily: baseStyles.FONT_REGULAR
+    },
+    sectionTitle: {
+        height: 75,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        lineHeight: 75,
+        paddingLeft: 16,
+        backgroundColor: "#f5f7f9",
+        color: "#223645",
+        fontSize: 14,
+        fontWeight: "700",
+        textTransform: "capitalize"
     }
 });
 

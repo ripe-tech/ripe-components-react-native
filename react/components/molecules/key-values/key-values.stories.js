@@ -11,6 +11,7 @@ storiesOf("Molecules", module)
             { key: "E-mail", value: "gcc@platforme.com" },
             { key: "Company", value: "Platforme", border: "none" },
             { key: "Position", value: "Head of Software Development", border: "soft" },
+            { section: "Nationality" },
             { key: "Birth date", value: "14/03/1993", border: "hard" },
             { key: "Nationality", value: "Portuguese" }
         ];
