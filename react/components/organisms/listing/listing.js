@@ -449,7 +449,7 @@ export class Listing extends Component {
                 renderItem={({ item, index }) => this.props.renderItem(item, index)}
                 keyExtractor={item => String(item.id)}
                 ListEmptyComponent={this._renderEmptyList()}
-                ListFooterComponent={<View style={styles.flatListBottom} />}
+                ListFooterComponent={this._renderLoadingFooter()}
                 {...this.props.flatListProps}
             />
         );
@@ -474,14 +474,16 @@ export class Listing extends Component {
         return this._renderListing();
     };
 
-    _renderLoading = () => {
-        if (!this.state.loading && !this.props.loading) return null;
+    _renderLoadingFooter = () => {
         return (
-            <ActivityIndicator
-                style={styles.loadingIndicator}
-                size="large"
-                color={this.props.loadingColor}
-            />
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator
+                    style={styles.loadingIndicator}
+                    size="large"
+                    color={this.props.loadingColor}
+                    animating={this.state.loading || this.props.loading}
+                />
+            </View>
         );
     };
 
@@ -490,7 +492,6 @@ export class Listing extends Component {
             <View style={this._style()}>
                 {this._renderHeader()}
                 {this._renderContent()}
-                {this._renderLoading()}
             </View>
         );
     }
@@ -560,9 +561,12 @@ const styles = StyleSheet.create({
     flatList: {
         height: "100%"
     },
+    loadingContainer: {
+        height: 79
+    },
     loadingIndicator: {
         position: "absolute",
-        bottom: 20,
+        top: 19,
         left: 0,
         right: 0
     },
