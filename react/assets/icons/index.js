@@ -337,6 +337,7 @@ import zoomOut from "./zoom-out.svg";
 import chatBalloons from "./extra/chat-balloons.svg";
 import id from "./extra/id.svg";
 import platforme from "./extra/platforme.svg";
+import sendAlt from "./extra/send-alt.svg";
 
 const icons = {
     "accessibility-human": accessibilityHuman,
@@ -676,7 +677,8 @@ const icons = {
     "zoom-out": zoomOut,
     "chat-balloons": chatBalloons,
     id: id,
-    platforme: platforme
+    platforme: platforme,
+    "send-alt": sendAlt
 };
 
 export default icons;
