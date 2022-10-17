@@ -15,10 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Add sections to `key-values` components - [ripe-robin-revamp/#330](https://github.com/ripe-tech/ripe-robin-revamp/issues/330)
 * Changed position of loading indicator for `listing` component
+* Add `send-alt` icon - [#464](https://github.com/ripe-tech/ripe-robin-revamp/issues/464)
 
 ### Fixed
 
-*
+* Fix `spam` icon with missing dot - [#464](https://github.com/ripe-tech/ripe-robin-revamp/issues/464)
 
 ## [0.27.6] - 2022-09-20
 
