@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+*
+
+### Fixed
+
+*
+
+## [0.27.7] - 2022-10-21
+
+### Changed
+
 * Add sections to `key-values` components - [ripe-robin-revamp/#330](https://github.com/ripe-tech/ripe-robin-revamp/issues/330)
 * Changed position of loading indicator for `listing` component
 * Add `send-alt` icon - [ripe-robin-revamp/#464](https://github.com/ripe-tech/ripe-robin-revamp/issues/464)
