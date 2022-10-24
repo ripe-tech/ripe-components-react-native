@@ -32,7 +32,7 @@ export class Attachment extends Component {
             activeOpacity: 0.8,
             attachmentIcon: "file",
             attachmentIconColor: "#ffffff",
-            attachmentIconBackgroundColor: "#6051f2",
+            attachmentIconBackgroundColor: "#406CF1",
             onPress: () => {},
             style: {},
             styles: styles
