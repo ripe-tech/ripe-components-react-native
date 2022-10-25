@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     },
     title: {
         marginTop: Platform.OS === "ios" ? 6 : 0,
-        fontFamily: baseStyles.FONT,
+        fontFamily: baseStyles.FONT_BOLD,
         fontSize: 20,
         letterSpacing: 0.5,
         color: "#1d2631",

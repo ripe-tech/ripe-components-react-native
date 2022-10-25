@@ -27,7 +27,7 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
             text: "Changed order status to",
             backgroundColor: "#6051f20f",
             borderColor: "#6051f266",
-            borderWith: 0,
+            borderWidth: 1,
             tagColor: "#57626e",
             tagBackgroundColor: "#eceef1",
             tagBorderColor: "transparent",
@@ -47,7 +47,7 @@ export class StatusEntry extends mix(PureComponent).with(IdentifiableMixin) {
             {
                 backgroundColor: this.props.backgroundColor,
                 borderColor: this.props.borderColor,
-                borderWith: this.props.borderWith
+                borderWidth: this.props.borderWidth
             },
             this.props.style
         ];
