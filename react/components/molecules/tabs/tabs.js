@@ -141,6 +141,13 @@ export class Tabs extends PureComponent {
     render() {
         return (
             <SafeAreaView style={this._style()}>
+                {this._animatedBarEnabled() ? (
+                    <BarAnimated
+                        style={this._barAnimatedStyle()}
+                        offset={this.state.animatedBarOffset}
+                        width={this.state.animatedBarWidth}
+                    />
+                ) : null}
                 {!this._isHidden() &&
                     this.props.tabs.map((tab, index) =>
                         !tab.hidden ? (
@@ -181,7 +188,6 @@ export class Tabs extends PureComponent {
 
 const styles = StyleSheet.create({
     tabs: {
-        paddingTop: 0,
         backgroundColor: "#ffffff",
         flexDirection: "row"
     },
