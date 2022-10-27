@@ -187,6 +187,7 @@ export class Tabs extends PureComponent {
 
 const styles = StyleSheet.create({
     tabs: {
+        paddingTop: 0,
         backgroundColor: "#ffffff",
         flexDirection: "row"
     },
