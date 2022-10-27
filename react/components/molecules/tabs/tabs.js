@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Keyboard, StyleSheet, View } from "react-native";
-import SafeAreaView from "react-native-safe-area-view";
+import { SafeAreaView } from "react-native-safe-area-context";
 import PropTypes from "prop-types";
 
 import { BarAnimated, ButtonTab } from "../../atoms";
@@ -131,7 +131,7 @@ export class Tabs extends PureComponent {
     };
 
     _style = () => {
-        return [styles.tabs, this.props.style];
+        return [styles.tabs, this.props.style, this._isHidden() ? { display: "none" } : {}];
     };
 
     _barAnimatedStyle = () => {
@@ -140,7 +140,7 @@ export class Tabs extends PureComponent {
 
     render() {
         return (
-            <SafeAreaView style={this._style()}>
+            <SafeAreaView edges={["bottom"]} style={this._style()}>
                 {this._animatedBarEnabled() ? (
                     <BarAnimated
                         style={this._barAnimatedStyle()}
@@ -148,39 +148,38 @@ export class Tabs extends PureComponent {
                         width={this.state.animatedBarWidth}
                     />
                 ) : null}
-                {!this._isHidden() &&
-                    this.props.tabs.map((tab, index) =>
-                        !tab.hidden ? (
-                            <View
-                                style={styles.buttonTab}
-                                key={tab.id}
-                                onLayout={event => this._onTabLayout(event, index)}
-                            >
-                                <ButtonTab
-                                    text={tab.text}
-                                    color={tab.color}
-                                    colorSelected={tab.colorSelected}
-                                    disabled={tab.disabled}
-                                    fill={tab.fill}
-                                    fillSelected={tab.fillSelected}
-                                    badgeAnimationDuration={tab.badgeAnimationDuration}
-                                    badgeBackgroundColor={tab.badgeBackgroundColor}
-                                    badgeColor={tab.badgeColor}
-                                    badgeCount={tab.badgeCount}
-                                    badgeCountThreshold={tab.badgeCountThreshold}
-                                    badgeHasAnimation={tab.badgeHasAnimation}
-                                    badgeText={tab.badgeText}
-                                    icon={tab.icon}
-                                    iconSelected={tab.iconSelected}
-                                    iconStrokeWidth={tab.iconStrokeWidth}
-                                    iconSelectedStrokeWidth={tab.iconSelectedStrokeWidth}
-                                    {...tab.props}
-                                    onPress={() => this.onTabPress(tab.id, index)}
-                                    selected={this._isSelected(tab.id)}
-                                />
-                            </View>
-                        ) : null
-                    )}
+                {this.props.tabs.map((tab, index) =>
+                    !tab.hidden ? (
+                        <View
+                            style={styles.buttonTab}
+                            key={tab.id}
+                            onLayout={event => this._onTabLayout(event, index)}
+                        >
+                            <ButtonTab
+                                text={tab.text}
+                                color={tab.color}
+                                colorSelected={tab.colorSelected}
+                                disabled={tab.disabled}
+                                fill={tab.fill}
+                                fillSelected={tab.fillSelected}
+                                badgeAnimationDuration={tab.badgeAnimationDuration}
+                                badgeBackgroundColor={tab.badgeBackgroundColor}
+                                badgeColor={tab.badgeColor}
+                                badgeCount={tab.badgeCount}
+                                badgeCountThreshold={tab.badgeCountThreshold}
+                                badgeHasAnimation={tab.badgeHasAnimation}
+                                badgeText={tab.badgeText}
+                                icon={tab.icon}
+                                iconSelected={tab.iconSelected}
+                                iconStrokeWidth={tab.iconStrokeWidth}
+                                iconSelectedStrokeWidth={tab.iconSelectedStrokeWidth}
+                                {...tab.props}
+                                onPress={() => this.onTabPress(tab.id, index)}
+                                selected={this._isSelected(tab.id)}
+                            />
+                        </View>
+                    ) : null
+                )}
             </SafeAreaView>
         );
     }
