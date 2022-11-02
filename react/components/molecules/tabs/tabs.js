@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Keyboard, StyleSheet, View } from "react-native";
-import SafeAreaView from "react-native-safe-area-view";
+import { SafeAreaView } from "react-native-safe-area-context";
 import PropTypes from "prop-types";
 
 import { BarAnimated, ButtonTab } from "../../atoms";
@@ -140,7 +140,7 @@ export class Tabs extends PureComponent {
 
     render() {
         return (
-            <SafeAreaView style={this._style()}>
+            <SafeAreaView edges={["bottom"]} style={this._style()}>
                 {this._animatedBarEnabled() ? (
                     <BarAnimated
                         style={this._barAnimatedStyle()}
