@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 * Fix tab visibility undesired extra padding - [ripe-robin-revamp/#472](https://github.com/ripe-tech/ripe-robin-revamp/issues/472])
+* Fix spam and error icons - [ripe-robin-revamp/#464](https://github.com/ripe-tech/ripe-robin-revamp/issues/464)
 
 ## [0.27.7] - 2022-10-21
 
