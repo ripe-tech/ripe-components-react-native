@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
+import { Listing } from "ripe-components-react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -38,6 +39,7 @@ export class Chat extends PureComponent {
                     )
                 })
             ),
+            getMessages: PropTypes.func,
             aggregationThreshold: PropTypes.number,
             animateScrollBottom: PropTypes.bool,
             textInputPlaceholder: PropTypes.string,
@@ -64,6 +66,7 @@ export class Chat extends PureComponent {
             username: undefined,
             beforeMessages: null,
             messages: [],
+            getMessages: null,
             aggregationThreshold: 3600,
             animateScrollBottom: true,
             textInputPlaceholder: "Say something...",
@@ -140,6 +143,30 @@ export class Chat extends PureComponent {
             previousDate = message.date;
         }
         return messages;
+    }
+
+    _aggregateMessages(messages) {
+        const agregatedMessages = [];
+        let previousMessage = null;
+        let previousDate = null;
+        const originalMessages = messages.map(message => ({ ...message }));
+        for (const message of originalMessages) {
+            if (
+                !message.status &&
+                previousMessage &&
+                previousMessage.message &&
+                message.message &&
+                message.username === previousMessage.username &&
+                message.date - previousDate < this.props.aggregationThreshold
+            ) {
+                previousMessage.message += `\n${message.message}`;
+            } else {
+                agregatedMessages.push(message);
+                previousMessage = message;
+            }
+            previousDate = message.date;
+        }
+        return agregatedMessages;
     }
 
     async _onNewMessage(message) {
@@ -231,6 +258,41 @@ export class Chat extends PureComponent {
         );
     };
 
+    async _getChatMessages(...args) {
+        if (this.props.getMessages) {
+            const chatMessages = await this.props.getMessages(...args);
+            // reverse message array for the inverted listing
+            // placing the most recent message at the end
+            const reversedMessages = chatMessages.reverse();
+            return this._aggregateMessages(reversedMessages);
+        } else {
+            return [];
+        }
+    }
+
+    _renderChatMessage(message) {
+        return (
+            <ChatMessage
+                style={this._chatMessageStyle()}
+                messageStyle={this._chatMessageContentStyle()}
+                avatarUrl={message.avatarUrl}
+                username={message.username}
+                date={message.date}
+                message={message.message}
+                status={message.status}
+                statusProps={message.statusProps}
+                replies={message.replies}
+                replyLabel={message.repliesLabel}
+                repliesLabel={message.repliesLabel}
+                repliesTextColor={this.props.repliesTextColor}
+                repliesAvatars={message.repliesAvatars}
+                attachments={message.attachments}
+                onPress={message.onPress}
+                imagePlaceholder={this.props.imagePlaceholder}
+            />
+        );
+    }
+
     render() {
         return (
             <View style={this._style()}>
@@ -272,6 +334,18 @@ export class Chat extends PureComponent {
                         </View>
                     )}
                 </ScrollView>
+                <Listing
+                    ref={el => (this.chatListingRef = el)}
+                    getItems={async (...args) => await this._getChatMessages(...args)}
+                    renderItem={(...args) => this._renderChatMessage(...args)}
+                    filters={this._filters}
+                    itemsSortReverse={true}
+                    search={false}
+                    flatListProps={{
+                        inverted: true,
+                        keyExtractor: (item, index) => item.timestamp || item.date || index
+                    }}
+                />
                 <RichTextInput
                     ref={el => (this.input = el)}
                     style={styles.richTextInput}
