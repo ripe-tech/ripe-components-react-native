@@ -195,8 +195,8 @@ export class Listing extends Component {
     _getItems = async (options = {}) => {
         const items = await this.props.getItems(
             {
-                start: this.state.itemsOffset,
-                limit: this.props.itemsRequestLimit,
+                start_record: this.state.itemsOffset,
+                number_records: this.props.itemsRequestLimit,
                 filter: this.state.searchText,
                 sort: this.props.itemsSortField,
                 reverse: this.props.itemsSortReverse,
