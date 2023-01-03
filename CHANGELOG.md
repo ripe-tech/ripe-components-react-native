@@ -9,11 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-*
+* Add pagination to `chat` by integrating the use of the `listing` component - [#340](https://github.com/ripe-tech/ripe-robin-revamp/issues/340)
 
 ### Changed
 
 * Small style improvements to be consistent with the original design
+* Small change in the alias used in listing filter components - [#340](https://github.com/ripe-tech/ripe-robin-revamp/issues/340)
 
 ### Fixed
 
