@@ -7,8 +7,7 @@ import {
     ScrollView,
     StyleSheet,
     Text,
-    View,
-    ViewPropTypes
+    View
 } from "react-native";
 import PropTypes from "prop-types";
 
@@ -21,6 +20,8 @@ export class Listing extends Component {
             itemsRequestLimit: PropTypes.number,
             renderItem: PropTypes.func.isRequired,
             renderContentRefreshing: PropTypes.func,
+            renderLoadingFooter: PropTypes.func,
+            renderNonLoadingFooter: PropTypes.func,
             filters: PropTypes.array,
             filtersValue: PropTypes.object,
             itemsSortField: PropTypes.string,
@@ -449,13 +450,14 @@ export class Listing extends Component {
                 renderItem={({ item, index }) => this.props.renderItem(item, index)}
                 keyExtractor={item => String(item.id)}
                 ListEmptyComponent={this._renderEmptyList()}
-                ListFooterComponent={this._renderLoadingFooter()}
+                ListFooterComponent={this._renderFooter()}
                 {...this.props.flatListProps}
             />
         );
     };
 
     _renderHeader = () => {
+        if (!this.props.search || this.props.filters.length === 0) return;
         return (
             <View
                 style={this._searchingHeaderStyle()}
@@ -474,7 +476,18 @@ export class Listing extends Component {
         return this._renderListing();
     };
 
+    _renderFooter = () => {
+        if (this.state.loading || this.props.loading) {
+            this._renderLoadingFooter();
+        } else {
+            this._renderNonLoadingFooter();
+        }
+    };
+
     _renderLoadingFooter = () => {
+        if (this.props.renderLoadingFooter) {
+            return this.props.renderLoadingFooter();
+        }
         return (
             <View style={styles.loadingContainer}>
                 <ActivityIndicator
@@ -485,6 +498,12 @@ export class Listing extends Component {
                 />
             </View>
         );
+    };
+
+    _renderNonLoadingFooter = () => {
+        if (this.props.renderNonLoadingFooter) {
+            return this.props.renderNonLoadingFooter();
+        }
     };
 
     render() {

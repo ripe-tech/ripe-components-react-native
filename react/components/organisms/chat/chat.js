@@ -293,6 +293,10 @@ export class Chat extends PureComponent {
         );
     }
 
+    _renderNonLoadingFooter() {
+        <View style={{ height: 100, backgroundColor: "red" }} />;
+    }
+
     render() {
         return (
             <View style={this._style()}>
@@ -336,13 +340,16 @@ export class Chat extends PureComponent {
                 </ScrollView>
                 <Listing
                     ref={el => (this.chatListingRef = el)}
+                    style={styles.chatListing}
                     getItems={async (...args) => await this._getChatMessages(...args)}
                     renderItem={(...args) => this._renderChatMessage(...args)}
+                    _renderNonLoadingFooter={(...args) => this._renderNonLoadingFooter(...args)}
                     filters={this._filters}
                     itemsSortReverse={true}
                     search={false}
                     flatListProps={{
                         inverted: true,
+                        onScroll: this.onScroll,
                         keyExtractor: (item, index) => item.timestamp || item.date || index
                     }}
                 />
@@ -369,6 +376,9 @@ export class Chat extends PureComponent {
 const styles = StyleSheet.create({
     chat: {
         flex: 1
+    },
+    chatListing: {
+        backgroundColor: "#ffffff"
     },
     chatMessagesContainer: {
         flex: 1,
