@@ -478,9 +478,9 @@ export class Listing extends Component {
 
     _renderFooter = () => {
         if (this.state.loading || this.props.loading) {
-            this._renderLoadingFooter();
+            return this._renderLoadingFooter();
         } else {
-            this._renderNonLoadingFooter();
+            return this._renderNonLoadingFooter();
         }
     };
 
