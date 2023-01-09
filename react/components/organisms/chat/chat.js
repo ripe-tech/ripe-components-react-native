@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { Listing } from "ripe-components-react-native";
 import PropTypes from "prop-types";
@@ -105,8 +105,11 @@ export class Chat extends PureComponent {
     };
 
     scrollToEnd = animated => {
+        if (!this.chatListingRef?.flatListRef?.getNativeScrollRef) return;
+
+        const scrollViewComponentRef = this.chatListingRef.flatListRef.getNativeScrollRef();
         animated = animated === undefined ? this.props.animateScrollBottom : animated;
-        this.scrollViewComponent.scrollToEnd({ animated: animated });
+        scrollViewComponentRef.scrollTo({ x: 0, y: 0 }, { animated: animated });
     };
 
     getInputValue = () => (this.input ? this.input.state.value || null : null);
@@ -260,11 +263,21 @@ export class Chat extends PureComponent {
 
     async _getChatMessages(...args) {
         if (this.props.getMessages) {
-            const chatMessages = await this.props.getMessages(...args);
+            const formatttedFilters = {
+                ...args[0],
+                number_records: args[0]?.limit,
+                start_record: args[0]?.start
+            };
+            const formatttedExtraFilters = { ...args[1] };
+            const chatMessages = await this.props.getMessages(
+                formatttedFilters,
+                formatttedExtraFilters
+            );
             // reverse message array for the inverted listing
             // placing the most recent message at the end
-            const reversedMessages = chatMessages.reverse();
-            return this._aggregateMessages(reversedMessages);
+            const agregatedMessages = this._aggregateMessages(chatMessages);
+            const reversedMessages = agregatedMessages.reverse();
+            return reversedMessages;
         } else {
             return [];
         }
@@ -293,64 +306,36 @@ export class Chat extends PureComponent {
         );
     }
 
-    _renderNonLoadingFooter() {
-        <View style={{ height: 100, backgroundColor: "red" }} />;
+    _renderLoadingEndedFooter() {
+        if (this.props.beforeMessages) {
+            return (
+                <View style={{ height: 100, backgroundColor: "red" }}>
+                    {this.props.beforeMessages}
+                </View>
+            );
+        }
+        return <View style={{ height: 100, backgroundColor: "red" }} />;
     }
 
     render() {
         return (
             <View style={this._style()}>
-                <ScrollView
-                    style={this._chatMessagesContainerStyle()}
-                    ref={ref => (this.scrollViewComponent = ref)}
-                    onScroll={this.onScroll}
-                    scrollEventThrottle={4}
-                >
-                    {this.props.messages.length === 0 ? (
-                        this._renderNoMessages()
-                    ) : (
-                        <View style={this._chatMessagesContentStyle()}>
-                            {this.props.beforeMessages &&
-                                React.cloneElement(React.Children.only(this.props.beforeMessages))}
-                            {this._aggregatedMessages().map((message, index) => {
-                                return (
-                                    <ChatMessage
-                                        key={index}
-                                        style={this._chatMessageStyle()}
-                                        messageStyle={this._chatMessageContentStyle()}
-                                        avatarUrl={message.avatarUrl}
-                                        username={message.username}
-                                        date={message.date}
-                                        message={message.message}
-                                        status={message.status}
-                                        statusProps={message.statusProps}
-                                        replies={message.replies}
-                                        replyLabel={message.repliesLabel}
-                                        repliesLabel={message.repliesLabel}
-                                        repliesTextColor={this.props.repliesTextColor}
-                                        repliesAvatars={message.repliesAvatars}
-                                        attachments={message.attachments}
-                                        onPress={message.onPress}
-                                        imagePlaceholder={this.props.imagePlaceholder}
-                                    />
-                                );
-                            })}
-                        </View>
-                    )}
-                </ScrollView>
                 <Listing
                     ref={el => (this.chatListingRef = el)}
                     style={styles.chatListing}
+                    listingContentStyle={styles.chatListingContent}
                     getItems={async (...args) => await this._getChatMessages(...args)}
                     renderItem={(...args) => this._renderChatMessage(...args)}
-                    _renderNonLoadingFooter={(...args) => this._renderNonLoadingFooter(...args)}
+                    renderFooter={(...args) => this._renderLoadingEndedFooter(...args)}
+                    renderEmptyList={(...args) => this._renderNoMessages(...args)}
                     filters={this._filters}
                     itemsSortReverse={true}
                     search={false}
+                    onEndReachedThreshold={300}
                     flatListProps={{
                         inverted: true,
                         onScroll: this.onScroll,
-                        keyExtractor: (item, index) => item.timestamp || item.date || index
+                        keyExtractor: (item, index) => index
                     }}
                 />
                 <RichTextInput
@@ -379,6 +364,11 @@ const styles = StyleSheet.create({
     },
     chatListing: {
         backgroundColor: "#ffffff"
+    },
+    chatListingContent: {
+        height: "auto",
+        backgroundColor: "#ffffff",
+        flexGrow: 0
     },
     chatMessagesContainer: {
         flex: 1,

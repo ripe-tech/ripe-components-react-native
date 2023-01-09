@@ -18,10 +18,12 @@ export class Listing extends Component {
         return {
             getItems: PropTypes.func,
             itemsRequestLimit: PropTypes.number,
+            itemsRefreshMinimum: PropTypes.number,
             renderItem: PropTypes.func.isRequired,
             renderContentRefreshing: PropTypes.func,
             renderLoadingFooter: PropTypes.func,
-            renderNonLoadingFooter: PropTypes.func,
+            renderFooter: PropTypes.func,
+            renderEmptyList: PropTypes.func,
             filters: PropTypes.array,
             filtersValue: PropTypes.object,
             itemsSortField: PropTypes.string,
@@ -47,6 +49,7 @@ export class Listing extends Component {
             searchingHeaderStyle: PropTypes.any,
             searchStyle: PropTypes.any,
             filtersStyle: PropTypes.any,
+            listingContentStyle: PropTypes.any,
             styles: PropTypes.any
         };
     }
@@ -55,6 +58,7 @@ export class Listing extends Component {
         return {
             items: [],
             itemsRequestLimit: 15,
+            itemsRefreshMinimum: 8,
             filters: [],
             filtersValue: {},
             emptyItemsText: "No items",
@@ -113,10 +117,13 @@ export class Listing extends Component {
         if (scrollToTop) this.scrollToTop();
         this.setState({ refreshing: true, itemsOffset: 0, end: false }, async () => {
             const items = await this._getItems();
-            this.setState({
-                items: items,
-                refreshing: false
-            });
+            this.setState(
+                {
+                    items: items,
+                    refreshing: false
+                },
+                this.onRefreshComplete
+            );
         });
     }
 
@@ -131,6 +138,11 @@ export class Listing extends Component {
             async () => await this.onFilter(this.state.filters)
         );
     }
+
+    onRefreshComplete = async () => {
+        const shouldLoadMore = this.state.items.length < this.props.itemsRefreshMinimum;
+        if (shouldLoadMore) await this._loadMoreItems();
+    };
 
     onSearch = async value => {
         await this.props.onSearch(value);
@@ -162,7 +174,10 @@ export class Listing extends Component {
         // in case the end of the lazy loading of the elements has
         // been reached then there's nothing to be loaded
         if (!this.props.getItems || this.state.end) return;
+        await this._loadMoreItems();
+    };
 
+    _loadMoreItems = async () => {
         this.setState(
             ({ itemsOffset }) => ({
                 itemsOffset: itemsOffset + this.props.itemsRequestLimit,
@@ -196,8 +211,8 @@ export class Listing extends Component {
     _getItems = async (options = {}) => {
         const items = await this.props.getItems(
             {
-                start_record: this.state.itemsOffset,
-                number_records: this.props.itemsRequestLimit,
+                start: this.state.itemsOffset,
+                limit: this.props.itemsRequestLimit,
                 filter: this.state.searchText,
                 sort: this.props.itemsSortField,
                 reverse: this.props.itemsSortReverse,
@@ -320,6 +335,10 @@ export class Listing extends Component {
         return [layoutStyle, animationStyle, this.props.filtersStyle];
     };
 
+    _listingStyle() {
+        return [styles.listingContent, this.props.listingContentStyle];
+    }
+
     /**
      * The placeholder text in the `<Select />` component can not
      * have opacity applied, otherwise the entire select is affected.
@@ -429,6 +448,7 @@ export class Listing extends Component {
     _renderEmptyList = () => {
         if (this.state.loading || this.state.refreshing) return null;
 
+        if (this.props.renderEmptyList) return this.props.renderEmptyList();
         return (
             <View style={styles.emptyList}>
                 <Text style={styles.emptyListText}>{this.props.emptyItemsText}</Text>
@@ -441,7 +461,7 @@ export class Listing extends Component {
             <FlatList
                 ref={el => (this.flatListRef = el)}
                 key={"items"}
-                style={styles.flatList}
+                style={this._listingStyle()}
                 data={this.state.items}
                 refreshing={this.props.refreshing && this.state.refreshing}
                 onRefresh={this.onRefresh}
@@ -452,6 +472,7 @@ export class Listing extends Component {
                 ListEmptyComponent={this._renderEmptyList()}
                 ListFooterComponent={this._renderFooter()}
                 {...this.props.flatListProps}
+                contentContainerStyle={{}}
             />
         );
     };
@@ -479,8 +500,8 @@ export class Listing extends Component {
     _renderFooter = () => {
         if (this.state.loading || this.props.loading) {
             return this._renderLoadingFooter();
-        } else {
-            return this._renderNonLoadingFooter();
+        } else if (this.state.end) {
+            return this._renderLoadingEndedFooter();
         }
     };
 
@@ -500,9 +521,9 @@ export class Listing extends Component {
         );
     };
 
-    _renderNonLoadingFooter = () => {
-        if (this.props.renderNonLoadingFooter) {
-            return this.props.renderNonLoadingFooter();
+    _renderLoadingEndedFooter = () => {
+        if (this.props.renderFooter) {
+            return this.props.renderFooter();
         }
     };
 
@@ -519,6 +540,10 @@ export class Listing extends Component {
 const styles = StyleSheet.create({
     listing: {
         flex: 1,
+        backgroundColor: "#f6f7f9"
+    },
+    listingContent: {
+        height: "100%",
         backgroundColor: "#f6f7f9"
     },
     searchingHeader: {
@@ -576,9 +601,6 @@ const styles = StyleSheet.create({
     },
     selectLastChild: {
         flex: 1
-    },
-    flatList: {
-        height: "100%"
     },
     loadingContainer: {
         height: 79
