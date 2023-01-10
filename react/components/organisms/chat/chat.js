@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { Listing } from "ripe-components-react-native";
 import PropTypes from "prop-types";
@@ -307,15 +307,24 @@ export class Chat extends PureComponent {
         );
     }
 
-    _renderLoadingEndedFooter() {
+    _renderFooter() {
         if (this.props.beforeMessages) {
-            return (
-                <View style={{ height: 100, backgroundColor: "red" }}>
-                    {this.props.beforeMessages}
-                </View>
-            );
+            return <View style={styles.footerContainer}>{this.props.beforeMessages}</View>;
         }
-        return <View style={{ height: 100, backgroundColor: "red" }} />;
+        return <View style={styles.footerContainer} />;
+    }
+
+    _renderLoadingFooter() {
+        return (
+            <View style={styles.loadingFooterContainer}>
+                <ActivityIndicator
+                    style={styles.loadingFooterIndicator}
+                    size="large"
+                    color={"#808080"}
+                    animating={true}
+                />
+            </View>
+        );
     }
 
     render() {
@@ -327,7 +336,8 @@ export class Chat extends PureComponent {
                     listingContentStyle={styles.chatListingContent}
                     getItems={async (...args) => await this._getChatMessages(...args)}
                     renderItem={(...args) => this._renderChatMessage(...args)}
-                    renderFooter={(...args) => this._renderLoadingEndedFooter(...args)}
+                    renderFooter={(...args) => this._renderFooter(...args)}
+                    renderLoadingFooter={(...args) => this._renderLoadingFooter(...args)}
                     renderEmptyList={(...args) => this._renderNoMessages(...args)}
                     filters={this._filters}
                     itemsSortReverse={true}
@@ -386,6 +396,18 @@ const styles = StyleSheet.create({
         borderBottomColor: "#dfe2e5",
         borderBottomWidth: 1,
         paddingBottom: 16
+    },
+    footerContainer: {
+        height: 100
+    },
+    loadingFooterContainer: {
+        height: 100
+    },
+    loadingFooterIndicator: {
+        position: "absolute",
+        top: 19,
+        left: 0,
+        right: 0
     },
     noMessages: {
         alignItems: "center",
