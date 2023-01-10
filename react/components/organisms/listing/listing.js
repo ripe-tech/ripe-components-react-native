@@ -133,6 +133,12 @@ export class Listing extends Component {
         this.flatListRef.scrollToOffset({ animated: true, offset: 0 });
     };
 
+    addItems = (items, addToStart = false) => {
+        this.setState(prevState => ({
+            items: addToStart ? [...items, ...prevState.items] : [...prevState.items, ...items]
+        }));
+    };
+
     onSelectUpdateValue(key, value) {
         this.setState(
             ({ filters }) => ({ filters: { ...filters, [key]: value } }),
@@ -180,34 +186,38 @@ export class Listing extends Component {
     };
 
     _loadMoreItems = async () => {
-        this.setState(
-            ({ itemsOffset }) => ({
-                itemsOffset: itemsOffset + this.props.itemsRequestLimit,
-                loading: true
-            }),
-            async () => {
-                try {
-                    // gathers the new orders from the server side using the
-                    // current base offset and base start order ID as the
-                    // reference for the retrieval of new orders
-                    const newItems = await this._getItems();
+        return new Promise((resolve, reject) => {
+            this.setState(
+                ({ itemsOffset }) => ({
+                    itemsOffset: itemsOffset + this.props.itemsRequestLimit,
+                    loading: true
+                }),
+                async () => {
+                    try {
+                        // gathers the new orders from the server side using the
+                        // current base offset and base start order ID as the
+                        // reference for the retrieval of new orders
+                        const newItems = await this._getItems();
 
-                    // in case no more orders are found then marks the end
-                    // of the list paging and returns the control flow, as
-                    // there's nothing remaining to be done
-                    if (newItems.length === 0) {
-                        this.setState({ end: true });
-                        return;
+                        // in case no more orders are found then marks the end
+                        // of the list paging and returns the control flow, as
+                        // there's nothing remaining to be done
+                        if (newItems.length === 0) {
+                            this.setState({ end: true });
+                            return;
+                        }
+
+                        this.setState(({ items }) => ({
+                            items: items.concat(newItems)
+                        }));
+                    } catch (error) {
+                        reject(error);
+                    } finally {
+                        this.setState({ loading: false }, resolve);
                     }
-
-                    this.setState(({ items }) => ({
-                        items: items.concat(newItems)
-                    }));
-                } finally {
-                    this.setState({ loading: false });
                 }
-            }
-        );
+            );
+        });
     };
 
     _getItems = async (options = {}) => {

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
 
-import { ChatMessage, RichTextInput } from "../../molecules";
+import { ChatMessage, ChatMessagePlaceholder, RichTextInput } from "../../molecules";
 
 import noMessageAnimation from "./assets/no-messages-animation.svga";
 
@@ -111,6 +111,10 @@ export class Chat extends PureComponent {
         const scrollViewComponentRef = this.chatListingRef.flatListRef.getNativeScrollRef();
         animated = animated === undefined ? this.props.animateScrollBottom : animated;
         scrollViewComponentRef.scrollTo({ x: 0, y: 0 }, { animated: animated });
+    };
+
+    addMessages = messages => {
+        this.chatListingRef.addItems(messages, true);
     };
 
     getInputValue = () => (this.input ? this.input.state.value || null : null);
@@ -316,13 +320,9 @@ export class Chat extends PureComponent {
 
     _renderLoadingFooter() {
         return (
-            <View style={styles.loadingFooterContainer}>
-                <ActivityIndicator
-                    style={styles.loadingFooterIndicator}
-                    size="large"
-                    color={"#808080"}
-                    animating={true}
-                />
+            <View style={styles.chatMessagePlaceholderContainer}>
+                <ChatMessagePlaceholder />
+                <ChatMessagePlaceholder />
             </View>
         );
     }
@@ -382,6 +382,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         flexGrow: 0
     },
+    chatMessagePlaceholderContainer: {
+        marginTop: 100
+    },
     chatMessagesContainer: {
         flex: 1,
         backgroundColor: "#ffffff"
@@ -402,12 +405,6 @@ const styles = StyleSheet.create({
     },
     loadingFooterContainer: {
         height: 100
-    },
-    loadingFooterIndicator: {
-        position: "absolute",
-        top: 19,
-        left: 0,
-        right: 0
     },
     noMessages: {
         alignItems: "center",
