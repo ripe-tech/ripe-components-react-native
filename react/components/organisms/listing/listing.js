@@ -517,7 +517,7 @@ export class Listing extends Component {
                     style={styles.loadingIndicator}
                     size="large"
                     color={this.props.loadingColor}
-                    animating={this.state.loading || this.props.loading}
+                    animating={true}
                 />
             </View>
         );
