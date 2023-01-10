@@ -141,9 +141,9 @@ export class Listing extends Component {
     }
 
     onRefreshComplete = async () => {
-        if (this.props.onRefreshComplete) this.props.onRefreshComplete();
         const shouldLoadMore = this.state.items.length < this.props.itemsRefreshMinimum;
         if (shouldLoadMore) await this._loadMoreItems();
+        if (this.props.onRefreshComplete) this.props.onRefreshComplete();
     };
 
     onSearch = async value => {
