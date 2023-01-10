@@ -51,6 +51,7 @@ export class Chat extends PureComponent {
             onScroll: PropTypes.func,
             onInputFocus: PropTypes.func,
             onInputBlur: PropTypes.func,
+            onRefreshComplete: PropTypes.func,
             style: PropTypes.any,
             styles: PropTypes.any,
             chatMessageStyle: PropTypes.any,
@@ -332,6 +333,7 @@ export class Chat extends PureComponent {
                     itemsSortReverse={true}
                     search={false}
                     onEndReachedThreshold={300}
+                    onRefreshComplete={this.props.onRefreshComplete}
                     flatListProps={{
                         inverted: true,
                         onScroll: this.onScroll,

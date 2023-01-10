@@ -42,6 +42,7 @@ export class Listing extends Component {
             onSearch: PropTypes.func,
             onSearchBlur: PropTypes.func,
             onSearchFocus: PropTypes.func,
+            onRefreshComplete: PropTypes.func,
             loadingColor: PropTypes.string,
             style: PropTypes.any,
             scrollViewStyle: PropTypes.any,
@@ -140,6 +141,7 @@ export class Listing extends Component {
     }
 
     onRefreshComplete = async () => {
+        if (this.props.onRefreshComplete) this.props.onRefreshComplete();
         const shouldLoadMore = this.state.items.length < this.props.itemsRefreshMinimum;
         if (shouldLoadMore) await this._loadMoreItems();
     };
