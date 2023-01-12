@@ -135,7 +135,6 @@ export class ChatMessage extends PureComponent {
     };
 
     _renderThumbnails = () => {
-        // const images = this._attachmentsMock();
         const images = this.props.attachments;
         const thumbnailImages = images.slice(0, 3);
         return (
