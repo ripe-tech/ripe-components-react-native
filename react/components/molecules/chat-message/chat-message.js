@@ -66,10 +66,6 @@ export class ChatMessage extends PureComponent {
         return this.props.onPress ? Touchable : View;
     }
 
-    _thumbnailOverlayText(additionalImages) {
-        return `+ ${additionalImages}`;
-    }
-
     _attachmentsStyle = () => {
         return { marginTop: this.props.message ? 10 : 0 };
     };
@@ -157,8 +153,8 @@ export class ChatMessage extends PureComponent {
                                 {additionalImages > 0 && isLastThumbnail && (
                                     <View style={styles.thumbnailOverlayContainer}>
                                         <View style={this._thumbnailOverlayStyle()} />
-                                        <Text style={{ color: "#ffffff", fontSize: 15, zIndex: 2 }}>
-                                            {this._thumbnailOverlayText(additionalImages)}
+                                        <Text style={styles.thumbnailOverlayText}>
+                                            + {additionalImages}
                                         </Text>
                                     </View>
                                 )}
@@ -301,7 +297,6 @@ const styles = StyleSheet.create({
         resizeMode: "cover"
     },
     thumbnailOverlayContainer: {
-        zIndex: 1,
         height: "100%",
         width: "100%",
         borderRadius: 12,
@@ -311,13 +306,16 @@ const styles = StyleSheet.create({
         position: "absolute"
     },
     thumbnailOverlay: {
-        zIndex: 1,
         height: "100%",
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
         opacity: 0.8,
         position: "absolute"
+    },
+    thumbnailOverlayText: {
+        color: "#ffffff",
+        fontSize: 15
     }
 });
 
