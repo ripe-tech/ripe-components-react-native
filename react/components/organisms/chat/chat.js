@@ -129,30 +129,6 @@ export class Chat extends PureComponent {
         }
     };
 
-    _aggregatedMessages() {
-        const messages = [];
-        let previousMessage = null;
-        let previousDate = null;
-        const originalMessages = this.props.messages.map(message => ({ ...message }));
-        for (const message of originalMessages) {
-            if (
-                !message.status &&
-                previousMessage &&
-                previousMessage.message &&
-                message.message &&
-                message.username === previousMessage.username &&
-                message.date - previousDate < this.props.aggregationThreshold
-            ) {
-                previousMessage.message += `\n${message.message}`;
-            } else {
-                messages.push(message);
-                previousMessage = message;
-            }
-            previousDate = message.date;
-        }
-        return messages;
-    }
-
     _aggregateMessages(messages) {
         const agregatedMessages = [];
         let previousMessage = null;
