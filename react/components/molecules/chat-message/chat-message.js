@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View } from "react-native";
-import PropTypes from "prop-types";
+import { StyleSheet, View, Image } from "react-native";
 import { dateTimeString, isImage } from "ripe-commons-native";
+import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
 
 import { Attachment, Avatar, Lightbox, StatusEntry, Text, Touchable } from "../../atoms";
 import { AvatarList } from "../avatar-list";
+import { ImageCarrousel } from "../image-carrousel";
 
 export class ChatMessage extends PureComponent {
     static get propTypes() {
@@ -30,6 +31,7 @@ export class ChatMessage extends PureComponent {
                 })
             ),
             imagePlaceholder: PropTypes.object,
+            imageOverlayColor: PropTypes.string,
             underlayColor: PropTypes.string,
             onPress: PropTypes.func,
             style: PropTypes.any,
@@ -52,6 +54,7 @@ export class ChatMessage extends PureComponent {
             repliesAvatars: [],
             attachments: [],
             imagePlaceholder: undefined,
+            imageOverlayColor: "#6687F6",
             underlayColor: "#f3f5ff",
             onPress: undefined,
             style: {},
@@ -61,6 +64,10 @@ export class ChatMessage extends PureComponent {
 
     _chatMessageComponent() {
         return this.props.onPress ? Touchable : View;
+    }
+
+    _thumbnailOverlayText(additionalImages) {
+        return `+ ${additionalImages}`;
     }
 
     _attachmentsStyle = () => {
@@ -77,6 +84,14 @@ export class ChatMessage extends PureComponent {
 
     _repliesTextStyle = () => {
         return [styles.repliesText, { color: this.props.repliesTextColor }];
+    };
+
+    _thumbnailContainerStyle = index => {
+        return [styles.thumbnailContainer, { marginLeft: index === 0 ? 0 : 10 }];
+    };
+
+    _thumbnailOverlayStyle = index => {
+        return [styles.thumbnailOverlay, { backgroundColor: this.props.imageOverlayColor }];
     };
 
     _renderHeader = () => {
@@ -119,8 +134,55 @@ export class ChatMessage extends PureComponent {
         );
     };
 
+    _renderThumbnails = () => {
+        // const images = this._attachmentsMock();
+        const images = this.props.attachments;
+        const thumbnailImages = images.slice(0, 3);
+        return (
+            <>
+                <View style={styles.thumbnailsContainer}>
+                    {thumbnailImages.map((attachment, index) => {
+                        const additionalImages = images.length - thumbnailImages.length;
+                        const isLastThumbnail = index === thumbnailImages.length - 1;
+                        return (
+                            <Touchable
+                                style={this._thumbnailContainerStyle()}
+                                onPress={() => this.carrouselRef.open(index)}
+                                key={index}
+                            >
+                                <Image
+                                    style={styles.thumbnailImage}
+                                    key={index}
+                                    source={{ uri: attachment.path }}
+                                />
+                                {additionalImages > 0 && isLastThumbnail && (
+                                    <View style={styles.thumbnailOverlayContainer}>
+                                        <View style={this._thumbnailOverlayStyle()} />
+                                        <Text style={{ color: "#ffffff", fontSize: 15, zIndex: 2 }}>
+                                            {this._thumbnailOverlayText(additionalImages)}
+                                        </Text>
+                                    </View>
+                                )}
+                            </Touchable>
+                        );
+                    })}
+                </View>
+                <ImageCarrousel
+                    ref={ref => (this.carrouselRef = ref)}
+                    images={images.map(i => ({ uri: i.path }))}
+                    resizeModeFullScreen={"contain"}
+                />
+            </>
+        );
+    };
+
     _renderContentAttachments = () => {
-        return this.props.attachments.map((attachment, index) => (
+        const attachments = this.props.attachments;
+        if (!attachments?.length) return;
+
+        const multipleImageOnly = attachments.length > 1 && attachments.every(a => isImage(a.name));
+        if (multipleImageOnly) return this._renderThumbnails();
+        return attachments.map((attachment, index) => (
             <View style={this._attachmentsStyle()} key={index}>
                 {isImage(attachment.name) ? (
                     <Lightbox
@@ -222,6 +284,41 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 14,
         marginTop: 3
+    },
+    thumbnailsContainer: {
+        flexDirection: "row",
+        justifyContent: "space-around"
+    },
+    thumbnailContainer: {
+        height: 80,
+        maxWidth: "100%",
+        flex: 1
+    },
+    thumbnailImage: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 12,
+        overflow: "hidden",
+        resizeMode: "cover"
+    },
+    thumbnailOverlayContainer: {
+        zIndex: 1,
+        height: "100%",
+        width: "100%",
+        borderRadius: 12,
+        overflow: "hidden",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute"
+    },
+    thumbnailOverlay: {
+        zIndex: 1,
+        height: "100%",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        opacity: 0.8,
+        position: "absolute"
     }
 });
 
