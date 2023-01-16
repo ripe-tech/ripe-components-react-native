@@ -223,6 +223,7 @@ export class TabsText extends PureComponent {
                 alwaysBounceHorizontal={false}
                 showsHorizontalScrollIndicator={false}
                 onScroll={this.onScroll}
+                scrollEventThrottle={4}
             >
                 {this._renderTabs()}
                 {this._animatedBarEnabled() ? (
