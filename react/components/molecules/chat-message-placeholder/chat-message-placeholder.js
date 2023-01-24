@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, View } from "react-native";
-import { PlaceholderContext, isTabletSize } from "ripe-commons-native";
+import { PlaceholderContext } from "ripe-commons-native";
 import LinearGradient from "react-native-linear-gradient";
 import PropTypes from "prop-types";
 
@@ -75,11 +75,9 @@ export class ChatMessagePlaceholder extends PureComponent {
 
 const styles = StyleSheet.create({
     chatMessage: {
-        width: "100%",
         maxHeight: 120,
         paddingHorizontal: 16,
         paddingVertical: 16,
-        flex: 1,
         flexDirection: "row"
     },
     avatar: {
