@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
     },
     noMessagesImage: {
         width: 250,
-        height: 180
+        height: 200
     },
     noMessagesText: {
         margin: 20,
