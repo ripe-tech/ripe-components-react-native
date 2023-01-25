@@ -2,6 +2,7 @@ export * from "./avatar-list";
 export * from "./button-toggle";
 export * from "./card";
 export * from "./chat-message";
+export * from "./chat-message-placeholder";
 export * from "./checkbox-group";
 export * from "./date-input";
 export * from "./gradient-animated";

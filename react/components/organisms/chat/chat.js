@@ -1,11 +1,12 @@
 import React, { PureComponent } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
+import { Listing } from "ripe-components-react-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
 
-import { ChatMessage, RichTextInput } from "../../molecules";
+import { ChatMessage, ChatMessagePlaceholder, RichTextInput } from "../../molecules";
 
 import noMessageAnimation from "./assets/no-messages-animation.svga";
 
@@ -38,6 +39,7 @@ export class Chat extends PureComponent {
                     )
                 })
             ),
+            getMessages: PropTypes.func,
             aggregationThreshold: PropTypes.number,
             animateScrollBottom: PropTypes.bool,
             textInputPlaceholder: PropTypes.string,
@@ -49,6 +51,7 @@ export class Chat extends PureComponent {
             onScroll: PropTypes.func,
             onInputFocus: PropTypes.func,
             onInputBlur: PropTypes.func,
+            onRefreshComplete: PropTypes.func,
             style: PropTypes.any,
             styles: PropTypes.any,
             chatMessageStyle: PropTypes.any,
@@ -64,6 +67,7 @@ export class Chat extends PureComponent {
             username: undefined,
             beforeMessages: null,
             messages: [],
+            getMessages: null,
             aggregationThreshold: 3600,
             animateScrollBottom: true,
             textInputPlaceholder: "Say something...",
@@ -102,8 +106,15 @@ export class Chat extends PureComponent {
     };
 
     scrollToEnd = animated => {
+        if (!this.chatListingRef?.flatListRef?.getNativeScrollRef) return;
+
+        const scrollViewComponentRef = this.chatListingRef.flatListRef.getNativeScrollRef();
         animated = animated === undefined ? this.props.animateScrollBottom : animated;
-        this.scrollViewComponent.scrollToEnd({ animated: animated });
+        scrollViewComponentRef.scrollTo({ x: 0, y: 0 }, { animated: animated });
+    };
+
+    addMessages = messages => {
+        this.chatListingRef.addItems(messages, true);
     };
 
     getInputValue = () => (this.input ? this.input.state.value || null : null);
@@ -118,11 +129,11 @@ export class Chat extends PureComponent {
         }
     };
 
-    _aggregatedMessages() {
-        const messages = [];
+    _aggregateMessages(messages) {
+        const agregatedMessages = [];
         let previousMessage = null;
         let previousDate = null;
-        const originalMessages = this.props.messages.map(message => ({ ...message }));
+        const originalMessages = messages.map(message => ({ ...message }));
         for (const message of originalMessages) {
             if (
                 !message.status &&
@@ -134,12 +145,12 @@ export class Chat extends PureComponent {
             ) {
                 previousMessage.message += `\n${message.message}`;
             } else {
-                messages.push(message);
+                agregatedMessages.push(message);
                 previousMessage = message;
             }
             previousDate = message.date;
         }
-        return messages;
+        return agregatedMessages;
     }
 
     async _onNewMessage(message) {
@@ -231,47 +242,90 @@ export class Chat extends PureComponent {
         );
     };
 
+    async _getChatMessages(...args) {
+        if (this.props.getMessages) {
+            const formatttedFilters = {
+                ...args[0],
+                number_records: args[0]?.limit,
+                start_record: args[0]?.start
+            };
+            const formatttedExtraFilters = { ...args[1] };
+            const chatMessages = await this.props.getMessages(
+                formatttedFilters,
+                formatttedExtraFilters
+            );
+            // reverse message array for the inverted listing
+            // placing the most recent message at the end
+            const agregatedMessages = this._aggregateMessages(chatMessages);
+            const reversedMessages = agregatedMessages.reverse();
+            return reversedMessages;
+        } else {
+            return [];
+        }
+    }
+
+    _renderChatMessage(message) {
+        return (
+            <ChatMessage
+                style={this._chatMessageStyle()}
+                messageStyle={this._chatMessageContentStyle()}
+                avatarUrl={message.avatarUrl}
+                username={message.username}
+                date={message.date}
+                message={message.message}
+                status={message.status}
+                statusProps={message.statusProps}
+                replies={message.replies}
+                replyLabel={message.repliesLabel}
+                repliesLabel={message.repliesLabel}
+                repliesTextColor={this.props.repliesTextColor}
+                repliesAvatars={message.repliesAvatars}
+                attachments={message.attachments}
+                onPress={message.onPress}
+                imagePlaceholder={this.props.imagePlaceholder}
+            />
+        );
+    }
+
+    _renderFooter() {
+        if (this.props.beforeMessages) {
+            return <View style={styles.footerContainer}>{this.props.beforeMessages}</View>;
+        }
+        return <View style={styles.footerContainer} />;
+    }
+
+    _renderLoadingFooter() {
+        return (
+            <View style={styles.chatMessagePlaceholderContainer}>
+                <ChatMessagePlaceholder />
+                <ChatMessagePlaceholder />
+            </View>
+        );
+    }
+
     render() {
         return (
             <View style={this._style()}>
-                <ScrollView
-                    style={this._chatMessagesContainerStyle()}
-                    ref={ref => (this.scrollViewComponent = ref)}
-                    onScroll={this.onScroll}
-                    scrollEventThrottle={4}
-                >
-                    {this.props.messages.length === 0 ? (
-                        this._renderNoMessages()
-                    ) : (
-                        <View style={this._chatMessagesContentStyle()}>
-                            {this.props.beforeMessages &&
-                                React.cloneElement(React.Children.only(this.props.beforeMessages))}
-                            {this._aggregatedMessages().map((message, index) => {
-                                return (
-                                    <ChatMessage
-                                        key={index}
-                                        style={this._chatMessageStyle()}
-                                        messageStyle={this._chatMessageContentStyle()}
-                                        avatarUrl={message.avatarUrl}
-                                        username={message.username}
-                                        date={message.date}
-                                        message={message.message}
-                                        status={message.status}
-                                        statusProps={message.statusProps}
-                                        replies={message.replies}
-                                        replyLabel={message.repliesLabel}
-                                        repliesLabel={message.repliesLabel}
-                                        repliesTextColor={this.props.repliesTextColor}
-                                        repliesAvatars={message.repliesAvatars}
-                                        attachments={message.attachments}
-                                        onPress={message.onPress}
-                                        imagePlaceholder={this.props.imagePlaceholder}
-                                    />
-                                );
-                            })}
-                        </View>
-                    )}
-                </ScrollView>
+                <Listing
+                    ref={el => (this.chatListingRef = el)}
+                    style={styles.chatListing}
+                    listingContentStyle={styles.chatListingContent}
+                    getItems={async (...args) => await this._getChatMessages(...args)}
+                    renderItem={(...args) => this._renderChatMessage(...args)}
+                    renderFooter={(...args) => this._renderFooter(...args)}
+                    renderLoadingFooter={(...args) => this._renderLoadingFooter(...args)}
+                    renderEmptyList={(...args) => this._renderNoMessages(...args)}
+                    filters={this._filters}
+                    itemsSortReverse={true}
+                    search={false}
+                    onEndReachedThreshold={300}
+                    onRefreshComplete={this.props.onRefreshComplete}
+                    flatListProps={{
+                        inverted: true,
+                        onScroll: this.onScroll,
+                        keyExtractor: (item, index) => index
+                    }}
+                />
                 <RichTextInput
                     ref={el => (this.input = el)}
                     style={styles.richTextInput}
@@ -296,6 +350,17 @@ const styles = StyleSheet.create({
     chat: {
         flex: 1
     },
+    chatListing: {
+        backgroundColor: "#ffffff"
+    },
+    chatListingContent: {
+        height: "auto",
+        backgroundColor: "#ffffff",
+        flexGrow: 0
+    },
+    chatMessagePlaceholderContainer: {
+        marginTop: 100
+    },
     chatMessagesContainer: {
         flex: 1,
         backgroundColor: "#ffffff"
@@ -311,13 +376,19 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         paddingBottom: 16
     },
+    footerContainer: {
+        height: 100
+    },
+    loadingFooterContainer: {
+        height: 100
+    },
     noMessages: {
         alignItems: "center",
-        marginTop: "40%"
+        paddingTop: "40%"
     },
     noMessagesImage: {
         width: 250,
-        height: 200
+        height: 205
     },
     noMessagesText: {
         margin: 20,
