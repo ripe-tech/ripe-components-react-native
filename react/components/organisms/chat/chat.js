@@ -46,6 +46,7 @@ export class Chat extends PureComponent {
             noMessagesPlaceholder: PropTypes.string,
             imagePlaceholder: PropTypes.object,
             repliesTextColor: PropTypes.string,
+            attachButtonsVisibility: PropTypes.bool,
             onNewMessage: PropTypes.func,
             onScrollBottom: PropTypes.func,
             onScroll: PropTypes.func,
@@ -333,6 +334,7 @@ export class Chat extends PureComponent {
                     sendButtonProps={{ loading: this.state.sendingMessage }}
                     multiline={true}
                     textareaMaxHeight={baseStyles.FONT_SIZE * 5}
+                    attachButtonsVisibility={this.props.attachButtonsVisibility}
                     onPhotoAdded={image => this.onRichTextInputPhotoAdded(image)}
                     onAttachmentsAdded={attachments =>
                         this.onRichTextInputAttachmentsAdded(attachments)
