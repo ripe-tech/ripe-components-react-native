@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { Listing } from "ripe-components-react-native";
 import PropTypes from "prop-types";
