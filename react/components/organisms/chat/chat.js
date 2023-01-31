@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { Listing } from "ripe-components-react-native";
+import { isImage } from "ripe-commons-native";
 import PropTypes from "prop-types";
 
 import { baseStyles } from "../../../util";
@@ -144,6 +145,15 @@ export class Chat extends PureComponent {
                 message.date - previousDate < this.props.aggregationThreshold
             ) {
                 previousMessage.message += `\n${message.message}`;
+            } else if (
+                !message.status &&
+                previousMessage &&
+                this._onlyImageAttachmentsMessage(previousMessage) &&
+                this._onlyImageAttachmentsMessage(message) &&
+                message.username === previousMessage.username &&
+                message.date - previousDate < this.props.aggregationThreshold
+            ) {
+                previousMessage.attachments.push(...message.attachments);
             } else {
                 agregatedMessages.push(message);
                 previousMessage = message;
@@ -151,6 +161,11 @@ export class Chat extends PureComponent {
             previousDate = message.date;
         }
         return agregatedMessages;
+    }
+
+    _onlyImageAttachmentsMessage(message) {
+        if (!message.attachments?.length) return;
+        return message.attachments.every(a => isImage(a.path));
     }
 
     async _onNewMessage(message) {

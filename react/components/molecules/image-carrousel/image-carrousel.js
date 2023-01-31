@@ -1,14 +1,5 @@
 import React, { PureComponent } from "react";
-import {
-    Dimensions,
-    Image,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
-    ViewPropTypes
-} from "react-native";
+import { Dimensions, Image, Modal, ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 
 import { isTabletSize } from "ripe-commons-native";
@@ -54,7 +45,7 @@ export class ImageCarrousel extends PureComponent {
             {
                 visible: value
             },
-            () => this.props.onVisible(value)
+            () => this.onVisibilityUpdate(value)
         );
     }
 
@@ -79,6 +70,16 @@ export class ImageCarrousel extends PureComponent {
         const currentPage = Math.round(scroll / this.screenWidth);
         this.setState({ selectedImage: currentPage });
     };
+
+    onVisibilityUpdate(value) {
+        this.props.onVisible(value);
+        if (value) {
+            this.scrollViewRef.scrollTo({
+                x: this.state.currentPagePosition,
+                y: 0
+            });
+        }
+    }
 
     onBackButtonPress = () => {
         this.closeLigthBox();
@@ -107,9 +108,13 @@ export class ImageCarrousel extends PureComponent {
         ];
     };
 
+    _style() {
+        return [styles.container, this.props.style];
+    }
+
     render() {
         return (
-            <View style={styles.container}>
+            <View style={this._style()}>
                 <Modal
                     animationType="fade"
                     transparent={false}
@@ -118,6 +123,7 @@ export class ImageCarrousel extends PureComponent {
                 >
                     <View style={styles.fullscreenContainer}>
                         <ScrollView
+                            ref={el => (this.scrollViewRef = el)}
                             contentOffset={{ x: this.state.currentPagePosition, y: 0 }}
                             style={styles.scrollView}
                             contentContainerStyle={{ flexGrow: 1 }}

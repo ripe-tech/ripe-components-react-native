@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Add pagination to `chat` by integrating the use of the `listing` component - [ripe-robin-revamp/#340](https://github.com/ripe-tech/ripe-robin-revamp/issues/340)
 * Add and adapt to newest chat message placeholder refresh component - [ripe-robin-revamp/#340](https://github.com/ripe-tech/ripe-robin-revamp/issues/340)
+* Add chat attachment images aggregation according to defined `aggregationThreshold` - [#332](https://github.com/ripe-tech/ripe-robin-revamp/issues/332)
 
 ### Changed
 
@@ -37,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Fix spam and error icons - [ripe-robin-revamp/#464](https://github.com/ripe-tech/ripe-robin-revamp/issues/464)
 * Fix send-alt icon viewport and size - [ripe-robin-revamp/#464](https://github.com/ripe-tech/ripe-robin-revamp/issues/464)
 * Fix no messages animation shadow - [ripe-robin-revamp/#489](https://github.com/ripe-tech/ripe-robin-revamp/issues/489)
+* Add missing `scrollEventThrottle` to tabs text - [#332](https://github.com/ripe-tech/ripe-robin-revamp/issues/332)
 
 ## [0.27.7] - 2022-10-21
 
