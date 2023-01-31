@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+*
+
+### Changed
+
+*
+
+### Fixed
+
+*
+
+## [0.28.0] - 2023-01-30
+
+### Added
+
 * Add pagination to `chat` by integrating the use of the `listing` component - [ripe-robin-revamp/#340](https://github.com/ripe-tech/ripe-robin-revamp/issues/340)
 * Add and adapt to newest chat message placeholder refresh component - [ripe-robin-revamp/#340](https://github.com/ripe-tech/ripe-robin-revamp/issues/340)
 * Add chat attachment images aggregation according to defined `aggregationThreshold` - [#332](https://github.com/ripe-tech/ripe-robin-revamp/issues/332)
