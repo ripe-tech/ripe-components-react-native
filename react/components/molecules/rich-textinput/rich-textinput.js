@@ -15,6 +15,7 @@ export class RichTextInput extends PureComponent {
             textareaMaxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             animationTime: PropTypes.number,
             sendButtonProps: PropTypes.object,
+            attachButtonsVisibility: PropTypes.bool,
             onPhotoAdded: PropTypes.func,
             onAttachmentsAdded: PropTypes.func,
             onSendMessage: PropTypes.func,
@@ -34,6 +35,7 @@ export class RichTextInput extends PureComponent {
             textareaMaxHeight: undefined,
             animationTime: 200,
             sendButtonProps: {},
+            attachButtonsVisibility: true,
             onPhotoAdded: image => {},
             onAttachmentsAdded: attachments => {},
             onSendMessage: text => {},
@@ -170,7 +172,13 @@ export class RichTextInput extends PureComponent {
     }
 
     _buttonsStyle() {
-        const style = [styles.buttons, { opacity: this.state.buttonsOpacityValue }];
+        const style = [
+            styles.buttons,
+            {
+                opacity: this.state.buttonsOpacityValue,
+                display: this.props.attachButtonsVisibility ? undefined : "none"
+            }
+        ];
 
         if (!this.state.buttonsVisible) style.push({ width: 0 });
         return style;
@@ -180,7 +188,8 @@ export class RichTextInput extends PureComponent {
         const style = [
             styles.moreOptions,
             {
-                opacity: this.state.moreOptionsOpacityValue
+                opacity: this.state.moreOptionsOpacityValue,
+                display: this.props.attachButtonsVisibility ? undefined : "none"
             }
         ];
 
