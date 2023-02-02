@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* Add `attachButtonsVisibility` prop to allow hiding attach buttons
+*
 
 ### Changed
 
@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *
+
+## [0.28.1] - 2023-02-02
+
+### Added
+
+* Add `attachButtonsVisibility` prop to allow hiding attach buttons
 
 ## [0.28.0] - 2023-01-30
 
